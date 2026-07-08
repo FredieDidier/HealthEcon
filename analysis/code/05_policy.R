@@ -19,7 +19,8 @@ pacman::p_load(data.table, arrow, fixest, ggplot2, here)
 source(here::here("analysis", "code", "00_utils.R"))
 
 OUT   <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
-COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")
+COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")   # parto_adequado list
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 
 pa <- fread(file.path(COV, "parto_adequado_fase2_hospitais.csv"),
@@ -38,7 +39,7 @@ es_coefs <- function(mod, tv, ref) {
 # =============================================================================
 # (a) SINASC event study — annual, long pre-period
 # =============================================================================
-sd <- as.data.table(read_parquet(file.path(COV, "sinasc_daily_muni.parquet")))
+sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, year := year(date)]
 sy <- sd[sector == "Private", .(births = sum(births), ces = sum(cesarean)),
          by = .(muni, year)]

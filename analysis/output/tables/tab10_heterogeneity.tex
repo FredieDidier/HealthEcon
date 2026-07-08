@@ -1,0 +1,36 @@
+
+\begin{table}[H]
+   \caption{\label{tab:heterogeneity} Where the scheduling motive binds: theory-driven heterogeneity}
+   \centering
+\small\setlength{\tabcolsep}{5pt}
+   \begin{tabular}{lcc}
+      \toprule
+      Dependent Variable: & \multicolumn{2}{c}{Cesarean share}\\
+                                                         & By obstetrician density & By mother's education \\   
+      Model:                                             & (1)                     & (2)\\  
+      \midrule
+      \emph{Variables}\\
+      Weekend                                            & -0.0680$^{***}$         & -0.2107$^{***}$\\   
+                                                         & (0.0055)                & (0.0110)\\   
+\addlinespace[2pt]
+      Weekend $\times$ Low obstetrician density          & -0.0223$^{***}$         &   \\   
+                                                         & (0.0079)                &   \\   
+\addlinespace[2pt]
+      Weekend $\times$ Mother has 8+ years of schooling  &                         & 0.1441$^{***}$\\   
+                                                         &                         & (0.0098)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      Municipality                                       & Yes                     & Yes\\  
+      Year                                               & Yes                     & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                                       & 1,348,043               & 1,636,747\\  
+\bottomrule
+   \end{tabular}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Private-sector municipality-date cells, SINASC 2010--2024, weighted by births. Low obstetrician density = below-median obstetricians per 1,000 births (CNES-PF). Education splits mothers at 8+ years of schooling. SE clustered by municipality. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+

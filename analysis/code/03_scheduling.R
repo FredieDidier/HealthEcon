@@ -12,7 +12,7 @@ if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(data.table, arrow, fixest, ggplot2, here)
 source(here::here("analysis", "code", "00_utils.R"))
 
-COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 
 # --- Brazilian national holidays (fixed + Easter-based movable) ----------------
@@ -36,7 +36,7 @@ holiday_dates <- function(years) {
 }
 
 # --- Load SINASC daily and classify each date ---------------------------------
-sd <- as.data.table(read_parquet(file.path(COV, "sinasc_daily_muni.parquet")))
+sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, `:=`(dow = wday(date), year = year(date))]
 sd <- sd[year <= 2024]
 hol <- holiday_dates(2015:2024)
@@ -57,7 +57,10 @@ fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector
   scale_colour_manual(values = c(Private = unname(PAL["red"]),
                                  Nonprofit = unname(PAL["orange"]),
                                  Public = unname(PAL["blue"]))) +
-  scale_y_continuous(limits = c(30, 75), breaks = seq(30, 75, 15)) +
+  # no hard y-limits: scale_y_continuous(limits=) DROPS out-of-range points
+  # (with the 2010-2024 sample private weekday rates exceed 75%, which erased
+  # the private line); let the scale adapt instead.
+  scale_y_continuous(breaks = seq(30, 90, 10)) +
   labs(x = NULL, y = "Cesarean rate (%)") +
   theme_paper()
 save_fig(fig2, "fig02_dow_cesarean")
@@ -67,8 +70,11 @@ save_fig(fig2, "fig02_dow_cesarean")
 # nonprofit (3xxx, SUS-heavy) is shown in the figure but excluded from the test.
 cell <- sd[births > 0, .(rate = sum(cesarean) / sum(births), births = sum(births)),
            by = .(muni, date, sector, weekend, holiday, eve, year)]
-r_pub  <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Public"],  weights = ~births)
-r_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Private"], weights = ~births)
+# two-way clustering: weekend/holiday are DATE-level shocks common to all munis
+r_pub  <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Public"],
+                weights = ~births, cluster = ~muni + date)
+r_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Private"],
+                weights = ~births, cluster = ~muni + date)
 
 dict <- c(weekend = "Weekend", holiday = "National holiday",
           eve = "Eve of rest day", muni = "Municipality", year = "Year")
@@ -83,7 +89,7 @@ etable(r_pub, r_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "weighted by births. The dependent variable is the cesarean share of births.",
          "\\emph{Eve of rest day} is a Friday or the day before a national holiday.",
          "Movable holidays (Good Friday, Carnival, Corpus Christi) are included.",
-         "Standard errors clustered by municipality.", SIGNIF_NOTE))
+         "Standard errors two-way clustered by municipality and date.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 
 # --- console summary ----------------------------------------------------------

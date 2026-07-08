@@ -1,32 +1,97 @@
-# HealthEcon
+# When Money Doesn't Explain It: Physician Convenience and the Cesarean Epidemic in Brazil's Private Health Sector — Replication Package
 
-Empirical health-economics research on Brazil's private health-insurance
-(*saúde suplementar*) sector, using the **ANS TISS Hospitalar** micro-data on
-hospital admissions financed by private health plans (2015–2025).
+**Author:** Fredie Didier (fdidier@terra.com.br)
 
-## Reproducing
-
-1. Set `DROPBOX_ROOT` in [`config/config.R`](config/config.R) — the only path
-   that changes per machine. It must point at the data folder containing
-   `build/TISS/input/` and `build/TISS/output/`.
-2. Run [`config/00_master_build.R`](config/00_master_build.R) to build the
-   analytical dataset from the raw TISS parquet files.
-3. Run [`config/00_master_analysis.R`](config/00_master_analysis.R) to reproduce
-   the results.
-
-Packages install themselves via `pacman::p_load()` — no manual
-`install.packages()` needed.
-
-## Layout
+## Repository layout
 
 ```
-config/     config.R (paths) · 00_master_build.R · 00_master_analysis.R
-build/      00_utils.R · 01_download_tiss.R · (02_clean_tiss.R …)
-analysis/   code/ (00_utils.R, analysis scripts) · output/{graphs,tables,maps}
-dictionary/ ANS TISS variable dictionaries (.ods)
-latex/      paper source
+config/
+  config.R              # <-- THE ONLY FILE TO EDIT (set DROPBOX_ROOT)
+  00_master_build.R     # runs the data build
+  00_master_analysis.R  # runs all analysis scripts
+build/
+  00_utils.R            # admission-count proxies, TUSS delivery codes
+  01a_tiss.R            # one-time ANS TISS Hospitalar download (CONS + DET)
+  01b_sinasc_cnes.R     # one-time SINASC (Base dos Dados) + CNES downloads/ingest
+  01c_ieps.R            # IEPS municipality-year covariates
+  02_deliveries.R       # TISS delivery events + municipality-month panel
+  03_workfile.R         # merges everything into main_data.parquet
+analysis/code/          # 00_utils.R, 01_descriptives.R … 06_fee_shock.R
+analysis/output/        # tables/, graphs/, maps/ (committed)
+latex/                  # paper.tex, refs.bib
+dictionary/             # ANS TISS dictionaries (.xlsx) + main_data_dictionary.md
 ```
 
-**Code and final outputs live in Git; raw and intermediate data live in Dropbox
-(never committed).** See [`CLAUDE.md`](CLAUDE.md) for the data infrastructure and
-conventions.
+## Data
+
+The microdata are **not** in this repository. They live in a (Dropbox) folder:
+
+```
+<DROPBOX_ROOT>/build/TISS/input/        raw ANS TISS claims (CONS/DET parquets, 2015–2025)
+<DROPBOX_ROOT>/build/TISS/output/       delivery event workfiles + muni-month panel
+<DROPBOX_ROOT>/build/SINASC/input/      sinasc_births.parquet (2010–2024) + daily extract
+<DROPBOX_ROOT>/build/CNES/input/        hospital beds + obstetrician counts
+<DROPBOX_ROOT>/build/IEPS/{input,output}/   municipality covariates
+<DROPBOX_ROOT>/build/covariates/input/  Parto Adequado Fase-2 hospital list
+<DROPBOX_ROOT>/build/workfile/output/   main_data.parquet (final muni-year dataset)
+```
+
+`main_data.parquet` covers 2015–2025 (11,567 municipality-years); the SINASC
+extracts cover 2010–2024 (~42M births).
+
+### Getting the data — all sources are public
+
+- **ANS TISS Hospitalar** — open data, downloaded by `build/01a_tiss.R` from
+  `https://dadosabertos.ans.gov.br/FTP/PDA/TISS/HOSPITALAR/`.
+- **SINASC** — via [Base dos Dados](https://basedosdados.org/dataset/48ccef51-8207-40ee-af5b-134c8ac3fb8c)
+  (BigQuery; the targeted 24-column query is documented in `build/01b_sinasc_cnes.R`;
+  requires a Google Cloud billing project), then ingested by `ingest_sinasc()`.
+- **CNES** (beds via `datazoom.saude`; professionals via `microdatasus`) —
+  downloaded by `build/01b_sinasc_cnes.R`.
+- **IEPS Data** — manual export from `https://iepsdata.org.br`, placed in
+  `<DROPBOX_ROOT>/build/IEPS/input/ieps.csv`.
+- **Parto Adequado hospital list** — scraped from the
+  [ANS Fase-2 PDF](https://www.gov.br/ans/pt-br/arquivos/assuntos/prestadores/parto-adequado-1/projeto_parto_adequado_fase_2_hospitais_participantes.pdf)
+  (snapshot 11/02/2019), stored as `parto_adequado_fase2_hospitais.csv`.
+
+## Reproducing the results
+
+First, clone this repository and enter it:
+
+```
+git clone https://github.com/FredieDidier/HealthEcon.git
+cd HealthEcon
+```
+
+Then:
+
+1. **Open the project, then set the data path.** Open `HealthEcon.Rproj` in RStudio
+   (or otherwise set the working directory to the repository root) **before running
+   anything** — this is what lets `here::here()` and the `source()` calls below
+   resolve paths correctly. Then edit the single line in `config/config.R`:
+
+   ```r
+   DROPBOX_ROOT <- "/path/to/your/HealthEcon"
+   ```
+
+   This is the only path that changes per machine; all repository paths are
+   resolved automatically with `here::here()`.
+
+2. **Build the dataset** (skip if `main_data.parquet` already exists):
+
+   ```r
+   source("config/00_master_build.R")
+   ```
+
+   The two master scripts install any missing R packages automatically (via
+   `pacman::p_load()`) before `source()`-ing the individual `build/` and
+   `analysis/code/*.R` files, so there is no need to run `install.packages()` by
+   hand. The one-time raw downloads (`01a_tiss.R`, `01b_sinasc_cnes.R`,
+   `01c_ieps.R`) are commented out in the master script; uncomment them only to
+   (re-)download the raw data.
+
+3. **Run the analysis** (writes all tables and figures to `analysis/output/`):
+
+   ```r
+   source("config/00_master_analysis.R")
+   ```

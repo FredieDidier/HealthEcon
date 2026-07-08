@@ -1,0 +1,110 @@
+% =============================================================================
+% model.tex — A simple model of delivery-mode choice and physician time.
+% \input{model} from paper.tex. Delivers the five predictions tested in the
+% empirical sections (P1-P5) and the policy corollary.
+% =============================================================================
+
+\section{A simple model of delivery-mode choice and physician time}
+\label{sec:model}
+
+\subsection{Setup}
+
+A physician attends a pregnancy whose labor, absent intervention, begins at a
+random time $\tilde{t}$ distributed (approximately) uniformly over the days and
+hours of the week --- clinically, the onset of spontaneous labor does not respect
+the calendar, which is the identifying assumption behind our timing tests. The
+physician chooses between attending a vaginal delivery ($v$) and performing a
+\emph{prelabor scheduled} cesarean ($c$) at a time $t$ of her choosing; if labor
+starts before a cesarean is performed, the delivery may still convert to an
+\emph{in-labor} cesarean for clinical reasons.
+
+\paragraph{Fees.} The physician receives $f_c$ for a cesarean and $f_v$ for a
+vaginal delivery, where $f_v$ includes the separately-billed hourly labor
+assistance --- the \emph{economic} vaginal fee. In our data $f_c - f_v \le 0$ in
+the largest states.
+
+\paragraph{Time.} A cesarean takes a fixed block $\tau_c$ ($\approx$1 hour) at
+the chosen time $t$. A vaginal delivery requires attending labor for a random
+duration $\tau_v$ (billed mean $\approx$2.7 hours, with $E[\tau_v] > \tau_c$) at
+the random time $\tilde{t}$. The opportunity cost of physician time is
+\[
+w(t) \;=\;
+\begin{cases}
+w_0 & t \in \text{weekday business hours}, \\
+w_0 + \Delta & t \in \text{nights, weekends, holidays},
+\end{cases}
+\qquad \Delta > 0 .
+\]
+Committing to an event of unknown timing additionally carries an on-call cost
+$\kappa \ge 0$: the physician must hold open calendar slots she could otherwise
+fill (an option cost of unschedulable time).
+
+\paragraph{Agency.} A vaginal delivery yields the patient a net clinical benefit
+$\theta \sim F$ (with $\theta < 0$ when a cesarean is medically indicated). The
+physician is an imperfect agent and internalizes $\alpha\theta$, $\alpha \in
+(0,1]$.
+
+\subsection{The delivery-mode decision}
+
+The physician schedules a prelabor cesarean if and only if
+\begin{equation}
+\underbrace{f_c - f_v}_{\text{fee gap } \le 0}
+\;+\;
+\underbrace{\Pi}_{\text{convenience premium}}
+\;>\; \alpha\,\theta,
+\qquad
+\Pi \;\equiv\; E\!\left[w(\tilde{t})\right] E[\tau_v] + \kappa - w_0\,\tau_c \;>\; 0,
+\label{eq:choice}
+\end{equation}
+so the cutoff is $\theta^{*} = \left(f_c - f_v + \Pi\right)/\alpha$ and the
+cesarean share is $F(\theta^{*})$. The convenience premium $\Pi$ is strictly
+positive even when the fee gap is negative: labor falls disproportionately on
+high-$w$ times ($E[w(\tilde{t})] > w_0$), lasts longer ($E[\tau_v] > \tau_c$),
+and blocks the calendar ($\kappa$). Conditional on choosing $c$, the physician
+schedules it at $\arg\min_t w(t)$ --- weekday business hours --- and, to
+guarantee the procedure precedes $\tilde{t}$ (whose hazard rises steeply after
+gestational week 39), books it at weeks 37--39, earlier than spontaneous labor
+would deliver.
+
+\subsection{Predictions and the corresponding tests}
+
+\begin{itemize}
+\item[\textbf{P1.}] \emph{Fees are not the operative margin.} The cesarean share
+responds to the fee gap only through $f(\theta^{*})/\alpha$; when $\Pi$
+dominates the wedge in \eqref{eq:choice}, the discretionary mass is already
+inframarginal and fee (semi-)elasticities are $\approx 0$.
+\hfill [\emph{Tested:} fee-gap regressions and fee-swing falsification, Tables
+\ref{tab:not_a_price} and \ref{tab:fee_shock}; even a court order to triple
+vaginal pay changed nothing.]
+\item[\textbf{P2.}] \emph{The scheduling fingerprint.} Prelabor cesareans bunch
+at $\arg\min_t w(t)$ --- weekday business hours --- and fall on weekends and
+holidays; in-labor cesareans inherit $\tilde{t}$'s uniform timing and weakly
+\emph{rise} on weekends (marginal-$\theta$ women who labor before being
+scheduled convert). \hfill [\emph{Tested:} day-of-week, holiday and
+hour-of-birth clustering, and the prelabor/in-labor split: Figures
+\ref{fig:dow}--\ref{fig:hours}, Tables \ref{tab:scheduling} and
+\ref{tab:mechanism_checks}.]
+\item[\textbf{P3.}] \emph{Scarcity.} $\Delta$ and $\kappa$ rise where
+obstetricians per birth are scarce (fewer substitutes to cover on-call time), so
+weekend dips are larger there. \hfill [\emph{Tested:} density interaction, Table
+\ref{tab:heterogeneity}.]
+\item[\textbf{P4.}] \emph{The early-term cost.} Guaranteeing $t < \tilde{t}$
+requires booking before the week-39 hazard spike, shifting prelabor cesareans to
+37--38 weeks and producing excess early-term birth. \hfill [\emph{Tested:}
+gestational-age distributions and early-term gap, Figure \ref{fig:gestation},
+Table \ref{tab:health}.]
+\item[\textbf{P5.}] \emph{Supply, not demand.} If the timing preference were the
+mother's, the weekend dip would concentrate among mothers with the strongest
+demand for scheduling (proxied by schooling); it does not. \hfill
+[\emph{Tested:} education interaction, Table \ref{tab:heterogeneity}.]
+\end{itemize}
+
+\subsection{Policy corollary}
+
+Interventions on $f$ --- equalizing or even tripling the vaginal fee --- leave
+$\theta^{*}$ nearly unchanged because the operative wedge is $\Pi$, not the fee
+gap. The model thereby rationalizes our fee nulls jointly with the timing
+evidence, and directs attention to organizational levers that reduce $\Pi$
+itself: on-call/laborist shift coverage (which lowers $\kappa$ and detaches
+$w(\tilde t)$ from the attending physician's calendar), midwife-led continuity
+of care, and hospital scheduling norms.

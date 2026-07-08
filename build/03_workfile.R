@@ -20,10 +20,11 @@
 
 source(here::here("config", "config.R"))
 
-OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
-COV <- file.path(DROPBOX_ROOT, "build", "covariates", "input")
-IEO <- file.path(DROPBOX_ROOT, "build", "IEPS", "output")
-WFO <- file.path(DROPBOX_ROOT, "build", "workfile", "output")
+OUT  <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
+CNES <- file.path(DROPBOX_ROOT, "build", "CNES", "input")
+SIN  <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
+IEO  <- file.path(DROPBOX_ROOT, "build", "IEPS", "output")
+WFO  <- file.path(DROPBOX_ROOT, "build", "workfile", "output")
 dir.create(WFO, recursive = TRUE, showWarnings = FALSE)
 
 m6 <- function(x) formatC(as.integer(as.character(x)), width = 6, flag = "0")
@@ -52,12 +53,12 @@ build_workfile <- function() {
 
   # --- CNES obstetricians ----------------------------------------------------
   obs <- data.table::as.data.table(arrow::read_parquet(
-    file.path(COV, "cnes_obstetricians_muni_year.parquet")))
+    file.path(CNES, "cnes_obstetricians_muni_year.parquet")))
   obs <- obs[, .(muni6 = m6(muni), year, n_obstetricians)]
 
   # --- SINASC all-births + private/public cesarean (from daily extract) ------
   sd <- data.table::as.data.table(arrow::read_parquet(
-    file.path(COV, "sinasc_daily_muni.parquet")))
+    file.path(SIN, "sinasc_daily_muni.parquet")))
   sd[, year := data.table::year(date)]
   sin <- sd[, .(
     sinasc_births      = sum(births),

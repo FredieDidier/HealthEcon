@@ -10,7 +10,7 @@ pacman::p_load(data.table, arrow, ggplot2, here)
 source(here::here("analysis", "code", "00_utils.R"))
 
 OUT   <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
-COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 WFO   <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
 TABLE <- here::here("analysis", "output", "tables")
 
@@ -20,7 +20,7 @@ tiss_yr <- panel[!is.na(muni) & year <= 2024,
   .(rate = sum(n_cesarean) / sum(n_deliveries)), by = year][
   , series := "Private (TISS claims)"]
 
-sd <- as.data.table(read_parquet(file.path(COV, "sinasc_daily_muni.parquet")))
+sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, year := year(date)]
 sin_yr <- sd[year <= 2024, .(
   priv = sum(cesarean[sector == "Private"]) / sum(births[sector == "Private"]),
@@ -40,8 +40,9 @@ pal_sector <- c("Private (TISS claims)"    = unname(PAL["red"]),
 fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   scale_colour_manual(values = pal_sector) +
-  scale_x_continuous(breaks = seq(2015, 2024, 3)) +
-  scale_y_continuous(limits = c(0, 90), breaks = seq(0, 90, 15)) +
+  scale_x_continuous(breaks = seq(2010, 2024, 2)) +   # SINASC now starts in 2010
+  scale_y_continuous(breaks = seq(0, 90, 15)) +
+  coord_cartesian(ylim = c(0, 90)) +                  # zoom, never drop points
   labs(x = NULL, y = "Cesarean rate (%)") +
   theme_paper()
 save_fig(fig1, "fig01_csection_trend")

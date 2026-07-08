@@ -14,15 +14,17 @@ if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(data.table, arrow, fixest, ggplot2, here)
 source(here::here("analysis", "code", "00_utils.R"))
 
-COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
-BIRTHS <- file.path(COV, "sinasc_births.parquet")
+BIRTHS <- file.path(SIN, "sinasc_births.parquet")
 
 if (!file.exists(BIRTHS)) {
   message("04_robson.R skipped — sinasc_births.parquet not built yet ",
-          "(run the richer SINASC pull + ingest_sinasc() in build/01d).")
+          "(run the SINASC pull + ingest_sinasc() in build/01b_sinasc_cnes.R).")
 } else {
-  b <- as.data.table(read_parquet(BIRTHS))
+  # column subset: the extended file has ~42M rows × 31 cols — read only what we use
+  b <- as.data.table(read_parquet(BIRTHS,
+         col_select = c("tipo_robson", "sector", "cesarean", "muni", "date", "dow", "year")))
   b <- b[year <= 2024]
   b[, `:=`(weekend = as.integer(dow %in% c(1, 7)),
            robson  = as.character(tipo_robson))]
@@ -42,10 +44,13 @@ if (!file.exists(BIRTHS)) {
   # --- Table 4: weekend dip within Robson 1-2 (and Robson 1 alone) ------------
   cell <- function(dat) dat[, .(rate = mean(cesarean, na.rm = TRUE), n = .N),
                             by = .(muni, date, weekend, year)]
-  r12_pub  <- feols(rate ~ weekend | muni + year, cell(low[sector == "Public"]),  weights = ~n)
-  r12_priv <- feols(rate ~ weekend | muni + year, cell(low[sector == "Private"]), weights = ~n)
+  r12_pub  <- feols(rate ~ weekend | muni + year, cell(low[sector == "Public"]),
+                    weights = ~n, cluster = ~muni + date)
+  r12_priv <- feols(rate ~ weekend | muni + year, cell(low[sector == "Private"]),
+                    weights = ~n, cluster = ~muni + date)
   r1_priv  <- feols(rate ~ weekend | muni + year,
-                    cell(b[robson == "01" & sector == "Private"]), weights = ~n)
+                    cell(b[robson == "01" & sector == "Private"]),
+                    weights = ~n, cluster = ~muni + date)
 
   dict <- c(weekend = "Weekend", muni = "Municipality", year = "Year")
   f <- file.path(TABLE, "tab04_robson.tex")
@@ -58,7 +63,7 @@ if (!file.exists(BIRTHS)) {
          notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",
            "weighted by births, within Robson groups 1-2 (nulliparous, term,",
            "singleton, cephalic). The dependent variable is the cesarean share.",
-           "Standard errors clustered by municipality.", SIGNIF_NOTE))
+           "Standard errors two-way clustered by municipality and date.", SIGNIF_NOTE))
   postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
   etable(r12_pub, r12_priv, r1_priv, dict = dict, fitstat = ~ n + r2, digits = 4)
 

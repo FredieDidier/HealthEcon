@@ -27,3 +27,8 @@ source(here("analysis", "code", "03_scheduling.R"))     # SINASC scheduling (wee
 source(here("analysis", "code", "04_robson.R"))         # low-risk (Robson 1-2) cesareans
 source(here("analysis", "code", "05_policy.R"))         # Parto Adequado + RN 368 (support)
 source(here("analysis", "code", "06_fee_shock.R"))      # fee changes don't move cesareans
+source(here("analysis", "code", "07_hours.R"))          # hour-of-birth (within-day fingerprint)
+source(here("analysis", "code", "08_mechanism_checks.R")) # prelabor split, counts, placebo
+source(here("analysis", "code", "09_gestation_health.R")) # early-term shifting + newborn health
+source(here("analysis", "code", "10_heterogeneity.R"))  # theory-driven heterogeneity
+source(here("analysis", "code", "11_decomposition.R"))  # Kitagawa + excess-cesarean counts
