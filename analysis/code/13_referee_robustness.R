@@ -87,15 +87,15 @@ etable(m_tv, m_sun, m_rest, m_ap, m_lb, tex = TRUE, file = f, replace = TRUE, di
        fitstat = ~ n, digits = 4, digits.stats = 3,
        headers = c("Cesarean rate, time-varying sector", "Cesarean rate, Sunday only",
                    "Cesarean rate, rest days", "Low Apgar (5-minute)", "Low birthweight"),
-       title = "Referee-stage robustness: sector classification, rest-day definitions, newborn composition",
+       title = "Robustness of the weekend dip: sector classification, rest-day definitions, and newborn composition",
        label = "tab:referee_robustness",
        notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each",
          "birth's establishment with the natureza jur\\'idica of its own year",
          "(2015--2024; earlier births use 2015). Columns 4--5 are composition checks:",
          "weekend (unscheduled) private births include fewer healthy scheduled",
-         "term pregnancies, so newborn risk indicators shift mechanically. SE two-way",
-         "clustered by municipality and date.", SIGNIF_NOTE))
+         "term pregnancies, so newborn risk indicators shift mechanically.",
+         "Standard errors two-way clustered by municipality and date.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\footnotesize", tabcolsep = 3)
 etable(m_tv, m_sun, m_rest, m_ap, m_lb, dict = dict, fitstat = ~ n, digits = 4,
        headers = c("TV sector", "Sunday", "Rest", "Apgar", "LBW"))
@@ -137,7 +137,7 @@ etable(c(list(m_clean), m_reg, m_pd), tex = TRUE, file = fc, replace = TRUE, dic
          "cells, weighted by births. \\emph{Clean low-risk} keeps births with no",
          "recorded schedulable indication: cephalic presentation, singleton, term",
          "(37--41 weeks), no prior cesarean (multiparity allowed, unlike Robson 1--2).",
-         "SE two-way clustered by municipality and date.", SIGNIF_NOTE))
+         "Standard errors two-way clustered by municipality and date.", SIGNIF_NOTE))
 postprocess_tex(fc, fontsize = "\\small", tabcolsep = 3, resize = TRUE)
 # nine-column table: typeset in landscape
 .txc <- readLines(fc)
@@ -173,11 +173,10 @@ etable(m_b1, m_b2, tex = TRUE, file = fb2, replace = TRUE,
                 state = "State", muni_b = "Municipality", year = "Year"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("State + Year FE", "Municipality + Year FE"),
        title = "Not a price story: beneficiary-municipality aggregation",
        label = "tab:beneficiary_muni",
        notes = paste("\\footnotesize\\textit{Notes:} TISS delivery events 2015--2024",
-         "aggregated by the BENEFICIARY's municipality of residence (the baseline",
+         "aggregated by the beneficiary's municipality of residence (the baseline",
          "uses the provider municipality), weighted by deliveries; cells with at",
          "least 20 deliveries. The fee-gap null replicates.", SIGNIF_NOTE))
 postprocess_tex(fb2, fontsize = "\\small", tabcolsep = 5)

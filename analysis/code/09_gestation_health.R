@@ -72,7 +72,7 @@ m_lb1 <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, c
 m_ap1 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 
 dict <- c(private = "Private (for-profit) establishment",
-          early_term = "Early-term birth (37--38 wk)", lbw = "Low birthweight ($<$2500g)",
+          early_term = "Early-term birth (37--38 weeks)", lbw = "Low birthweight ($<$2500g)",
           low_apgar = "Five-minute Apgar $<$ 7", idade_mae = "Mother's age",
           muni = "Municipality", year = "Year")
 f <- file.path(TABLE, "tab09_health.tex")
@@ -88,7 +88,7 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
          "year fixed effects. Maternal controls: age, age$^2$, education, race.",
          "Estimates are associational (mothers differ across sectors) and quantify",
          "the epidemic's health margins, with early-term shifting the direct",
-         "consequence of prelabor scheduling. SE clustered by municipality.",
+         "consequence of prelabor scheduling. Standard errors clustered by municipality.",
          SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_et0, m_et1, m_lb1, m_ap1, dict = dict, keep = "%private", fitstat = ~ n, digits = 4)

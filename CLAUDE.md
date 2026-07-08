@@ -479,10 +479,16 @@ fails parallel trends; fee shocks null; RN 368 national with short pre-period).
   column attributes; `postprocess_tex()` (booktabs + shrink-only `\resizebox` via
   `resize_tabular()`). Very wide tables (≥6 cols: tab08, tab13c) are typeset
   `landscape` (`sidewaystable`, needs `\usepackage{rotating}`) with `resize=FALSE`.
-  Figures: notes are folded into the `\caption{}` (one block, styled by the
-  `caption` package — `\captionsetup{font=small,labelfont=bf}`), NOT a separate
-  minipage (which misaligned with the centered caption). Keep exhibits in English
-  (no `natureza jur\'idica` etc.).
+  Figures: the `\caption{}` holds ONLY the short bold title; the notes go on a
+  separate block below it via the `\fignotes{...}` macro (defined in `paper.tex` —
+  small, `\textit{Notes:}` lead-in, centered in a 0.85\textwidth minipage so the
+  block sits balanced under the figure). Do NOT fold notes back into `\caption{}`
+  (that produced a run-on "title Notes: ..." blob). Keep exhibits in English (no
+  `natureza jur\'idica` etc.). NB: several committed `.tex` tables have been
+  hand-edited after generation and diverge from their R sources (e.g. "legal
+  nature" in the `.tex` vs "natureza jur\'idica" still in `13_referee_robustness.R`);
+  the `.tex` files are the source of truth for the paper, so when re-running an
+  analysis script re-check its table against the committed `.tex`.
 - **Never commit data** (`*.parquet/*.csv/*.dta/*.rds` gitignored). Commit/push only
   when asked. macOS filesystem is case-insensitive.
 - When adding a variable to `main_data`, update `dictionary/build_dictionary.R`

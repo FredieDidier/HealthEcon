@@ -61,8 +61,8 @@ etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
        label = "tab:heterogeneity",
        notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Low obstetrician density =",
-         "below-median obstetricians per 1,000 births (CNES-PF). Education splits",
-         "mothers at 8+ years of schooling. SE clustered by municipality.",
+         "below-median obstetricians per 1,000 births (CNES professionals file). Education splits",
+         "mothers at 8+ years of schooling. Standard errors clustered by municipality.",
          SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_dens, m_educ, dict = dict, fitstat = ~ n, digits = 4)
@@ -89,7 +89,7 @@ etable(m_mod0, m_mod1, tex = TRUE, file = f2, replace = TRUE,
        notes = paste("\\footnotesize\\textit{Notes:} TISS delivery events 2015--2024,",
          "municipality and year fixed effects. Cooperativas m\\'edicas (e.g.\\ Unimed)",
          "are physician-owned; agency predicts more discretion over the delivery",
-         "decision than in insurer-run plans. SE clustered by municipality.",
+         "decision than in insurer-run plans. Standard errors clustered by municipality.",
          SIGNIF_NOTE))
 postprocess_tex(f2, fontsize = "\\small", tabcolsep = 5)
 etable(m_mod0, m_mod1, keep = "%coop", fitstat = ~ n, digits = 4)

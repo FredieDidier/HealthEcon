@@ -49,7 +49,7 @@ tex <- c("\\begin{table}[H]\\centering",
   "Pseudo rest-day pair & Private cesarean dip (pp) \\\\", "\\midrule",
   res[, sprintf("%s%s & %.2f \\\\", days, ifelse(days == "Sun+Sat", " (true weekend)", ""), coef)],
   "\\bottomrule", "\\end{tabular}",
-  sprintf("\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, muni-date cells, muni and year FE, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos; exact permutation $p = %.3f$.", pval),
+  sprintf("\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos; exact permutation $p = %.3f$.", pval),
   "\\end{table}")
 writeLines(tex, file.path(TABLE, "tab15_permutation.tex"))
 

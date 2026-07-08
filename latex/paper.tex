@@ -17,6 +17,16 @@
 \usepackage{rotating}
 \usepackage{hyperref}
 
+% Figure notes: a separate paragraph centered below the caption title,
+% styled small with a "Notes:" lead-in. Keeps the figure title (\caption)
+% clean and short. Constrained to 0.85\textwidth so the block sits centered
+% under the figure rather than running edge to edge.
+\newcommand{\fignotes}[1]{%
+  \par\vspace{3pt}%
+  {\footnotesize\begin{center}\begin{minipage}{0.85\textwidth}
+  \centering\textit{Notes:} #1
+  \end{minipage}\end{center}}}
+
 \title{Born on Schedule: Physician Time and the World's Highest Private
 Cesarean Rate}
 \author{Fredie Didier\thanks{Contact: fdidier@terra.com.br. I thank seminar
@@ -70,14 +80,19 @@ well beyond Brazil.
 
 Economic theory offers a natural suspect and a large literature to back it. When
 patients cannot judge treatment necessity, physicians act as imperfect agents
-and can tilt clinical decisions toward their own interests \citep{mcguire2000}.
-The canonical version of this argument is financial: providers do more of what
-pays more. \citet{gruber1996physician} show that obstetricians substitute toward
-cesareans when fee differentials widen, \citet{gruber1999physician} confirm the
-fee margin in Medicaid data, and \citet{clemens2014} document strong treatment
-responses to payment changes in Medicare. Childbirth has become the laboratory
-of choice for testing physician agency, precisely because the cesarean decision
-is frequent, discretionary, and well measured: \citet{currie2008} show that
+and can tilt clinical decisions toward their own interests
+\citep{dranove1988,mcguire2000}. The canonical version of this argument is
+financial: providers do more of what pays more. \citet{gruber1996physician} show
+that obstetricians substitute toward cesareans when fee differentials widen,
+\citet{gruber1999physician} confirm the fee margin in Medicaid data, and
+\citet{clemens2014} document strong treatment responses to payment changes in
+Medicare. The financial channel is not universal, however, even in childbirth:
+\citet{grant2009} finds that fee incentives explain little of the cross-sectional
+variation in cesarean use, and \citet{alexander2020} shows that paying physicians
+to economize can move treatment in unintended ways. Childbirth has become the
+laboratory of choice for testing physician agency, precisely because the cesarean
+decision is frequent, discretionary, and well measured: \citet{currie2008} show
+that
 liability pressure distorts delivery mode, \citet{johnson2016} find that
 physicians treat informed patients (other physicians) differently from everyone
 else, and \citet{card2023} show that being delivered in a hospital with a high
@@ -91,13 +106,16 @@ physician fees and the exact timing of births in the same setting, a combination
 administrative data rarely provide.
 
 This paper separates the two channels at national scale. I combine the universe
-of hospital claims in Brazil's private insurance system (TISS), which records
-the physician fee actually billed for every delivery from 2015 to 2025, with the
-universe of birth records (SINASC), 42 million births from 2010 to 2024 with the
-exact date and hour of birth, the Robson clinical classification, and an
-indicator for whether a cesarean was performed before labor began. The claims
-data measure the money incentive; the birth records reveal the time incentive
-through the calendar. Three sets of facts emerge.
+of private-insurance hospital claims, filed with the sector's federal regulator
+under Brazil's mandatory reporting standard (Troca de Informa\c{c}\~oes na
+Sa\'ude Suplementar, TISS), which records the physician fee actually billed for
+every delivery from 2015 to 2025, with the universe of official birth records
+from the Ministry of Health (Sistema de Informa\c{c}\~oes sobre Nascidos Vivos,
+SINASC), 42 million births from 2010 to 2024 that record the exact date and hour
+of birth, the clinical group under the World Health Organization's Robson
+classification, and an indicator for whether a cesarean was performed before
+labor began. The claims measure the financial incentive; the birth records
+reveal the time incentive through the calendar. Three sets of facts emerge.
 
 First, the epidemic is not a price story. The correct financial comparison must
 credit the vaginal delivery with the separately billed hourly labor-assistance
@@ -115,7 +133,9 @@ operate.
 Second, the calendar does. Because the onset of spontaneous labor does not
 respect the week, the day on which a birth falls is as good as random with
 respect to medical need, and any systematic weekly pattern in surgery reveals
-choices about timing. Cesarean rates in the private sector fall by 8.3
+choices about timing. That delivery dates can be shifted for non-clinical reasons
+is well established: births respond to tax and holiday incentives
+\citep{dickertconlin1999,gans2009}. Cesarean rates in the private sector fall by 8.3
 percentage points on weekends and 5.3 points on national holidays, roughly twice
 the public-sector dips, and half of all cesareans are performed in weekday
 business hours, against a 30\% benchmark under uniform timing. The mechanism is
@@ -140,7 +160,8 @@ age, education, and race, and prelabor cesareans mass exactly at those weeks.
 Early-term delivery is precisely the margin that the clinical literature links
 to higher neonatal respiratory morbidity and intensive-care admission
 \citep{tita2009}, and quasi-experimental evidence confirms that non-indicated
-cesareans harm newborn health \citep{costaramon2018,card2023}.
+cesareans and earlier scheduled births harm newborn health
+\citep{costaramon2018,card2023,borra2019}.
 
 A simple model of physician time allocation rationalizes all of these facts jointly. A physician
 chooses between attending a vaginal delivery, which arrives at a random hour,
@@ -154,9 +175,10 @@ larger dips where obstetric time is scarce, and the early-term shift as a single
 package, and it explains why fee-based policy levers have no traction: they act
 on the wrong wedge.
 
-The policy record is consistent with this reading. Beyond the toothless court
-order, I evaluate Parto Adequado, the flagship national quality program run by
-the regulator with participating hospitals from 2015 onward. Municipalities
+The policy record is consistent with this reading. Beyond the ineffective court
+order, I evaluate \emph{Parto Adequado} (``Adequate Childbirth''), the flagship
+national quality-improvement program run by the regulator with participating
+hospitals from 2015 onward. Municipalities
 hosting participating private hospitals do show falling cesarean rates, but the
 decline starts in 2010, seven years before the program's dissemination phase,
 and shows no break at adoption; an event study with a long pre-period rejects
@@ -178,18 +200,27 @@ where cesareans pay less. In its place I identify and measure a distinct
 channel, the opportunity cost of the physician's own time, and show that agency
 operates through the calendar rather than the fee schedule. This reframes
 supplier-induced demand around a non-price margin that the incentive literature
-has largely left implicit.
+has largely left implicit. In doing so the paper connects to the literature on
+physician practice styles and geographic variation in treatment, which finds
+that much of the variation in care reflects supply-side practice patterns rather
+than patient case-mix \citep{finkelstein2016,molitor2018,cutler2019,%
+curriemacleod2016}. I show that in the most extreme cesarean system on record the
+operative practice pattern is a scheduling choice, and I quantify it: within
+identical clinical groups, practice style accounts for the majority of the
+private-public gap.
 
 The second is the economics of childbirth, where the cesarean decision has
 become a workhorse for studying physician behavior \citep{currie2008,%
 johnson2016,costaramon2018,card2023}. \citet{johnson2016} use information
 asymmetry between doctor and patient, and \citet{currie2008} use liability
-pressure, to move the delivery-mode margin; \citet{card2023} trace its
-consequences for newborn health. I contribute the first national anatomy of the
-most extreme cesarean system on record, assembled from the universe of private
-claims and birth records, and a portable set of scheduling fingerprints,
-weekend and holiday dips, the business-hour peak, and the prelabor-versus-labor
-split, that can be reproduced wherever birth records carry a date.
+pressure, to move the delivery-mode margin; \citet{epstein2009} document
+persistent physician-specific treatment styles in cesarean use, and
+\citet{card2023} trace the consequences of delivery practices for newborn health.
+I contribute the first national anatomy of the most extreme cesarean system on
+record, assembled from the universe of private claims and birth records, and a
+portable set of scheduling fingerprints, weekend and holiday dips, the
+business-hour peak, and the prelabor-versus-labor split, that can be reproduced
+wherever birth records carry a date.
 
 The third is the design of health policy in middle-income countries. A decade of
 Brazilian interventions aimed the fee schedule and mandatory disclosure at the
@@ -214,8 +245,10 @@ Appendix~\ref{sec:model} develops the model.
 % =============================================================================
 
 About a quarter of Brazilians hold private health insurance, a parallel system
-of insurers (\emph{operadoras}) and accredited hospitals regulated by the
-national agency ANS. The rest rely on the public single-payer system (SUS).
+of insurers (\emph{operadoras}) and accredited hospitals regulated by the federal
+private-health-insurance authority, the National Supplementary Health Agency
+(Ag\^encia Nacional de Sa\'ude Suplementar, ANS). The rest rely on the public
+single-payer system, the Unified Health System (Sistema \'Unico de Sa\'ude, SUS).
 Childbirth is covered by both, but the two sectors deliver very differently.
 Figure~\ref{fig:trend} plots the cesarean share of births by sector over time.
 In the private sector the rate sits near 80\% throughout, whether measured from
@@ -225,10 +258,10 @@ Health Organization uses as a reference.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.82\textwidth]{../analysis/output/graphs/fig01_csection_trend.pdf}
-\caption{Cesarean rate by sector, 2010--2024 \textit{Notes:}  Cesarean share of deliveries. ``Private (TISS claims)'' is the
+\caption{Cesarean rate by sector, 2010--2024}\label{fig:trend}
+\fignotes{Cesarean share of deliveries. ``Private (TISS claims)'' is the
 insurance-financed sector; ``Private/Public (SINASC births)'' classify births by
-the legal nature of the establishment (for-profit vs public).
-}\label{fig:trend}
+the legal nature of the establishment (for-profit vs public).}
 \end{figure}
 
 Private obstetricians are paid fee-for-service on a procedure schedule. A
@@ -245,8 +278,9 @@ informed-consent term mandatory for elective cesareans. In December 2015 the
 Federal Court in S\~ao Paulo, ruling on a civil action by the state prosecutor,
 ordered the ANS, a national regulator, to issue rules making plans pay at least
 three times more for vaginal than for cesarean delivery; the agency appealed, and
-the rule never took effect. Parto Adequado is a national quality program run by
-the ANS with a private hospital and the Institute for Healthcare Improvement;
+the rule never took effect. \emph{Parto Adequado} (``Adequate Childbirth'') is a
+national quality-improvement program run by the ANS together with a large private
+hospital and the United States-based Institute for Healthcare Improvement;
 adoption is voluntary and at the hospital level, with a 2015--16 pilot and a
 2017--2021 dissemination phase of about 113 hospitals in 60 municipalities.
 
@@ -254,19 +288,27 @@ adoption is voluntary and at the hospital level, with a 2015--16 pilot and a
 \section{Data}\label{sec:data}
 % =============================================================================
 
-The analysis combines two national administrative universes. The first is the
-TISS hospital claims that private insurers report to the ANS, covering every
-insurance-financed delivery from 2015 to 2025. Each claim records the
-beneficiary's age band and municipality, the provider's municipality, the
-diagnosis, and, at the procedure level, the fee billed. I identify deliveries by
-their procedure codes and classify each as cesarean or vaginal, and I measure the
-physician fee for each mode. The second is SINASC, the birth registry, with 42
-million births from 2010 to 2024. SINASC records the exact date and hour of
-birth, the Robson clinical group, gestational age, and an indicator for whether a
-cesarean was performed before labor began, and it assigns each birth to an
-establishment whose sector I take from the national facility registry (CNES).
-I supplement these with obstetrician counts from the CNES professionals file and
-with municipal covariates from IEPS.
+The analysis combines two national administrative universes. The first is the set
+of hospital claims that private insurers are required to report to the ANS under
+the TISS standard, covering every insurance-financed delivery from 2015 to 2025.
+Each claim records the beneficiary's age band and municipality, the provider's
+municipality, the diagnosis, and, at the procedure level, the fee billed. I
+identify deliveries by their procedure codes, classify each as cesarean or
+vaginal, and measure the physician fee for each mode. The second is SINASC, the
+Ministry of Health's registry of all live births, with 42 million births from
+2010 to 2024. It records the exact date and hour of birth, the Robson clinical
+group, gestational age, and an indicator for whether a cesarean was performed
+before labor began, and it assigns each birth to an establishment whose sector I
+take from the National Registry of Health Establishments (Cadastro Nacional de
+Estabelecimentos de Sa\'ude, CNES). The Robson classification is a World Health
+Organization standard that sorts every delivery into one of ten mutually
+exclusive groups defined by obstetric characteristics such as parity, gestational
+age, fetal presentation, and onset of labor; groups~1 and~2 collect first-time
+mothers at term with a single, cephalic baby, for whom a cesarean is hardest to
+justify. I supplement these sources with obstetrician counts from the CNES
+professionals file and with municipal covariates from the Institute for Health
+Policy Studies (Instituto de Estudos para Pol\'iticas de Sa\'ude, IEPS), an
+independent Brazilian research institute.
 
 From these sources I build two files. The first is a municipality-year panel of
 private deliveries from the claims, with the cesarean rate, the two fees, and
@@ -314,9 +356,9 @@ cesarean rate. Money does not explain the epidemic.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.7\textwidth]{../analysis/output/graphs/fig06_fee_shock.pdf}
-\caption{Change in the cesarean rate versus change in the fee gap \textit{Notes:}  State-year first differences, weighted by deliveries. The fitted
-line is flat: cesarean rates do not respond to relative-fee changes.
-}\label{fig:fee_shock}
+\caption{Change in the cesarean rate versus change in the fee gap}\label{fig:fee_shock}
+\fignotes{State-year first differences, weighted by deliveries. The fitted
+line is flat: cesarean rates do not respond to relative-fee changes.}
 \end{figure}
 
 \input{../analysis/output/tables/tab06_fee_shock.tex}
@@ -337,8 +379,8 @@ sectors bracket it.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig02_dow_cesarean.pdf}
-\caption{Cesarean rate by day of week and sector \textit{Notes:}  SINASC 2010--2024, all births, by establishment sector.
-}\label{fig:dow}
+\caption{Cesarean rate by day of week and sector}\label{fig:dow}
+\fignotes{SINASC 2010--2024, all births, by establishment sector.}
 \end{figure}
 
 Table~\ref{tab:scheduling} estimates the dips in municipality-by-date cells with
@@ -355,9 +397,9 @@ uniform timing, and only about a third of vaginal births do.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.92\textwidth]{../analysis/output/graphs/fig07_hour_of_birth.pdf}
-\caption{Hour-of-birth distribution, by delivery mode and sector \textit{Notes:}  SINASC 2010--2024, share of births by hour. Cesareans peak in the
-morning operating-room block; vaginal births are near-uniform.
-}\label{fig:hours}
+\caption{Hour-of-birth distribution, by delivery mode and sector}\label{fig:hours}
+\fignotes{SINASC 2010--2024, share of births by hour. Cesareans peak in the
+morning operating-room block; vaginal births are near-uniform.}
 \end{figure}
 
 The decisive evidence is in the components of the cesarean rate.
@@ -374,9 +416,9 @@ which rules out a compositional change in who is admitted.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.92\textwidth]{../analysis/output/graphs/fig08_daily_counts.pdf}
-\caption{Mean daily births by day of week, delivery mode, and sector \textit{Notes:}  Indexed to Tuesday $=100$. Cesarean counts fall on weekends;
-vaginal counts are stable.
-}\label{fig:daily_counts}
+\caption{Mean daily births by day of week, delivery mode, and sector}\label{fig:daily_counts}
+\fignotes{Indexed to Tuesday $=100$. Cesarean counts fall on weekends;
+vaginal counts are stable.}
 \end{figure}
 
 \input{../analysis/output/tables/tab08_mechanism_checks.tex}
@@ -394,8 +436,8 @@ days,'' the true weekend produces the largest dip, an exact permutation p-value 
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig03_robson_dow.pdf}
-\caption{Cesarean rate by day of week, low-risk Robson groups 1--2 \textit{Notes:}  SINASC 2010--2024, Robson groups 1--2, by sector.
-}\label{fig:robson_dow}
+\caption{Cesarean rate by day of week, low-risk Robson groups 1--2}\label{fig:robson_dow}
+\fignotes{SINASC 2010--2024, Robson groups 1--2, by sector.}
 \end{figure}
 
 \input{../analysis/output/tables/tab04_robson.tex}
@@ -406,7 +448,10 @@ points larger in municipalities where obstetricians are scarce relative to
 births, exactly where the opportunity cost of an unschedulable delivery is
 highest. And the dip is no larger, if anything smaller, for more-educated
 mothers, which is hard to square with a story in which mothers themselves demand
-convenient timing. Physician-owned cooperative operators use cesareans slightly
+convenient timing and points instead to the supply side, consistent with evidence
+that physician beliefs and practice patterns, rather than patient preferences,
+drive much of the variation in treatment intensity \citep{cutler2019}.
+Physician-owned cooperative operators use cesareans slightly
 more than insurer-run plans conditional on case-mix (Table~\ref{tab:modality}),
 though the difference is not significant.
 
@@ -436,16 +481,16 @@ health margin the scheduling mechanism produces is the shift to early term.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig09_gestation.pdf}
-\caption{Gestational-age distribution at birth, by sector \textit{Notes:}  SINASC 2010--2024. Private births mass at 37--38 weeks, public at
-39--40.
-}\label{fig:gestation}
+\caption{Gestational-age distribution at birth, by sector}\label{fig:gestation}
+\fignotes{SINASC 2010--2024. Private births mass at 37--38 weeks, public at
+39--40.}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig09b_gestation_by_timing.pdf}
-\caption{Gestational age by delivery timing, private sector \textit{Notes:}  Prelabor cesareans mass at 37--38 weeks; in-labor cesareans and
-vaginal births at 39--40.
-}\label{fig:gestation_timing}
+\caption{Gestational age by delivery timing, private sector}\label{fig:gestation_timing}
+\fignotes{Prelabor cesareans mass at 37--38 weeks; in-labor cesareans and
+vaginal births at 39--40.}
 \end{figure}
 
 \input{../analysis/output/tables/tab09_health.tex}
@@ -453,7 +498,11 @@ vaginal births at 39--40.
 How large is the convenience margin? Table~\ref{tab:decomposition} decomposes the
 35 percentage-point private-public gap over Robson clinical groups. Only 29
 percent reflects differences in case-mix; the remaining 71 percent is
-within-group practice style, the same women managed differently. Benchmarking
+within-group practice style, the same women managed differently. That most of the
+gap is practice style rather than patient composition echoes the finding, in the
+literature on geographic variation in health care, that supply-side practice
+patterns dominate patient case-mix \citep{finkelstein2016,molitor2018}.
+Benchmarking
 each municipality's weekday cesarean propensity against its own weekend rate, a
 lower bound, implies about 50,000 excess weekday cesareans per year in the
 private sector, roughly one in ten private cesareans. Consistent with the
@@ -484,19 +533,19 @@ national series in its policy timeline for reference.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig04_parto_adequado_es_sinasc.pdf}
-\caption{Parto Adequado event study, treated versus control municipalities \textit{Notes:}  Private cesarean rate, treated (participating private hospital)
+\caption{Parto Adequado event study, treated versus control municipalities}\label{fig:pa_es}
+\fignotes{Private cesarean rate, treated (participating private hospital)
 minus control municipalities, relative to 2016. The pre-existing downward trend
-has no break at the 2017 onset (dashed line).
-}\label{fig:pa_es}
+has no break at the 2017 onset (dashed line).}
 \end{figure}
 
 \input{../analysis/output/tables/tab05_parto_adequado.tex}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
-\caption{National cesarean rate and the policy timeline \textit{Notes:}  Monthly cesarean rate, private (for-profit) and all births.
-Dashed line marks RN 368/2015.
-}\label{fig:rn368}
+\caption{National cesarean rate and the policy timeline}\label{fig:rn368}
+\fignotes{Monthly cesarean rate, private (for-profit) and all births.
+Dashed line marks RN 368/2015.}
 \end{figure}
 
 % =============================================================================

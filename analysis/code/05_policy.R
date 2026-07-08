@@ -98,19 +98,21 @@ did_tiss <- feols(rate ~ i(treated, post, ref = 0) | muni + q,    pq, weights = 
 f <- file.path(TABLE, "tab05_parto_adequado.tex")
 etable(did_sin, did_tiss, tex = TRUE, file = f, replace = TRUE,
        dict = c(rate = "Cesarean rate", treated = "Treated municipality",
-                post = "Post (2017+)", muni = "Municipality", year = "Year", q = "Quarter"),
+                post = "Post (2017+)",
+                "treated::1:post" = "Treated municipality $\\times$ Post (2017+)",
+                muni = "Municipality", year = "Year", q = "Quarter"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
        headers = c("Private (SINASC, annual)", "Private (TISS, quarterly)"),
-       title = "Parto Adequado DiD (does NOT survive the parallel-trends test)",
+       title = "The \\emph{Parto Adequado} difference-in-differences does not survive the parallel-trends test",
        label = "tab:parto_adequado",
        notes = paste("\\footnotesize\\textit{Notes:} Treated = municipality with a",
-         "participating \\emph{Parto Adequado} Fase 2 private hospital (a diluted",
+         "participating \\emph{Parto Adequado} 2017--2021 dissemination-phase private hospital (a diluted",
          "exposure; TISS has no hospital identifier). Weighted by private births",
-         "(SINASC) / deliveries (TISS). SE clustered by municipality. \\emph{The",
+         "(SINASC) / deliveries (TISS). Standard errors clustered by municipality. \\emph{The",
          "SINASC event study rejects parallel pre-trends} (2010--2015 joint test",
-         "$F=4.5$, $p<0.001$): treated munis are on a pre-existing differential",
-         "downward trend, so this DiD is not interpreted causally.", SIGNIF_NOTE))
+         "$F=4.5$, $p<0.001$): treated municipalities are on a pre-existing differential",
+         "downward trend, so this difference-in-differences is not interpreted as causal.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(did_sin, did_tiss, dict = c(treated = "Treated", post = "Post"), fitstat = ~ n + r2, digits = 4)
 
@@ -130,23 +132,24 @@ r_both  <- feols(rate ~ i(treated, post, ref = 0) + treated:year_c + gdp_pc + pl
 fb <- file.path(TABLE, "tab05b_pretrend_robustness.tex")
 etable(r_base, r_cov, r_trend, r_both, tex = TRUE, file = fb, replace = TRUE,
        keep = c("treated", "year_c"),
-       dict = c(rate = "Cesarean rate", "treated::1:post::1" = "Treated $\\times$ Post (2017+)",
+       dict = c(rate = "Cesarean rate", "treated::1:post" = "Treated $\\times$ Post (2017+)",
                 "treated:year_c" = "Treated $\\times$ Year (linear trend)",
                 gdp_pc = "GDP per capita", plan_cov = "Plan coverage",
                 inc_pc = "Income p.c.", lpop = "Log population",
                 muni = "Municipality", year = "Year"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Base", "(i) + covariates", "(ii) + treated trend", "(iii) both"),
-       title = "Neither covariates nor a treated linear trend rescue the DiD",
+       headers = c("Baseline", "+ Covariates", "+ Treated trend", "+ Both"),
+       title = "Neither covariates nor a treated linear trend rescues the difference-in-differences",
        label = "tab:pretrend_robustness",
        notes = paste("\\footnotesize\\textit{Notes:} SINASC private (for-profit)",
-         "cesarean rate, municipality-year 2010--2024, weighted by births. (i) adds",
-         "time-varying municipal covariates; (ii) adds a treated-cohort linear time",
-         "trend; (iii) both. Covariates leave the differential pre-trend intact",
+         "cesarean rate, municipality-year 2010--2024, weighted by births. Column 1",
+         "is the baseline difference-in-differences; column 2 adds time-varying",
+         "municipal covariates; column 3 adds a treated-cohort linear time trend;",
+         "column 4 adds both. Covariates leave the differential pre-trend intact",
          "(joint 2010--2015 test still rejects, $p<0.01$); the treated linear trend",
          "absorbs the 2017 ``break'' entirely, confirming it is a pre-existing trend,",
-         "not a treatment effect. SE clustered by municipality.", SIGNIF_NOTE))
+         "not a treatment effect. Standard errors clustered by municipality.", SIGNIF_NOTE))
 postprocess_tex(fb, fontsize = "\\small", tabcolsep = 5)
 
 # =============================================================================

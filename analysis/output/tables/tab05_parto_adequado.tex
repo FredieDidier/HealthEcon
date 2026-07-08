@@ -1,6 +1,6 @@
 
 \begin{table}[H]
-   \caption{\label{tab:parto_adequado} Parto Adequado DiD (does NOT survive the parallel-trends test)}
+   \caption{\label{tab:parto_adequado} The \emph{Parto Adequado} difference-in-differences does not survive the parallel-trends test}
    \centering
 \small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
@@ -10,8 +10,8 @@
       Model:                                            & (1)                      & (2)\\  
       \midrule
       \emph{Variables}\\
-      Post (2017+) $\times$ Treated municipality $=$ 1  & -0.0659$^{***}$          & -0.0159\\   
-                                                        & (0.0146)                 & (0.0136)\\   
+      Treated municipality $\times$ Post (2017+)        & -0.0659$^{***}$          & -0.0159\\
+                                                        & (0.0146)                 & (0.0136)\\
 \addlinespace[2pt]
       \midrule
       \emph{Fixed-effects}\\
@@ -27,7 +27,7 @@
 }
    
    \par \raggedright 
-   \footnotesize\textit{Notes:} Treated = municipality with a participating \emph{Parto Adequado} Fase 2 private hospital (a diluted exposure; TISS has no hospital identifier). Weighted by private births (SINASC) / deliveries (TISS). SE clustered by municipality. \emph{The SINASC event study rejects parallel pre-trends} (2010--2015 joint test $F=4.5$, $p<0.001$): treated munis are on a pre-existing differential downward trend, so this DiD is not interpreted causally. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+   \footnotesize\textit{Notes:} A municipality is treated if it contains a private hospital that joined the \emph{Parto Adequado} 2017--2021 dissemination phase (a diluted exposure, since TISS carries no hospital identifier). Weighted by private births (SINASC) and deliveries (TISS). Standard errors clustered by municipality. The SINASC event study rejects parallel pre-trends (2010--2015 joint test $F=4.5$, $p<0.001$): treated municipalities are on a pre-existing differential downward trend, so this difference-in-differences is not interpreted as causal. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{table}
 
 

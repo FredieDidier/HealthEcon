@@ -64,7 +64,6 @@ f <- file.path(TABLE, "tab14_neonatal_suggestive.tex")
 etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("(1)", "(2)", "(3)"),
        title = "Suggestive: early-term shifting and neonatal hospital use",
        label = "tab:neonatal_suggestive",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-year cells,",
