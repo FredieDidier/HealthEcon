@@ -80,13 +80,13 @@ m_ap <- feols(y ~ weekend | muni + year, cell_ap, weights = ~n, cluster = ~muni 
 m_lb <- feols(y ~ weekend | muni + year, cell_lb, weights = ~n, cluster = ~muni + date)
 
 dict <- c(weekend = "Weekend", sunday = "Sunday", rest_day = "Rest day (weekend or holiday)",
-          rate = "Cesarean share", y = "Outcome", muni = "Municipality", year = "Year")
+          rate = "Cesarean rate", y = "Newborn outcome", muni = "Municipality", year = "Year")
 f <- file.path(TABLE, "tab13_referee_robustness.tex")
 etable(m_tv, m_sun, m_rest, m_ap, m_lb, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Cesarean, time-varying sector", "Cesarean, Sunday only",
-                   "Cesarean, rest days", "Low Apgar", "Low birthweight"),
+       headers = c("Cesarean rate, time-varying sector", "Cesarean rate, Sunday only",
+                   "Cesarean rate, rest days", "Low Apgar (5-minute)", "Low birthweight"),
        title = "Referee-stage robustness: sector classification, rest-day definitions, newborn composition",
        label = "tab:referee_robustness",
        notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
@@ -129,8 +129,8 @@ fc <- file.path(TABLE, "tab13c_dip_by_region_period.tex")
 etable(c(list(m_clean), m_reg, m_pd), tex = TRUE, file = fc, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Clean low-risk", "North", "Northeast", "Southeast", "South",
-                   "Center-West", "2010-2014", "2015-2019", "2020-2024"),
+       headers = c("Clinically clean low-risk", "North", "Northeast", "Southeast", "South",
+                   "Center-West", "2010--2014", "2015--2019", "2020--2024"),
        title = "The private weekend dip: clean clinical sample, regions, and periods",
        label = "tab:dip_region_period",
        notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
@@ -138,7 +138,12 @@ etable(c(list(m_clean), m_reg, m_pd), tex = TRUE, file = fc, replace = TRUE, dic
          "recorded schedulable indication: cephalic presentation, singleton, term",
          "(37--41 weeks), no prior cesarean (multiparity allowed, unlike Robson 1--2).",
          "SE two-way clustered by municipality and date.", SIGNIF_NOTE))
-postprocess_tex(fc, fontsize = "\\footnotesize", tabcolsep = 2)
+postprocess_tex(fc, fontsize = "\\small", tabcolsep = 3, resize = TRUE)
+# nine-column table: typeset in landscape
+.txc <- readLines(fc)
+.txc <- gsub("\\begin{table}[H]", "\\begin{sidewaystable}\\centering", .txc, fixed = TRUE)
+.txc <- gsub("\\end{table}", "\\end{sidewaystable}", .txc, fixed = TRUE)
+writeLines(.txc, fc)
 etable(c(list(m_clean), m_reg, m_pd), dict = dict, fitstat = ~ n, digits = 4,
        headers = c("Clean", "N", "NE", "SE", "S", "CO", "10-14", "15-19", "20-24"))
 

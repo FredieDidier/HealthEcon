@@ -34,3 +34,5 @@ source(here("analysis", "code", "10_heterogeneity.R"))  # theory-driven heteroge
 source(here("analysis", "code", "11_decomposition.R"))  # Kitagawa + excess-cesarean counts
 source(here("analysis", "code", "12_maps.R"))           # municipal choropleth maps
 source(here("analysis", "code", "13_referee_robustness.R")) # sector/rest-day/composition checks
+source(here("analysis", "code", "14_neonatal_suggestive.R"))   # suggestive neonatal (null)
+source(here("analysis", "code", "15_permutation_indication.R")) # randomization inference + no-indication

@@ -2,10 +2,10 @@
 \begin{table}[H]
    \caption{\label{tab:parto_adequado} Parto Adequado DiD (does NOT survive the parallel-trends test)}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
-      Dependent Variable: & \multicolumn{2}{c}{rate}\\
+      Dependent Variable: & \multicolumn{2}{c}{Cesarean rate}\\
                                                         & Private (SINASC, annual) & Private (TISS, quarterly) \\   
       Model:                                            & (1)                      & (2)\\  
       \midrule
@@ -24,6 +24,7 @@
       R$^2$                                             & 0.856                    & 0.776\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} Treated = municipality with a participating \emph{Parto Adequado} Fase 2 private hospital (a diluted exposure; TISS has no hospital identifier). Weighted by private births (SINASC) / deliveries (TISS). SE clustered by municipality. \emph{The SINASC event study rejects parallel pre-trends} (2010--2015 joint test $F=4.5$, $p<0.001$): treated munis are on a pre-existing differential downward trend, so this DiD is not interpreted causally. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

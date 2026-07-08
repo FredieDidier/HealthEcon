@@ -47,7 +47,8 @@ SIGNIF_NOTE  <- "\\footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0
 # together with `signif.code = NA`.
 # =============================================================================
 
-postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4, addspace = TRUE) {
+postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
+                            addspace = TRUE, resize = TRUE) {
   tx <- readLines(file)
   tx <- tx[!grepl("standard-errors in parentheses", tx, fixed = TRUE)]
   tx <- tx[!grepl("Signif. Codes", tx, fixed = TRUE)]  # our own legend is in the note
@@ -62,8 +63,25 @@ postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4, addspace 
       tx <- unlist(out)
     }
   }
-  i  <- grep("\\begin{tabular}", tx, fixed = TRUE)[1]
-  tx <- append(tx, paste0(fontsize, "\\setlength{\\tabcolsep}{", tabcolsep, "pt}"),
-               after = i - 1)
+  tx <- resize_tabular(tx, resize, fontsize, tabcolsep)
   writeLines(tx, file)
+}
+
+# Wrap the tabular in a SHRINK-ONLY \resizebox so wide tables fit the text width
+# but narrow tables keep their natural size (no ugly stretching). Also injects
+# the font-size + column-spacing setting just before the tabular. Idempotent:
+# does nothing if the file is already wrapped.
+resize_tabular <- function(tx, resize = TRUE, fontsize = "\\small", tabcolsep = 4) {
+  if (any(grepl("resizebox", tx, fixed = TRUE))) return(tx)
+  i <- grep("\\begin{tabular}", tx, fixed = TRUE)[1]
+  j <- grep("\\end{tabular}", tx, fixed = TRUE)
+  j <- j[j >= i][1]
+  if (is.na(i) || is.na(j)) return(tx)
+  open <- paste0(fontsize, "\\setlength{\\tabcolsep}{", tabcolsep, "pt}")
+  if (resize) open <- paste0(open,
+    "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%")
+  tx <- append(tx, open, after = i - 1)      # before \begin{tabular} (index unshifted... use i)
+  jj <- grep("\\end{tabular}", tx, fixed = TRUE); jj <- jj[jj > i][1]
+  if (resize) tx <- append(tx, "}", after = jj)   # close \resizebox after \end{tabular}
+  tx
 }

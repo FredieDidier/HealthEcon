@@ -97,8 +97,8 @@ did_sin  <- feols(rate ~ i(treated, post, ref = 0) | muni + year, sy, weights = 
 did_tiss <- feols(rate ~ i(treated, post, ref = 0) | muni + q,    pq, weights = ~del)
 f <- file.path(TABLE, "tab05_parto_adequado.tex")
 etable(did_sin, did_tiss, tex = TRUE, file = f, replace = TRUE,
-       dict = c(treated = "Treated municipality", post = "Post (2017+)",
-                muni = "Municipality", year = "Year", q = "Quarter"),
+       dict = c(rate = "Cesarean rate", treated = "Treated municipality",
+                post = "Post (2017+)", muni = "Municipality", year = "Year", q = "Quarter"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
        headers = c("Private (SINASC, annual)", "Private (TISS, quarterly)"),
@@ -130,7 +130,7 @@ r_both  <- feols(rate ~ i(treated, post, ref = 0) + treated:year_c + gdp_pc + pl
 fb <- file.path(TABLE, "tab05b_pretrend_robustness.tex")
 etable(r_base, r_cov, r_trend, r_both, tex = TRUE, file = fb, replace = TRUE,
        keep = c("treated", "year_c"),
-       dict = c("treated::1:post::1" = "Treated $\\times$ Post (2017+)",
+       dict = c(rate = "Cesarean rate", "treated::1:post::1" = "Treated $\\times$ Post (2017+)",
                 "treated:year_c" = "Treated $\\times$ Year (linear trend)",
                 gdp_pc = "GDP per capita", plan_cov = "Plan coverage",
                 inc_pc = "Income p.c.", lpop = "Log population",

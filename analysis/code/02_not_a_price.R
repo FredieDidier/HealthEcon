@@ -37,7 +37,6 @@ f <- file.path(TABLE, "tab02_not_a_price.tex")
 etable(m1, m2, m3, m4, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 3, digits.stats = 3,
-       headers = c("(1)", "(2)", "(3)", "(4)"),
        title = "The private cesarean rate does not respond to the relative fee",
        label = "tab:not_a_price",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-year regressions,",

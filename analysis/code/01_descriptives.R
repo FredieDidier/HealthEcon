@@ -56,9 +56,9 @@ vars <- c(
   mean_los                     = "Length of stay (days)",
   any_uti_share                = "Share of deliveries with any ICU day",
   obstetricians_per_1k_births  = "Obstetricians per 1,000 births",
-  gdp_pc                       = "GDP per capita (R$ thousands)",
-  plan_cov                     = "Private health-plan coverage (%)",
-  prenatal                     = "Adequate prenatal care (%)")
+  gdp_pc                       = "GDP per capita (R\\$ thousands)",
+  plan_cov                     = "Private health-plan coverage (\\%)",
+  prenatal                     = "Adequate prenatal care (\\%)")
 
 desc <- rbindlist(lapply(names(vars), function(v) {
   x <- w[[v]]
@@ -91,7 +91,7 @@ tex <- c(
         "(2015--2024). TISS variables from ANS private-insurance claims; SINASC and",
         "covariates as described in the text."),
   "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab01_descriptives.tex"))
+writeLines(resize_tabular(tex), file.path(TABLE, "tab01_descriptives.tex"))
 print(desc)
 
 message("01_descriptives.R done")

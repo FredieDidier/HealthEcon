@@ -12,9 +12,14 @@ their agreement is itself reassuring. NB: Brazil *overall* is ~57% (top-tier but
 uniquely #1 — Egypt/Dominican Republic are comparable), so the "world's highest"
 claim is defensible **only for the private sector** — hence "Private" in the title
 and "any large health system" in the abstract. Introduction is WRITTEN
-(`latex/paper.tex`; model in the appendix); style exemplar = Johnson & Rehavi 2016
-AEJ:Policy (see memory `style-exemplar-johnson-rehavi`; no em-dashes, moderate
-sentences).
+(`latex/paper.tex`; abstract ≤100 words per AEJ; 3-paragraph literature
+contribution). Appendix: **A** = model, **B** = data/variables, **C** = robustness
+(tables numbered C.1–C.7 via `\numberwithin`). Citations = natbib `[round]` +
+`plainnat` (Chicago author-date, matches HomeOfficePNAD). **Target = AEJ:Policy**
+(guidelines: abstract ≤100w, ≤40–45pp incl. appendices, Chicago author-date,
+essential material in-paper vs supplemental appendix). Style exemplar = Johnson &
+Rehavi 2016 AEJ:Policy (memory `style-exemplar-johnson-rehavi`; no em-dashes,
+moderate sentences).
 
 **Core result (built and verified):**
 1. **The epidemic is real and extreme** — private cesarean ~82% (TISS claims) /
@@ -32,8 +37,10 @@ sentences).
    fingerprint of elective surgery — and the dip persists within low-risk Robson 1–2
    (**−7.4pp private**), where cesareans are least medically justified.
 
-**Author:** Fredie Didier. **Target journals:** **Journal of Health Economics**
-(primary); *AEJ: Applied / JHR* as a stretch (see "Status & diagnosis").
+**Author:** Fredie Didier. **Target journal: AEJ: Economic Policy** (primary; the
+paper is written and formatted to its guidelines — abstract ≤100 words, Chicago
+author-date, ≤40–45pp, essential material in-paper vs supplemental appendix).
+**Journal of Health Economics is the solid fallback**; JHR/AEJ:Applied also fit.
 
 ---
 
@@ -269,7 +276,7 @@ municipality (~0.06% of TISS) are dropped in the build.
 |---|---|
 | Download | R (`arrow` for ANS FTP TISS; **Base dos Dados**/BigQuery for SINASC; `datazoom.saude` for CNES beds; `microdatasus` for CNES-PF) |
 | Build & analysis | R (`data.table`, `arrow`, `fixest`, `ggplot2`) |
-| Writing | LaTeX (`latex/paper.tex`, JHE draft) |
+| Writing | LaTeX (`latex/paper.tex`, AEJ:Policy draft) |
 
 ## Repository layout
 ```
@@ -353,6 +360,8 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | `tab13b_beneficiary_muni` | 13 | Not-a-price with BENEFICIARY-muni aggregation | Fee-gap null replicates (+0.029 n.s. / −0.013) |
 | `tab13c_dip_by_region_period` | 13 | Clean clinical sample (cephalic, singleton, term, no prior CS): **−8.9**; all 5 regions (−6.7 to −10.7); 3 periods (−8.1/−7.8/−7.6) | Dip survives strictest clinical cleaning; national and stable |
 | `tab14_neonatal_suggestive` | 14 | Infant ICD-P admissions per private birth vs early-term share (muni-year) | **Null, underpowered** — do NOT feature; harm pricing stays literature-based |
+| `tab15_permutation` | 15 | Weekend dip vs all 21 two-day placebos | True weekend −8.11pp = **most negative of 21** (rank 1/21, exact p=0.048) |
+| `tab15b_no_indication` | 15 | Share of private cesareans with no indication CID | **~88–91%** have only a delivery-outcome code, rising over time |
 
 ## Key facts / numbers (sanity checks; SINASC = 2010–2024 sample)
 | Fact | Value |
@@ -435,16 +444,25 @@ fails parallel trends; fee shocks null; RN 368 national with short pre-period).
   mothers (supply-side). Quantified: 71% of the private–public gap is practice
   style; ~50k excess weekday cesareans/yr; +10.9pp early-term shifting (the cost).
 - **Not causal (honest nulls):** Parto Adequado (pre-trends), fee shocks.
-- **Publication read:** **JHE solid**; with the full mechanism chain +
-  quantification + health-cost margin, **AEJ:Policy / AEJ:Applied become a real
-  (if still uphill) shot** — the bottleneck remains no sharply-timed exogenous
-  shock. Not top-5.
+- **Publication read:** **target AEJ: Economic Policy** — the full mechanism chain
+  + quantification + health-cost margin + honest policy nulls make it a real (if
+  uphill) shot; the bottleneck is no sharply-timed exogenous shock. **JHE is the
+  solid fallback.** Not top-5.
 - **Contribution:** two national datasets show the world's worst private cesarean
   epidemic is not money — it is physician time/convenience & norms (SID reframed
   as the opportunity cost of physician time), with its health cost quantified.
 - **Model: DONE** (`latex/model.tex`, §"The model" above — 5 predictions all
-  matched to evidence; compiles into `paper.tex`). **Pending (writing stage):**
-  the introduction and prose sections — on Fredie's go.
+  matched to evidence; Appendix A of `paper.tex`).
+- **Full paper draft: DONE (2026-07-08)** — `latex/paper.tex` compiles clean
+  (bibtex, 0 undefined refs, 26 pp). Intro + all body sections written
+  (Background, Data, Not-a-price, Mechanism, Cost, Policy, Conclusion), every
+  exhibit wired with resolved labels (body figs fig:trend/dow/hours/daily_counts/
+  robson_dow/gestation/gestation_timing/fee_shock/pa_es/rn368; body tables
+  tab01/02/03/04/06/08/09/10/10b/11/05; appendix C tables C.1–C.7). Prose in
+  AEJ voice, no em-dashes. **Pending polish:** 8 overfull hboxes (wide etable
+  tables — wrap in \resizebox or shrink); consider moving non-essential robustness
+  to a supplemental appendix if page limit binds; a proper conclusion is short.
+  Body-section \input paths use ../analysis/output/... (compile from latex/).
 
 ## Conventions & working agreements
 - **R** with `data.table` / `arrow` / `fixest`; `pacman::p_load` in master scripts.
@@ -454,8 +472,17 @@ fails parallel trends; fee shocks null; RN 368 national with short pre-period).
 - Figures: `theme_paper()` + `PAL` (no titles/subtitles/captions), saved PDF+PNG via
   `save_fig()`. **Never set `scale_y_continuous(limits=)`** — it silently drops
   out-of-range points (this erased the private line in fig02 once); use breaks only
-  or `coord_cartesian`. Tables: `etable` + `dict` (clear names, no abbreviations) +
-  `postprocess_tex()` (booktabs).
+  or `coord_cartesian`. Tables: `etable` + `dict` (clear names, **never
+  abbreviate** — full column/variable names; always `dict` the outcome so it is not
+  a bare var name like "rate"), no numeric `headers=c("(1)"...)` (etable already
+  prints a Model number row — passing them duplicates it), use `extralines` for
+  column attributes; `postprocess_tex()` (booktabs + shrink-only `\resizebox` via
+  `resize_tabular()`). Very wide tables (≥6 cols: tab08, tab13c) are typeset
+  `landscape` (`sidewaystable`, needs `\usepackage{rotating}`) with `resize=FALSE`.
+  Figures: notes are folded into the `\caption{}` (one block, styled by the
+  `caption` package — `\captionsetup{font=small,labelfont=bf}`), NOT a separate
+  minipage (which misaligned with the centered caption). Keep exhibits in English
+  (no `natureza jur\'idica` etc.).
 - **Never commit data** (`*.parquet/*.csv/*.dta/*.rds` gitignored). Commit/push only
   when asked. macOS filesystem is case-insensitive.
 - When adding a variable to `main_data`, update `dictionary/build_dictionary.R`

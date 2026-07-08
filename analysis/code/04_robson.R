@@ -52,12 +52,14 @@ if (!file.exists(BIRTHS)) {
                     cell(b[robson == "01" & sector == "Private"]),
                     weights = ~n, cluster = ~muni + date)
 
-  dict <- c(weekend = "Weekend", muni = "Municipality", year = "Year")
+  dict <- c(rate = "Cesarean rate", weekend = "Weekend",
+            muni = "Municipality", year = "Year")
   f <- file.path(TABLE, "tab04_robson.tex")
   etable(r12_pub, r12_priv, r1_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
          signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
          fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-         headers = c("Robson 1-2, Public", "Robson 1-2, Private", "Robson 1, Private"),
+         headers = c("Robson groups 1--2, public", "Robson groups 1--2, private",
+                     "Robson group 1, private"),
          title = "Weekend dip among low-risk (Robson 1-2) cesareans",
          label = "tab:robson",
          notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",

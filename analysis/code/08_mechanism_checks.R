@@ -58,20 +58,24 @@ etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10,
        tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Prelabor, Priv.", "In-labor, Priv.", "Prelabor, Pub.",
-                   "In-labor, Pub.", "Robson 1-2, Priv.", "Robson 10 (preterm), Priv."),
+       extralines = list(
+         "Sector" = c("Private", "Private", "Public", "Public", "Private", "Private"),
+         "Sample" = c("All births", "All births", "All births", "All births",
+                      "Robson groups 1--2", "Robson group 10 (preterm)")),
        title = "Mechanism checks: the weekend dip is scheduled, prelabor cesareans",
        label = "tab:mechanism_checks",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells, weighted",
          "by births, SINASC 2010--2024. Columns 1--4 split the cesarean rate into its",
-         "prelabor (\\emph{cesarea antes do trabalho de parto}) and in-labor",
-         "components. Columns 5--6 contrast schedulable low-risk births (Robson 1--2)",
-         "with preterm births (Robson 10), which cannot be freely scheduled. SE two-way",
-         "clustered by municipality and date.", SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\footnotesize", tabcolsep = 3)
-etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10, dict = dict,
-       fitstat = ~ n, digits = 4,
-       headers = c("Pre,Priv", "Lab,Priv", "Pre,Pub", "Lab,Pub", "R1-2,Priv", "R10,Priv"))
+         "prelabor (cesarean performed before labor began) and in-labor components.",
+         "Columns 5--6 contrast schedulable low-risk births (Robson groups 1--2)",
+         "with preterm births (Robson group 10), which cannot be freely scheduled. SE",
+         "two-way clustered by municipality and date.", SIGNIF_NOTE))
+postprocess_tex(f, fontsize = "\\small", tabcolsep = 4, resize = TRUE)
+# six-column table: typeset in landscape so it is readable at full size
+.tx <- readLines(f)
+.tx <- gsub("\\begin{table}[H]", "\\begin{sidewaystable}\\centering", .tx, fixed = TRUE)
+.tx <- gsub("\\end{table}", "\\end{sidewaystable}", .tx, fixed = TRUE)
+writeLines(.tx, f)
 
 # --- (b) daily counts by day-of-week: cesarean vs vaginal, private vs public --
 cnt <- b[, .(births = .N), by = .(type = fifelse(cesarean == 1, "Cesarean", "Vaginal"),

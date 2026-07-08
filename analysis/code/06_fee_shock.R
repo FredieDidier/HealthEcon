@@ -39,7 +39,7 @@ f <- file.path(TABLE, "tab06_fee_shock.tex")
 etable(m_fd, m_lvl, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("First differences", "Levels, State + Year FE"),
+       headers = c("First differences", "Levels"),
        title = "The cesarean rate does not respond to changes in the relative fee",
        label = "tab:fee_shock",
        notes = paste("\\footnotesize\\textit{Notes:} State-year observations, weighted",

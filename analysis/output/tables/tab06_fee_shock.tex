@@ -2,11 +2,11 @@
 \begin{table}[H]
    \caption{\label{tab:fee_shock} The cesarean rate does not respond to changes in the relative fee}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
       Dependent Variables:  & $\Delta$ Cesarean rate  & Cesarean rate\\  
-                            & First differences       & Levels, State + Year FE \\   
+                            & First differences       & Levels \\   
       Model:                & (1)                     & (2)\\  
       \midrule
       \emph{Variables}\\
@@ -29,6 +29,7 @@
       R$^2$                 & 0.021                   & 0.854\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} State-year observations, weighted by private deliveries. Column 1 first-differences both variables; column 2 is in levels with state and year fixed effects. Even large idiosyncratic swings in the relative fee leave the cesarean rate essentially unchanged. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

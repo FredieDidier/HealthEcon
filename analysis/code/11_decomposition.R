@@ -63,7 +63,7 @@ tex <- c(
         "private--public cesarean gap into Robson-group composition and",
         "within-group rate differences."),
   "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab11_decomposition.tex"))
+writeLines(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))
 
 # --- (b) excess weekday cesareans (scheduling counterfactual) ------------------
 # benchmark: each sector-year's WEEKEND cesarean rate; excess = weekday births ×

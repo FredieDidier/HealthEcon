@@ -2,7 +2,7 @@
 \begin{table}[H]
    \caption{\label{tab:heterogeneity} Where the scheduling motive binds: theory-driven heterogeneity}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
       Dependent Variable: & \multicolumn{2}{c}{Cesarean share}\\
@@ -28,6 +28,7 @@
       Observations                                       & 1,348,043               & 1,636,747\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} Private-sector municipality-date cells, SINASC 2010--2024, weighted by births. Low obstetrician density = below-median obstetricians per 1,000 births (CNES-PF). Education splits mothers at 8+ years of schooling. SE clustered by municipality. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

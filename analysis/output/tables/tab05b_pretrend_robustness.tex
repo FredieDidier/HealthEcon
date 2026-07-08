@@ -2,10 +2,10 @@
 \begin{table}[H]
    \caption{\label{tab:pretrend_robustness} Neither covariates nor a treated linear trend rescue the DiD}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcccc}
       \toprule
-      Dependent Variable: & \multicolumn{4}{c}{rate}\\
+      Dependent Variable: & \multicolumn{4}{c}{Cesarean rate}\\
                                    & Base            & (i) + covariates & (ii) + treated trend & (iii) both \\   
       Model:                       & (1)             & (2)              & (3)                  & (4)\\  
       \midrule
@@ -22,6 +22,7 @@
       Observations                 & 7,660           & 7,218            & 7,660                & 7,218\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} SINASC private (for-profit) cesarean rate, municipality-year 2010--2024, weighted by births. (i) adds time-varying municipal covariates; (ii) adds a treated-cohort linear time trend; (iii) both. Covariates leave the differential pre-trend intact (joint 2010--2015 test still rejects, $p<0.01$); the treated linear trend absorbs the 2017 ``break'' entirely, confirming it is a pre-existing trend, not a treatment effect. SE clustered by municipality. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

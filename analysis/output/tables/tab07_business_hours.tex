@@ -2,6 +2,7 @@
 \caption{Share of births occurring in business hours (weekdays, 8am--6pm)}
 \label{tab:business_hours}
 \small
+\small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
 \begin{tabular}{lcc}
 \toprule
 Sector & Cesarean & Vaginal \\
@@ -12,5 +13,6 @@ Public & 50.9\% & 31.9\% \\
 Uniform-timing benchmark & \multicolumn{2}{c}{29.8\%} \\
 \bottomrule
 \end{tabular}
+}
 \\[2pt]\footnotesize\textit{Notes:} SINASC 2010--2024, births with a valid time of birth. Business hours are Monday--Friday, 8:00--17:59. A birth occurring at a uniformly random moment of the week would fall in business hours with probability 29.8\%.
 \end{table}

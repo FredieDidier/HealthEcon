@@ -2,7 +2,7 @@
 \begin{table}[H]
    \caption{\label{tab:beneficiary_muni} Not a price story: beneficiary-municipality aggregation}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
       Dependent Variable: & \multicolumn{2}{c}{Private cesarean rate}\\
@@ -24,6 +24,7 @@
       R$^2$                                         & 0.354           & 0.827\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} TISS delivery events 2015--2024 aggregated by the BENEFICIARY's municipality of residence (the baseline uses the provider municipality), weighted by deliveries; cells with at least 20 deliveries. The fee-gap null replicates. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

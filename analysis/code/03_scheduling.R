@@ -76,13 +76,13 @@ r_pub  <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Pu
 r_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Private"],
                 weights = ~births, cluster = ~muni + date)
 
-dict <- c(weekend = "Weekend", holiday = "National holiday",
+dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "National holiday",
           eve = "Eve of rest day", muni = "Municipality", year = "Year")
 f <- file.path(TABLE, "tab03_scheduling.tex")
 etable(r_pub, r_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("Public", "Private"),
+       headers = c("Public sector", "Private sector"),
        title = "Cesareans dip on weekends and holidays, more so in the private sector",
        label = "tab:scheduling",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",

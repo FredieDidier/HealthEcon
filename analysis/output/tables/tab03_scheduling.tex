@@ -2,11 +2,11 @@
 \begin{table}[H]
    \caption{\label{tab:scheduling} Cesareans dip on weekends and holidays, more so in the private sector}
    \centering
-\small\setlength{\tabcolsep}{5pt}
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
-      Dependent Variable: & \multicolumn{2}{c}{rate}\\
-                       & Public          & Private \\   
+      Dependent Variable: & \multicolumn{2}{c}{Cesarean rate}\\
+                       & Public sector   & Private sector \\   
       Model:           & (1)             & (2)\\  
       \midrule
       \emph{Variables}\\
@@ -29,6 +29,7 @@
       R$^2$            & 0.334           & 0.440\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
    \footnotesize\textit{Notes:} Municipality-date cells, weighted by births. The dependent variable is the cesarean share of births. \emph{Eve of rest day} is a Friday or the day before a national holiday. Movable holidays (Good Friday, Carnival, Corpus Christi) are included. Standard errors two-way clustered by municipality and date. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

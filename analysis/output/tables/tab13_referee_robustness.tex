@@ -2,35 +2,37 @@
 \begin{table}[H]
    \caption{\label{tab:referee_robustness} Referee-stage robustness: sector classification, rest-day definitions, newborn composition}
    \centering
-\footnotesize\setlength{\tabcolsep}{3pt}
+\footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccccc}
       \toprule
-      Dependent Variables: & \multicolumn{3}{c}{Cesarean share} & \multicolumn{2}{c}{Outcome}\\
-                                    & Cesarean, time-varying sector & Cesarean, Sunday only & Cesarean, rest days & Low Apgar      & Low birthweight \\   
-      Model:                        & (1)                           & (2)                   & (3)                 & (4)            & (5)\\  
+      Dependent Variables: & \multicolumn{3}{c}{Cesarean rate} & \multicolumn{2}{c}{Newborn outcome}\\
+                                    & Cesarean rate, time-varying sector & Cesarean rate, Sunday only & Cesarean rate, rest days & Low Apgar (5-minute) & Low birthweight \\   
+\addlinespace[2pt]
+      Model:                        & (1)                                & (2)                        & (3)                      & (4)                  & (5)\\  
       \midrule
       \emph{Variables}\\
-      Weekend                       & -0.0769$^{***}$               &                       &                     & 0.0019$^{***}$ & 0.0132$^{***}$\\   
-                                    & (0.0046)                      &                       &                     & (0.0002)       & (0.0013)\\   
+      Weekend                       & -0.0769$^{***}$                    &                            &                          & 0.0019$^{***}$       & 0.0132$^{***}$\\   
+                                    & (0.0046)                           &                            &                          & (0.0002)             & (0.0013)\\   
 \addlinespace[2pt]
-      Sunday                        &                               & -0.1081$^{***}$       &                     &                &   \\   
-                                    &                               & (0.0071)              &                     &                &   \\   
+      Sunday                        &                                    & -0.1081$^{***}$            &                          &                      &   \\   
+                                    &                                    & (0.0071)                   &                          &                      &   \\   
 \addlinespace[2pt]
-      Rest day (weekend or holiday) &                               &                       & -0.0810$^{***}$     &                &   \\   
-                                    &                               &                       & (0.0047)            &                &   \\   
+      Rest day (weekend or holiday) &                                    &                            & -0.0810$^{***}$          &                      &   \\   
+                                    &                                    &                            & (0.0047)                 &                      &   \\   
 \addlinespace[2pt]
       \midrule
       \emph{Fixed-effects}\\
-      Municipality                  & Yes                           & Yes                   & Yes                 & Yes            & Yes\\  
-      Year                          & Yes                           & Yes                   & Yes                 & Yes            & Yes\\  
+      Municipality                  & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
+      Year                          & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
       \midrule
       \emph{Fit statistics}\\
-      Observations                  & 1,380,183                     & 1,455,272             & 1,455,272           & 1,447,875      & 1,455,272\\  
+      Observations                  & 1,380,183                          & 1,455,272                  & 1,455,272                & 1,447,875            & 1,455,272\\  
 \bottomrule
    \end{tabular}
+}
    
    \par \raggedright 
-   \footnotesize\textit{Notes:} Private-sector municipality-date cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each birth's establishment with the natureza jur\'idica of its own year (2015--2024; earlier births use 2015). Columns 4--5 are composition checks: weekend (unscheduled) private births include fewer healthy scheduled term pregnancies, so newborn risk indicators shift mechanically. SE two-way clustered by municipality and date. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+   \footnotesize\textit{Notes:} Private-sector municipality-date cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each birth's establishment with the legal nature of its own year (2015--2024; earlier births use 2015). Columns 4--5 are composition checks: weekend (unscheduled) private births include fewer healthy scheduled term pregnancies, so newborn risk indicators shift mechanically. SE two-way clustered by municipality and date. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{table}
 
 
