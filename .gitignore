@@ -1,0 +1,23 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Raw / intermediate data live in Dropbox, never in Git
+*.parquet
+*.csv
+*.dta
+*.rds
+*.zip
+*.rar
+
+# LaTeX build artifacts (source .tex/.bib tracked; PDF compiled locally)
+latex/*.aux
+latex/*.log
+latex/*.bbl
+latex/*.blg
+latex/*.out
+latex/*.pdf
+latex/*.synctex.gz
+
+.DS_Store

@@ -1,0 +1,31 @@
+
+\begin{table}[H]
+   \caption{\label{tab:robson} Weekend dip among low-risk (Robson 1-2) cesareans}
+   \centering
+\small\setlength{\tabcolsep}{4pt}
+   \begin{tabular}{lccc}
+      \toprule
+      Dependent Variable: & \multicolumn{3}{c}{rate}\\
+                   & Robson 1-2, Public & Robson 1-2, Private & Robson 1, Private \\   
+      Model:       & (1)                & (2)                 & (3)\\  
+      \midrule
+      \emph{Variables}\\
+      Weekend      & -0.0451$^{***}$    & -0.0728$^{***}$     & -0.0593$^{***}$\\   
+                   & (0.0024)           & (0.0041)            & (0.0042)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      Municipality & Yes                & Yes                 & Yes\\  
+      Year         & Yes                & Yes                 & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations & 1,238,046          & 589,689             & 360,328\\  
+      R$^2$        & 0.240              & 0.313               & 0.284\\  
+\bottomrule
+   \end{tabular}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Municipality-date cells, weighted by births, within Robson groups 1-2 (nulliparous, term, singleton, cephalic). The dependent variable is the cesarean share. Standard errors clustered by municipality. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+
