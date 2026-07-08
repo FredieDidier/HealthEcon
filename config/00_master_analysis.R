@@ -32,3 +32,5 @@ source(here("analysis", "code", "08_mechanism_checks.R")) # prelabor split, coun
 source(here("analysis", "code", "09_gestation_health.R")) # early-term shifting + newborn health
 source(here("analysis", "code", "10_heterogeneity.R"))  # theory-driven heterogeneity
 source(here("analysis", "code", "11_decomposition.R"))  # Kitagawa + excess-cesarean counts
+source(here("analysis", "code", "12_maps.R"))           # municipal choropleth maps
+source(here("analysis", "code", "13_referee_robustness.R")) # sector/rest-day/composition checks

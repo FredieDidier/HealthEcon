@@ -79,6 +79,18 @@ build_workfile <- function() {
     private_share_proxy         = tiss_deliveries / sinasc_births
   )]
 
+  # --- Parto Adequado treated-municipality flag ------------------------------
+  # = 1 if the municipality has a participating Fase-2 PRIVATE hospital
+  # (ANS list scraped with CNES→IBGE mapping; see 05_policy.R for the event
+  # study — the flag is descriptive/supporting, NOT causal identification).
+  pa <- data.table::fread(
+    file.path(DROPBOX_ROOT, "build", "covariates", "input",
+              "parto_adequado_fase2_hospitais.csv"),
+    colClasses = list(character = "ibge6"))
+  treated_set <- unique(pa[status == "Privado" & !is.na(ibge6),
+                           formatC(as.integer(ibge6), width = 6, flag = "0")])
+  w[, treated_parto_adequado := as.integer(muni6 %in% treated_set)]
+
   # --- clean: NaN → NA (empty-subset means in sparse cells) ------------------
   num <- names(w)[vapply(w, is.numeric, logical(1))]
   for (col in num) data.table::set(w, i = which(is.nan(w[[col]])), j = col, value = NA_real_)

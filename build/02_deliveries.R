@@ -18,9 +18,10 @@
 # MECHANISM variables (why cesarean, if not price): maternal age band, primary
 #   CID (risk), operator modality (organisational norms), length of stay and ICU
 #   days (intensity), admission character. Plus a post-RN 368/2015 time flag.
-#   Parto-Adequado treated-municipality flag is added LATER, once CNES gives an
-#   exact CNES→IBGE-municipality map for the participating hospitals
-#   (build/covariates/input/parto_adequado_fase2_hospitais.csv).
+#   The Parto-Adequado treated-municipality flag is NOT built here: it is added
+#   at the muni-year level by build/03_workfile.R (as `treated_parto_adequado`),
+#   using the CNES→IBGE mapping already embedded in
+#   build/covariates/input/parto_adequado_fase2_hospitais.csv (ibge6 column).
 #
 # MEMORY: DET is filtered to ~4 procedure codes inside {arrow}; CONS is inner-
 #   joined to just the delivery events; processed one year at a time with gc().

@@ -1,6 +1,8 @@
 % =============================================================================
-% HealthEcon — paper source (skeleton).
+% HealthEcon — paper source.
 % Compiled locally; the PDF is git-ignored (see ../.gitignore).
+% Style exemplar: Johnson & Rehavi (2016, AEJ:Policy); voice model:
+% HomeOfficePNAD intro. Avoid em-dashes and long winding sentences.
 % =============================================================================
 \documentclass[12pt]{article}
 
@@ -12,25 +14,205 @@
 \usepackage[round]{natbib}
 \usepackage{hyperref}
 
-\title{Untitled --- Private Health Insurance and Hospital Care in Brazil}
-\author{Fredie Didier}
+\title{Born on Schedule: Physician Time and the World's Highest Cesarean Rate}
+\author{Fredie Didier\thanks{Contact: fdidier@terra.com.br. I thank seminar
+participants for helpful comments. All errors are my own.}}
 \date{\today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Placeholder. Research design under development using the ANS TISS Hospitalar
-micro-data.
+\noindent Brazil's private health-insurance sector delivers about 80\% of its
+babies by cesarean section, the highest rate documented for any large health
+system. Using the universe of private insurance claims (TISS) and of birth
+records (SINASC), I show that this epidemic is not explained by the standard
+financial story: once the hourly labor-assistance fee is counted, a cesarean
+pays physicians less than a vaginal delivery in the largest states, and cesarean
+rates do not respond to fee variation, or even to a court order to triple
+vaginal-delivery pay. The evidence instead points to the physician's time.
+Cesareans cluster on weekdays and business hours, fall by 8 percentage points on
+weekends and 5 on holidays, and the entire dip comes from cesareans scheduled
+before labor begins. The pattern survives among low-risk first-time mothers in
+spontaneous labor, is larger where obstetricians are scarce, and is not driven
+by educated mothers' requests. Scheduling shifts births toward 37--38 weeks of
+gestation, and practice style, not case-mix, accounts for 71\% of the 35
+percentage-point private-public gap. A simple model of physician time allocation
+rationalizes all of these facts and explains why fee-based policies have failed.
 \end{abstract}
 
-\section{Introduction}
+\bigskip
+\noindent \textbf{JEL codes:} I11, I13, J22, D82. \\
+\noindent \textbf{Keywords:} cesarean section, physician agency, supplier-induced
+demand, physician time, Brazil.
 
-% (Introduction to be written.)
+\newpage
 
-\input{model}
+% =============================================================================
+\section{Introduction}\label{sec:intro}
+% =============================================================================
+
+Cesarean section is the most common major surgery in the world, and its use has
+risen far beyond any clinical benchmark. About 21\% of births worldwide are
+cesarean deliveries, a share projected to reach nearly 29\% by 2030
+\citep{betran2021}, against a World Health Organization reference of 10--15\%,
+the range above which population-level gains in maternal and newborn survival
+disappear \citep{who2015cesarean}. Overuse is not innocuous: unnecessary
+cesareans raise maternal morbidity, respiratory distress and other neonatal
+complications, and costs \citep{sandall2018,boerma2018}. Brazil is the frontier
+case. Roughly 57\% of all Brazilian births are cesarean, and in the private
+insurance sector, which covers about a quarter of the population, the rate
+reaches 80\%, the highest documented for any large health system. The excess is
+not confined to complicated pregnancies. Among first-time mothers at term with a
+single, well-positioned baby who are already in spontaneous labor, the group for
+which surgery is hardest to justify on clinical grounds, two thirds of private
+weekday deliveries end in a cesarean, against roughly one third in public
+hospitals. Understanding what sustains surgical rates of this magnitude in a
+modern, well-financed health sector is a first-order question for health policy
+well beyond Brazil.
+
+Economic theory offers a natural suspect and a large literature to back it. When
+patients cannot judge treatment necessity, physicians act as imperfect agents
+and can tilt clinical decisions toward their own interests \citep{mcguire2000}.
+The canonical version of this argument is financial: providers do more of what
+pays more. \citet{gruber1996physician} show that obstetricians substitute toward
+cesareans when fee differentials widen, \citet{gruber1999physician} confirm the
+fee margin in Medicaid data, and \citet{clemens2014} document strong treatment
+responses to payment changes in Medicare. Childbirth has become the laboratory
+of choice for testing physician agency, precisely because the cesarean decision
+is frequent, discretionary, and well measured: \citet{currie2008} show that
+liability pressure distorts delivery mode, \citet{johnson2016} find that
+physicians treat informed patients (other physicians) differently from everyone
+else, and \citet{card2023} show that being delivered in a hospital with a high
+cesarean propensity harms the marginal newborn. Throughout this literature the
+operative margin is money. Yet the physician's scarcest input is not billable
+revenue but time. A vaginal delivery is a long commitment of uncertain onset and
+duration that blocks nights, weekends, and office hours; a scheduled cesarean is
+a one-hour appointment at a time of the physician's choosing. Separating this
+time-and-convenience channel from the fee channel requires observing actual
+physician fees and the exact timing of births in the same setting, a combination
+administrative data rarely provide.
+
+This paper separates the two channels at national scale. I combine the universe
+of hospital claims in Brazil's private insurance system (TISS), which records
+the physician fee actually billed for every delivery from 2015 to 2025, with the
+universe of birth records (SINASC), 42 million births from 2010 to 2024 with the
+exact date and hour of birth, the Robson clinical classification, and an
+indicator for whether a cesarean was performed before labor began. The claims
+data measure the money incentive; the birth records reveal the time incentive
+through the calendar. Three sets of facts emerge.
+
+First, the epidemic is not a price story. The correct financial comparison must
+credit the vaginal delivery with the separately billed hourly labor-assistance
+fee, which averages 2.7 hours at roughly R\$409 per hour. Once it is counted, a
+cesarean pays the physician 10 to 30\% less than a vaginal delivery in Brazil's
+largest states, which nonetheless run cesarean rates near 80\%. Across
+municipalities and years, the association between the fee gap and the cesarean
+rate is tiny and flips sign across specifications. State-level fee swings as
+large as two log points leave cesarean rates unchanged. Even a 2015 federal
+court order directing the national regulator to make insurers pay at least three
+times more for vaginal deliveries produced no movement in fees or in cesarean
+rates. Money does not explain where, when, or how often Brazilian physicians
+operate.
+
+Second, the calendar does. Because the onset of spontaneous labor does not
+respect the week, the day on which a birth falls is as good as random with
+respect to medical need, and any systematic weekly pattern in surgery reveals
+choices about timing. Cesarean rates in the private sector fall by 8.3
+percentage points on weekends and 5.3 points on national holidays, roughly twice
+the public-sector dips, and half of all cesareans are performed in weekday
+business hours, against a 30\% benchmark under uniform timing. The mechanism is
+visible in its components: the weekend dip is minus 9.7 percentage points for
+cesareans scheduled before labor and plus 1.7 points for cesareans during labor,
+so the entire pattern comes from surgery booked around the physician's calendar,
+with a small displacement of unscheduled women into in-labor surgery. The
+pattern persists among low-risk first-time mothers in spontaneous labor, is 2.2
+points larger in municipalities where obstetricians are scarce relative to
+births, and is no stronger for educated mothers, which points to the supply
+side rather than to maternal demand for convenient timing.
+
+Third, convenience has a quantity and a cost. A decomposition over Robson
+clinical groups attributes 71\% of the 35 percentage-point private-public gap to
+practice style within identical clinical groups, not to differences in case-mix.
+Benchmarking each municipality's weekday cesarean propensity against its own
+weekend rate implies about 50,000 excess weekday cesareans per year in the
+private sector alone, about one in ten private cesareans. Scheduling also moves
+births earlier: private births are 10.9 percentage points more likely to occur
+at 37--38 weeks of gestation than public births after controlling for maternal
+age, education, and race, and prelabor cesareans mass exactly at those weeks.
+Early-term delivery is precisely the margin that the clinical literature links
+to higher neonatal respiratory morbidity and intensive-care admission
+\citep{tita2009}, and quasi-experimental evidence confirms that non-indicated
+cesareans harm newborn health \citep{costaramon2018,card2023}.
+
+A simple model of physician time allocation, presented in
+Appendix~\ref{sec:model}, rationalizes all of these facts jointly. A physician
+chooses between attending a vaginal delivery, which arrives at a random hour,
+lasts long, and blocks the calendar, and scheduling a one-hour cesarean at the
+time she prefers. The choice depends on the fee gap plus a convenience premium:
+the value of converting an unschedulable liability into a business-hours
+appointment. The premium is positive even where the fee gap is negative, which
+is exactly the configuration the data show. The model delivers the fee
+irrelevance, the weekday and business-hour clustering of prelabor cesareans, the
+larger dips where obstetric time is scarce, and the early-term shift as a single
+package, and it explains why fee-based policy levers have no traction: they act
+on the wrong wedge.
+
+The policy record is consistent with this reading. Beyond the toothless court
+order, I evaluate Parto Adequado, the flagship national quality program run by
+the regulator with participating hospitals from 2015 onward. Municipalities
+hosting participating private hospitals do show falling cesarean rates, but the
+decline starts in 2010, seven years before the program's dissemination phase,
+and shows no break at adoption; an event study with a long pre-period rejects
+parallel trends, and controlling for the pre-existing trend eliminates the
+estimated effect entirely. The decline is real, but its attribution to the
+program is not supported. If the binding constraint is the physician's time,
+the relevant policy class is organizational: on-call and shift coverage,
+midwife-led continuity of care, and hospital scheduling norms, rather than fee
+schedules.
+
+The paper contributes to three literatures. To the physician-agency and
+supplier-induced-demand literature \citep{mcguire2000,gruber1996physician,%
+gruber1999physician,clemens2014,johnson2016}, it adds a setting in which the
+canonical financial channel can be measured directly and rejected, and a
+time-and-convenience channel that is measured directly and confirmed; agency
+here operates through the opportunity cost of physician time, not through the
+fee schedule. To the economics of childbirth and cesarean choice
+\citep{currie2008,johnson2016,costaramon2018,card2023}, it contributes the first
+national anatomy of the world's most extreme cesarean system, built from the
+universe of private claims and birth records, and a set of scheduling
+fingerprints (weekends, holidays, hours, prelabor status) that can be replicated
+in any country with dated birth records. To health policy in middle-income
+countries, it explains why a decade of fee-oriented and transparency-oriented
+interventions failed to move the epidemic, and points to the reorganization of
+obstetric time as the margin worth regulating.
+
+The remainder of the paper proceeds as follows. Section~\ref{sec:background}
+describes the private health sector, delivery payment, and the policy
+environment. Section~\ref{sec:data} presents the two administrative datasets and
+the construction of the analysis files. Section~\ref{sec:notprice} shows that
+fees do not explain the epidemic. Section~\ref{sec:mechanism} presents the
+scheduling evidence and its checks. Section~\ref{sec:cost} quantifies the
+epidemic's composition and its health margin. Section~\ref{sec:policy} evaluates
+the policy record, and Section~\ref{sec:conclusion} concludes.
+Appendix~\ref{sec:model} develops the model.
+
+% =============================================================================
+% (Sections to be written)
+% =============================================================================
+\section{Institutional background}\label{sec:background}
+\section{Data}\label{sec:data}
+\section{The epidemic is not a price story}\label{sec:notprice}
+\section{The convenience mechanism}\label{sec:mechanism}
+\section{The cost of convenience}\label{sec:cost}
+\section{The policy record}\label{sec:policy}
+\section{Conclusion}\label{sec:conclusion}
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
+
+% =============================================================================
+\appendix
+\input{model}
 
 \end{document}

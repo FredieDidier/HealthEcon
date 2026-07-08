@@ -2,10 +2,12 @@
 
 ## Project Overview
 
-Empirical paper (working title *"When Money Doesn't Explain It: Physician
-Convenience and the Cesarean Epidemic in Brazil's Private Health Sector"*) asking
-why Brazil's private-insurance sector performs the **highest cesarean rate in the
-world** — **~82% of private deliveries** (TISS), against a WHO reference of 10–15%.
+Empirical paper (title *"Born on Schedule: Physician Time and the World's Highest
+Cesarean Rate"*) asking why Brazil's private-insurance sector performs the
+**highest cesarean rate in the world** — **~82% of private deliveries** (TISS),
+against a WHO reference of 10–15%. Introduction is WRITTEN (`latex/paper.tex`;
+model in the appendix); style exemplar = Johnson & Rehavi 2016 AEJ:Policy (see
+memory `style-exemplar-johnson-rehavi`; no em-dashes, moderate sentences).
 
 **Core result (built and verified):**
 1. **The epidemic is real and extreme** — private cesarean ~82% (TISS claims) /
@@ -209,18 +211,31 @@ populated from ~2014 on.
   in the private sector** (~10.5% of private cesareans; ~73k public).
 
 ### Supporting nulls (kept for rigor, NOT identification) (`05_policy.R`)
-- **Parto Adequado** (treated = muni with a participating Fase-2 private hospital,
-  CNES→IBGE mapped): with the long SINASC pre-period, the event study **rejects
+Institutional scope of each policy (be precise in the paper):
+- **Parto Adequado** — **national program** run by the ANS (federal regulator) with
+  Hospital Israelita Albert Einstein and the IHI, but **adoption is voluntary and
+  hospital-level**: Phase 1 pilot 2015–16 (35 hospitals), **Phase 2 2017–2021 (our
+  list: 113 hospitals in 60 municipalities across ~15 states)**, Phase 3 national
+  campaign (no hospital list). Treated = muni with a participating Fase-2 private
+  hospital (CNES→IBGE). With the long SINASC pre-period, the event study **rejects
   parallel pre-trends** (2010–2015 joint F=4.5, p<0.001) — treated munis are on a
   straight pre-existing downward trend (+6.8pp 2010 → −5.7pp 2024, **no break at
   2017**). Neither time-varying covariates nor a treated linear trend rescue it
-  (`tab05b`): covariates leave the pre-trend rejected; the treated trend absorbs the
-  "effect" entirely (+0.3pp n.s.). **Not causal evidence** — kept as a transparent
-  null. TISS version is quarterly (8 pre-quarters) but the pre-window is short.
-- **RN 368/2015** (transparency + partogram): national monthly series only
-  (underpowered pre-period).
-- **Dec-2015 SP court ruling** ordering ANS to make plans pay ≥3× for vaginal
-  delivery: our fee series shows **no jump** — never became a real fee change.
+  (`tab05b`). **Not causal evidence** — kept as a transparent null. TISS version is
+  quarterly (8 pre-quarters) but the pre-window is short.
+- **RN 368/2015** — **national**: an ANS normative resolution binding on ALL
+  private health plans in Brazil (in force July 2015; right to operator/hospital/
+  physician cesarean rates on request, mandatory partogram, informed-consent term
+  for elective cesareans). National and single-dated → only an underpowered
+  monthly time series, no cross-sectional contrast.
+- **Dec-2015 court ruling** — decision by the **Federal Court in São Paulo**
+  (ação civil do Ministério Público in SP) ordering the **ANS — a national
+  regulator — to issue rules** making plans pay ≥3× more for vaginal delivery
+  (60-day deadline, R$10k/day fine). So: issued by a court in SP, but aimed at a
+  **national** fee rule; ANS appealed and **it never became an actual fee change**
+  — our fee series shows no jump in the cesarean−vaginal gap in 2015–16.
+- **RN 465/2021** — **national** (ANS coverage list update; elective cesarean
+  covered upon signed consent). Context only, not used for identification.
 
 ---
 
@@ -300,10 +315,10 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | `tiss_csection_rate` / `sinasc_private_csection_rate` | Private cesarean shares (claims / births). | main_data |
 | `tipo_robson` | Robson group "01".."11" (01–02 = low risk; 01 = spontaneous labor). From ~2014. | SINASC |
 | `dow`, `weekend`, `holiday`, `eve` | Day-of-week (1=Sun), weekend, national holiday (fixed + Easter-based movable), eve-of-rest-day. | derived |
-| `treated` | Muni has a Parto-Adequado Fase-2 private hospital. | ANS list × CNES |
+| `treated_parto_adequado` | Muni has a Parto-Adequado Fase-2 private hospital (58 munis; in `main_data` via `03_workfile.R`). | ANS list × CNES |
 | `obstetricians_per_1k_births` | CNES-PF obstetrician count / SINASC births ×1000. | CNES-PF |
-| `estimate_admissions_vinicius()` | Admission-count proxy (per-event qt/LOS; 2023: 9.40M vs ANS 9.2M — preferred). | build/00_utils.R |
-| Full main_data codebook | `dictionary/main_data_dictionary.md` | — |
+| `estimate_admissions_vinicius()` | Admission-count proxy (per-event qt/LOS; 2023: 9.40M vs ANS 9.2M — preferred; Fredie's aggregate method 8.89M). **No exhibit depends on either proxy** (deliveries are TUSS-identified), so it needs no robustness table — it is a data-validation tool. | build/00_utils.R |
+| Full main_data codebook | `dictionary/variable_dictionary.xlsx` (regenerate via `dictionary/build_dictionary.R`) | — |
 
 ## Results guide & exhibit map
 
@@ -326,6 +341,11 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | `fig09_gestation` / `fig09b` / `tab09_health` | 09 | Gestational-age distributions; early-term/LBW/Apgar gaps | Cost of convenience: +10.9pp early-term |
 | `tab10_heterogeneity` / `tab10b_modality` | 10 | Dip × obstetrician density / mother's educ; cooperativas | Binds where time is scarce; supply-side |
 | `tab11_decomposition` | 11 | Kitagawa (Robson) + excess weekday cesareans | 71% practice style; ~50k excess/yr private |
+| `map01_csection_all` / `map02_csection_private` | 12 | Municipal choropleths (2020–24; navy→sand→red gradient) | Geography: North low, Center-South/private high |
+| `tab13_referee_robustness` | 13 | Time-varying sector (−7.7); Sunday-only (−10.8); rest days (−8.1); weekend newborn composition (+1.3pp LBW, +0.19pp low Apgar) | Scheduling result robust; weekend births are the unscheduled, riskier ones |
+| `tab13b_beneficiary_muni` | 13 | Not-a-price with BENEFICIARY-muni aggregation | Fee-gap null replicates (+0.029 n.s. / −0.013) |
+| `tab13c_dip_by_region_period` | 13 | Clean clinical sample (cephalic, singleton, term, no prior CS): **−8.9**; all 5 regions (−6.7 to −10.7); 3 periods (−8.1/−7.8/−7.6) | Dip survives strictest clinical cleaning; national and stable |
+| `tab14_neonatal_suggestive` | 14 | Infant ICD-P admissions per private birth vs early-term share (muni-year) | **Null, underpowered** — do NOT feature; harm pricing stays literature-based |
 
 ## Key facts / numbers (sanity checks; SINASC = 2010–2024 sample)
 | Fact | Value |
@@ -344,8 +364,52 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | Early-term (37–38wk) private gap, with maternal controls | +10.9pp*** |
 | Weekend dip × low obstetrician density | −2.2pp** extra |
 | Kitagawa: private–public gap 35.4pp | 29% case-mix, **71% practice style** |
+| Clean clinical sample weekend dip (cephalic/singleton/term/no prior CS) | −8.9pp*** |
+| Weekend dip by region / by period | all regions −6.7 to −10.7; stable −8.1/−7.8/−7.6 |
+| Beneficiary-muni fee-gap coef (UF / muni FE) | +0.029 n.s. / −0.013 (null replicates) |
 | Excess weekday cesareans (scheduling counterfactual) | ~50k/yr private (10.5%) |
 | Deliveries/yr: TISS ~406k · SINASC all ~2.7M | |
+
+## Clinical-cost positioning ("why does convenience matter?")
+Deliberate scope decision (2026-07-08): we do **NOT** build new empirical programs
+on maternal mortality/complications, NICU admission, or broad neonatal morbidity.
+Three reasons: (i) **selection dominates** — private mothers are healthier and
+private hospitals better resourced, so cross-sector outcome regressions come out
+"wrong-signed" (we already see LOWER low-birthweight/low-Apgar in private:
+tab09) and would hand referees our weakest front; (ii) **power** — maternal deaths
+(~1.5–2k/yr nationwide) cannot support muni-date designs, and there is no public
+mother–baby linkage for individual follow-up; (iii) the causal harm of
+non-indicated cesareans/early-term birth is **already established with better
+identification than we could achieve** — cite it, don't re-estimate it.
+**How the paper answers "why it matters":** (a) our own early-term result
+(+10.9pp at 37–38wk, the margin mechanically produced by prelabor scheduling —
+tab09/fig09b) + weekend-composition corroboration (tab13); (b) magnitudes (~50k
+excess weekday cesareans/yr; 71% practice style — tab11); (c) **price the harm
+with the literature**: Tita et al. (2009 *NEJM*, early-term elective cesarean →
+neonatal respiratory morbidity/NICU), Costa-Ramón et al. (2018 *JHE*, unplanned
+cesareans harm neonatal health), Card, Fenizia & Silver (2023 *AEJ:Policy*,
+cesareans for marginal low-risk mothers worsen outcomes), Sandall et al. (2018
+*Lancet*). The suggestive TISS check WAS implemented (`14_neonatal_suggestive.R`, tab14):
+infant (<1) admissions with ICD-10 chapter-P primary diagnoses per private
+birth, muni-year, vs the share of private births at 37–38 weeks. **It came out
+null and is underpowered by design** (newborn admissions are billed under the
+mother's plan in the first 30 days with uneven coding; provider-muni vs
+occurrence-muni mismatch; little within-muni variation in early-term share
+after FE). Keep the table for transparency but do NOT feature it — the harm
+pricing stays literature-based, which was the plan.
+
+**Why 09(b) is associational and what causal would take:** `private` (sector of
+birth) is chosen — mothers differ in unobserved pregnancy health, income and
+preferences; muni/year FE + age/education/race controls cannot absorb that
+selection. (Direction: healthier private mothers should if anything carry
+LONGER, biasing the early-term gap toward zero, so +10.9pp is plausibly
+conservative — an argument, not identification.) Causal upgrades would need:
+(i) **mother fixed effects** (same mother across sectors) — requires identified
+SINASC linkage (CIDACS/Fiocruz 100M-cohort style data agreement; no public
+mother ID); (ii) **IV for private access** — local formal-employment/plan-loss
+shocks (shift-share), exclusion debatable; (iii) Costa-Ramón-style timing
+instruments identify the cesarean→health effect, not the sector→early-term
+effect. With public de-identified data it stays associational by design.
 
 ## Honest limits (the identification ceiling)
 No operadora/hospital/physician IDs in TISS (rules out bargaining, vertical
@@ -387,4 +451,5 @@ fails parallel trends; fee shocks null; RN 368 national with short pre-period).
   `postprocess_tex()` (booktabs).
 - **Never commit data** (`*.parquet/*.csv/*.dta/*.rds` gitignored). Commit/push only
   when asked. macOS filesystem is case-insensitive.
-- When adding a variable to `main_data`, update `dictionary/main_data_dictionary.md`.
+- When adding a variable to `main_data`, update `dictionary/build_dictionary.R`
+  and re-run it (regenerates `variable_dictionary.xlsx`, HomeOfficePNAD format).

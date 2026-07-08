@@ -1,0 +1,34 @@
+
+\begin{table}[H]
+   \caption{\label{tab:neonatal_suggestive} Suggestive: early-term shifting and neonatal hospital use}
+   \centering
+\small\setlength{\tabcolsep}{5pt}
+   \begin{tabular}{lccc}
+      \toprule
+      Dependent Variables: & \multicolumn{2}{c}{Perinatal-condition (ICD-10 P) infant admissions per private birth} & All infant ($<$1) admissions per private birth\\
+                                              & (1)      & (2)      & (3) \\   
+\addlinespace[2pt]
+      Model:                                  & (1)      & (2)      & (3)\\  
+      \midrule
+      \emph{Variables}\\
+      Share of private births at 37--38 weeks & 0.0044   &          & -0.0084\\   
+                                              & (0.0097) &          & (0.0540)\\   
+\addlinespace[2pt]
+      Private cesarean rate                   &          & 0.0094   &   \\   
+                                              &          & (0.0070) &   \\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      Municipality                            & Yes      & Yes      & Yes\\  
+      Year                                    & Yes      & Yes      & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                            & 4,284    & 4,284    & 4,284\\  
+\bottomrule
+   \end{tabular}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Municipality-year cells, 2015--2024, weighted by private births; cells with at least 50 private births. Infant admissions are TISS hospital events of beneficiaries in the $<$1 age band, at the provider municipality; perinatal conditions are ICD-10 chapter P primary diagnoses. Ecological and correlational — a corroboration of the early-term margin, not a causal estimate. SE clustered by municipality. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+

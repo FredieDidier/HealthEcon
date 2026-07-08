@@ -1,4 +1,4 @@
-# When Money Doesn't Explain It: Physician Convenience and the Cesarean Epidemic in Brazil's Private Health Sector — Replication Package
+# Born on Schedule: Physician Time and the World's Highest Cesarean Rate — Replication Package
 
 **Author:** Fredie Didier (fdidier@terra.com.br)
 
@@ -16,10 +16,10 @@ build/
   01c_ieps.R            # IEPS municipality-year covariates
   02_deliveries.R       # TISS delivery events + municipality-month panel
   03_workfile.R         # merges everything into main_data.parquet
-analysis/code/          # 00_utils.R, 01_descriptives.R … 06_fee_shock.R
+analysis/code/          # 00_utils.R, 01_descriptives.R … 14_neonatal_suggestive.R
 analysis/output/        # tables/, graphs/, maps/ (committed)
-latex/                  # paper.tex, refs.bib
-dictionary/             # ANS TISS dictionaries (.xlsx) + main_data_dictionary.md
+latex/                  # paper.tex, model.tex (appendix), refs.bib
+dictionary/             # ANS TISS dictionaries + variable_dictionary.xlsx (build_dictionary.R)
 ```
 
 ## Data

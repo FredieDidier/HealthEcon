@@ -1,0 +1,32 @@
+
+\begin{table}[H]
+   \caption{\label{tab:beneficiary_muni} Not a price story: beneficiary-municipality aggregation}
+   \centering
+\small\setlength{\tabcolsep}{5pt}
+   \begin{tabular}{lcc}
+      \toprule
+      Dependent Variable: & \multicolumn{2}{c}{Private cesarean rate}\\
+                                                    & State + Year FE & Municipality + Year FE \\   
+      Model:                                        & (1)             & (2)\\  
+      \midrule
+      \emph{Variables}\\
+      Log economic fee gap (cesarean minus vaginal) & 0.0291          & -0.0131$^{**}$\\   
+                                                    & (0.0176)        & (0.0062)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      State                                         & Yes             & \\  
+      Year                                          & Yes             & Yes\\  
+      Municipality                                  &                 & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                                  & 10,722          & 10,722\\  
+      R$^2$                                         & 0.354           & 0.827\\  
+\bottomrule
+   \end{tabular}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} TISS delivery events 2015--2024 aggregated by the BENEFICIARY's municipality of residence (the baseline uses the provider municipality), weighted by deliveries; cells with at least 20 deliveries. The fee-gap null replicates. \footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+
