@@ -3,11 +3,18 @@
 ## Project Overview
 
 Empirical paper (title *"Born on Schedule: Physician Time and the World's Highest
-Cesarean Rate"*) asking why Brazil's private-insurance sector performs the
-**highest cesarean rate in the world** — **~82% of private deliveries** (TISS),
-against a WHO reference of 10–15%. Introduction is WRITTEN (`latex/paper.tex`;
-model in the appendix); style exemplar = Johnson & Rehavi 2016 AEJ:Policy (see
-memory `style-exemplar-johnson-rehavi`; no em-dashes, moderate sentences).
+Private Cesarean Rate"*) asking why Brazil's private sector performs the **highest
+cesarean rate documented for any large health system**, against a WHO reference of
+10–15%. **"Private" is measured two ways that agree** (~79–82%): insurance-financed
+deliveries in **TISS** (~82%) and for-profit-establishment births (nat. jurídica
+2xxx) in **SINASC** (~79%); they are overlapping, not identical, populations, and
+their agreement is itself reassuring. NB: Brazil *overall* is ~57% (top-tier but not
+uniquely #1 — Egypt/Dominican Republic are comparable), so the "world's highest"
+claim is defensible **only for the private sector** — hence "Private" in the title
+and "any large health system" in the abstract. Introduction is WRITTEN
+(`latex/paper.tex`; model in the appendix); style exemplar = Johnson & Rehavi 2016
+AEJ:Policy (see memory `style-exemplar-johnson-rehavi`; no em-dashes, moderate
+sentences).
 
 **Core result (built and verified):**
 1. **The epidemic is real and extreme** — private cesarean ~82% (TISS claims) /
