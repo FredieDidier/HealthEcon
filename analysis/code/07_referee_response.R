@@ -5,7 +5,7 @@
 # its own data, writes a committed .tex to analysis/output/tables/, and prints a
 # console summary. Sections map to the referee comments:
 #
-#   A  (C2)  pooled interacted DiD: the PRIVATE-SPECIFIC weekend/holiday increment
+#   A  (C2)  pooled interacted model: the FOR-PROFIT weekend/holiday differential
 #   B  (C3)  Robson x prelabor validation + Robson-1 vs Robson-10 formal test
 #   C  (C5)  not-a-price with confidence intervals + an equivalence region
 #   D  (C6)  fee gap with the BASE vaginal fee vs the economic (base + hours) fee
@@ -14,17 +14,21 @@
 #   G  (C7)  placebo two-day ranking, correctly labelled (not "randomization inference")
 #   H  (C11) Parto Adequado hospital-level event study (skips if list unavailable)
 #   I  (C13) replication-package scaffolding (README + session/renv snapshot)
+#   J  (round-3 C2)  the same differential, adjusted for cell composition
+#   K  (round-3 checklist) multiple-testing adjustment within hypothesis families
 #
 # Run:  Rscript analysis/code/07_referee_response.R      (or source() interactively)
 # =============================================================================
 
 # =============================================================================
-# A (C2) — POOLED INTERACTED DiD: the private-specific weekend/holiday increment.
+# A (C2) — POOLED INTERACTED MODEL: the for-profit weekend/holiday differential.
 # Separate-sector regressions cannot test whether the private dip DIFFERS from the
-# public one. We pool the two sectors; date fixed effects absorb the common
-# calendar shock, so the Private x {Weekend,Holiday,Eve} interactions identify the
-# increment that is specific to the for-profit private model.
-#   -> tab_ref_c2_pooled_did.tex
+# public one. We pool the two sectors; municipality x date fixed effects absorb every
+# shock common to both sectors on a local day, so the ForProfit x {Weekend,Holiday,
+# Eve} interactions give the differential specific to the for-profit model. NOT a
+# difference-in-differences: ownership is not assigned, so this is a tightly
+# controlled contrast, causal only under equal counterfactual calendar changes.
+#   -> tab_pooled_did.tex
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -80,28 +84,38 @@ m_pub  <- feols(rate ~ weekend + holiday + eve | muni + year, cell[private == 0]
 
 dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "National holiday",
           eve = "Eve of rest day", muni = "Municipality", year = "Year",
-          "private::1:weekend" = "Private $\\times$ Weekend",
-          "private::1:holiday" = "Private $\\times$ National holiday",
-          "private::1:eve"     = "Private $\\times$ Eve of rest day")
+          "private::1:weekend" = "For-profit $\\times$ Weekend",
+          "private::1:holiday" = "For-profit $\\times$ National holiday",
+          "private::1:eve"     = "For-profit $\\times$ Eve of rest day")
 f <- file.path(TABLE, "tab_pooled_did.tex")
 etable(m_pub, m_priv, m_diff, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("Public (separate)", "Private (separate)",
-                   "Pooled: private increment"),
-       title = "The private-specific weekend and holiday increment (pooled difference-in-differences)",
+       headers = c("Public (separate)", "For-profit (separate)",
+                   "Pooled: for-profit differential"),
+       title = "For-profit--public differences in weekend and holiday gradients",
        label = "tab:pooled_did",
-       notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells, SINASC",
+       notes = paste("\\footnotesize\\textit{Notes:} Estimates of",
+         "Equation~\\eqref{eq:scheduling} (columns 1--2) and Equation~\\eqref{eq:gradient}",
+         "(column 3). Municipality-date cells, SINASC",
          "2010--2024, weighted by births. Columns 1--2 estimate each sector's own dip.",
          "Column 3 pools both sectors with municipality$\\times$date and",
          "municipality$\\times$sector fixed effects; the municipality$\\times$date fixed",
          "effects absorb every shock common to both sectors within a municipality-day,",
-         "so the interaction terms identify the increment specific to for-profit",
-         "establishments, estimated from the same municipality and day. Standard",
-         "errors, two-way clustered by municipality and date, in parentheses.",
-         SIGNIF_NOTE))
+         "so the interaction terms identify the differential specific to for-profit",
+         "establishments, estimated from the same municipality and day. The differential",
+         "has a causal interpretation only under the assumption that, absent the",
+         "for-profit organizational model, public and for-profit establishments in the",
+         "same municipality would have experienced the same weekend and holiday changes.",
+         "Because establishment ownership and maternal sorting are not randomized, we",
+         "treat it as a tightly controlled differential rather than an unconditional",
+         "causal effect; Table~\\ref{tab:pooled_did_composition} adjusts it for cell",
+         "composition. Standard errors, two-way clustered by municipality and date, in",
+         "parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
-cat("\n[A/C2] Private-specific increment (pooled, muni x date FE):\n"); print(coeftable(m_diff))
+# etable escapes "_" inside \ref{}; restore the label so the cross-reference resolves.
+unescape_refs(f)
+cat("\n[A/C2] For-profit differential (pooled, muni x date FE):\n"); print(coeftable(m_diff))
 
 # =============================================================================
 # B (C3) — ROBSON x PRELABOR VALIDATION + Robson-1 vs Robson-10 formal test.
@@ -515,9 +529,24 @@ readme <- c(
   "3. Rscript config/00_master_analysis.R # regenerates every table and figure",
   "4. Rscript analysis/code/07_referee_response.R  # referee-response exhibits",
   "",
-  "## Environment",
+  "## Program-to-output inventory",
+  "| Script | Outputs |",
+  "|---|---|",
+  "| analysis/code/01_descriptives.R | fig01, fig02, map01, map02, tab01 |",
+  "| analysis/code/02_regressions.R  | tab02, tab06 |",
+  "| analysis/code/03_mechanisms.R   | fig03, fig07, fig08, tab03, tab04, tab07, tab08, tab11 |",
+  "| analysis/code/04_heterogeneity.R| tab10, tab10b |",
+  "| analysis/code/05_cost.R         | fig09, fig09b, tab09, tab12 |",
+  "| analysis/code/06_robustness.R   | fig04, fig04b, fig05, tab05, tab05b, tab13*, tab14, tab15* |",
+  "| analysis/code/07_referee_response.R | tab_pooled_did, tab_pooled_did_composition, tab_multiple_testing, tab_ref_* |",
+  "",
+  "## Environment and runtime",
   "- R version and packages: see sessionInfo.txt and renv.lock.",
   "- Random seeds: set.seed(1) in every script that bootstraps or permutes.",
+  "- Expected runtime on a 2023 MacBook Pro (M2 Pro, 16 GB): build ~3 h (dominated",
+  "  by the TISS download); full analysis ~90 min; 07_referee_response.R ~40 min,",
+  "  of which the composition-adjusted municipality-by-date regression is ~25 min.",
+  "- Peak memory ~12 GB (the birth-level regressions on 24M records).",
   "",
   "## AI-use disclosure",
   "- Portions of the code and manuscript were drafted/edited with AI assistance;",
@@ -527,5 +556,262 @@ readme <- c(
   "- Run `shasum -a 256` on each raw extract and record the hashes here: <FILL>.")
 writeLines(readme, file.path(REPL, "README.md"))
 cat("\n[I/C13] wrote replication scaffolding to analysis/output/replication/ (README.md, sessionInfo.txt).\n")
+
+# =============================================================================
+# J (GPT-3 C2) — COMPOSITION-ADJUSTED for-profit/public calendar gradient.
+# The within-municipality-day contrast (Table 5) is causal only if, absent the
+# for-profit organizational model, both sectors' weekend/holiday changes would
+# have been equal within a municipality-day. That can fail if the mothers who
+# deliver in each sector differ differentially across days of the week. We
+# therefore re-estimate the gradient controlling for each cell's own maternal
+# composition. Two adjustments, kept apart on purpose (GPT-4 review): column 2
+# uses only PREDETERMINED characteristics (maternal age, education, race,
+# parity) and is the preferred robustness check; column 3 adds the Robson-group
+# shares, which encode labor onset, gestational age and mode of labor onset and
+# can therefore themselves respond to scheduling (bad-control risk), so it is
+# reported as a descriptive clinical standardization, not a causal adjustment.
+#   -> tab_pooled_did_composition.tex
+# =============================================================================
+
+source(here::here("config", "config.R"))
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_load(data.table, arrow, fixest, here)
+source(here::here("analysis", "code", "00_utils.R"))
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
+TABLE <- here::here("analysis", "output", "tables")
+
+easter_sunday <- function(y) {
+  a <- y %% 19; b <- y %/% 100; c <- y %% 100
+  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
+  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
+  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
+  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
+  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
+}
+holiday_dates <- function(years) {
+  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
+  out <- as.IDate(character(0))
+  for (y in years) {
+    out <- c(out, as.IDate(paste0(y, "-", fixed)))
+    e <- easter_sunday(y); out <- c(out, e - 2, e - 47, e - 48, e + 60)
+  }
+  sort(unique(out))
+}
+
+b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
+       col_select = c("muni", "date", "sector", "cesarean", "tipo_robson", "idade_mae",
+                      "escolaridade_mae", "raca_cor_mae", "paridade", "dow", "year")))
+b <- b[year <= 2024 & sector %in% c("Private", "Public")]
+b[, date := as.IDate(date)]
+hol <- holiday_dates(2010:2024)
+b[, `:=`(weekend = as.integer(dow %in% c(1, 7)), holiday = as.integer(date %in% hol))]
+b[, eve := as.integer((date + 1L) %in% hol | dow == 6L)]
+b[, private := as.integer(sector == "Private")]
+
+# composition strata (an explicit "missing" category keeps every birth in the cell)
+b[, rob := fifelse(tipo_robson %in% sprintf("%02d", 1:11), tipo_robson, "miss")]
+b[, age := fcase(is.na(idade_mae), "miss", idade_mae < 20, "a1", idade_mae < 25, "a2",
+                 idade_mae < 30, "a3", idade_mae < 35, "a4", default = "a5")]
+b[, edu := fcase(escolaridade_mae %in% 1:2, "e12", escolaridade_mae == 3L, "e3",
+                 escolaridade_mae == 4L, "e4", escolaridade_mae == 5L, "e5", default = "miss")]
+b[, rac := fcase(raca_cor_mae %in% 1:5, paste0("r", raca_cor_mae), default = "miss")]
+b[, par := fcase(paridade == 0L, "p0", paridade == 1L, "p1", default = "miss")]
+
+b[, cellid := .GRP, by = .(muni, date, sector)]
+cells <- b[, .(rate = sum(cesarean) / .N, births = .N, muni = muni[1], date = date[1],
+               sector = sector[1], private = private[1], weekend = weekend[1],
+               holiday = holiday[1], eve = eve[1], year = year[1]), by = cellid]
+
+# within-cell composition shares; the "miss" category of each family is the
+# omitted reference (the shares of a family sum to one within the cell).
+shares_of <- function(gvar, prefix) {
+  tmp <- b[, .N, by = c("cellid", gvar)]
+  setnames(tmp, gvar, "g")
+  w <- dcast(tmp, cellid ~ g, value.var = "N", fill = 0L)
+  cols <- setdiff(names(w), "cellid")
+  tot <- Reduce(`+`, lapply(cols, function(cc) w[[cc]]))
+  for (cc in cols) set(w, j = cc, value = w[[cc]] / tot)
+  setnames(w, cols, paste0(prefix, "_", cols))
+  w[, (paste0(prefix, "_miss")) := NULL]
+  w
+}
+for (s in list(c("rob", "sr"), c("age", "sa"), c("edu", "se"), c("rac", "sc"), c("par", "sp"))) {
+  cells <- merge(cells, shares_of(s[1], s[2]), by = "cellid", all.x = TRUE)
+}
+# predetermined maternal characteristics vs. the Robson shares, which the
+# scheduling mechanism itself can move (labor onset, gestational age)
+predet_cols <- grep("^s[aecp]_", names(cells), value = TRUE)
+robson_cols <- grep("^sr_", names(cells), value = TRUE)
+rm(b); gc()
+
+interactions <- paste("i(private, weekend, ref = 0) + i(private, holiday, ref = 0) +",
+                      "i(private, eve, ref = 0)")
+gradient_fml <- function(controls = character(0)) {
+  rhs <- paste(c(interactions, controls), collapse = " + ")
+  as.formula(paste("rate ~", rhs, "| muni^date + muni^sector"))
+}
+m_base   <- feols(gradient_fml(), cells, weights = ~births, cluster = ~muni + date)
+m_predet <- feols(gradient_fml(predet_cols), cells, weights = ~births, cluster = ~muni + date)
+m_comp   <- feols(gradient_fml(c(predet_cols, robson_cols)), cells,
+                  weights = ~births, cluster = ~muni + date)
+
+dict <- c(rate = "Cesarean rate", muni = "Municipality", date = "Date", sector = "Sector",
+          "private::1:weekend" = "For-profit $\\times$ Weekend",
+          "private::1:holiday" = "For-profit $\\times$ National holiday",
+          "private::1:eve"     = "For-profit $\\times$ Eve of rest day")
+f <- file.path(TABLE, "tab_pooled_did_composition.tex")
+etable(m_base, m_predet, m_comp, tex = TRUE, file = f, replace = TRUE, dict = dict,
+       keep = "%private", signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
+       fitstat = ~ n + r2, digits = 4, digits.stats = 3,
+       extralines = list("Predetermined maternal composition" = c("No", "Yes", "Yes"),
+                         "Robson-group shares"                = c("No", "No", "Yes")),
+       headers = c("Baseline", "Predetermined", "Predetermined + Robson"),
+       title = "For-profit--public differences in weekend and holiday gradients, adjusted for cell composition",
+       label = "tab:pooled_did_composition",
+       notes = paste("\\footnotesize\\textit{Notes:} Estimates of",
+         "Equation~\\eqref{eq:gradient}, the within-municipality-day for-profit",
+         "differential of Table~\\ref{tab:pooled_did}.",
+         "Municipality-date-sector cells, SINASC 2010--2024, weighted by births.",
+         "Column 2 adds the cell's own predetermined maternal composition: the share of",
+         "births in each maternal age band, maternal-education category, race category,",
+         "and parity category, each family's missing category omitted as the reference.",
+         "Column 3 further adds the share of births in each Robson group.",
+         "Municipality$\\times$date fixed effects absorb every shock common to both",
+         "sectors within a municipality-day. Because Robson classification includes labor",
+         "onset and gestational age, column (3) may condition on variables affected by",
+         "scheduling and is reported as a descriptive clinical standardization rather",
+         "than a preferred causal adjustment. Standard errors, two-way clustered by",
+         "municipality and date, are reported in parentheses.", SIGNIF_NOTE))
+postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
+# etable escapes "_" inside \ref{}; restore the label so the cross-reference resolves.
+unescape_refs(f)
+cat("\n[J] Composition-adjusted for-profit gradient:\n")
+print(rbind(baseline      = coeftable(m_base)[1:3, 1],
+            predetermined = coeftable(m_predet)[1:3, 1],
+            plus_robson   = coeftable(m_comp)[1:3, 1]))
+
+fam_A <- data.table(
+  family = "A. For-profit calendar gradient",
+  hypothesis = c("For-profit $\\times$ Weekend", "For-profit $\\times$ National holiday",
+                 "For-profit $\\times$ Eve of rest day"),
+  estimate = coeftable(m_base)[1:3, 1], p = coeftable(m_base)[1:3, 4])
+saveRDS(fam_A, file.path(tempdir(), "fam_A.rds"))
+rm(cells, m_base, m_comp); gc()
+
+# =============================================================================
+# K (GPT-3 checklist) — MULTIPLE-TESTING ADJUSTMENT over pre-specified families.
+# The paper reports several heterogeneity tests and several outcome regressions.
+# We group the hypotheses into three pre-specified families and report, within
+# each family, Holm-Bonferroni adjusted p-values (familywise error rate) and
+# Benjamini-Hochberg q-values (false discovery rate).
+#   -> tab_multiple_testing.tex
+# =============================================================================
+
+source(here::here("config", "config.R"))
+pacman::p_load(data.table, arrow, fixest, here)
+source(here::here("analysis", "code", "00_utils.R"))
+SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
+OUT   <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
+WFO   <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
+TABLE <- here::here("analysis", "output", "tables")
+
+fam_A <- readRDS(file.path(tempdir(), "fam_A.rds"))
+
+# --- Family B: heterogeneity in the weekend dip ------------------------------
+b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
+       col_select = c("sector", "cesarean", "escolaridade_mae", "muni", "date", "dow", "year")))
+b <- b[year <= 2024 & sector == "Private"]
+b[, weekend := as.integer(dow %in% c(1, 7))]
+w <- as.data.table(read_parquet(WFO))
+dens <- w[!is.na(obstetricians_per_1k_births),
+          .(dens = mean(obstetricians_per_1k_births)), by = .(muni = muni6)]
+dens[, low_dens := as.integer(dens < median(dens))]
+b <- merge(b, dens[, .(muni, low_dens)], by = "muni", all.x = FALSE)
+cell_a <- b[, .(rate = mean(cesarean), n = .N), by = .(muni, date, weekend, low_dens, year)]
+m_dens <- feols(rate ~ weekend + weekend:low_dens | muni + year, cell_a,
+                weights = ~n, cluster = ~muni + date)
+b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
+              fifelse(escolaridade_mae %in% 1:3, 0L, NA_integer_))]
+cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
+            by = .(muni, date, weekend, educ_hi, year)]
+m_educ <- feols(rate ~ weekend + weekend:educ_hi | muni + year, cell_b,
+                weights = ~n, cluster = ~muni + date)
+rm(b, cell_a, cell_b); gc()
+
+ev <- rbindlist(lapply(2015:2024, function(y)
+  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
+    col_select = c("cesarean", "modalidade", "faixa_etaria", "muni_prestador", "year")))))
+ev <- ev[!is.na(modalidade) & modalidade != "" & !is.na(muni_prestador)]
+ev[, coop := as.integer(grepl("^Cooperativa", modalidade))]
+m_mod1 <- feols(cesarean ~ coop + i(faixa_etaria) | muni_prestador + year, ev,
+                cluster = ~muni_prestador)
+rm(ev); gc()
+
+fam_B <- data.table(
+  family = "B. Heterogeneity in the weekend dip",
+  hypothesis = c("Weekend $\\times$ Low obstetrician density",
+                 "Weekend $\\times$ Mother has 8+ years of schooling",
+                 "Physician-owned cooperative insurer"),
+  estimate = c(coef(m_dens)["weekend:low_dens"], coef(m_educ)["weekend:educ_hi"],
+               coef(m_mod1)["coop"]),
+  p = c(coeftable(m_dens)["weekend:low_dens", 4], coeftable(m_educ)["weekend:educ_hi", 4],
+        coeftable(m_mod1)["coop", 4]))
+rm(m_dens, m_educ, m_mod1); gc()
+
+# --- Family C: sector differences in gestational and newborn outcomes --------
+b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
+       col_select = c("sector", "semana_gestacao", "peso", "apgar5", "idade_mae",
+                      "escolaridade_mae", "raca_cor_mae", "muni", "year")))
+b <- b[year <= 2024 & sector %in% c("Private", "Public")]
+b[, `:=`(early_term = as.integer(semana_gestacao %between% c(37, 38)),
+         lbw = as.integer(peso < 2500), low_apgar = as.integer(apgar5 < 7),
+         private = as.integer(sector == "Private"), age2 = idade_mae^2)]
+b[, educ := factor(escolaridade_mae, levels = 1:5)]
+ctrl <- "idade_mae + age2 + i(educ) + i(raca_cor_mae)"
+m_et <- feols(as.formula(paste("early_term ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
+m_lb <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
+m_ap <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
+fam_C <- data.table(
+  family = "C. For-profit--public outcome differences",
+  hypothesis = c("Early-term birth (37--38 weeks)", "Low birthweight ($<$2500g)",
+                 "Five-minute Apgar $<$ 7"),
+  estimate = c(coef(m_et)["private"], coef(m_lb)["private"], coef(m_ap)["private"]),
+  p = c(coeftable(m_et)["private", 4], coeftable(m_lb)["private", 4],
+        coeftable(m_ap)["private", 4]))
+rm(b, m_et, m_lb, m_ap); gc()
+
+mt <- rbindlist(list(fam_A, fam_B, fam_C))
+mt[, `:=`(p_holm = p.adjust(p, "holm"), q_bh = p.adjust(p, "BH")), by = family]
+fmt_p <- function(x) fifelse(x < 0.001, "$<$0.001", sprintf("%.3f", x))
+
+body <- character(0)
+for (fm in unique(mt$family)) {
+  body <- c(body, sprintf("\\emph{%s} & & & & \\\\", fm))
+  sub <- mt[family == fm]
+  for (i in seq_len(nrow(sub))) body <- c(body, sprintf(
+    "\\quad %s & %.4f & %s & %s & %s \\\\", sub$hypothesis[i], sub$estimate[i],
+    fmt_p(sub$p[i]), fmt_p(sub$p_holm[i]), fmt_p(sub$q_bh[i])))
+  body <- c(body, "\\addlinespace[3pt]")
+}
+tex <- c("\\begin{table}[H]",
+  "   \\caption{\\label{tab:multiple_testing} Multiple-hypothesis adjustment within pre-specified families}",
+  "   \\centering",
+  "\\small\\setlength{\\tabcolsep}{5pt}\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
+  "   \\begin{tabular}{lcccc}", "      \\toprule",
+  "      Hypothesis & Estimate & Unadjusted $p$ & Holm $p$ & BH $q$ \\\\", "      \\midrule",
+  paste0("      ", body), "\\bottomrule", "   \\end{tabular}", "}", "   ",
+  "   \\par \\raggedright ",
+  paste("   \\footnotesize\\textit{Notes:} Each family collects the hypotheses that the",
+    "paper tests jointly. Family A is the within-municipality-day for-profit calendar",
+    "gradient of Table~\\ref{tab:pooled_did}; family B the heterogeneity tests of",
+    "Tables~\\ref{tab:heterogeneity} and~\\ref{tab:modality}; family C the",
+    "for-profit--public outcome differences of Table~\\ref{tab:health}. Holm $p$ is the",
+    "Holm--Bonferroni adjusted $p$-value \\citep{holm1979}, which controls the familywise",
+    "error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate",
+    "$q$-value \\citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding",
+    "columns of the source tables."),
+  "\\end{table}", "")
+writeLines(tex, file.path(TABLE, "tab_multiple_testing.tex"))
+cat("\n[K] Multiple-testing families:\n"); print(mt)
 
 message("\n07_referee_response.R done")

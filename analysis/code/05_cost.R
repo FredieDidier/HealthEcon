@@ -93,9 +93,10 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
        notes = paste("\\footnotesize\\textit{Notes:} Birth-level regressions, SINASC",
          "2010--2024, private (for-profit) vs public establishments, municipality and",
          "year fixed effects. Maternal controls: age, age$^2$, education, race.",
-         "Estimates are associational (mothers differ across sectors) and quantify",
-         "the epidemic's health margins, with early-term shifting the direct",
-         "consequence of prelabor scheduling. Standard errors, clustered by municipality, are reported in parentheses.",
+         "Mothers differ across sectors, so the early-term coefficient is an",
+         "associational difference between establishment sectors and is not",
+         "interpreted as the causal effect of prelabor scheduling.",
+         "Standard errors, clustered by municipality, are reported in parentheses.",
          SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_et0, m_et1, m_lb1, m_ap1, dict = dict, keep = "%private", fitstat = ~ n, digits = 4)

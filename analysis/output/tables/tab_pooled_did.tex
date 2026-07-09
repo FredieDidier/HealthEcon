@@ -1,12 +1,12 @@
 
 \begin{table}[H]
-   \caption{\label{tab:pooled_did} The private-specific weekend and holiday increment (pooled difference-in-differences)}
+   \caption{\label{tab:pooled_did} For-profit--public differences in weekend and holiday gradients}
    \centering
 \small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccc}
       \toprule
       Dependent Variable: & \multicolumn{3}{c}{Cesarean rate}\\
-                                         & Public (separate) & Private (separate) & Pooled: private increment \\   
+                                         & Public (separate) & For-profit (separate) & Pooled: for-profit differential \\   
       Model:                             & (1)               & (2)                & (3)\\  
       \midrule
       \emph{Variables}\\
@@ -19,13 +19,13 @@
       Eve of rest day                    & -0.0055$^{***}$   & -0.0094$^{***}$    &   \\   
                                          & (0.0013)          & (0.0016)           &   \\   
 \addlinespace[2pt]
-      Private $\times$ Weekend           &                   &                    & -0.0182$^{***}$\\   
+      For-profit $\times$ Weekend        &                   &                    & -0.0182$^{***}$\\   
                                          &                   &                    & (0.0067)\\   
 \addlinespace[2pt]
-      Private $\times$ National holiday  &                   &                    & -0.0244$^{***}$\\   
+      For-profit $\times$ National holiday &                   &                    & -0.0244$^{***}$\\   
                                          &                   &                    & (0.0048)\\   
 \addlinespace[2pt]
-      Private $\times$ Eve of rest day   &                   &                    & -0.0095$^{***}$\\   
+      For-profit $\times$ Eve of rest day &                   &                    & -0.0095$^{***}$\\   
                                          &                   &                    & (0.0031)\\   
 \addlinespace[2pt]
       \midrule
@@ -43,7 +43,7 @@
 }
    
    \par \raggedright 
-   \footnotesize\textit{Notes:} Municipality-date cells, SINASC 2010--2024, weighted by births. Columns 1--2 estimate each sector's own dip. Column 3 pools both sectors with municipality$\times$date and municipality$\times$sector fixed effects; the municipality$\times$date fixed effects absorb every shock common to both sectors within a municipality-day, so the interaction terms identify the increment specific to for-profit establishments, estimated from the same municipality and day. Standard errors, two-way clustered by municipality and date, in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+   \footnotesize\textit{Notes:} Estimates of Equation~\eqref{eq:scheduling} (columns 1--2) and Equation~\eqref{eq:gradient} (column 3). Municipality-date cells, SINASC 2010--2024, weighted by births. Columns 1--2 estimate each sector's own dip. Column 3 pools both sectors with municipality$\times$date and municipality$\times$sector fixed effects; the municipality$\times$date fixed effects absorb every shock common to both sectors within a municipality-day, so the interaction terms identify the differential specific to for-profit establishments, estimated from the same municipality and day. The differential has a causal interpretation only under the assumption that, absent the for-profit organizational model, public and for-profit establishments in the same municipality would have experienced the same weekend and holiday changes. Because establishment ownership and maternal sorting are not randomized, we treat it as a tightly controlled differential rather than an unconditional causal effect; Table~\ref{tab:pooled_did_composition} adjusts it for cell composition. Standard errors, two-way clustered by municipality and date, in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{table}
 
 

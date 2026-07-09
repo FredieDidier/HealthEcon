@@ -1,0 +1,31 @@
+\begin{table}[H]
+   \caption{\label{tab:multiple_testing} Multiple-hypothesis adjustment within pre-specified families}
+   \centering
+\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+   \begin{tabular}{lcccc}
+      \toprule
+      Hypothesis & Estimate & Unadjusted $p$ & Holm $p$ & BH $q$ \\
+      \midrule
+      \emph{A. For-profit calendar gradient} & & & & \\
+      \quad For-profit $\times$ Weekend & -0.0182 & 0.006 & 0.006 & 0.006 \\
+      \quad For-profit $\times$ National holiday & -0.0244 & $<$0.001 & $<$0.001 & $<$0.001 \\
+      \quad For-profit $\times$ Eve of rest day & -0.0095 & 0.002 & 0.004 & 0.003 \\
+      \addlinespace[3pt]
+      \emph{B. Heterogeneity in the weekend dip} & & & & \\
+      \quad Weekend $\times$ Low obstetrician density & -0.0223 & 0.005 & 0.010 & 0.008 \\
+      \quad Weekend $\times$ Mother has 8+ years of schooling & 0.1441 & $<$0.001 & $<$0.001 & $<$0.001 \\
+      \quad Physician-owned cooperative insurer & 0.0084 & 0.350 & 0.350 & 0.350 \\
+      \addlinespace[3pt]
+      \emph{C. For-profit--public outcome differences} & & & & \\
+      \quad Early-term birth (37--38 weeks) & 0.1087 & $<$0.001 & $<$0.001 & $<$0.001 \\
+      \quad Low birthweight ($<$2500g) & -0.0290 & $<$0.001 & $<$0.001 & $<$0.001 \\
+      \quad Five-minute Apgar $<$ 7 & -0.0055 & $<$0.001 & $<$0.001 & $<$0.001 \\
+      \addlinespace[3pt]
+\bottomrule
+   \end{tabular}
+}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Each family collects the hypotheses that the paper tests jointly. Family A is the within-municipality-day for-profit calendar gradient of Table~\ref{tab:pooled_did}; family B the heterogeneity tests of Tables~\ref{tab:heterogeneity} and~\ref{tab:modality}; family C the for-profit--public outcome differences of Table~\ref{tab:health}. Holm $p$ is the Holm--Bonferroni adjusted $p$-value \citep{holm1979}, which controls the familywise error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate $q$-value \citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding columns of the source tables.
+\end{table}
+

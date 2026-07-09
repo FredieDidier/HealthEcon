@@ -67,6 +67,18 @@ postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
   writeLines(tx, file)
 }
 
+# etable() escapes underscores everywhere in `notes`, including inside \ref{} and
+# \eqref{}, which silently breaks any cross-reference to a label that contains one
+# (e.g. tab:pooled_did). Call right after postprocess_tex() on any table whose note
+# cites such a label.
+unescape_refs <- function(file) {
+  tx <- readLines(file)
+  tx <- gsub("(\\\\(?:eq)?ref\\{[^}]*)\\\\_", "\\1_", tx)
+  while (any(grepl("\\\\(eq)?ref\\{[^}]*\\\\_", tx)))       # labels with several "_"
+    tx <- gsub("(\\\\(?:eq)?ref\\{[^}]*)\\\\_", "\\1_", tx)
+  writeLines(tx, file)
+}
+
 # Wrap the tabular in a SHRINK-ONLY \resizebox so wide tables fit the text width
 # but narrow tables keep their natural size (no ugly stretching). Also injects
 # the font-size + column-spacing setting just before the tabular. Idempotent:

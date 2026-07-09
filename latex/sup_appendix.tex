@@ -103,3 +103,28 @@ is not a missingness artifact.
 \input{../analysis/output/tables/tab_ref_c10_fewcluster.tex}
 \input{../analysis/output/tables/tab_ref_c12_sampleflow.tex}
 \input{../analysis/output/tables/tab_ref_c12_missingness.tex}
+
+\subsection{Multiple hypothesis testing}\label{app:multiple}
+
+The paper reports more than one test in two places where a reader may worry about
+selective reporting: the heterogeneity of the weekend dip, and the differences
+between for-profit and public establishments in gestational and newborn outcomes.
+We therefore group the hypotheses into three pre-specified families and adjust
+within each. Family A is the for-profit calendar gradient of
+Table~\ref{tab:pooled_did}, which tests the weekend, holiday, and eve interactions
+together. Family B is the heterogeneity of the weekend dip, comprising the
+obstetrician-density and maternal-education interactions of
+Table~\ref{tab:heterogeneity} and the cooperative-insurer contrast of
+Table~\ref{tab:modality}. Family C is the set of for-profit-versus-public outcome
+differences of Table~\ref{tab:health}: early-term birth, low birthweight, and low
+Apgar score. Families are defined by the substantive question a reader would pose,
+not by the outcome of the test. Table~\ref{tab:multiple_testing} reports, within
+each family, the Holm-Bonferroni adjusted $p$-value \citep{holm1979}, which controls
+the familywise error rate, and the Benjamini-Hochberg $q$-value
+\citep{benjamini1995}, which controls the false discovery rate. The adjustments do
+not change any conclusion: the estimates that are
+individually significant remain so, and the cooperative-insurer contrast, which was
+insignificant to begin with, stays insignificant. The precision comes from sample
+sizes in the millions rather than from a fortunate choice among tests.
+
+\input{../analysis/output/tables/tab_multiple_testing.tex}

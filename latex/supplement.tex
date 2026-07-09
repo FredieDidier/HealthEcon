@@ -49,4 +49,10 @@ in Brazil}
 
 \input{sup_appendix}
 
+% The supplement now carries citations of its own (the multiple-testing
+% procedures), so it needs its own reference list. Compile with:
+%   pdflatex supplement ; bibtex supplement ; pdflatex supplement (x2)
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
 \end{document}
