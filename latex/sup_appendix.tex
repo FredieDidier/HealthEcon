@@ -1,22 +1,63 @@
 % =============================================================================
-% sup_appendix.tex — the supplemental (online) appendix, \input by paper.tex.
-%   Appendix C: additional results and robustness (non-essential; kept for rigor).
+% sup_appendix.tex — the supplemental (online) appendix, shared body.
+%   Appendix C: the policy record and additional robustness.
+%   Appendix D: supplementary robustness and inference.
+% Compiled two ways: \input by supplement.tex (standalone online supplement), and
+% available to paper.tex if the two documents are ever merged. Numbering (C, D)
+% is set by \numberwithin in the host preamble.
 % =============================================================================
 
-\clearpage
-\phantomsection
-\addcontentsline{toc}{section}{Supplemental Appendix}
-\begin{center}{\Large\bfseries Supplemental Appendix}\end{center}
-\vspace{0.5em}
+% =============================================================================
+\section{The policy record and additional robustness}\label{app:robustness}
+% =============================================================================
 
-% =============================================================================
-\section{Additional results and robustness}\label{app:robustness}
-% =============================================================================
-This supplemental appendix collects the supporting and robustness exhibits
-discussed in the text. Table~\ref{tab:pretrend_robustness} shows that neither
-time-varying covariates nor a treated-specific linear trend rescues the Parto
-Adequado difference-in-differences, whose event study rejects parallel pre-trends.
-Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
+\subsection{The fee-based policy record and \emph{Parto Adequado}}
+
+A decade of Brazilian policy aimed the fee schedule and mandatory disclosure at the
+cesarean epidemic. Two episodes bear directly on the paper's reading that the
+operative margin is not the fee. First, the December 2015 court order directing the
+national regulator to make plans pay at least three times more for vaginal delivery
+never became an actual fee change, as Section~\ref{sec:notprice} shows: the fee
+series has no jump. Second, \emph{Parto Adequado}, the flagship
+quality-improvement program, invites a cleaner test, because hospitals joined it
+from 2017. Figure~\ref{fig:pa_es} presents an event study for municipalities hosting
+a participating for-profit hospital, using the long pre-period the birth records
+afford. The treated municipalities are on a downward path, but the path begins in
+2010, seven years before the dissemination phase, and shows no break at adoption. A
+joint test rejects parallel pre-trends, and controlling for a treated-specific
+linear trend removes the estimated effect (Table~\ref{tab:pretrend_robustness}); the
+difference-in-differences estimates are in Table~\ref{tab:parto_adequado}. Two
+features compound the problem: hospitals adopted on a staggered schedule between 2017
+and 2021, which a common post-2017 indicator cannot capture, and our
+municipality-level exposure dilutes any hospital-level effect. We therefore do not
+read this comparison as an estimate of the program's effect; the available
+observational design does not identify it. The decline is real; its attribution to
+the program is not supported by the data, a caution for the short-window evaluations
+that have credited it. Figure~\ref{fig:rn368} places the national monthly series in
+its policy timeline for reference.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig04_parto_adequado_es_sinasc.pdf}
+\caption{Parto Adequado event study, treated versus control municipalities}\label{fig:pa_es}
+\fignotes{For-profit cesarean rate, treated (participating for-profit hospital)
+minus control municipalities, relative to 2016. The pre-existing downward trend
+has no break at the 2017 onset (dashed line).}
+\end{figure}
+
+\input{../analysis/output/tables/tab05_parto_adequado.tex}
+\input{../analysis/output/tables/tab05b_pretrend_robustness.tex}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
+\caption{National cesarean rate and the policy timeline}\label{fig:rn368}
+\fignotes{Monthly cesarean rate, for-profit and all births.
+Dashed line marks RN 368/2015.}
+\end{figure}
+
+\subsection{Additional robustness}
+
+This subsection collects the supporting and robustness exhibits discussed in the
+text. Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
 time-varying sector classification, alternative rest-day definitions, and the
 composition of weekend newborns. Table~\ref{tab:beneficiary_muni} replicates the
 fee-gap null aggregating by the beneficiary's municipality, and
@@ -24,20 +65,10 @@ Table~\ref{tab:dip_region_period} shows that the dip survives a clinically clean
 low-risk sample and is stable across regions and periods.
 Table~\ref{tab:permutation} reports a descriptive ranking of the weekend dip
 across all twenty-one two-day placebos, and Table~\ref{tab:no_indication} the
-share of private cesareans with no recorded clinical indication.
+share of for-profit cesareans with no recorded clinical indication.
 Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
 weak, association between early-term shifting and neonatal admissions.
-Figure~\ref{fig:rn368} places the national monthly cesarean series in its policy
-timeline, for context.
 
-\begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
-\caption{National cesarean rate and the policy timeline}\label{fig:rn368}
-\fignotes{Monthly cesarean rate, private (for-profit) and all births.
-Dashed line marks RN 368/2015.}
-\end{figure}
-
-\input{../analysis/output/tables/tab05b_pretrend_robustness.tex}
 \input{../analysis/output/tables/tab13_referee_robustness.tex}
 \input{../analysis/output/tables/tab13b_beneficiary_muni.tex}
 \input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
@@ -46,10 +77,10 @@ Dashed line marks RN 368/2015.}
 \input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
 
 % =============================================================================
-\section{Referee-requested robustness}\label{app:referee}
+\section{Supplementary robustness and inference}\label{app:referee}
 % =============================================================================
-This section collects the additional checks prepared in response to referee
-comments; all are generated by \texttt{analysis/code/07\_referee\_response.R}.
+This appendix reports supplementary validation of the timing indicator, few-cluster
+inference for the fee channel, and sample-construction accounting.
 Table~\ref{tab:robson_validation} verifies that the cesarean-timing indicator is
 internally consistent across Robson groups: group 1 (spontaneous labor) carries no
 prelabor cesareans, so its weekend dip is entirely in-labor and cannot come from

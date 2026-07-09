@@ -1,4 +1,4 @@
-# Born on Schedule: Physician Time and the World's Highest Private Cesarean Rate — Replication Package
+# Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean Delivery in Brazil — Replication Package
 
 **Authors:** Fredie Didier (IDP; corresponding author, fdidier@terra.com.br),
 Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br),
@@ -18,9 +18,12 @@ build/
   01c_ieps.R            # IEPS municipality-year covariates
   02_deliveries.R       # TISS delivery events + municipality-month panel
   03_workfile.R         # merges everything into main_data.parquet
-analysis/code/          # 00_utils.R, 01_descriptives.R … 14_neonatal_suggestive.R
+analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
+                        #   07_referee_response.R (supplementary-appendix exhibits)
 analysis/output/        # tables/, graphs/, maps/ (committed)
-latex/                  # paper.tex, model.tex (appendix), refs.bib
+latex/                  # paper.tex, model.tex (Appendix A), appendix.tex (A+B),
+                        #   sup_appendix.tex (shared body of Appendices C+D),
+                        #   supplement.tex (standalone Supplemental Appendix), refs.bib
 dictionary/             # ANS TISS dictionaries + variable_dictionary.xlsx (build_dictionary.R)
 ```
 
@@ -97,3 +100,26 @@ Then:
    ```r
    source("config/00_master_analysis.R")
    ```
+
+   `analysis/code/07_referee_response.R` builds the supplementary-appendix
+   exhibits (pooled municipality$\times$date difference-in-differences, few-cluster
+   inference, timing-indicator validation, sample flow).
+
+## Compiling the paper
+
+The manuscript and its Supplemental Appendix are two separate documents. The
+supplement uses `xr` to resolve cross-references (equations, tables) from the main
+paper, so **compile the paper first**:
+
+```
+cd latex
+pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+pdflatex supplement && pdflatex supplement
+```
+
+- `paper.tex` — main text, Appendix A (model), Appendix B (data), then references.
+- `supplement.tex` — Supplemental Appendix C (the policy record, including *Parto
+  Adequado*, and additional robustness) and D (supplementary robustness and
+  inference), submitted as online supplementary material.
+
+The compiled PDFs are git-ignored.

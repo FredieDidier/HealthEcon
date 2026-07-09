@@ -46,7 +46,7 @@ b <- merge(b, dens[, .(muni, low_dens)], by = "muni", all.x = FALSE)
 cell_a <- b[, .(rate = mean(cesarean), n = .N),
             by = .(muni, date, weekend, low_dens, year)]
 m_dens <- feols(rate ~ weekend + weekend:low_dens | muni + year,
-                cell_a, weights = ~n, cluster = ~muni)
+                cell_a, weights = ~n, cluster = ~muni + date)
 
 # --- (b) weekend dip × mother's education (private births) --------------------
 b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
@@ -54,7 +54,19 @@ b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
 cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
             by = .(muni, date, weekend, educ_hi, year)]
 m_educ <- feols(rate ~ weekend + weekend:educ_hi | muni + year,
-                cell_b, weights = ~n, cluster = ~muni)
+                cell_b, weights = ~n, cluster = ~muni + date)
+
+# implied weekend dips by subgroup, reported directly (not only the interaction):
+# density panel -> {high, low} obstetrician density; education panel -> {low, high} schooling.
+dip_dens_hi <- coef(m_dens)["weekend"]                              # high density (ref)
+dip_dens_lo <- coef(m_dens)["weekend"] + coef(m_dens)["weekend:low_dens"]
+dip_educ_lo <- coef(m_educ)["weekend"]                              # low education (ref)
+dip_educ_hi <- coef(m_educ)["weekend"] + coef(m_educ)["weekend:educ_hi"]
+implied_lines <- list(
+  "Implied dip, high obst.\\ density / low education" =
+    c(sprintf("%.4f", dip_dens_hi), sprintf("%.4f", dip_educ_lo)),
+  "Implied dip, low obst.\\ density / high education" =
+    c(sprintf("%.4f", dip_dens_lo), sprintf("%.4f", dip_educ_hi)))
 
 dict <- c(weekend = "Weekend", "weekend:low_dens" = "Weekend $\\times$ Low obstetrician density",
           "weekend:educ_hi" = "Weekend $\\times$ Mother has 8+ years of schooling",
@@ -63,13 +75,16 @@ f <- file.path(TABLE, "tab10_heterogeneity.tex")
 etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
+       extralines = implied_lines,
        headers = c("By obstetrician density", "By mother's education"),
        title = "Heterogeneity in the weekend dip",
        label = "tab:heterogeneity",
-       notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
+       notes = paste("\\footnotesize\\textit{Notes:} Private (for-profit) municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Low obstetrician density =",
          "below-median obstetricians per 1,000 births (CNES professionals file). Education splits",
-         "mothers at 8+ years of schooling. Standard errors, clustered by municipality, are reported in parentheses.",
+         "mothers at 8+ years of schooling. The two implied rows report each subgroup's own",
+         "weekend dip (the reference-group coefficient and that coefficient plus the interaction).",
+         "Standard errors, two-way clustered by municipality and date, are reported in parentheses.",
          SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_dens, m_educ, dict = dict, fitstat = ~ n, digits = 4)

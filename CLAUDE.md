@@ -2,24 +2,35 @@
 
 ## Project Overview
 
-Empirical paper (title *"Born on Schedule: Physician Time and the World's Highest
-Private Cesarean Rate"*) asking why Brazil's private sector performs the **highest
-cesarean rate documented for any large health system**, against a WHO reference of
-10–15%. **"Private" is measured two ways that agree** (~79–82%): insurance-financed
-deliveries in **TISS** (~82%) and for-profit-establishment births (nat. jurídica
-2xxx) in **SINASC** (~79%); they are overlapping, not identical, populations, and
-their agreement is itself reassuring. NB: Brazil *overall* is ~57% (top-tier but not
-uniquely #1 — Egypt/Dominican Republic are comparable), so the "world's highest"
-claim is defensible **only for the private sector** — hence "Private" in the title
-and "any large health system" in the abstract. Introduction is WRITTEN
-(`latex/paper.tex`; abstract ≤100 words per AEJ; 3-paragraph literature
-contribution). Appendix: **A** = model, **B** = data/variables, **C** = robustness
-(tables numbered C.1–C.7 via `\numberwithin`). Citations = natbib `[round]` +
-`plainnat` (Chicago author-date, matches HomeOfficePNAD). **Target = AEJ:Policy**
-(guidelines: abstract ≤100w, ≤40–45pp incl. appendices, Chicago author-date,
-essential material in-paper vs supplemental appendix). Style exemplar = Johnson &
-Rehavi 2016 AEJ:Policy (memory `style-exemplar-johnson-rehavi`; no em-dashes,
-moderate sentences).
+Empirical paper (title *"Born on Schedule: Fees, Supply-Side Scheduling, and
+Cesarean Delivery in Brazil"*) asking why Brazil's private sector performs the
+**highest cesarean rate documented for any large health system**, against a WHO
+reference of 10–15%. **NB (title changed 2026-07-09, GPT round-2 review):** the
+title and abstract were retitled/reframed away from "Physician Time / World's
+Highest" to **supply-side convenience scheduling** because the design identifies
+calendar *ordering* of procedures and a private-specific increment, **not** the
+physician's private opportunity cost as an identified binding margin. Say
+"consistent with supply-side convenience scheduling," never "the binding margin is
+the physician's time." **"Private" is measured two ways that agree** (~79–82%):
+insurance-financed deliveries in **TISS** (~82%, the *private-insurance sector*)
+and for-profit-establishment births (nat. jurídica 2xxx) in **SINASC** (~79%, the
+*for-profit* / provider-ownership contrast — SINASC has no payer flag, so keep the
+two labels distinct: "private-insurance sector" for TISS, "for-profit
+establishments" for SINASC). They are overlapping, not identical, populations. NB:
+Brazil *overall* is ~57% (top-tier but not uniquely #1 — Egypt/Dominican Republic
+are comparable), so the "world's highest" claim is defensible **only for the
+private sector**. Introduction is WRITTEN (`latex/paper.tex`; abstract ≤100 words
+per AEJ; 3-paragraph literature contribution). **Appendix layout (reorganized
+2026-07-09):** essential **A** = model, **B** = data/variables precede the
+References in `paper.tex`; the **Supplemental Appendix is a separate document**
+(`latex/supplement.tex`) holding **C** = policy record (incl. Parto Adequado) +
+additional robustness and **D** = supplementary robustness and inference
+(tables numbered C.x/D.x via `\numberwithin`; cross-refs to the paper via `xr`).
+Citations = natbib `[round]` + `plainnat` (Chicago author-date, matches
+HomeOfficePNAD). **Target = AEJ:Policy** (guidelines: abstract ≤100w, ≤40–45pp,
+Chicago author-date, essential material in-paper vs supplemental appendix). Style
+exemplar = Johnson & Rehavi 2016 AEJ:Policy (memory `style-exemplar-johnson-rehavi`;
+no em-dashes, moderate sentences).
 
 **Core result (built and verified):**
 1. **The epidemic is real and extreme** — private cesarean ~82% (TISS claims) /
@@ -117,15 +128,17 @@ the relevant class.
 2. **The usual suspect fails** — the literature's default (fee incentives, Gruber
    & Owings) is rejected three ways: the *economic* fee gap is negative in the big
    states; within-muni fee variation doesn't move the rate; large fee swings and
-   even a court-ordered 3× vaginal fee changed nothing. **It is not the money.**
-   *(tab02, tab06, fig06)*
-3. **The mechanism** — a simple model says the binding margin is the physician's
-   *time*: the cesarean converts an unschedulable, long, calendar-blocking event
-   into a one-hour business-hours appointment (premium $\Pi$). Its fingerprints
-   are all there: weekday/weekend/holiday clustering (~2× stronger in private),
-   the 8–11am operating-room spike, and — decisively — the dip lives **entirely in
-   prelabor scheduled cesareans** (+ displacement into in-labor on weekends), is
-   larger where obstetrician time is scarce, and is not driven by educated
+   even a court-ordered 3× vaginal fee changed nothing. **Not a positive price
+   story** (say this, not "it is not the money"). *(tab02, tab06)*
+3. **The mechanism** — a simple model of physician time motivates (but does not
+   *identify*) the reading that the operative margin is **supply-side convenience
+   scheduling**: the cesarean converts an unschedulable, long, calendar-blocking
+   event into a one-hour business-hours appointment (premium $\Pi$). Its
+   fingerprints are all there: weekday/weekend/holiday clustering (~2× stronger in
+   private), the 8–11am operating-room spike, and the aggregate weekend dip is
+   **concentrated in prelabor scheduled cesareans** (+ displacement into in-labor on
+   weekends; do NOT write "entirely" — Robson 1 has an intrapartum dip), is larger
+   where obstetrician time is scarce, and is not driven by educated
    mothers' requests. **It is the doctor's time.** *(fig02/07/08, tab03/04/08/10)*
 4. **The cost** — scheduling shifts births to 37–38 weeks (+10.9pp early-term with
    maternal controls); 71% of the 35pp private–public gap is practice style, not
@@ -309,10 +322,15 @@ analysis/ code/  00_utils.R (theme_paper, PAL, postprocess_tex) · 01_descriptiv
                  now names the SECTION/theme, not a standalone file.
           output/ {graphs, tables, maps}      committed to git
 dictionary/ ANS TISS dictionaries (.xlsx) · main_data_dictionary.md
-latex/    paper.tex · model.tex (Appendix A) · appendix.tex (Appendix A input +
-          Appendix B data/variables) · sup_appendix.tex (Supplemental Appendix C
-          robustness) · refs.bib   (PDF git-ignored). paper.tex \inputs appendix.tex
-          then sup_appendix.tex after \appendix.
+latex/    paper.tex (main text; \inputs appendix.tex then the bibliography — the
+          essential appendix precedes the References) · model.tex (Appendix A) ·
+          appendix.tex (Appendix A input + Appendix B data/variables) ·
+          supplement.tex (STANDALONE Supplemental Appendix; \inputs sup_appendix.tex,
+          uses `xr`+`\externaldocument{paper}` so compile paper FIRST) ·
+          sup_appendix.tex (shared body: Appendix C policy record+robustness,
+          Appendix D supplementary robustness & inference) · refs.bib   (PDFs
+          git-ignored). Compile: `pdflatex paper; bibtex paper; pdflatex paper ×2;
+          pdflatex supplement ×2`.
 CLAUDE.md · README.md · .gitignore · HealthEcon.Rproj
 ```
 
@@ -355,8 +373,15 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 
 ## Results guide & exhibit map
 
+**NB (2026-07-09 reorg):** the Parto Adequado exhibits (`fig04`, `fig04b`, `tab05`,
+`tab05b`, `fig05_rn368`) and `tab13*`/`tab14`/`tab15*`/`tab_ref_*` now live in the
+**Supplemental Appendix** (`latex/supplement.tex` via `sup_appendix.tex`), NOT the
+body. The pooled DiD (`tab_pooled_did.tex`, was `tab_ref_c2_pooled_did`) is the
+CENTRAL timing exhibit in the body.
+
 | Exhibit | Script | Content | Takeaway |
 |---|---|---|---|
+| `tab_pooled_did` | 07 | Pooled DiD, muni×date + muni×sector FE (private increment) | **Central timing estimate: weekend −1.8pp / holiday −2.4pp, within same muni-day** |
 | `fig01_csection_trend` | 01 | Cesarean rate by sector, TISS + SINASC over time | Epidemic: private ~80% vs public ~44%, stable |
 | `tab01_descriptives` | 01 | Muni-year summary stats | Sample overview |
 | `tab02_not_a_price` | 02 | csection ~ log_fee_gap, 4 FE/controls specs | Fee gap doesn't explain it (sign-unstable, tiny) |
@@ -389,7 +414,7 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | SINASC cesarean (all / private / nonprofit / public) | ~57% / 79% / 60% / 44% |
 | Weekday cesarean % (private / nonprofit / public) | 81.9 / 62.5 / 45.0 |
 | Weekend dip (private / public) | −8.3pp / −7.0pp (p<0.001) |
-| **Private-SPECIFIC increment (pooled DiD, muni×sector + date FE)** | **weekend −1.6pp*** (SE .0053) / holiday −2.1pp*** (SE .0044)** — the number that survives the sector-contrast test (referee C2). Most of the 8.3pp is common to both sectors; this is the honest headline. |
+| **Private-SPECIFIC increment (pooled DiD, muni×date + muni×sector FE)** | **weekend −1.8pp*** (SE .0067) / holiday −2.4pp*** (SE .0048) / eve −0.9pp*** ** — the CENTRAL timing estimate (`tab_pooled_did.tex`; upgraded to within-muni×date FE per GPT round-2 C8, from the old muni×sector+date −1.6/−2.1). Compares the two ownership types on the SAME municipality-day; most of the raw 8.3pp is common to both sectors. |
 | Holiday dip (private / public) | −5.3pp / −3.5pp (p<0.001) |
 | Robson 1–2 weekend dip (private / public) | −7.4pp / −5.0pp; Robson 1 private −6.5pp |
 | Economic fee gap (big states) | negative (~−8 to −25%) |

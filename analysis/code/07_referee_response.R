@@ -64,10 +64,13 @@ sd[, private := as.integer(sector == "Private")]
 cell <- sd[births > 0, .(rate = sum(cesarean) / sum(births), births = sum(births)),
            by = .(muni, date, sector, private, weekend, holiday, eve, year)]
 
-# date FE absorbs the common weekend/holiday/eve main effects; muni^sector absorbs
-# the sector level. The interactions are the private-specific differentials.
+# municipality x date FE absorbs every shock common to both sectors within a
+# municipality-day (local staffing, capacity, municipal holidays); municipality x
+# sector absorbs the sector level. The interactions are then the private-specific
+# differentials estimated from the SAME municipality and day, the strongest local
+# public--for-profit contrast the data allow.
 m_diff <- feols(rate ~ i(private, weekend, ref = 0) + i(private, holiday, ref = 0) +
-                       i(private, eve, ref = 0) | muni^sector + date,
+                       i(private, eve, ref = 0) | muni^date + muni^sector,
                 cell, weights = ~births, cluster = ~muni + date)
 # also report each sector's own dip (from separate regressions) for context
 m_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[private == 1],
@@ -80,7 +83,7 @@ dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "National holid
           "private::1:weekend" = "Private $\\times$ Weekend",
           "private::1:holiday" = "Private $\\times$ National holiday",
           "private::1:eve"     = "Private $\\times$ Eve of rest day")
-f <- file.path(TABLE, "tab_ref_c2_pooled_did.tex")
+f <- file.path(TABLE, "tab_pooled_did.tex")
 etable(m_pub, m_priv, m_diff, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
@@ -90,13 +93,15 @@ etable(m_pub, m_priv, m_diff, tex = TRUE, file = f, replace = TRUE, dict = dict,
        label = "tab:pooled_did",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells, SINASC",
          "2010--2024, weighted by births. Columns 1--2 estimate each sector's own dip.",
-         "Column 3 pools both sectors with municipality$\\times$sector and date fixed",
-         "effects; the date fixed effects absorb the calendar shock common to both",
-         "sectors, so the interaction terms identify the increment specific to the",
-         "for-profit private sector. Standard errors, two-way clustered by",
-         "municipality and date, in parentheses.", SIGNIF_NOTE))
+         "Column 3 pools both sectors with municipality$\\times$date and",
+         "municipality$\\times$sector fixed effects; the municipality$\\times$date fixed",
+         "effects absorb every shock common to both sectors within a municipality-day,",
+         "so the interaction terms identify the increment specific to for-profit",
+         "establishments, estimated from the same municipality and day. Standard",
+         "errors, two-way clustered by municipality and date, in parentheses.",
+         SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
-cat("\n[A/C2] Private-specific increment (pooled, date FE):\n"); print(coeftable(m_diff))
+cat("\n[A/C2] Private-specific increment (pooled, muni x date FE):\n"); print(coeftable(m_diff))
 
 # =============================================================================
 # B (C3) — ROBSON x PRELABOR VALIDATION + Robson-1 vs Robson-10 formal test.

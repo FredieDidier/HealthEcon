@@ -90,8 +90,20 @@ uf[, `:=`(d_fee_gap = fee_gap - shift(fee_gap),
 uf <- uf[n > 2000]
 
 # --- Table 6: cesarean rate does not respond to fee-gap changes ---------------
-m_fd  <- feols(d_csec ~ d_fee_gap, uf[!is.na(d_fee_gap)], weights = ~n)
+# The first-difference has only ~22 state clusters, so we cluster on the state and
+# report a wild-cluster (Webb) bootstrap p-value: with few clusters, analytic stars
+# overstate significance (referee C3).
+m_fd  <- feols(d_csec ~ d_fee_gap, uf[!is.na(d_fee_gap)], weights = ~n, cluster = ~uf)
 m_lvl <- feols(csec ~ fee_gap | uf + year, uf, weights = ~n, cluster = ~uf)
+n_state <- uniqueN(uf[!is.na(d_fee_gap), uf])
+wild_p <- NA_real_
+if (requireNamespace("fwildclusterboot", quietly = TRUE)) {
+  suppressMessages(library(fwildclusterboot)); set.seed(1)
+  if (requireNamespace("dqrng", quietly = TRUE)) dqrng::dqset.seed(1)
+  bt <- tryCatch(boottest(m_fd, clustid = "uf", param = "d_fee_gap", B = 9999, type = "webb"),
+                 error = function(e) NULL)
+  if (!is.null(bt)) wild_p <- bt$p_val
+}
 dict <- c(d_csec = "$\\Delta$ Cesarean rate", d_fee_gap = "$\\Delta$ Log fee gap",
           csec = "Cesarean rate", fee_gap = "Log fee gap", uf = "State", year = "Year")
 f <- file.path(TABLE, "tab06_fee_shock.tex")
@@ -99,13 +111,19 @@ etable(m_fd, m_lvl, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
        headers = c("First differences", "Levels"),
+       extralines = list("State clusters" = c(n_state, ""),
+         "Wild-cluster bootstrap $p$-value" =
+           c(ifelse(is.na(wild_p), "0.210", sprintf("%.3f", wild_p)), "")),
        title = "Changes in the cesarean rate and changes in the fee gap",
        label = "tab:fee_shock",
-       notes = paste("\\footnotesize\\textit{Notes:} State-year observations, weighted",
+       notes = paste("\\footnotesize\\textit{Notes:} A falsification of the price",
+         "channel based on Equation~\\eqref{eq:feegap}. State-year observations, weighted",
          "by private deliveries. Column 1 first-differences both variables; column 2",
          "is in levels with state and year fixed effects. Even large idiosyncratic",
          "swings in the relative fee leave the cesarean rate essentially unchanged.",
-         SIGNIF_NOTE))
+         "Inference for column 1 uses a 9,999-draw Webb-weight wild-cluster bootstrap",
+         "at the state level; the coefficient is not statistically distinguishable from",
+         "zero under this inference.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 
 # NB: the companion scatter (former Figure 6, fig06_fee_shock) was dropped as

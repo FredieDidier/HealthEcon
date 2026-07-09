@@ -5,34 +5,36 @@
 \small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
-      Dependent Variables:  & $\Delta$ Cesarean rate  & Cesarean rate\\  
-                            & First differences       & Levels \\   
-      Model:                & (1)                     & (2)\\  
+      Dependent Variables:             & $\Delta$ Cesarean rate  & Cesarean rate\\  
+                                       & First differences       & Levels \\   
+      Model:                           & (1)                     & (2)\\  
       \midrule
       \emph{Variables}\\
-      Constant              & -0.0040$^{***}$         &   \\   
-                            & (0.0014)                &   \\   
+      Constant                         & -0.0040$^{**}$          &   \\   
+                                       & (0.0015)                &   \\   
 \addlinespace[2pt]
-      $\Delta$ Log fee gap  & -0.0127$^{**}$          &   \\   
-                            & (0.0063)                &   \\   
+      $\Delta$ Log fee gap             & -0.0127                 &   \\   
+                                       & (0.0113)                &   \\   
 \addlinespace[2pt]
-      Log fee gap           &                         & -0.0270\\   
-                            &                         & (0.0205)\\   
+      Log fee gap                      &                         & -0.0270\\   
+                                       &                         & (0.0205)\\   
 \addlinespace[2pt]
+      State clusters                   & 22                      & \\  
+      Wild-cluster bootstrap $p$-value & 0.210                   & \\  
       \midrule
       \emph{Fixed-effects}\\
-      State                 &                         & Yes\\  
-      Year                  &                         & Yes\\  
+      State                            &                         & Yes\\  
+      Year                             &                         & Yes\\  
       \midrule
       \emph{Fit statistics}\\
-      Observations          & 188                     & 207\\  
-      R$^2$                 & 0.021                   & 0.854\\  
+      Observations                     & 188                     & 207\\  
+      R$^2$                            & 0.021                   & 0.854\\  
 \bottomrule
    \end{tabular}
 }
    
    \par \raggedright 
-   \footnotesize\textit{Notes:} A falsification of the price channel based on Equation~\eqref{eq:feegap}. State-year observations, weighted by private deliveries. Column 1 first-differences both variables; column 2 is in levels with state and year fixed effects. Even large idiosyncratic swings in the relative fee leave the cesarean rate essentially unchanged. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+   \footnotesize\textit{Notes:} A falsification of the price channel based on Equation~\eqref{eq:feegap}. State-year observations, weighted by private deliveries. Column 1 first-differences both variables; column 2 is in levels with state and year fixed effects. Even large idiosyncratic swings in the relative fee leave the cesarean rate essentially unchanged. Inference for column 1 uses a 9,999-draw Webb-weight wild-cluster bootstrap at the state level; the coefficient is not statistically distinguishable from zero under this inference. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{table}
 
 
