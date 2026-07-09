@@ -88,7 +88,7 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        extralines = list("Maternal controls" = c("No", "Yes", "Yes", "Yes")),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       title = "The health footprint: early-term shifting in the private sector",
+       title = "Private-sector differences in early-term birth and newborn outcomes",
        label = "tab:health",
        notes = paste("\\footnotesize\\textit{Notes:} Birth-level regressions, SINASC",
          "2010--2024, private (for-profit) vs public establishments, municipality and",
