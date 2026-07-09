@@ -1,0 +1,36 @@
+
+\begin{table}[H]
+   \caption{\label{tab:fee_base_econ} The fee-gap null does not depend on the endogenous labor-assistance hours}
+   \centering
+\small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+   \begin{tabular}{lcccc}
+      \toprule
+      Dependent Variable: & \multicolumn{4}{c}{Private cesarean rate}\\
+                                         & Base, state FE & Base, muni FE  & Economic, state FE & Economic, muni FE \\   
+      Model:                             & (1)            & (2)            & (3)                & (4)\\  
+      \midrule
+      \emph{Variables}\\
+      Log fee gap (base vaginal fee)     & 0.0358$^{*}$   & -0.0192$^{**}$ &                    &   \\   
+                                         & (0.0196)       & (0.0092)       &                    &   \\   
+\addlinespace[2pt]
+      Log fee gap (economic vaginal fee) &                &                & 0.0473$^{*}$       & -0.0163$^{*}$\\   
+                                         &                &                & (0.0241)           & (0.0090)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      State                              & Yes            &                & Yes                & \\  
+      Year                               & Yes            & Yes            & Yes                & Yes\\  
+      Municipality                       &                & Yes            &                    & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                       & 5,176          & 5,176          & 5,176              & 5,176\\  
+      R$^2$                              & 0.315          & 0.849          & 0.334              & 0.849\\  
+\bottomrule
+   \end{tabular}
+}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Municipality-year cells built from event-level TISS claims, weighted by deliveries. The base fee gap uses only the delivery procedure fee; the economic fee gap adds the separately-billed hourly labor-assistance fee to the vaginal fee. The coefficient is small and sign-unstable under both definitions, so the null is not an artifact of the endogenous billed hours. SE clustered by the fixed-effect geography. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+

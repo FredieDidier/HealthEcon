@@ -411,13 +411,13 @@ cat(sprintf("\nTrue weekend (Sun+Sat) dip = %.2f pp; rank %d/21; exact permutati
 print(res)
 
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{Randomization inference: the weekend dip across all 21 two-day placebos}",
+  "\\caption{Descriptive ranking: the weekend dip across all 21 two-day placebos}",
   "\\label{tab:permutation}\\small",
   "\\begin{tabular}{lc}", "\\toprule",
   "Pseudo rest-day pair & Private cesarean dip (pp) \\\\", "\\midrule",
   res[, sprintf("%s%s & %.2f \\\\", days, ifelse(days == "Sun+Sat", " (true weekend)", ""), coef)],
   "\\bottomrule", "\\end{tabular}",
-  sprintf("\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos; exact permutation $p = %.3f$.", pval),
+  "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
   "\\end{table}")
 writeLines(tex, file.path(TABLE, "tab15_permutation.tex"))
 

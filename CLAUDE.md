@@ -38,8 +38,8 @@ moderate sentences).
    (**−7.4pp private**), where cesareans are least medically justified.
 
 **Authors (in order):** Fredie Didier (IDP; corresponding, fdidier@terra.com.br),
-Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br).
-The paper is written in the first-person plural ("we"). **Target journal: AEJ: Economic Policy** (primary; the
+Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br),
+Pablo Castro (UFBA, pablocastro@ufba.br). The paper is written in the first-person plural ("we"). **Target journal: AEJ: Economic Policy** (primary; the
 paper is written and formatted to its guidelines — abstract ≤100 words, Chicago
 author-date, ≤40–45pp, essential material in-paper vs supplemental appendix).
 **Journal of Health Economics is the solid fallback**; JHR/AEJ:Applied also fit.
@@ -205,11 +205,19 @@ populated from ~2014 on.
   uniform-timing benchmark** (vaginal ~32%).
 - **Prelabor split** (`08_mechanism_checks.R`, `cesarea_antes_parto`): the private
   weekend dip is **−9.7pp for prelabor (scheduled) cesareans and +1.7pp for
-  in-labor cesareans** — the dip is entirely scheduled sections (the positive
-  in-labor term is displacement: unscheduled women labor and some convert). Daily
-  *counts*: cesarean counts crater on weekends while vaginal counts barely move
-  (rules out staffing/admission composition). Robson 10 (preterm) dips less
-  (−6.0), a weak placebo (preterm cesareans are also medically scheduled).
+  in-labor cesareans** — the AGGREGATE dip is concentrated in scheduled sections
+  (the positive in-labor term is displacement: unscheduled women labor and some
+  convert). **CAVEAT (referee C3, verified 2026-07-09):** do NOT write "the ENTIRE
+  dip is prelabor." Robson 1 (spontaneous labor) has prelabor=0 by construction,
+  yet its private weekend dip is −6.5pp (all in-labor) — so intrapartum
+  decision-making / weekend selection ALSO drives a dip; the mechanism is broader
+  than pure prelabor scheduling. Prelabor-indicator missingness ~16%, balanced
+  weekday vs weekend (0.1604 vs 0.1609 private), so the split is not an artifact.
+  Daily *counts*: cesarean counts crater on weekends while vaginal counts barely
+  move (rules out staffing/admission composition). Robson 10 (preterm) dip
+  (−5.9/−6.0) is **NOT statistically distinguishable** from the Robson-1 dip
+  (interaction p=0.18) → the preterm "placebo" is weak; the "dips far less" claim
+  was REMOVED from the paper.
 - **The cost of convenience** (`09_gestation_health.R`): private births are
   **+10.9pp more likely to be early-term (37–38 wk)** with maternal controls
   (age, education, race) + muni/year FE — the gestational-age shift that prelabor
@@ -381,6 +389,7 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | SINASC cesarean (all / private / nonprofit / public) | ~57% / 79% / 60% / 44% |
 | Weekday cesarean % (private / nonprofit / public) | 81.9 / 62.5 / 45.0 |
 | Weekend dip (private / public) | −8.3pp / −7.0pp (p<0.001) |
+| **Private-SPECIFIC increment (pooled DiD, muni×sector + date FE)** | **weekend −1.6pp*** (SE .0053) / holiday −2.1pp*** (SE .0044)** — the number that survives the sector-contrast test (referee C2). Most of the 8.3pp is common to both sectors; this is the honest headline. |
 | Holiday dip (private / public) | −5.3pp / −3.5pp (p<0.001) |
 | Robson 1–2 weekend dip (private / public) | −7.4pp / −5.0pp; Robson 1 private −6.5pp |
 | Economic fee gap (big states) | negative (~−8 to −25%) |

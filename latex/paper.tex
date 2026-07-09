@@ -35,7 +35,9 @@ helpful comments. All errors are our own.}
 \and Vinicius Mendes\thanks{Federal University of Bahia (UFBA), e-mail:
 vdmendes@ufba.br.}
 \and Lucas Emanuel\thanks{Federal University of Bahia (UFBA), e-mail:
-lucasemanuel@ufba.br.}}
+lucasemanuel@ufba.br.}
+\and Pablo Castro\thanks{Federal University of Bahia (UFBA), e-mail:
+pablocastro@ufba.br.}}
 \date{\today}
 
 \begin{document}
@@ -147,44 +149,43 @@ respect to medical need, and any systematic weekly pattern in surgery reveals
 choices about timing. That delivery dates can be shifted for non-clinical reasons
 is well established: births respond to tax and holiday incentives
 \citep{dickertconlin1999,gans2009}. Cesarean rates in the private sector fall by 8.3
-percentage points on weekends and 5.3 points on national holidays, roughly twice
-the public-sector dips, and half of all cesareans are performed in weekday
-business hours, against a 30\% benchmark under uniform timing. The mechanism is
-visible in its components: the weekend dip is minus 9.7 percentage points for
-cesareans scheduled before labor and plus 1.7 points for cesareans during labor,
-so the entire pattern comes from surgery booked around the physician's calendar,
-with a small displacement of unscheduled women into in-labor surgery. The
-pattern persists among low-risk first-time mothers in spontaneous labor, is 2.2
-points larger in municipalities where obstetricians are scarce relative to
-births, and is no stronger for educated mothers, which points to the supply
-side rather than to maternal demand for convenient timing.
+percentage points on weekends and 5.3 points on national holidays, against 7.0 and
+3.5 points in the public sector, and half of all cesareans are performed in weekday
+business hours, against a 30\% benchmark under uniform timing. Weekly scheduling
+thus pervades both sectors; a pooled specification with date fixed effects isolates
+a private-specific increment of a further 1.6 points on weekends and 2.1 on
+holidays. The mechanism is visible in the components of the rate: the aggregate
+weekend dip is minus 9.7 percentage points for cesareans scheduled before labor
+and near zero for cesareans during labor, so it is carried by surgery booked
+around the physician's calendar. It does not vanish among low-risk first-time
+mothers already in spontaneous labor, where the cesarean is intrapartum by
+definition; there it reflects weekend decision-making and selection rather than
+prelabor scheduling. The pattern is 2.2 points larger in municipalities where
+obstetricians are scarce relative to births, and is no stronger for educated
+mothers, which points to the supply side rather than to maternal demand for
+convenient timing.
 
 Third, convenience has a quantity and a cost. A decomposition over Robson
 clinical groups attributes 71\% of the 35 percentage-point private-public gap to
 practice style within identical clinical groups, not to differences in case-mix.
 Benchmarking each municipality's weekday cesarean propensity against its own
-weekend rate implies about 50,000 excess weekday cesareans per year in the
-private sector alone, about one in ten private cesareans. Scheduling also moves
+weekend rate places about 50,000 private weekday cesareans per year above that
+mechanical benchmark, about one in ten, a count of surgery above the weekend rate
+rather than of procedures that scheduling alone caused. Scheduling also moves
 births earlier: private births are 10.9 percentage points more likely to occur
 at 37--38 weeks of gestation than public births after controlling for maternal
 age, education, and race, and prelabor cesareans mass exactly at those weeks.
-Early-term delivery is precisely the margin that the clinical literature links
+Early-term delivery is the margin that the clinical literature links
 to higher neonatal respiratory morbidity and intensive-care admission
 \citep{tita2009}, and quasi-experimental evidence confirms that non-indicated
 cesareans and earlier scheduled births harm newborn health
 \citep{costaramon2018,card2023,borra2019}.
 
-A simple model of physician time allocation rationalizes all of these facts jointly. A physician
-chooses between attending a vaginal delivery, which arrives at a random hour,
-lasts long, and blocks the calendar, and scheduling a one-hour cesarean at the
-time she prefers. The choice depends on the fee gap plus a convenience premium:
-the value of converting an unschedulable liability into a business-hours
-appointment. The premium is positive even where the fee gap is negative, which
-is exactly the configuration the data show. The model delivers the fee
-irrelevance, the weekday and business-hour clustering of prelabor cesareans, the
-larger dips where obstetric time is scarce, and the early-term shift as a single
-package, and it explains why fee-based policy levers have no traction: they act
-on the wrong wedge.
+A simple model of physician time rationalizes these facts. A physician weighs the
+fee gap against a convenience premium, the value of converting an unschedulable,
+calendar-blocking delivery into a one-hour appointment; the premium is positive
+even where the fee gap is negative, which is what the data show. The model also
+explains why fee-based policy levers have no traction: they act on the wrong wedge.
 
 The policy record is consistent with this reading. Beyond the ineffective court
 order, we evaluate \emph{Parto Adequado} (``Adequate Childbirth''), the flagship
@@ -207,9 +208,13 @@ established that providers respond to financial incentives, and the canonical
 test is whether treatment intensity tracks fees. We bring a setting where the
 financial channel can be measured directly, through actual billed fees, and
 rejected: cesarean use does not track the fee gap, and it is high precisely
-where cesareans pay less. In its place we identify and measure a distinct
-channel, the opportunity cost of the physician's own time, and show that agency
-operates through the calendar rather than the fee schedule. This reframes
+where cesareans pay less. In its place we document a distinct, non-price margin:
+supply-side scheduling of surgery around the calendar, the behavior the model
+attributes to the opportunity cost of physician time. Our data locate the margin
+on the supply side but cannot separate the attending physician's own time from
+hospital staffing, operating-room capacity, and scheduling protocols, so we frame
+the mechanism as supply-side convenience scheduling rather than as a clean
+measurement of the physician's private opportunity cost. This reframes
 supplier-induced demand around a non-price margin that the incentive literature
 has largely left implicit. In doing so the paper connects to the literature on
 physician practice styles and geographic variation in treatment, which finds
@@ -409,8 +414,11 @@ $\text{Eve}$ indicate weekends, national holidays, and the eve of a rest day;
 $\mu_m$ and $\delta_t$ are municipality and year fixed effects; cells are weighted
 by births; and standard errors are two-way clustered by municipality and date. The
 coefficients $\beta_1$ and $\beta_2$ measure the weekend and holiday dips in the
-cesarean rate. Under the identifying assumption they are causal statements about
-timing driven by convenience. We estimate Equation~\eqref{eq:scheduling} separately
+cesarean rate. Because the observed delivery date can itself be chosen for a
+scheduled cesarean, we read $\beta_1$ and $\beta_2$ as calendar sorting of
+cesarean deliveries, that is, as scheduling patterns, rather than as the causal
+effect of an as-good-as-random weekend assignment on medical need. We estimate
+Equation~\eqref{eq:scheduling} separately
 for the private and public sectors and, in extensions, within low-risk Robson
 groups, within a clinically clean sample, and separately for cesareans scheduled
 before as opposed to during labor. Birth-level regressions of gestational and
@@ -452,21 +460,27 @@ Table~\ref{tab:not_a_price} makes this precise by estimating
 Equation~\eqref{eq:feegap}: it regresses the private cesarean rate on the log
 economic fee gap across municipality-years, weighting by deliveries and adding
 state or municipality fixed effects and controls for income, plan coverage,
-prenatal care, and obstetrician density. The coefficient is small and changes
-sign across specifications: it is a positive 0.017 with state fixed effects and a
-negative 0.014 with municipality fixed effects, and never significant. A fee gap
-that swings by a full log point moves the cesarean rate by less than two
-percentage points, with an interval that includes zero.
+prenatal care, and obstetrician density. The coefficient is small and its sign
+flips with the fixed-effect scheme: with the full controls it is a positive 0.017
+under state fixed effects and a negative 0.014 under municipality fixed effects,
+neither significant, and in the specifications without controls it stays small but
+again switches sign. A fee gap that swings by a full log point moves the cesarean
+rate by less than two percentage points, with an interval that includes zero.
 
 \input{../analysis/output/tables/tab02_not_a_price.tex}
 
 Fees do move over time, and Table~\ref{tab:fee_shock} exploits that variation
 directly. State-level fee gaps swing by as much as two log points from one year
 to the next, yet cesarean rates do not follow. In first differences the
-coefficient is a precisely estimated near-zero with the wrong sign, and in levels
-with state and year fixed effects it is insignificant. Consistent with all of
-this, the 2015 court order to triple vaginal pay produced no jump in the fee
-series and no change in the cesarean rate. Money does not explain the epidemic.
+coefficient is small and wrong-signed; once the twenty-two states are treated as
+the clusters they are, a wild-cluster bootstrap cannot distinguish it from zero
+($p=0.21$), and in levels with state and year fixed effects it is likewise
+insignificant. Consistent with all of this, the 2015 court order to triple
+vaginal pay produced no jump in the fee series and no change in the cesarean
+rate. Taken together, the associations range from negative to positive and are
+sensitive to the fixed-effect and aggregation scheme; the data do not reveal a
+stable relationship between the relative fee and the cesarean rate, and money
+does not explain the epidemic.
 
 \input{../analysis/output/tables/tab06_fee_shock.tex}
 
@@ -481,8 +495,8 @@ reveals a choice about timing rather than a difference in the patients who give
 birth on different days. Figure~\ref{fig:dow} plots the cesarean rate by day of
 the week and sector. In the private sector the rate is flat at about 80 percent
 Monday through Friday and drops sharply on Saturday and Sunday. The public
-sector shows the same shape at a lower level, and the for-profit and nonprofit
-sectors bracket it.
+sector shows the same shape at a lower level, with the nonprofit sector in
+between.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig02_dow_cesarean.pdf}
@@ -493,14 +507,21 @@ sectors bracket it.
 Table~\ref{tab:scheduling} estimates the dips in municipality-by-date cells with
 municipality and year fixed effects, two-way clustered by municipality and date.
 Private cesarean rates fall by 8.3 percentage points on weekends and 5.3 points
-on national holidays, each about twice the public-sector dip. The effect is not a
-staffing artifact. Figure~\ref{fig:hours} shows that private cesareans are absent
+on national holidays, against public-sector dips of 7.0 and 3.5 points. Most of
+the weekend dip is thus common to both sectors, which is itself informative:
+weekly scheduling pervades Brazilian obstetrics. To isolate what is specific to
+the private model we pool the two sectors and add date fixed effects, which absorb
+the common calendar component; the private-specific increment is a further 1.6
+percentage points on weekends and 2.1 points on holidays, both statistically
+significant (Table~\ref{tab:pooled_did}). The pattern is consistent with supply-side scheduling rather than a
+pure staffing artifact. Figure~\ref{fig:hours} shows that private cesareans are absent
 overnight and spike between 8 and 11 in the morning, the operating-room block,
 while vaginal births are nearly uniform around the clock. Half of all cesareans
 occur in weekday business hours, against a benchmark of 29.8 percent under
 uniform timing, and only about a third of vaginal births do.
 
 \input{../analysis/output/tables/tab03_scheduling.tex}
+\input{../analysis/output/tables/tab_ref_c2_pooled_did.tex}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.92\textwidth]{../analysis/output/graphs/fig07_hour_of_birth.pdf}
@@ -509,15 +530,16 @@ uniform timing, and only about a third of vaginal births do.
 morning operating-room block; vaginal births are near-uniform.}
 \end{figure}
 
-The decisive evidence is in the components of the cesarean rate.
+The components of the cesarean rate locate the mechanism.
 Table~\ref{tab:mechanism_checks} splits it into cesareans performed before labor
-began and cesareans performed during labor. In the private sector the weekend
-dip is 9.7 percentage points for prelabor cesareans and a positive 1.7 points for
-in-labor cesareans. Scheduling can only operate on prelabor surgery, and that is
-exactly where the entire dip sits; the small positive in-labor term is
-displacement, as women who are not scheduled go into labor and some convert. A
-placebo confirms the reading: preterm births (Robson group 10), which cannot be
-freely scheduled, dip far less. Daily counts, in Figure~\ref{fig:daily_counts},
+began and cesareans performed during labor. In the private sector the aggregate
+weekend dip is 9.7 percentage points for prelabor cesareans and a positive 1.7
+points for in-labor cesareans. Scheduling operates on prelabor surgery, and that
+is where the aggregate dip is concentrated; the small positive in-labor term is
+displacement, as women who are not scheduled go into labor and some convert. This
+split is not an artifact of the timing indicator, which is missing for about 16
+percent of cesareans at a rate that is essentially identical on weekdays and
+weekends. Daily counts, in Figure~\ref{fig:daily_counts},
 show cesarean volumes collapsing on weekends while vaginal volumes barely move,
 which rules out a compositional change in who is admitted.
 
@@ -535,11 +557,16 @@ and Table~\ref{tab:robson} restrict attention to Robson groups 1 and 2, first-ti
 mothers at term with a single cephalic baby, the births for which a cesarean is
 hardest to justify. The private weekday rate still exceeds 70 percent and the
 weekend dip is 7.4 percentage points, against 5.0 in the public sector. Among
-Robson group 1 alone, women in spontaneous labor, the private dip is 6.5 points.
-Appendix Table~\ref{tab:permutation} pushes this further with exact randomization
-inference: across all twenty-one ways of choosing two days of the week as ``rest
-days,'' the true weekend produces the largest dip, an exact permutation p-value of
-0.048.
+Robson group 1 alone, first-time mothers in spontaneous labor, the private dip is
+still 6.5 points. Because these women are in labor by definition, this particular
+dip cannot come from prelabor scheduling; it reflects intrapartum decisions and
+selection into who delivers on a weekend, and it shows that the weekly calendar
+reaches even the births that scheduling cannot directly move. Appendix
+Table~\ref{tab:permutation} adds a descriptive placebo: across all twenty-one ways
+of choosing two days of the week as ``rest days,'' the true weekend produces the
+largest dip of the twenty-one. Because the days of the week are not exchangeable
+under a known assignment mechanism, we read this as a descriptive ranking rather
+than an exact randomization-inference p-value.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig03_robson_dow.pdf}
@@ -550,10 +577,11 @@ days,'' the true weekend produces the largest dip, an exact permutation p-value 
 \input{../analysis/output/tables/tab04_robson.tex}
 
 Two heterogeneity tests, in Table~\ref{tab:heterogeneity}, connect the pattern to
-physician time rather than patient demand. The weekend dip is 2.2 percentage
+the supply side rather than to patient demand. The weekend dip is 2.2 percentage
 points larger in municipalities where obstetricians are scarce relative to
-births, exactly where the opportunity cost of an unschedulable delivery is
-highest. And the dip is no larger, if anything smaller, for more-educated
+births, consistent with a higher opportunity cost of unschedulable time, though
+scarcity of obstetricians and of hospital capacity move together and we cannot
+fully separate them. And the dip is no larger, if anything smaller, for more-educated
 mothers, which is hard to square with a story in which mothers themselves demand
 convenient timing and points instead to the supply side, consistent with evidence
 that physician beliefs and practice patterns, rather than patient preferences,
@@ -579,27 +607,28 @@ carried entirely by prelabor cesareans (Figure~\ref{fig:gestation_timing}).
 Table~\ref{tab:health} estimates that private births are 10.9 percentage points
 more likely to be early-term (37--38 weeks) than public births, after controlling
 for maternal age, education, and race with municipality and year fixed effects.
-The estimate is associational, but the likely selection works against it: private
-mothers are healthier and would, if anything, carry to longer gestations, which
-biases the early-term gap toward zero, so 10.9 points is plausibly a lower bound.
-Early-term delivery is the margin the clinical literature links to higher
-neonatal respiratory morbidity and intensive-care use \citep{tita2009}, and
-quasi-experimental work confirms that non-indicated and early cesareans harm
-newborn health \citep{costaramon2018,card2023}. Private births show lower
+The estimate is associational. Sector and delivery mode are chosen, and the
+maternal controls cannot absorb differences in pregnancy risk, assisted
+reproduction, prior cesarean, or the measurement of gestational age, so we read
+the 10.9 points as a descriptive gap between sectors, not as a causal or
+lower-bound effect of scheduling. Early-term delivery is the margin the clinical
+literature links to higher neonatal respiratory morbidity and intensive-care use
+\citep{tita2009}, and quasi-experimental work confirms that non-indicated and
+early cesareans harm newborn health \citep{costaramon2018,card2023}. Private
+births show lower
 low-birthweight and low-Apgar rates, which reflects the better resources and
 healthier mothers of the private sector; we report these honestly, and the
 health margin the scheduling mechanism produces is the shift to early term.
 
 This shift is not costless. \citet{tita2009} find that elective delivery at
 37--38 weeks, rather than at 39, raises the rate of adverse neonatal outcomes,
-including respiratory morbidity and intensive-care admission, by roughly one half
-to one hundred percent. Applying even the lower end of that gradient to the tens
-of thousands of private cesareans booked before the week-39 hazard implies on the
-order of a thousand or more additional adverse neonatal episodes each year. This
-back-of-the-envelope figure is illustrative rather than causal, but it fixes the
-order of magnitude of the health cost that the convenience margin imposes, and it
-accords with quasi-experimental evidence that non-indicated and early cesareans
-harm newborns \citep{costaramon2018,card2023}.
+including respiratory morbidity and intensive-care admission. We deliberately do
+not convert our associational sector gap into a count of harmed newborns: the
+mapping from a chosen sector to a causal harm requires a design we do not have.
+The direction, however, is what both the clinical literature \citep{tita2009} and
+quasi-experimental evidence on non-indicated and early cesareans
+\citep{costaramon2018,card2023} would predict, and it locates the cost of the
+convenience margin in earlier, riskier births rather than in spending.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig09_gestation.pdf}
@@ -636,9 +665,12 @@ gap is practice style rather than patient composition echoes the finding, in the
 literature on geographic variation in health care, that supply-side practice
 patterns dominate patient case-mix \citep{finkelstein2016,molitor2018}.
 Benchmarking
-each municipality's weekday cesarean propensity against its own weekend rate, a
-lower bound, implies about 50,000 excess weekday cesareans per year in the
-private sector, roughly one in ten private cesareans. Consistent with the
+each municipality's weekday cesarean propensity against its own weekend rate
+places about 50,000 private weekday cesareans per year above that mechanical
+benchmark, roughly one in ten. This counts cesareans above the own-municipality
+weekend rate; it does not separate procedures that would not have occurred from
+those merely shifted off the weekend, and the weekend rate itself need not be the
+clinical optimum. Consistent with the
 picture that most private cesareans are elective, about 88 to 91 percent carry no
 recorded clinical indication in the claims, only a delivery-outcome code
 (Appendix Table~\ref{tab:no_indication}).
@@ -659,9 +691,14 @@ pre-period the birth records afford. The treated municipalities are indeed on a
 downward path, but the path begins in 2010, seven years before the dissemination
 phase, and shows no break at adoption. A joint test rejects parallel pre-trends,
 and controlling for a treated-specific linear trend removes the estimated effect
-entirely (Appendix Table~\ref{tab:pretrend_robustness}). The decline is real; its
-attribution to the program is not supported by the data, a caution for the
-short-window evaluations that have credited it. Appendix Figure~\ref{fig:rn368}
+entirely (Appendix Table~\ref{tab:pretrend_robustness}). Two features compound the
+problem: hospitals adopted on a staggered schedule between 2017 and 2021, which a
+common post-2017 indicator cannot capture, and our municipality-level exposure
+dilutes any hospital-level effect. We therefore do not read this comparison as an
+estimate of the program's effect; the available observational design does not
+identify it. The decline is real; its attribution to the program is not supported
+by the data, a caution for the short-window evaluations that have credited it.
+Appendix Figure~\ref{fig:rn368}
 places the national monthly series in its policy timeline for reference.
 
 \begin{figure}[H]\centering

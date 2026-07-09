@@ -1,0 +1,49 @@
+
+\begin{table}[H]
+   \caption{\label{tab:pooled_did} The private-specific weekend and holiday increment (pooled difference-in-differences)}
+   \centering
+\small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+   \begin{tabular}{lccc}
+      \toprule
+      Dependent Variable: & \multicolumn{3}{c}{Cesarean rate}\\
+                                         & Public (separate) & Private (separate) & Pooled: private increment \\   
+      Model:                             & (1)               & (2)                & (3)\\  
+      \midrule
+      \emph{Variables}\\
+      Weekend                            & -0.0704$^{***}$   & -0.0833$^{***}$    &   \\   
+                                         & (0.0026)          & (0.0050)           &   \\   
+\addlinespace[2pt]
+      National holiday                   & -0.0381$^{***}$   & -0.0559$^{***}$    &   \\   
+                                         & (0.0023)          & (0.0038)           &   \\   
+\addlinespace[2pt]
+      Eve of rest day                    & -0.0055$^{***}$   & -0.0094$^{***}$    &   \\   
+                                         & (0.0013)          & (0.0016)           &   \\   
+\addlinespace[2pt]
+      Private $\times$ Weekend           &                   &                    & -0.0157$^{***}$\\   
+                                         &                   &                    & (0.0053)\\   
+\addlinespace[2pt]
+      Private $\times$ National holiday  &                   &                    & -0.0209$^{***}$\\   
+                                         &                   &                    & (0.0044)\\   
+\addlinespace[2pt]
+      Private $\times$ Eve of rest day   &                   &                    & -0.0047$^{*}$\\   
+                                         &                   &                    & (0.0025)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      Municipality                       & Yes               & Yes                & \\  
+      Year                               & Yes               & Yes                & \\  
+      Municipality-sector                &                   &                    & Yes\\  
+      date                               &                   &                    & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                       & 3,806,155         & 1,455,272          & 5,261,427\\  
+      R$^2$                              & 0.335             & 0.441              & 0.572\\  
+\bottomrule
+   \end{tabular}
+}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Municipality-date cells, SINASC 2010--2024, weighted by births. Columns 1--2 estimate each sector's own dip. Column 3 pools both sectors with municipality$\times$sector and date fixed effects; the date fixed effects absorb the calendar shock common to both sectors, so the interaction terms identify the increment specific to the for-profit private sector. Standard errors, two-way clustered by municipality and date, in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+
