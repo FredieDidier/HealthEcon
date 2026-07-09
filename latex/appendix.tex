@@ -1,0 +1,68 @@
+% =============================================================================
+% appendix.tex — the essential appendix, \input by paper.tex after \appendix.
+%   Appendix A: the model (via \input{model})
+%   Appendix B: data and variable construction
+% =============================================================================
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{Appendix}
+\begin{center}{\Large\bfseries Appendix}\end{center}
+\vspace{0.5em}
+
+\input{model}   % Appendix A: the model
+
+% =============================================================================
+\section{Data and variable construction}\label{app:data}
+% =============================================================================
+This appendix documents the construction of the analysis files; the complete
+codebook is distributed in machine-readable form with the replication package
+described in the data-availability statement. Deliveries in the TISS claims are identified by
+their procedure codes in the Unified Health Supplementary Terminology
+(Terminologia Unificada da Sa\'ude Suplementar, TUSS), the standardized procedure
+nomenclature that private plans use to bill (cesarean 31309054 and 31309208;
+vaginal 31309127); the economic vaginal fee adds the separately billed hourly
+labor-assistance code (31309038). In SINASC, the sector of a birth is the legal
+nature of its establishment in the CNES registry: for-profit private (codes
+2xxx), nonprofit (3xxx), and public (1xxx); the headline private-public contrast
+compares for-profit private with public. Because a TISS event can bundle several
+inpatient days, a plain event count understates admissions; where an admission
+count is needed we use the ratio of the billed daily-visit items to the mean
+length of stay, which reproduces the regulator's published figure. All files are
+built at the municipality level on the six-digit municipality code of the
+Brazilian Institute of Geography and Statistics (Instituto Brasileiro de
+Geografia e Estat\'istica, IBGE).
+
+\paragraph{Variable definitions.} The main constructed variables are defined as
+follows. Indicators equal one when the stated condition holds and zero otherwise.
+\begin{itemize}
+\item \textbf{Cesarean}: the delivery is a cesarean section. In TISS this is
+the presence of a cesarean procedure code; in SINASC it is the registry's
+delivery-type field.
+\item \textbf{Sector (private / nonprofit / public)}: the sector of the birth
+establishment, from the legal nature of its CNES record; \textbf{private} denotes
+for-profit private establishments (2xxx), the headline group.
+\item \textbf{Economic vaginal fee}: the physician fee for a vaginal delivery
+plus the separately billed hourly labor-assistance fee (TUSS 31309038), which
+compensates the time spent attending labor. This is the correct comparison for
+the cesarean fee because it credits the vaginal delivery with the time it pays for.
+\item \textbf{Log fee gap}: the natural logarithm of the ratio of the mean
+cesarean fee to the mean economic vaginal fee in a municipality-year; positive
+values mean cesareans pay more.
+\item \textbf{Cesarean share}: the share of births delivered by cesarean in a
+municipality-date-sector cell.
+\item \textbf{Weekend, holiday, eve}: indicators for Saturdays and Sundays, the
+eight fixed and four Easter-based movable national holidays, and the eve of a rest
+day (a Friday or the day before a holiday), respectively.
+\item \textbf{Robson group}: the World Health Organization's ten-group
+classification of deliveries; groups 1 and 2 are the low-risk first births used in
+the mechanism tests.
+\item \textbf{Prelabor cesarean}: a cesarean recorded as performed before labor
+began, as opposed to an in-labor cesarean.
+\item \textbf{Early-term birth}: a birth at 37 or 38 completed weeks of
+gestation.
+\item \textbf{Treated (Parto Adequado)}: the municipality contains a private
+hospital that joined the program's 2017--2021 dissemination phase.
+\item \textbf{Obstetricians per 1,000 births}: the count of obstetricians in
+the CNES professionals file per 1,000 births in the municipality-year.
+\end{itemize}

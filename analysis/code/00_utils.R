@@ -36,7 +36,7 @@ save_fig <- function(plot, name, width = 8, height = 5) {
 }
 
 # Standard table-note fragments for etable(notes = ...).
-SIGNIF_NOTE  <- "\\footnotesize Significance: *** p$<$0.01, ** p$<$0.05, * p$<$0.10."
+SIGNIF_NOTE  <- "\\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10."
 
 # ---------------------------------------------------------------------------
 #

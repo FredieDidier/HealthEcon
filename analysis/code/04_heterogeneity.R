@@ -1,4 +1,11 @@
 # =============================================================================
+# 04_heterogeneity.R — theory-driven heterogeneity and operator modality
+# Consolidated analysis script. Sections below are self-contained (each loads
+# config + utils and its own data); they were merged from the former per-exhibit
+# scripts as part of the thematic reorganization.
+# =============================================================================
+
+# =============================================================================
 # 10_heterogeneity.R — heterogeneity as theory tests (not decoration).
 # The time-cost model predicts WHERE the scheduling motive binds hardest:
 #   (a) OBSTETRICIAN SCARCITY: where obstetricians per birth are scarce, the
@@ -62,7 +69,7 @@ etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
        notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Low obstetrician density =",
          "below-median obstetricians per 1,000 births (CNES professionals file). Education splits",
-         "mothers at 8+ years of schooling. Standard errors clustered by municipality.",
+         "mothers at 8+ years of schooling. Standard errors, clustered by municipality, are reported in parentheses.",
          SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_dens, m_educ, dict = dict, fitstat = ~ n, digits = 4)
@@ -78,18 +85,19 @@ m_mod1 <- feols(cesarean ~ coop + i(faixa_etaria) | muni_prestador + year, ev, c
 
 f2 <- file.path(TABLE, "tab10b_modality.tex")
 etable(m_mod0, m_mod1, tex = TRUE, file = f2, replace = TRUE,
-       dict = c(coop = "Cooperativa m\\'edica (physician-owned operator)",
+       dict = c(coop = "Physician-owned cooperative insurer",
                 cesarean = "Cesarean", muni_prestador = "Municipality", year = "Year"),
        keep = "%coop",
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        extralines = list("Maternal age-band controls" = c("No", "Yes")),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       title = "Physician-owned operators (cooperativas) and cesarean use",
+       title = "Physician-owned cooperative insurers and cesarean use",
        label = "tab:modality",
        notes = paste("\\footnotesize\\textit{Notes:} TISS delivery events 2015--2024,",
-         "municipality and year fixed effects. Cooperativas m\\'edicas (e.g.\\ Unimed)",
-         "are physician-owned; agency predicts more discretion over the delivery",
-         "decision than in insurer-run plans. Standard errors clustered by municipality.",
+         "municipality and year fixed effects. Physician-owned cooperative insurers",
+         "are owned by their affiliated doctors; agency predicts more discretion over the delivery",
+         "decision than in ordinary insurer-run plans. Maternal controls are indicators for the",
+         "beneficiary's age band. Standard errors, clustered by municipality, are reported in parentheses.",
          SIGNIF_NOTE))
 postprocess_tex(f2, fontsize = "\\small", tabcolsep = 5)
 etable(m_mod0, m_mod1, keep = "%coop", fitstat = ~ n, digits = 4)

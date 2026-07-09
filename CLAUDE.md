@@ -37,7 +37,9 @@ moderate sentences).
    fingerprint of elective surgery — and the dip persists within low-risk Robson 1–2
    (**−7.4pp private**), where cesareans are least medically justified.
 
-**Author:** Fredie Didier. **Target journal: AEJ: Economic Policy** (primary; the
+**Authors (in order):** Fredie Didier (IDP; corresponding, fdidier@terra.com.br),
+Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br).
+The paper is written in the first-person plural ("we"). **Target journal: AEJ: Economic Policy** (primary; the
 paper is written and formatted to its guidelines — abstract ≤100 words, Chicago
 author-date, ≤40–45pp, essential material in-paper vs supplemental appendix).
 **Journal of Health Economics is the solid fallback**; JHR/AEJ:Applied also fit.
@@ -170,7 +172,7 @@ inflates the private share to ~56%). In TISS, every event is private by construc
 National cesarean rates by sector over time (TISS 2015–2025; SINASC 2010–2024);
 muni-year summary statistics from `main_data.parquet`.
 
-### Pillar 2 — Not a price story (`02_not_a_price.R`, `06_fee_shock.R`)
+### Pillar 2 — Not a price story (`02_regressions.R`)
 Muni-year, delivery-weighted: `tiss_csection_rate ~ log_fee_gap | {UF, muni} + year`
 (+ GDP pc, plan coverage, prenatal, obstetrician density). `log_fee_gap =
 log(fee_cesarean / fee_vaginal_econ)`, where the **economic vaginal fee adds the
@@ -179,7 +181,7 @@ comparison. Coefficient: **+0.017 (UF FE) / −0.014 (muni FE), n.s./sign-unstab
 `06_fee_shock.R`: state-year first differences — even ±2 log-point fee-gap swings
 leave the cesarean rate unchanged (a reduced-form falsification).
 
-### Pillar 3 — The convenience mechanism (`03_scheduling.R`)
+### Pillar 3 — The convenience mechanism (`03_mechanisms.R`)
 SINASC muni × date × sector cells, 2010–2024: `cesarean_share ~ weekend + holiday +
 eve | muni + year`, weighted by births, **two-way clustered by muni AND date**
 (weekend/holiday are date-level shocks; SEs virtually unchanged vs muni-only),
@@ -288,12 +290,21 @@ build/    00_utils.R          admission proxies + TUSS delivery codes
           01c_ieps.R          IEPS muni-year covariates
           02_deliveries.R     TISS delivery events + muni-month panel
           03_workfile.R       → main_data.parquet
-analysis/ code/  00_utils.R (theme_paper, PAL, postprocess_tex) · 01_descriptives.R ·
-                 02_not_a_price.R · 03_scheduling.R · 04_robson.R · 05_policy.R ·
-                 06_fee_shock.R
+analysis/ code/  00_utils.R (theme_paper, PAL, postprocess_tex) · 01_descriptives.R
+                 (trends/stats/hours/maps) · 02_regressions.R (price channel) ·
+                 03_mechanisms.R (scheduling/Robson/prelabor/decomposition) ·
+                 04_heterogeneity.R · 05_cost.R · 06_robustness.R (policy nulls,
+                 referee checks, permutation, neonatal). NB: scripts were consolidated
+                 (2026-07-09) from 15 per-exhibit files into 6 thematic ones; each
+                 file is a concatenation of self-contained sections (each re-loads
+                 config + utils + its own data), so the "Script" column below (01–15)
+                 now names the SECTION/theme, not a standalone file.
           output/ {graphs, tables, maps}      committed to git
 dictionary/ ANS TISS dictionaries (.xlsx) · main_data_dictionary.md
-latex/    paper.tex · refs.bib   (PDF git-ignored)
+latex/    paper.tex · model.tex (Appendix A) · appendix.tex (Appendix A input +
+          Appendix B data/variables) · sup_appendix.tex (Supplemental Appendix C
+          robustness) · refs.bib   (PDF git-ignored). paper.tex \inputs appendix.tex
+          then sup_appendix.tex after \appendix.
 CLAUDE.md · README.md · .gitignore · HealthEcon.Rproj
 ```
 
@@ -349,7 +360,7 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | `fig04b_parto_adequado_es_tiss` | 05 | Quarterly TISS event study | Same, short pre-window |
 | `tab05_parto_adequado` / `tab05b` | 05 | DiD + covariate/trend robustness | Null is robust; trend absorbs "effect" |
 | `fig05_rn368_timeline` | 05 | National monthly series 2010–2024 | RN 368 context |
-| `fig06_fee_shock` / `tab06_fee_shock` | 06 | Fee-gap swings vs cesarean changes | Fees don't move cesareans (falsification) |
+| `tab06_fee_shock` | 06 | Fee-gap swings vs cesarean changes | Fees don't move cesareans (falsification). NB: the companion scatter `fig06_fee_shock` was REMOVED (redundant with the table); its plotting code is deleted from `06_fee_shock.R` and the PDF/PNG are gone. |
 | `fig07_hour_of_birth` / `tab07_business_hours` | 07 | Hour-of-day distribution; business-hours shares | The OR-schedule fingerprint (50% vs 29.8% benchmark) |
 | `fig08_daily_counts` / `tab08_mechanism_checks` | 08 | Prelabor vs in-labor dips; daily counts; Robson-10 placebo | Dip = scheduled prelabor cesareans (−9.7 vs +1.7pp) |
 | `fig09_gestation` / `fig09b` / `tab09_health` | 09 | Gestational-age distributions; early-term/LBW/Apgar gaps | Cost of convenience: +10.9pp early-term |
@@ -384,7 +395,25 @@ Phases: 1 pilot 2015–16 (35 hospitals); **2 dissemination 2017–2021 (this li
 | Weekend dip by region / by period | all regions −6.7 to −10.7; stable −8.1/−7.8/−7.6 |
 | Beneficiary-muni fee-gap coef (UF / muni FE) | +0.029 n.s. / −0.013 (null replicates) |
 | Excess weekday cesareans (scheduling counterfactual) | ~50k/yr private (10.5%) |
+| Total billed cost per delivery (cesarean vs vaginal, TISS 2015–24, trimmed) | R$6,739 vs R$6,743 mean (gap −R$5, −0.1%); median R$5,417 vs R$5,178 (+R$238, +4.6%) → **near-parity** |
 | Deliveries/yr: TISS ~406k · SINASC all ~2.7M | |
+
+## Financial cost (built 2026-07-09, `tab12_cost` / Table 10)
+`build/02_deliveries.R` now sums ALL DET items per delivery event →
+**`total_billed`** (event-level, in `delivery_events_<yr>.parquet`; the muni-month
+panel also gets `cost_cesarean`/`cost_vaginal`). It is the CHARGED/informed value
+(`VL_ITEM_EVENTO_INFORMADO`, summed directly — VL is the line total; do NOT ×QT,
+which overcounts ~50×), not the price paid. Result: a cesarean and a vaginal
+delivery bill **almost the same total** → reinforces "not a price" at the payer
+level and locates the epidemic's cost in health (early-term), not billing.
+`05_cost.R` regenerates `tab12_cost.tex` (skips gracefully if `total_billed`
+absent). **Dictionary:** `total_billed` is event-level, NOT in `main_data`, so the
+`main_data` codebook (`dictionary/build_dictionary.R`) needs no change; only add it
+if cost is ever pulled up to `main_data`. **Map added:** `map02_csection_private`
+is now Figure 2 (Background). **ACTION FOR FREDIE:** verify the Tita et al. (2009)
+neonatal-morbidity gradient numbers used in the back-of-envelope in the Cost
+section ("roughly one half to one hundred percent" increase at 37–38 vs 39 wk) —
+I stated it conservatively but the exact figures should be checked against the paper.
 
 ## Clinical-cost positioning ("why does convenience matter?")
 Deliberate scope decision (2026-07-08): we do **NOT** build new empirical programs
@@ -453,16 +482,32 @@ fails parallel trends; fee shocks null; RN 368 national with short pre-period).
   as the opportunity cost of physician time), with its health cost quantified.
 - **Model: DONE** (`latex/model.tex`, §"The model" above — 5 predictions all
   matched to evidence; Appendix A of `paper.tex`).
-- **Full paper draft: DONE (2026-07-08)** — `latex/paper.tex` compiles clean
-  (bibtex, 0 undefined refs, 26 pp). Intro + all body sections written
-  (Background, Data, Not-a-price, Mechanism, Cost, Policy, Conclusion), every
-  exhibit wired with resolved labels (body figs fig:trend/dow/hours/daily_counts/
-  robson_dow/gestation/gestation_timing/fee_shock/pa_es/rn368; body tables
-  tab01/02/03/04/06/08/09/10/10b/11/05; appendix C tables C.1–C.7). Prose in
-  AEJ voice, no em-dashes. **Pending polish:** 8 overfull hboxes (wide etable
-  tables — wrap in \resizebox or shrink); consider moving non-essential robustness
-  to a supplemental appendix if page limit binds; a proper conclusion is short.
-  Body-section \input paths use ../analysis/output/... (compile from latex/).
+- **Full paper draft: DONE (2026-07-08; revised 2026-07-09)** — `latex/paper.tex`
+  compiles clean (bibtex, 0 undefined refs, 0 overfull hboxes, ~31 pp). Sections:
+  Intro, Background, Data, **Empirical strategy** (new — presents the two core
+  estimating equations `eq:feegap` (fee/price channel) and `eq:scheduling`
+  (weekend/holiday timing channel), plus the identification logic; table notes now
+  reference these via `\eqref`), Not-a-price, Mechanism, Cost, Policy, Conclusion
+  (expanded with a grounded "what policy could work" discussion — laborist/shift
+  coverage, salaried/integrated vs private-office FFS, outcome-based regulation —
+  cited to finkelstein2016/molitor2018/cutler2019/clemens2014/alexander2020/card2023).
+  Appendix has a centered "Appendix" divider before Appendix A (the model).
+  **Figure 2 (`fig06_fee_shock`) was removed** (redundant with tab06). Prose in
+  AEJ voice, no em-dashes (paper.tex AND model.tex clean). Acronyms defined on
+  first use with the Portuguese name + English gloss (ANS, SUS, TISS, SINASC=MoH
+  registry, CNES, IEPS=consolidates multi-source data into a muni-year panel;
+  covariates listed). Body-section \input paths use ../analysis/output/... (compile
+  from latex/). refs.bib = 24 entries (added dranove1988, grant2009, alexander2020,
+  epstein2009, finkelstein2016, molitor2018, cutler2019, curriemacleod2016,
+  dickertconlin1999, gans2009, borra2019).
+- **Table-note house standard (matches HomeOfficePNAD):** every regression-table
+  note opens with "Estimates of Equation~\eqref{eq:...}." (or a first-difference/
+  placebo variant), states sample + weights + variable/units, then "Standard
+  errors, clustered by <geog>, are reported in parentheses." and ends
+  "Significance levels: *** p$<$0.01, ...". `SIGNIF_NOTE` in `analysis/code/00_utils.R`
+  carries the "Significance levels:" phrasing. Figure `\fignotes` uses `\centerline`
+  + a 0.85\textwidth minipage with only `\vspace{1pt}` so notes sit tight and
+  centered under the title.
 
 ## Conventions & working agreements
 - **R** with `data.table` / `arrow` / `fixest`; `pacman::p_load` in master scripts.

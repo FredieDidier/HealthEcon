@@ -1,0 +1,37 @@
+% =============================================================================
+% sup_appendix.tex — the supplemental (online) appendix, \input by paper.tex.
+%   Appendix C: additional results and robustness (non-essential; kept for rigor).
+% =============================================================================
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{Supplemental Appendix}
+\begin{center}{\Large\bfseries Supplemental Appendix}\end{center}
+\vspace{0.5em}
+
+% =============================================================================
+\section{Additional results and robustness}\label{app:robustness}
+% =============================================================================
+This supplemental appendix collects the supporting and robustness exhibits
+discussed in the text. Table~\ref{tab:pretrend_robustness} shows that neither
+time-varying covariates nor a treated-specific linear trend rescues the Parto
+Adequado difference-in-differences, whose event study rejects parallel pre-trends.
+Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
+time-varying sector classification, alternative rest-day definitions, and the
+composition of weekend newborns. Table~\ref{tab:beneficiary_muni} replicates the
+fee-gap null aggregating by the beneficiary's municipality, and
+Table~\ref{tab:dip_region_period} shows that the dip survives a clinically clean
+low-risk sample and is stable across regions and periods.
+Table~\ref{tab:permutation} reports exact randomization inference across all
+twenty-one two-day placebos, and Table~\ref{tab:no_indication} the share of
+private cesareans with no recorded clinical indication.
+Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
+weak, association between early-term shifting and neonatal admissions.
+
+\input{../analysis/output/tables/tab05b_pretrend_robustness.tex}
+\input{../analysis/output/tables/tab13_referee_robustness.tex}
+\input{../analysis/output/tables/tab13b_beneficiary_muni.tex}
+\input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
+\input{../analysis/output/tables/tab15_permutation.tex}
+\input{../analysis/output/tables/tab15b_no_indication.tex}
+\input{../analysis/output/tables/tab14_neonatal_suggestive.tex}

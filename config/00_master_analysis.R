@@ -3,13 +3,18 @@
 # Master script for the analysis pipeline.
 # Run this file after 00_master_build.R to reproduce all results.
 #
-# Each script is self-contained and loads the analytical dataset from
-# Dropbox build/TISS/output.
+# Each consolidated script is self-contained and loads the analytical files from
+# Dropbox build/... . Scripts are organized thematically (one per paper theme),
+# not one per exhibit.
 #
-# Pipeline (to be written as the research design is finalised):
-#   00_utils.R          →  Shared analysis helpers (LaTeX table post-processing).
-#   01_descriptives.R   →  Summary statistics and descriptive figures.
-#   ...
+# Pipeline:
+#   00_utils.R          →  Shared analysis helpers (theme, palette, LaTeX post-processing).
+#   01_descriptives.R   →  Trends, summary stats, hour-of-birth, choropleth maps.
+#   02_regressions.R    →  Price channel: not-a-price fee regressions + fee-shock.
+#   03_mechanisms.R     →  Scheduling, low-risk (Robson), prelabor split, decomposition.
+#   04_heterogeneity.R  →  Theory-driven heterogeneity + operator modality.
+#   05_cost.R           →  Cost of convenience: early-term shifting + newborn health.
+#   06_robustness.R     →  Policy nulls, referee robustness, permutation, neonatal (suggestive).
 #
 # PATHS: set DROPBOX_ROOT once in config/config.R (the only path to change on a
 #   new machine); every script sources it. GitHub-repo paths use here::here().
@@ -21,18 +26,9 @@ if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(here, arrow, data.table, dplyr, fixest, ggplot2, modelsummary)
 
 source(here("analysis", "code", "00_utils.R"))
-source(here("analysis", "code", "01_descriptives.R"))   # trends + descriptive table
-source(here("analysis", "code", "02_not_a_price.R"))    # fee-gap regressions (not a price)
-source(here("analysis", "code", "03_scheduling.R"))     # SINASC scheduling (weekend/holiday)
-source(here("analysis", "code", "04_robson.R"))         # low-risk (Robson 1-2) cesareans
-source(here("analysis", "code", "05_policy.R"))         # Parto Adequado + RN 368 (support)
-source(here("analysis", "code", "06_fee_shock.R"))      # fee changes don't move cesareans
-source(here("analysis", "code", "07_hours.R"))          # hour-of-birth (within-day fingerprint)
-source(here("analysis", "code", "08_mechanism_checks.R")) # prelabor split, counts, placebo
-source(here("analysis", "code", "09_gestation_health.R")) # early-term shifting + newborn health
-source(here("analysis", "code", "10_heterogeneity.R"))  # theory-driven heterogeneity
-source(here("analysis", "code", "11_decomposition.R"))  # Kitagawa + excess-cesarean counts
-source(here("analysis", "code", "12_maps.R"))           # municipal choropleth maps
-source(here("analysis", "code", "13_referee_robustness.R")) # sector/rest-day/composition checks
-source(here("analysis", "code", "14_neonatal_suggestive.R"))   # suggestive neonatal (null)
-source(here("analysis", "code", "15_permutation_indication.R")) # randomization inference + no-indication
+source(here("analysis", "code", "01_descriptives.R"))   # trends, summary stats, hours, maps
+source(here("analysis", "code", "02_regressions.R"))    # price channel (not a price + fee shock)
+source(here("analysis", "code", "03_mechanisms.R"))     # scheduling, Robson, prelabor, decomposition
+source(here("analysis", "code", "04_heterogeneity.R"))  # heterogeneity + operator modality
+source(here("analysis", "code", "05_cost.R"))           # early-term shifting + newborn health
+source(here("analysis", "code", "06_robustness.R"))     # policy nulls, referee checks, permutation

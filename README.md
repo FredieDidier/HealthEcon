@@ -1,6 +1,7 @@
 # Born on Schedule: Physician Time and the World's Highest Private Cesarean Rate — Replication Package
 
-**Author:** Fredie Didier (fdidier@terra.com.br)
+**Authors:** Fredie Didier (IDP; corresponding author, fdidier@terra.com.br),
+Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br)
 
 ## Repository layout
 

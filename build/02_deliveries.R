@@ -79,6 +79,24 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
     ev[, c("ces", "vag", "assist") := NULL]
     rm(det); gc()
 
+    # --- DET (2nd pass): TOTAL billed cost of the delivery hospitalization -----
+    # Sum ALL item values (procedures, materials/OPME, drugs, daily rates) under
+    # each delivery event, not just the delivery procedure, to get the total
+    # amount billed for the hospitalization. This is the CHARGED/informed value
+    # (VL_ITEM_EVENTO_INFORMADO), NOT the negotiated price paid (paid value is
+    # <5% populated), so it is a gross, order-of-magnitude cost. Same arrow
+    # inner-join-on-event-id pattern used for CONS below.
+    det_cost <- arrow::open_dataset(file.path(HOSP_IN, "DET", sprintf("Hosp_%d_DET.parquet", y))) |>
+      dplyr::select(ID_EVENTO_ATENCAO_SAUDE, VL_ITEM_EVENTO_INFORMADO) |>
+      dplyr::inner_join(ev[, .(ID_EVENTO_ATENCAO_SAUDE)], by = "ID_EVENTO_ATENCAO_SAUDE") |>
+      dplyr::collect() |>
+      data.table::as.data.table()
+    det_cost[, ID_EVENTO_ATENCAO_SAUDE := as.numeric(ID_EVENTO_ATENCAO_SAUDE)]
+    tot <- det_cost[, .(total_billed = sum(as.numeric(VL_ITEM_EVENTO_INFORMADO), na.rm = TRUE)),
+                    by = ID_EVENTO_ATENCAO_SAUDE]
+    ev <- merge(ev, tot, by = "ID_EVENTO_ATENCAO_SAUDE", all.x = TRUE)
+    rm(det_cost, tot); gc()
+
     # --- CONS: mechanism covariates for those events (defensive select) -------
     cons_ds <- arrow::open_dataset(file.path(HOSP_IN, "CONS", sprintf("Hosp_%d_CONS.parquet", y)))
     have <- intersect(CONS_WANT, names(cons_ds$schema))
@@ -110,8 +128,8 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
     keep <- c("ID_EVENTO_ATENCAO_SAUDE", "year", "month", "ano_mes",
               "muni_prestador", "uf", "muni_beneficiario", "modalidade",
               "faixa_etaria", "cid_1", "carater", "type", "cesarean",
-              "fee_delivery", "fee_assist", "fee_vaginal_econ", "los", "uti_days",
-              "post_rn368")
+              "fee_delivery", "fee_assist", "fee_vaginal_econ", "total_billed",
+              "los", "uti_days", "post_rn368")
     d <- d[, intersect(keep, names(d)), with = FALSE]
 
     # --- OUTPUT 1: event-level workfile (one file per year) -------------------
@@ -124,6 +142,8 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
       csection_rate = mean(cesarean),
       fee_cesarean      = mean(fee_delivery[type == "cesarean"], na.rm = TRUE),
       fee_vaginal_econ  = mean(fee_vaginal_econ, na.rm = TRUE),
+      cost_cesarean     = mean(total_billed[type == "cesarean"], na.rm = TRUE),
+      cost_vaginal      = mean(total_billed[type == "vaginal"],  na.rm = TRUE),
       mean_los          = mean(los, na.rm = TRUE),
       mean_uti_days     = mean(uti_days, na.rm = TRUE),
       any_uti_share     = mean(uti_days > 0, na.rm = TRUE)
