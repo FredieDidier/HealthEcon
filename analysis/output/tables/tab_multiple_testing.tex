@@ -1,5 +1,5 @@
 \begin{table}[H]
-   \caption{\label{tab:multiple_testing} Multiple-hypothesis adjustment within pre-specified families}
+   \caption{\label{tab:multiple_testing} \textbf{Multiple-hypothesis adjustment within pre-specified families}}
    \centering
 \small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcccc}
@@ -21,11 +21,21 @@
       \quad Low birthweight ($<$2500g) & -0.0290 & $<$0.001 & $<$0.001 & $<$0.001 \\
       \quad Five-minute Apgar $<$ 7 & -0.0055 & $<$0.001 & $<$0.001 & $<$0.001 \\
       \addlinespace[3pt]
+      \emph{D. Long weekends} & & & & \\
+      \quad For-profit $\times$ Bridge holiday & -0.0342 & 0.031 & 0.092 & 0.061 \\
+      \quad For-profit $\times$ Three-day holiday & -0.0380 & 0.015 & 0.061 & 0.061 \\
+      \quad For-profit $\times$ Isolated holiday & -0.0352 & 0.065 & 0.130 & 0.075 \\
+      \quad Pre-holiday excess, prelabor cesareans & -0.3917 & 0.075 & 0.130 & 0.075 \\
+      \addlinespace[3pt]
+      \emph{E. Organizational capacity} & & & & \\
+      \quad Weekend $\times$ log(1 + obstetric beds) & 0.0045 & 0.223 & 0.446 & 0.367 \\
+      \quad National holiday $\times$ log(1 + obstetric beds) & 0.0026 & 0.367 & 0.446 & 0.367 \\
+      \addlinespace[3pt]
 \bottomrule
    \end{tabular}
 }
    
    \par \raggedright 
-   \footnotesize\textit{Notes:} Each family collects the hypotheses that the paper tests jointly. Family A is the within-municipality-day for-profit calendar gradient of Table~\ref{tab:pooled_did}; family B the heterogeneity tests of Tables~\ref{tab:heterogeneity} and~\ref{tab:modality}; family C the for-profit--public outcome differences of Table~\ref{tab:health}. Holm $p$ is the Holm--Bonferroni adjusted $p$-value \citep{holm1979}, which controls the familywise error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate $q$-value \citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding columns of the source tables.
+   \footnotesize\textit{Notes:} Each family collects the hypotheses that the paper tests jointly. Family A is the within-municipality-day for-profit calendar gradient of Table~\ref{tab:main_gradient}; family B the supplemental heterogeneity tests; family C the for-profit--public outcome differences of Table~\ref{tab:health}; family D the long-weekend taxonomy and displacement tests of Table~\ref{tab:long_weekends}; family E the organizational-capacity interactions of Table~\ref{tab:org_capacity}. Holm $p$ is the Holm--Bonferroni adjusted $p$-value \citep{holm1979}, which controls the familywise error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate $q$-value \citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding columns of the source tables.
 \end{table}
 

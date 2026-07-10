@@ -54,6 +54,48 @@ has no break at the 2017 onset (dashed line).}
 Dashed line marks RN 368/2015.}
 \end{figure}
 
+\subsection{Supplementary descriptive exhibits}
+
+Table~\ref{tab:descriptives} reports summary statistics for the
+municipality-year analysis file. Figure~\ref{fig:map_private} maps the for-profit
+cesarean rate across municipalities. Table~\ref{tab:business_hours} reports the
+share of births occurring in weekday business hours, the quantity behind panel (b)
+of Figure~\ref{fig:calendar}. Figure~\ref{fig:robson_dow} shows the day-of-week
+profile within low-risk Robson groups 1--2, and Figure~\ref{fig:daily_counts}
+plots mean daily births by day of week, which shows cesarean counts collapsing on
+weekends while vaginal counts barely move. Table~\ref{tab:mechanism_checks}
+reports the full timing split together with the Robson group 10 (preterm)
+comparison, which a formal test cannot distinguish from the Robson group 1 dip, so
+we do not treat preterm births as a placebo. Table~\ref{tab:cost} sums every item
+billed under each delivery hospitalization and finds that a cesarean and a vaginal
+delivery generate similar gross billed amounts.
+
+\input{../analysis/output/tables/tab01_descriptives.tex}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.62\textwidth]{../analysis/output/maps/map02_csection_private.pdf}
+\caption{For-profit cesarean rate by municipality}\label{fig:map_private}
+\fignotes{SINASC 2020--2024, births at for-profit establishments.}
+\end{figure}
+
+\input{../analysis/output/tables/tab07_business_hours.tex}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.72\textwidth]{../analysis/output/graphs/fig03_robson_dow.pdf}
+\caption{Cesarean rate by day of week, low-risk Robson groups 1--2}\label{fig:robson_dow}
+\fignotes{SINASC 2010--2024, Robson groups 1--2, by sector.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.85\textwidth]{../analysis/output/graphs/fig08_daily_counts.pdf}
+\caption{Mean daily births by day of week, delivery mode, and sector}\label{fig:daily_counts}
+\fignotes{Indexed to Tuesday $=100$. Cesarean counts fall on weekends;
+vaginal counts are stable.}
+\end{figure}
+
+\input{../analysis/output/tables/tab08_mechanism_checks.tex}
+\input{../analysis/output/tables/tab12_cost.tex}
+
 \subsection{Additional robustness}
 
 This subsection collects the supporting and robustness exhibits discussed in the
@@ -69,12 +111,32 @@ share of for-profit cesareans with no recorded clinical indication.
 Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
 weak, association between early-term shifting and neonatal admissions.
 
+Several exhibits accompany the extensions of Section~\ref{sec:mechanism}.
+Table~\ref{tab:displacement_robust} repeats the long-weekend event study with
+share outcomes, reports the isolated-holiday blocks alongside the bridge blocks,
+and re-estimates the holiday taxonomy with the movable national holidays added.
+Table~\ref{tab:org_capacity} reports the organizational-capacity regressions of
+Section~\ref{sec:mechanism}\,D in full, and
+Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
+measures and samples. Table~\ref{tab:heterogeneity} reports the
+municipality-level heterogeneity of the weekend dip by obstetrician density and
+by maternal education, and Table~\ref{tab:modality} contrasts physician-owned
+cooperative insurers with insurer-run plans. Neither the education split nor the
+cooperative contrast supports a demand-side reading: the implied weekend dip is
+smaller, not larger, for more-educated mothers, and the cooperative difference is
+not significant.
+
 \input{../analysis/output/tables/tab13_referee_robustness.tex}
 \input{../analysis/output/tables/tab13b_beneficiary_muni.tex}
 \input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
 \input{../analysis/output/tables/tab15_permutation.tex}
 \input{../analysis/output/tables/tab15b_no_indication.tex}
 \input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
+\input{../analysis/output/tables/tab_displacement_robust.tex}
+\input{../analysis/output/tables/tab_org_capacity.tex}
+\input{../analysis/output/tables/tab_org_capacity_valid.tex}
+\input{../analysis/output/tables/tab10_heterogeneity.tex}
+\input{../analysis/output/tables/tab10b_modality.tex}
 
 % =============================================================================
 \section{Supplementary robustness and inference}\label{app:referee}
@@ -106,25 +168,26 @@ is not a missingness artifact.
 
 \subsection{Multiple hypothesis testing}\label{app:multiple}
 
-The paper reports more than one test in two places where a reader may worry about
-selective reporting: the heterogeneity of the weekend dip, and the differences
-between for-profit and public establishments in gestational and newborn outcomes.
-We therefore group the hypotheses into three pre-specified families and adjust
-within each. Family A is the for-profit calendar gradient of
-Table~\ref{tab:pooled_did}, which tests the weekend, holiday, and eve interactions
-together. Family B is the heterogeneity of the weekend dip, comprising the
-obstetrician-density and maternal-education interactions of
-Table~\ref{tab:heterogeneity} and the cooperative-insurer contrast of
-Table~\ref{tab:modality}. Family C is the set of for-profit-versus-public outcome
-differences of Table~\ref{tab:health}: early-term birth, low birthweight, and low
-Apgar score. Families are defined by the substantive question a reader would pose,
-not by the outcome of the test. Table~\ref{tab:multiple_testing} reports, within
-each family, the Holm-Bonferroni adjusted $p$-value \citep{holm1979}, which controls
-the familywise error rate, and the Benjamini-Hochberg $q$-value
-\citep{benjamini1995}, which controls the false discovery rate. The adjustments do
-not change any conclusion: the estimates that are
-individually significant remain so, and the cooperative-insurer contrast, which was
-insignificant to begin with, stays insignificant. The precision comes from sample
-sizes in the millions rather than from a fortunate choice among tests.
+The paper reports more than one test in several places where a reader may worry
+about selective reporting. We therefore group the hypotheses into five
+pre-specified families and adjust within each. Family A is the for-profit
+calendar gradient of Table~\ref{tab:main_gradient}, which tests the weekend,
+holiday, and eve interactions together. Family B is the supplemental
+heterogeneity of the weekend dip, comprising the obstetrician-density and
+maternal-education interactions of Table~\ref{tab:heterogeneity} and the
+cooperative-insurer contrast of Table~\ref{tab:modality}. Family C is the set of
+for-profit-versus-public outcome differences of Table~\ref{tab:health}: early-term
+birth, low birthweight, and low Apgar score. Family D is the long-weekend family
+of Table~\ref{tab:long_weekends}: the three holiday-type interactions and the
+pre-holiday displacement sum. Family E is the pair of organizational-capacity
+interactions of Table~\ref{tab:org_capacity}. Families are defined by the
+substantive question a reader would pose, not by the outcome of the test.
+Table~\ref{tab:multiple_testing} reports, within each family, the Holm-Bonferroni
+adjusted $p$-value \citep{holm1979}, which controls the familywise error rate, and
+the Benjamini-Hochberg $q$-value \citep{benjamini1995}, which controls the false
+discovery rate. The adjustments do not change any conclusion: the estimates that
+are individually significant remain so, and the tests that were insignificant to
+begin with stay insignificant. The precision comes from sample sizes in the
+millions rather than from a fortunate choice among tests.
 
 \input{../analysis/output/tables/tab_multiple_testing.tex}

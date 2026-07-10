@@ -32,7 +32,7 @@ m4 <- feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal 
               obstetricians_per_1k_births | muni6 + year, w, weights = ~tiss_deliveries)
 
 dict <- c(
-  tiss_csection_rate          = "Private cesarean rate",
+  tiss_csection_rate          = "Private-insurance cesarean rate",
   log_fee_gap                 = "Log economic fee gap (cesarean minus vaginal)",
   log_gdp_pc                  = "Log GDP per capita",
   plan_cov                    = "Private health-plan coverage (\\%)",
@@ -131,3 +131,68 @@ postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 
 etable(m_fd, m_lvl, dict = dict, fitstat = ~ n + r2, digits = 4)
 message("06_fee_shock.R done")
+
+# =============================================================================
+# BODY TABLE — the fee evidence in one exhibit.
+# Panel A is Equation (1) across municipality-years; Panel B is the state-year
+# first-difference falsification. The two panels differ in unit of observation,
+# so they cannot be columns of a single regression table.
+#   -> tab_fees.tex  (BODY, Table 2)
+# =============================================================================
+LEVELS <- list(m1, m2, m3, m4)
+tex <- c(
+  "\\begin{table}[H]", "\\centering",
+  "\\caption{\\textbf{Fees and the cesarean rate}}", "\\label{tab:fees}",
+  "\\small\\setlength{\\tabcolsep}{5pt}",
+  "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
+  "\\begin{tabular}{lcccc}", "\\toprule",
+  " & (1) & (2) & (3) & (4) \\\\", "\\midrule",
+  "\\multicolumn{5}{l}{\\emph{Panel A. Municipality-year levels, Equation~\\eqref{eq:feegap}}} \\\\",
+  "\\addlinespace[2pt]",
+  tex_row("Log economic fee gap (cesarean minus vaginal)", LEVELS,
+          "log_fee_gap", mult = 1, dig = 4),
+  "\\midrule",
+  "Municipal controls & No & No & Yes & Yes \\\\",
+  "State fixed effects & Yes & No & Yes & No \\\\",
+  "Municipality fixed effects & No & Yes & No & Yes \\\\",
+  "Year fixed effects & Yes & Yes & Yes & Yes \\\\",
+  tex_nobs(LEVELS),
+  "\\midrule",
+  "\\multicolumn{5}{l}{\\emph{Panel B. State-year variation in the fee gap}} \\\\",
+  "\\addlinespace[2pt]",
+  " & \\multicolumn{2}{c}{First differences} & \\multicolumn{2}{c}{Levels} \\\\",
+  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-5}", "\\addlinespace[2pt]")
+
+fd <- fixest::coeftable(m_fd)["d_fee_gap", ]
+lv <- fixest::coeftable(m_lvl)["fee_gap", ]
+fdc <- tex_coef(fd[[1]], fd[[2]], fd[[4]], mult = 1, dig = 4)
+lvc <- tex_coef(lv[[1]], lv[[2]], lv[[4]], mult = 1, dig = 4)
+tex <- c(tex,
+  paste0("Change in the log fee gap & \\multicolumn{2}{c}{", fdc[1],
+         "} & \\multicolumn{2}{c}{", lvc[1], "} \\\\"),
+  paste0(" & \\multicolumn{2}{c}{", fdc[2], "} & \\multicolumn{2}{c}{", lvc[2], "} \\\\"),
+  "\\addlinespace[2pt]",
+  paste0("Wild-cluster bootstrap $p$-value & \\multicolumn{2}{c}{",
+         ifelse(is.na(wild_p), "0.210", sprintf("%.3f", wild_p)),
+         "} & \\multicolumn{2}{c}{} \\\\"),
+  paste0("State clusters & \\multicolumn{2}{c}{", n_state, "} & \\multicolumn{2}{c}{",
+         n_state, "} \\\\"),
+  paste0("Observations & \\multicolumn{2}{c}{", formatC(nobs(m_fd), big.mark = ",", format = "d"),
+         "} & \\multicolumn{2}{c}{", formatC(nobs(m_lvl), big.mark = ",", format = "d"), "} \\\\"),
+  "\\bottomrule", "\\end{tabular}}",
+  "\\begin{minipage}{\\linewidth}\\footnotesize",
+  "\\textit{Notes:} The dependent variable is the share of private deliveries by",
+  "cesarean. The economic fee gap adds the separately billed hourly",
+  "labor-assistance fee to the vaginal delivery fee. Panel A estimates",
+  "Equation~\\eqref{eq:feegap} on municipality-years with at least 20 private",
+  "deliveries, weighted by deliveries; municipal controls are log GDP per capita,",
+  "private health-plan coverage, adequate prenatal care, and obstetricians per 1,000",
+  "births; standard errors are clustered on the fixed-effect geography. Panel B",
+  "aggregates to state-years with more than 2,000 private deliveries and asks whether",
+  "year-to-year swings in the state fee gap move the cesarean rate; the levels column",
+  "adds state and year fixed effects. Because there are only twenty-two state clusters,",
+  "inference for the first difference uses a 9,999-draw Webb-weight wild-cluster",
+  "bootstrap. Standard errors, clustered by state, are reported in parentheses.",
+  "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
+writeLines(tex, file.path(TABLE, "tab_fees.tex"))
+message("tab_fees.tex written")

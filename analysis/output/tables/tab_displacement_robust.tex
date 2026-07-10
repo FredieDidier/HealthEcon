@@ -1,0 +1,47 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{Long weekends: share outcomes, isolated blocks, and movable holidays}}
+\label{tab:displacement_robust}
+\small\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{l}{\emph{Panel A. Event-time sums, share outcomes (percentage points)}} \\
+\addlinespace[2pt]
+ & \multicolumn{2}{c}{Prelabor cesarean share} & \multicolumn{2}{c}{Cesarean share} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & Bridge & Isolated & Bridge & Isolated \\
+\midrule
+Pre-holiday excess, $\sum_{\ell=-3}^{-1}\theta_\ell$ & -1.642 & -2.266 & -0.112 & 0.520 \\
+ & (1.186) & (1.704) & (0.946) & (1.376) \\
+\addlinespace[2pt]
+Window total, $\sum_{\ell=-3}^{+3}\theta_\ell$ & -8.425$^{***}$ & -9.950$^{***}$ & -0.168 & 0.621 \\
+ & (2.059) & (2.860) & (1.716) & (2.440) \\
+\addlinespace[2pt]
+\midrule
+\multicolumn{5}{l}{\emph{Panel B. Prelabor-share taxonomy including movable holidays}} \\
+\addlinespace[2pt]
+For-profit $\times$ Bridge holiday & \multicolumn{4}{c}{-3.610$^{**}$} \\
+ & \multicolumn{4}{c}{(1.531)} \\
+\addlinespace[2pt]
+For-profit $\times$ Three-day holiday & \multicolumn{4}{c}{-3.646$^{**}$} \\
+ & \multicolumn{4}{c}{(1.506)} \\
+\addlinespace[2pt]
+For-profit $\times$ Isolated holiday & \multicolumn{4}{c}{-3.522$^{*}$} \\
+ & \multicolumn{4}{c}{(1.909)} \\
+\addlinespace[2pt]
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} SINASC 2012--2024. Panel A repeats the event study of
+Table~\ref{tab:long_weekends}, Panel B, with sector cesarean shares in place of
+counts, on the municipality-days in which both sectors record at least one birth;
+outcomes are unweighted differences between the for-profit and the public share.
+Panel B re-estimates the prelabor-share taxonomy after assigning the movable
+national holidays (Carnival, Good Friday, Corpus Christi) to their day-of-week
+class; because these holidays fall on structurally fixed week days, they are
+excluded from the main specification. Standard errors, two-way clustered by
+municipality and date, are reported in parentheses.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
+\end{table}

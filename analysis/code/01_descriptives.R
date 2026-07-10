@@ -25,7 +25,7 @@ TABLE <- here::here("analysis", "output", "tables")
 panel <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parquet")))
 tiss_yr <- panel[!is.na(muni) & year <= 2024,
   .(rate = sum(n_cesarean) / sum(n_deliveries)), by = year][
-  , series := "Private (TISS claims)"]
+  , series := "Private insurance (TISS claims)"]
 
 sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, year := year(date)]
@@ -35,13 +35,14 @@ sin_yr <- sd[year <= 2024, .(
 
 trend <- rbind(
   tiss_yr[, .(year, rate, series)],
-  sin_yr[, .(year, rate = priv, series = "Private (SINASC births)")],
+  sin_yr[, .(year, rate = priv, series = "For-profit establishments (SINASC)")],
   sin_yr[, .(year, rate = pub,  series = "Public (SINASC births)")])
 trend[, series := factor(series, levels = c(
-  "Private (TISS claims)", "Private (SINASC births)", "Public (SINASC births)"))]
+  "Private insurance (TISS claims)", "For-profit establishments (SINASC)",
+  "Public establishments (SINASC)"))]
 
-pal_sector <- c("Private (TISS claims)"    = unname(PAL["red"]),
-                "Private (SINASC births)"  = unname(PAL["orange"]),
+pal_sector <- c("Private insurance (TISS claims)"        = unname(PAL["red"]),
+                "For-profit establishments (SINASC)"     = unname(PAL["orange"]),
                 "Public (SINASC births)"   = unname(PAL["blue"]))
 
 fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
@@ -85,7 +86,7 @@ hdr <- c("Variable", "Mean", "Std.\\ dev.", "10th pct.", "Median", "90th pct.", 
 body <- apply(desc, 1, function(r) paste(r, collapse = " & "))
 tex <- c(
   "\\begin{table}[H]\\centering",
-  "\\caption{Municipality-year summary statistics}\\label{tab:descriptives}",
+  "\\caption{\\textbf{Municipality-year summary statistics}}\\label{tab:descriptives}",
   "\\small",
   "\\begin{tabular}{lrrrrrr}",
   "\\toprule",
@@ -150,7 +151,7 @@ bh_w <- dcast(bh, sector ~ type, value.var = "share")
 bench <- 5 / 7 * 10 / 24
 tex <- c(
   "\\begin{table}[H]\\centering",
-  "\\caption{Share of births occurring in business hours (weekdays, 8am--6pm)}",
+  "\\caption{\\textbf{Share of births occurring in business hours (weekdays, 8am--6pm)}}",
   "\\label{tab:business_hours}",
   "\\small",
   "\\begin{tabular}{lcc}",

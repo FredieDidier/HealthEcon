@@ -1,0 +1,60 @@
+
+\begin{table}[H]
+   \caption{\label{tab:org_capacity} \textbf{Organizational capacity and the weekend scheduling gradient}}
+   \centering
+\footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+   \begin{tabular}{lccccc}
+      \toprule
+      Dependent Variables: & \multicolumn{3}{c}{Prelabor cesarean share} & Cesarean share & Prelabor cesarean share\\
+       & \multicolumn{2}{c}{Prelabor} & Prelabor (terciles) & All cesareans & Prelabor (weak measure) \\ 
+      Model:                                                       & (1)            & (2)          & (3)                   & (4)           & (5)\\  
+      \midrule
+      \emph{Variables}\\
+      Weekend $\times$ log(1 + obstetric beds)                     & 0.0048         & 0.0045       &                       & 0.0046$^{*}$  &   \\   
+                                                                   & (0.0034)       & (0.0037)     &                       & (0.0025)      &   \\   
+\addlinespace[2pt]
+      National holiday $\times$ log(1 + obstetric beds)            & 0.0046         & 0.0026       &                       & 0.0047$^{**}$ &   \\   
+                                                                   & (0.0029)       & (0.0029)     &                       & (0.0021)      &   \\   
+\addlinespace[2pt]
+      Weekend $\times$ log(1 + annual deliveries)                  & 0.0150$^{***}$ & 0.0070$^{*}$ & 0.0105$^{***}$        & 0.0025        & 0.0118$^{***}$\\   
+                                                                   & (0.0034)       & (0.0039)     & (0.0040)              & (0.0029)      & (0.0042)\\   
+\addlinespace[2pt]
+      National holiday $\times$ log(1 + annual deliveries)         & 0.0083$^{***}$ & -0.0016      & $3.62\times 10^{-5}$  & -0.0026       & 0.0009\\   
+                                                                   & (0.0032)       & (0.0044)     & (0.0040)              & (0.0035)      & (0.0039)\\   
+\addlinespace[2pt]
+      Weekend $\times$ middle tercile of beds                      &                &              & -0.0019               &               &   \\   
+                                                                   &                &              & (0.0126)              &               &   \\   
+\addlinespace[2pt]
+      Weekend $\times$ top tercile of beds                         &                &              & 0.0019                &               &   \\   
+                                                                   &                &              & (0.0114)              &               &   \\   
+\addlinespace[2pt]
+      National holiday $\times$ middle tercile of beds             &                &              & 0.0064                &               &   \\   
+                                                                   &                &              & (0.0115)              &               &   \\   
+\addlinespace[2pt]
+      National holiday $\times$ top tercile of beds                &                &              & 0.0063                &               &   \\   
+                                                                   &                &              & (0.0096)              &               &   \\   
+\addlinespace[2pt]
+      Weekend $\times$ log(1 + registered obstetricians)           &                &              &                       &               & -0.0029\\   
+                                                                   &                &              &                       &               & (0.0030)\\   
+\addlinespace[2pt]
+      National holiday $\times$ log(1 + registered obstetricians)  &                &              &                       &               & -0.0003\\   
+                                                                   &                &              &                       &               & (0.0037)\\   
+\addlinespace[2pt]
+      \midrule
+      \emph{Fixed-effects}\\
+      Establishment-Year                                           & Yes            & Yes          & Yes                   & Yes           & Yes\\  
+      Date                                                         & Yes            &              &                       &               & \\  
+      Municipality-Date                                            &                & Yes          & Yes                   & Yes           & Yes\\  
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                                                 & 1,279,380      & 1,279,380    & 1,279,380             & 1,279,380     & 1,279,380\\  
+      R$^2$                                                        & 0.537          & 0.803        & 0.803                 & 0.774         & 0.803\\  
+\bottomrule
+   \end{tabular}
+}
+   
+   \par \raggedright 
+   \footnotesize\textit{Notes:} Establishment-date cells at for-profit establishments with at least fifty deliveries in the previous year, SINASC 2015--2024, weighted by births. Obstetric beds and annual deliveries are measured at the establishment in the PREVIOUS calendar year, so they are predetermined with respect to current scheduling. The municipality$\times$date fixed effects of columns 2--5 restrict identification to municipality-days on which more than one for-profit establishment records a birth. Column 5 replaces obstetric beds with the count of obstetricians registered at the establishment in CNES-PF; about half of these maternities register none, equally in the public and the for-profit sector, because Brazilian obstetricians hold their bond at their own practice, so this is a weak proxy for the obstetric team and is reported for completeness only. Establishment size does not separate the individual physician's calendar from institutional staffing; both predict attenuation at larger establishments. Standard errors, two-way clustered by establishment and date, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{table}
+
+

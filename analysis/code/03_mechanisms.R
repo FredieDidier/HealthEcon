@@ -46,7 +46,9 @@ holiday_dates <- function(years) {
 sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, `:=`(dow = wday(date), year = year(date))]
 sd <- sd[year <= 2024]
-hol <- holiday_dates(2015:2024)
+# holidays must span the FULL sample (2010-2024); using 2015-2024 left 2010-2014
+# holidays flagged as ordinary days and diluted the holiday coefficient.
+hol <- holiday_dates(2010:2024)
 sd[, `:=`(
   weekend = as.integer(dow %in% c(1, 7)),
   holiday = as.integer(date %in% hol))]
@@ -54,14 +56,17 @@ sd[, eve := as.integer((date + 1L) %in% hol | (dow == 6L))]   # Fri or day-befor
 sd[, day_type := fifelse(holiday == 1, "Holiday",
                  fifelse(weekend == 1, "Weekend",
                  fifelse(eve == 1, "Eve of rest day", "Regular weekday")))]
-sd[, sector := factor(sector, levels = c("Private", "Nonprofit", "Public"))]
+# NB: the `sector` column keeps its raw SINASC levels (Private/Nonprofit/Public)
+# because the regressions below subset on them; display labels are applied to the
+# plotting and table objects only (see sector_display() in 00_utils.R).
 
 # --- Figure 2: cesarean rate by day-of-week, by sector ------------------------
 dow_tab <- sd[, .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
+dow_tab[, sector := sector_display(sector)]
 dow_tab[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
 fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
-  scale_colour_manual(values = c(Private = unname(PAL["red"]),
+  scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]),
                                  Nonprofit = unname(PAL["orange"]),
                                  Public = unname(PAL["blue"]))) +
   # no hard y-limits: scale_y_continuous(limits=) DROPS out-of-range points
@@ -89,7 +94,7 @@ f <- file.path(TABLE, "tab03_scheduling.tex")
 etable(r_pub, r_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("Public sector", "Private sector"),
+       headers = c("Public", "For-profit"),
        title = "Weekend, holiday, and eve-of-rest-day effects on the cesarean rate",
        label = "tab:scheduling",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",
@@ -142,10 +147,11 @@ if (!file.exists(BIRTHS)) {
   # --- Figure 3: cesarean rate by day-of-week, Robson 1-2, private vs public ---
   dow_tab <- low[sector %in% c("Private", "Public"),
                  .(rate = mean(cesarean, na.rm = TRUE)), by = .(sector, dow)]
+  dow_tab[, sector := sector_display(sector, c("Private", "Public"))]
   dow_tab[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
   fig3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
     geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
-    scale_colour_manual(values = c(Private = unname(PAL["red"]), Public = unname(PAL["blue"]))) +
+    scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]), Public = unname(PAL["blue"]))) +
     labs(x = NULL, y = "Cesarean rate (%), Robson groups 1-2") +
     theme_paper()
   save_fig(fig3, "fig03_robson_dow")
@@ -167,8 +173,8 @@ if (!file.exists(BIRTHS)) {
   etable(r12_pub, r12_priv, r1_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
          signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
          fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-         headers = c("Robson groups 1--2, public", "Robson groups 1--2, private",
-                     "Robson group 1, private"),
+         headers = c("Robson groups 1--2, public", "Robson groups 1--2, for-profit",
+                     "Robson group 1, for-profit"),
          title = "Weekend dip among low-risk (Robson 1-2) cesareans",
          label = "tab:robson",
          notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",
@@ -242,7 +248,7 @@ etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
        extralines = list(
-         "Sector" = c("Private", "Private", "Public", "Public", "Private", "Private"),
+         "Sector" = c("For-profit", "For-profit", "Public", "Public", "For-profit", "For-profit"),
          "Sample" = c("All births", "All births", "All births", "All births",
                       "Robson groups 1--2", "Robson group 10 (preterm)")),
        title = "The weekend dip by cesarean timing and Robson group",
@@ -264,6 +270,7 @@ writeLines(.tx, f)
 cnt <- b[, .(births = .N), by = .(type = fifelse(cesarean == 1, "Cesarean", "Vaginal"),
              sector, dow, date)][
        , .(mean_daily = mean(births)), by = .(type, sector, dow)]
+cnt[, sector := sector_display(sector, c("Private", "Public"))]
 cnt[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
 cnt[, idx := 100 * mean_daily / mean_daily[dow == 3], by = .(type, sector)]  # Tue = 100
 fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
@@ -275,6 +282,47 @@ fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
   labs(x = NULL, y = "Mean daily births (Tuesday = 100)") +
   theme_paper()
 save_fig(fig8, "fig08_daily_counts", width = 9, height = 4.8)
+
+# =============================================================================
+# BODY TABLE — where the weekend dip lives: delivery timing and clinical risk.
+# Merges the prelabor/in-labor split with the low-risk (Robson) restriction, the
+# two pieces of evidence that locate the mechanism.
+#   -> tab_prelabor_lowrisk.tex  (BODY, Table 5)
+# =============================================================================
+if (exists("r1_priv")) {
+  MECH <- list(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, r1_priv)
+  tex <- c(
+    "\\begin{table}[H]", "\\centering",
+    "\\caption{\\textbf{The weekend dip by delivery timing and clinical risk}}",
+    "\\label{tab:prelabor_lowrisk}",
+    "\\small\\setlength{\\tabcolsep}{4pt}",
+    "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
+    "\\begin{tabular}{lcccccc}", "\\toprule",
+    " & (1) & (2) & (3) & (4) & (5) & (6) \\\\",
+    " & \\multicolumn{4}{c}{Components of the cesarean share} & \\multicolumn{2}{c}{Cesarean share, low risk} \\\\",
+    "\\cmidrule(lr){2-5}\\cmidrule(lr){6-7}",
+    " & Prelabor & In-labor & Prelabor & In-labor & Robson 1--2 & Robson 1 \\\\",
+    "\\midrule",
+    tex_row("Weekend", MECH, "weekend"),
+    "\\midrule",
+    "Sector & For-profit & For-profit & Public & Public & For-profit & For-profit \\\\",
+    "Municipality fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\\\",
+    "Year fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\\\",
+    tex_nobs(MECH),
+    "\\bottomrule", "\\end{tabular}}",
+    "\\begin{minipage}{\\linewidth}\\footnotesize",
+    "\\textit{Notes:} Estimates of Equation~\\eqref{eq:scheduling}, restricted to the",
+    "weekend indicator. Municipality-date cells, SINASC 2010--2024, weighted by births;",
+    "coefficients in percentage points. Columns 1--4 split the cesarean share of births",
+    "into cesareans performed before labor began and cesareans performed during labor.",
+    "Columns 5--6 restrict to Robson groups 1--2 (nulliparous, term, singleton,",
+    "cephalic) and to Robson group 1 alone, which requires spontaneous labor, so that",
+    "its cesareans are intrapartum by construction. Standard errors, two-way clustered",
+    "by municipality and date, are reported in parentheses.",
+    "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
+  writeLines(tex, file.path(TABLE, "tab_prelabor_lowrisk.tex"))
+  message("tab_prelabor_lowrisk.tex written")
+}
 
 message("08_mechanism_checks.R done")
 
@@ -325,7 +373,7 @@ kt <- wide[order(g), .(
   `Rate public`   = sprintf("%.1f", 100*rate_Public))]
 tex <- c(
   "\\begin{table}[H]\\centering",
-  "\\caption{Decomposing the private--public cesarean gap (Kitagawa, Robson groups)}",
+  "\\caption{\\textbf{Decomposing the private--public cesarean gap (Kitagawa, Robson groups)}}",
   "\\label{tab:decomposition}",
   "\\small",
   "\\begin{tabular}{lcccc}",

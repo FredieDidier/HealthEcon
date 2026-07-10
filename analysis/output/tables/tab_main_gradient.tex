@@ -1,0 +1,65 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{For-profit calendar gradient within the municipality-day}}
+\label{tab:main_gradient}
+\small\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+ & (1) & (2) & (3) & (4) & (5) \\
+ & Cesarean & Cesarean & Cesarean & Prelabor & In-labor \\
+ & share & share & share & cesarean share & cesarean share \\
+\midrule
+\multicolumn{6}{l}{\emph{Panel A. For-profit differential, Equation~\eqref{eq:gradient}}} \\
+\addlinespace[2pt]
+For-profit $\times$ Weekend & -1.824$^{***}$ & -1.818$^{***}$ & -1.475$^{***}$ & -4.716$^{***}$ & 2.785$^{***}$ \\
+ & (0.666) & (0.599) & (0.513) & (0.939) & (0.473) \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -2.441$^{***}$ & -2.285$^{***}$ & -2.002$^{***}$ & -4.148$^{***}$ & 1.958$^{***}$ \\
+ & (0.476) & (0.415) & (0.392) & (0.714) & (0.391) \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -0.946$^{***}$ & -0.900$^{***}$ & -0.740$^{***}$ & -1.322$^{***}$ & 0.369 \\
+ & (0.308) & (0.305) & (0.275) & (0.433) & (0.264) \\
+\addlinespace[2pt]
+\midrule
+Predetermined maternal composition & No & Yes & Yes & No & No \\
+Robson-group shares & No & No & Yes & No & No \\
+Municipality $\times$ date fixed effects & Yes & Yes & Yes & Yes & Yes \\
+Sample & 2010--2024 & 2010--2024 & 2010--2024 & 2012--2024 & 2012--2024 \\
+Observations & 5,261,427 & 5,261,427 & 5,261,427 & 4,460,109 & 4,460,109 \\
+\midrule
+\multicolumn{6}{l}{\emph{Panel B. Each sector's own gradient, Equation~\eqref{eq:scheduling} (context)}} \\
+\addlinespace[2pt]
+ & \multicolumn{2}{c}{Public} & \multicolumn{2}{c}{For-profit} & \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+\addlinespace[2pt]
+Weekend & \multicolumn{2}{c}{-7.039$^{***}$} & \multicolumn{2}{c}{-8.330$^{***}$} & \\
+ & \multicolumn{2}{c}{(0.263)} & \multicolumn{2}{c}{(0.501)} & \\
+\addlinespace[2pt]
+National holiday & \multicolumn{2}{c}{-3.811$^{***}$} & \multicolumn{2}{c}{-5.589$^{***}$} & \\
+ & \multicolumn{2}{c}{(0.228)} & \multicolumn{2}{c}{(0.378)} & \\
+\addlinespace[2pt]
+Eve of rest day & \multicolumn{2}{c}{-0.546$^{***}$} & \multicolumn{2}{c}{-0.940$^{***}$} & \\
+ & \multicolumn{2}{c}{(0.130)} & \multicolumn{2}{c}{(0.156)} & \\
+\addlinespace[2pt]
+\bottomrule
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;
+coefficients in percentage points. Panel A estimates
+Equation~\eqref{eq:gradient}: municipality$\times$date fixed effects absorb every
+shock common to the two sectors within a municipality-day, so the interactions are
+the for-profit-specific gradient. Predetermined maternal composition is the cell's
+share of births in each maternal age band, education category, race category, and
+parity category. Robson-group shares standardize clinically but may respond to
+scheduling, since the classification encodes labor onset and gestational age.
+Columns 4--5 split the cesarean share into cesareans performed before and during
+labor, on the years in which the timing indicator is recorded for more than 85
+percent of cesareans. Panel B reports each sector's own gradient from
+Equation~\eqref{eq:scheduling}, with municipality and year fixed effects.
+Standard errors, two-way clustered by municipality and date, are reported in
+parentheses.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
+\end{table}

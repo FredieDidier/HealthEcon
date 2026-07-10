@@ -1,8 +1,8 @@
 # Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean Delivery in Brazil — Replication Package
 
 **Authors:** Fredie Didier (IDP; corresponding author, fdidier@terra.com.br),
-Vinicius Mendes (UFBA, vdmendes@ufba.br), Lucas Emanuel (UFBA, lucasemanuel@ufba.br),
-Pablo Castro (UFBA, pablocastro@ufba.br)
+Pablo Castro (UFBA, pablocastro@ufba.br), Vinicius Mendes (UFBA, vdmendes@ufba.br),
+Lucas Emanuel (UFBA, lucasemanuel@ufba.br)
 
 ## Repository layout
 
@@ -10,16 +10,21 @@ Pablo Castro (UFBA, pablocastro@ufba.br)
 config/
   config.R              # <-- THE ONLY FILE TO EDIT (set DROPBOX_ROOT)
   00_master_build.R     # runs the data build
-  00_master_analysis.R  # runs all analysis scripts
+  00_master_analysis.R  # runs all analysis scripts, in order
 build/
   00_utils.R            # admission-count proxies, TUSS delivery codes
   01a_tiss.R            # one-time ANS TISS Hospitalar download (CONS + DET)
-  01b_sinasc_cnes.R     # one-time SINASC (Base dos Dados) + CNES downloads/ingest
+  01b_sinasc_cnes.R     # one-time SINASC (Base dos Dados) + CNES downloads
   01c_ieps.R            # IEPS municipality-year covariates
+  01d_cnes_estab.R      # establishment-year CNES capacity panel (beds + obstetricians)
   02_deliveries.R       # TISS delivery events + municipality-month panel
   03_workfile.R         # merges everything into main_data.parquet
 analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
-                        #   07_referee_response.R (supplementary-appendix exhibits)
+                        #   07_main_specification.R  (Equation 3, the main gradient)
+                        #   08_long_weekends.R       (holiday taxonomy + displacement)
+                        #   09_org_capacity.R        (establishment-capacity heterogeneity)
+                        #   10_supplement.R          (Supplemental Appendix exhibits)
+                        #   11_body_figures.R        (merged multi-panel body figures)
 analysis/output/        # tables/, graphs/, maps/ (committed)
 latex/                  # paper.tex, model.tex (Appendix A), appendix.tex (A+B),
                         #   sup_appendix.tex (shared body of Appendices C+D),
@@ -35,7 +40,7 @@ The microdata are **not** in this repository. They live in a (Dropbox) folder:
 <DROPBOX_ROOT>/build/TISS/input/        raw ANS TISS claims (CONS/DET parquets, 2015–2025)
 <DROPBOX_ROOT>/build/TISS/output/       delivery event workfiles + muni-month panel
 <DROPBOX_ROOT>/build/SINASC/input/      sinasc_births.parquet (2010–2024) + daily extract
-<DROPBOX_ROOT>/build/CNES/input/        hospital beds + obstetrician counts
+<DROPBOX_ROOT>/build/CNES/input/        hospital beds, obstetrician counts, establishment panel
 <DROPBOX_ROOT>/build/IEPS/{input,output}/   municipality covariates
 <DROPBOX_ROOT>/build/covariates/input/  Parto Adequado Fase-2 hospital list
 <DROPBOX_ROOT>/build/workfile/output/   main_data.parquet (final muni-year dataset)
@@ -52,7 +57,9 @@ extracts cover 2010–2024 (~42M births).
   (BigQuery; the targeted 24-column query is documented in `build/01b_sinasc_cnes.R`;
   requires a Google Cloud billing project), then ingested by `ingest_sinasc()`.
 - **CNES** (beds via `datazoom.saude`; professionals via `microdatasus`) —
-  downloaded by `build/01b_sinasc_cnes.R`.
+  downloaded by `build/01b_sinasc_cnes.R`. The establishment-year capacity panel
+  used by the organizational-capacity analysis is built by `build/01d_cnes_estab.R`
+  (run once with the environment variable `RUN_01D=1`).
 - **IEPS Data** — manual export from `https://iepsdata.org.br`, placed in
   `<DROPBOX_ROOT>/build/IEPS/input/ieps.csv`.
 - **Parto Adequado hospital list** — scraped from the
@@ -92,34 +99,12 @@ Then:
    `pacman::p_load()`) before `source()`-ing the individual `build/` and
    `analysis/code/*.R` files, so there is no need to run `install.packages()` by
    hand. The one-time raw downloads (`01a_tiss.R`, `01b_sinasc_cnes.R`,
-   `01c_ieps.R`) are commented out in the master script; uncomment them only to
-   (re-)download the raw data.
+   `01c_ieps.R`, `01d_cnes_estab.R`) are commented out (or gated behind
+   `RUN_01D=1`) in the master script; uncomment them only to (re-)download the
+   raw data.
 
 3. **Run the analysis** (writes all tables and figures to `analysis/output/`):
 
    ```r
    source("config/00_master_analysis.R")
    ```
-
-   `analysis/code/07_referee_response.R` builds the supplementary-appendix
-   exhibits (pooled municipality$\times$date difference-in-differences, few-cluster
-   inference, timing-indicator validation, sample flow).
-
-## Compiling the paper
-
-The manuscript and its Supplemental Appendix are two separate documents. The
-supplement uses `xr` to resolve cross-references (equations, tables) from the main
-paper, so **compile the paper first**:
-
-```
-cd latex
-pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
-pdflatex supplement && pdflatex supplement
-```
-
-- `paper.tex` — main text, Appendix A (model), Appendix B (data), then references.
-- `supplement.tex` — Supplemental Appendix C (the policy record, including *Parto
-  Adequado*, and additional robustness) and D (supplementary robustness and
-  inference), submitted as online supplementary material.
-
-The compiled PDFs are git-ignored.

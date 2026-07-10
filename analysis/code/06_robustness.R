@@ -69,7 +69,7 @@ fig4 <- ggplot(c_sin, aes(t, 100 * b)) +
   geom_pointrange(aes(ymin = 100*(b-1.96*se), ymax = 100*(b+1.96*se)),
                   colour = unname(PAL["navy"])) +
   scale_x_continuous(breaks = seq(2010, 2024, 2)) +
-  labs(x = NULL, y = "Private cesarean rate: treated vs control (pp)") +
+  labs(x = NULL, y = "For-profit cesarean rate: treated vs control (pp)") +
   theme_paper()
 save_fig(fig4, "fig04_parto_adequado_es_sinasc")
 
@@ -93,7 +93,7 @@ fig4b <- ggplot(c_tiss, aes(yr, 100 * b)) +
   geom_pointrange(aes(ymin = 100*(b-1.96*se), ymax = 100*(b+1.96*se)),
                   colour = unname(PAL["red"]), size = 0.3) +
   scale_x_continuous(breaks = seq(2015, 2024, 1)) +
-  labs(x = NULL, y = "Private cesarean rate: treated vs control (pp), quarterly") +
+  labs(x = NULL, y = "Private-insurance cesarean rate: treated vs control (pp), quarterly") +
   theme_paper()
 save_fig(fig4b, "fig04b_parto_adequado_es_tiss")
 
@@ -110,7 +110,7 @@ etable(did_sin, did_tiss, tex = TRUE, file = f, replace = TRUE,
                 muni = "Municipality", year = "Year", q = "Year-quarter"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("Private (SINASC, annual)", "Private (TISS, quarterly)"),
+       headers = c("For-profit (SINASC, annual)", "Private insurance (TISS, quarterly)"),
        title = "\emph{Parto Adequado} difference-in-differences estimates",
        label = "tab:parto_adequado",
        notes = paste("\\footnotesize\\textit{Notes:} Treated = municipality with a",
@@ -167,11 +167,11 @@ natm <- sd[, .(all = sum(cesarean) / sum(births),
                priv = sum(cesarean[sector == "Private"]) / sum(births[sector == "Private"])),
            by = ym]
 natl <- melt(natm, id.vars = "ym", variable.name = "series", value.name = "rate")
-natl[, series := factor(series, c("priv", "all"), c("Private (for-profit)", "All births"))]
+natl[, series := factor(series, c("priv", "all"), c("For-profit establishments", "All births"))]
 fig5 <- ggplot(natl, aes(ym, 100 * rate, colour = series)) +
   geom_line(linewidth = 0.6) +
   geom_vline(xintercept = as.IDate("2015-07-01"), linetype = "dashed", colour = "grey40") +
-  scale_colour_manual(values = c("Private (for-profit)" = unname(PAL["red"]),
+  scale_colour_manual(values = c("For-profit establishments" = unname(PAL["red"]),
                                  "All births" = unname(PAL["blue"]))) +
   scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
   labs(x = NULL, y = "Cesarean rate (%)") +
@@ -350,7 +350,7 @@ m_b2 <- feols(csec ~ log_fee_gap | muni_b + year, by, weights = ~deliveries, clu
 
 fb2 <- file.path(TABLE, "tab13b_beneficiary_muni.tex")
 etable(m_b1, m_b2, tex = TRUE, file = fb2, replace = TRUE,
-       dict = c(csec = "Private cesarean rate",
+       dict = c(csec = "For-profit cesarean rate",
                 log_fee_gap = "Log economic fee gap (cesarean minus vaginal)",
                 state = "State", muni_b = "Municipality", year = "Year"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
@@ -411,10 +411,10 @@ cat(sprintf("\nTrue weekend (Sun+Sat) dip = %.2f pp; rank %d/21; exact permutati
 print(res)
 
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{Descriptive ranking: the weekend dip across all 21 two-day placebos}",
+  "\\caption{\\textbf{Descriptive ranking: the weekend dip across all 21 two-day placebos}}",
   "\\label{tab:permutation}\\small",
   "\\begin{tabular}{lc}", "\\toprule",
-  "Pseudo rest-day pair & Private cesarean dip (pp) \\\\", "\\midrule",
+  "Pseudo rest-day pair & For-profit cesarean dip (pp) \\\\", "\\midrule",
   res[, sprintf("%s%s & %.2f \\\\", days, ifelse(days == "Sun+Sat", " (true weekend)", ""), coef)],
   "\\bottomrule", "\\end{tabular}",
   "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
@@ -435,11 +435,11 @@ ces[, no_indication := as.integer(is.na(cid_1) | cid_1 == "" |
                                   cid3 %in% c("O80","O81","O82","O83","O84") |
                                   !(cid3 %in% IND))]
 byyr <- ces[, .(no_indication_pct = round(100 * mean(no_indication), 1), n = .N), by = year][order(year)]
-cat("\nPrivate cesareans with NO recorded clinical indication (primary CID), by year:\n")
+cat("\nPrivate-insurance cesareans with NO recorded clinical indication (primary CID), by year:\n")
 print(byyr)
 
 tex2 <- c("\\begin{table}[H]\\centering",
-  "\\caption{Private cesareans with no recorded clinical indication}",
+  "\\caption{\\textbf{Private-insurance cesareans with no recorded clinical indication}}",
   "\\label{tab:no_indication}\\small",
   "\\begin{tabular}{cc}", "\\toprule",
   "Year & Share with no indication ICD-10 code (\\%) \\\\", "\\midrule",
@@ -509,10 +509,10 @@ m1 <- feols(neo_rate ~ early_term | muni6 + year, d, weights = ~priv_births, clu
 m2 <- feols(neo_rate ~ csec       | muni6 + year, d, weights = ~priv_births, cluster = ~muni6)
 m3 <- feols(inf_rate ~ early_term | muni6 + year, d, weights = ~priv_births, cluster = ~muni6)
 
-dict <- c(neo_rate = "Perinatal-condition (ICD-10 P) infant admissions per private birth",
-          inf_rate = "All infant ($<$1) admissions per private birth",
+dict <- c(neo_rate = "Perinatal-condition admissions per private birth",
+          inf_rate = "All infant admissions per private birth",
           early_term = "Share of private births at 37--38 weeks",
-          csec = "Private cesarean rate", muni6 = "Municipality", year = "Year")
+          csec = "For-profit cesarean rate", muni6 = "Municipality", year = "Year")
 f <- file.path(TABLE, "tab14_neonatal_suggestive.tex")
 etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
@@ -523,9 +523,9 @@ etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "2015--2024, weighted by private births; cells with at least 50 private",
          "births. Infant admissions are TISS hospital events of beneficiaries in the",
          "$<$1 age band, at the provider municipality; perinatal conditions are",
-         "ICD-10 chapter P primary diagnoses. Ecological and correlational — a",
-         "corroboration of the early-term margin, not a causal estimate. SE",
-         "clustered by municipality.", SIGNIF_NOTE))
+         "primary diagnoses of conditions originating in the perinatal period.",
+         "Ecological and correlational, a corroboration of the early-term margin,",
+         "not a causal estimate. SE clustered by municipality.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m1, m2, m3, dict = dict, fitstat = ~ n, digits = 4)
 

@@ -78,7 +78,7 @@ m_et1 <- feols(as.formula(paste("early_term ~ private +", ctrl, "| muni + year")
 m_lb1 <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 m_ap1 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 
-dict <- c(private = "Private (for-profit) establishment",
+dict <- c(private = "For-profit establishment",
           early_term = "Early-term birth (37--38 weeks)", lbw = "Low birthweight ($<$2500g)",
           low_apgar = "Five-minute Apgar $<$ 7", idade_mae = "Mother's age",
           muni = "Municipality", year = "Year")
@@ -88,7 +88,7 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        extralines = list("Maternal controls" = c("No", "Yes", "Yes", "Yes")),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       title = "Private-sector differences in early-term birth and newborn outcomes",
+       title = "For-profit--public differences in early-term birth and newborn outcomes",
        label = "tab:health",
        notes = paste("\\footnotesize\\textit{Notes:} Birth-level regressions, SINASC",
          "2010--2024, private (for-profit) vs public establishments, municipality and",
@@ -137,7 +137,7 @@ if (!have_cost) {
   fmt <- function(x) formatC(x, format = "f", digits = 0, big.mark = ",")
   tex <- c(
     "\\begin{table}[H]\\centering",
-    "\\caption{Total amount billed per delivery, by mode}",
+    "\\caption{\\textbf{Total amount billed per delivery, by mode}}",
     "\\label{tab:cost}",
     "\\small",
     "\\begin{tabular}{lcc}",

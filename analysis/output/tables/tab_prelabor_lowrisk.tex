@@ -1,0 +1,36 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{The weekend dip by delivery timing and clinical risk}}
+\label{tab:prelabor_lowrisk}
+\small\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+ & \multicolumn{4}{c}{Components of the cesarean share} & \multicolumn{2}{c}{Cesarean share, low risk} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}
+ & Prelabor & In-labor & Prelabor & In-labor & Robson 1--2 & Robson 1 \\
+\midrule
+Weekend & -9.743$^{***}$ & 1.741$^{***}$ & -4.745$^{***}$ & -1.739$^{***}$ & -7.444$^{***}$ & -6.503$^{***}$ \\
+ & (0.651) & (0.394) & (0.265) & (0.180) & (0.462) & (0.421) \\
+\addlinespace[2pt]
+\midrule
+Sector & For-profit & For-profit & Public & Public & For-profit & For-profit \\
+Municipality fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\
+Year fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\
+Observations & 1,245,104 & 1,245,104 & 3,455,018 & 3,455,018 & 758,851 & 462,891 \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} Estimates of Equation~\eqref{eq:scheduling}, restricted to the
+weekend indicator. Municipality-date cells, SINASC 2010--2024, weighted by births;
+coefficients in percentage points. Columns 1--4 split the cesarean share of births
+into cesareans performed before labor began and cesareans performed during labor.
+Columns 5--6 restrict to Robson groups 1--2 (nulliparous, term, singleton,
+cephalic) and to Robson group 1 alone, which requires spontaneous labor, so that
+its cesareans are intrapartum by construction. Standard errors, two-way clustered
+by municipality and date, are reported in parentheses.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
+\end{table}
