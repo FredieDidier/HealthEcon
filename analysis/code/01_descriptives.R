@@ -39,7 +39,7 @@ trend <- rbind(
   sin_yr[, .(year, rate = pub,  series = "Public (SINASC births)")])
 trend[, series := factor(series, levels = c(
   "Private insurance (TISS claims)", "For-profit establishments (SINASC)",
-  "Public establishments (SINASC)"))]
+  "Public (SINASC births)"))]
 
 pal_sector <- c("Private insurance (TISS claims)"        = unname(PAL["red"]),
                 "For-profit establishments (SINASC)"     = unname(PAL["orange"]),
