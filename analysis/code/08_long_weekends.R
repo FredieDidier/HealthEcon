@@ -401,9 +401,11 @@ pb_row <- function(label, col) {
     paste0(" & ", paste(vals[2, ], collapse = " & "), " \\\\"),
     "\\addlinespace[2pt]")
 }
+n_evt <- formatC(stats::nobs(m_evt[[1]]), big.mark = ",", format = "d")
 lines <- c(lines,
   pb_row("Pre-holiday excess, $\\sum_{\\ell=-3}^{-1}\\theta_\\ell$", "pre"),
   pb_row("Window total, $\\sum_{\\ell=-3}^{+3}\\theta_\\ell$", "full"),
+  paste0("Observations & ", paste(rep(n_evt, 4), collapse = " & "), " \\\\"),
   "\\bottomrule",
   "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
@@ -415,10 +417,12 @@ lines <- c(lines,
   "falling holiday is the omitted category and the coefficients are identified within",
   "holiday and within day of week. Coefficients are in percentage points.",
   "Panel B: balanced municipality-date panel of the two sectors, counts in births,",
-  "event time $\\ell$ measured in days from the holiday, non-window days omitted;",
+  "event time $\\ell$ measured in days from the holiday, non-window days omitted,",
+  "municipality and year-month fixed effects with day-of-week controls;",
   "$\\theta_\\ell$ is the for-profit minus public difference on event day $\\ell$",
-  "relative to an ordinary day of the same week day. Standard errors, two-way",
-  "clustered by municipality and date, are reported in parentheses.",
+  "relative to an ordinary day of the same week day. The observation count is the",
+  "municipality-days of the balanced panel and is common to the four columns.",
+  "Standard errors, two-way clustered by municipality and date, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE,
   "\\end{minipage}",
   "\\end{table}")
@@ -486,9 +490,11 @@ sr <- function(col, label) {
     paste0(" & ", paste(sapply(cells, `[`, 2), collapse = " & "), " \\\\"),
     "\\addlinespace[2pt]")
 }
+n_share <- formatC(stats::nobs(m_share$pre), big.mark = ",", format = "d")
 sup <- c(sup,
   sr("pre",  "Pre-holiday excess, $\\sum_{\\ell=-3}^{-1}\\theta_\\ell$"),
   sr("full", "Window total, $\\sum_{\\ell=-3}^{+3}\\theta_\\ell$"),
+  paste0("Observations & ", paste(rep(n_share, 4), collapse = " & "), " \\\\"),
   "\\midrule",
   "\\multicolumn{5}{l}{\\emph{Panel B. Prelabor-share taxonomy including movable holidays}} \\\\",
   "\\addlinespace[2pt]")
@@ -502,6 +508,8 @@ sup <- c(sup,
   mvrow("For-profit $\\times$ Bridge holiday", K[["brg"]]),
   mvrow("For-profit $\\times$ Three-day holiday", K[["d3"]]),
   mvrow("For-profit $\\times$ Isolated holiday", K[["iso"]]),
+  paste0("Observations & \\multicolumn{4}{c}{",
+         formatC(stats::nobs(m_mv), big.mark = ",", format = "d"), "} \\\\"),
   "\\bottomrule", "\\end{tabular}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
   "\\textit{Notes:} SINASC 2012--2024. Panel A repeats the event study of",

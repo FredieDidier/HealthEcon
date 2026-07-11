@@ -59,7 +59,7 @@ save_fig(fig1, "fig01_csection_trend")
 w <- as.data.table(read_parquet(WFO))
 vars <- c(
   tiss_csection_rate           = "Cesarean rate, private (TISS)",
-  sinasc_private_csection_rate = "Cesarean rate, private (SINASC)",
+  sinasc_private_csection_rate = "Cesarean rate, for-profit (SINASC)",
   log_fee_gap                  = "Log economic fee gap (cesarean minus vaginal)",
   mean_los                     = "Length of stay (days)",
   any_uti_share                = "Share of deliveries with any ICU day",
@@ -158,7 +158,9 @@ tex <- c(
   "\\toprule",
   "Sector & Cesarean & Vaginal \\\\",
   "\\midrule",
-  sprintf("%s & %.1f\\%% & %.1f\\%% \\\\", bh_w$sector, 100 * bh_w$Cesarean, 100 * bh_w$Vaginal),
+  sprintf("%s & %.1f\\%% & %.1f\\%% \\\\",
+          as.character(sector_display(bh_w$sector, c("Private", "Public"))),
+          100 * bh_w$Cesarean, 100 * bh_w$Vaginal),
   "\\midrule",
   sprintf("Uniform-timing benchmark & \\multicolumn{2}{c}{%.1f\\%%} \\\\", 100 * bench),
   "\\bottomrule",

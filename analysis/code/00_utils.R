@@ -119,10 +119,34 @@ bold_caption <- function(tx) {
   tx
 }
 
+# Standardize the fixed-effects block to the spelled-out row style used by the
+# hand-built body tables ("Municipality fixed effects & Yes ...") instead of
+# etable's default "\emph{Fixed-effects}" section header with bare dimension
+# names. Removes the header line and appends " fixed effects" to each dimension
+# row between it and the next rule. Idempotent (a row that already ends in
+# "fixed effects" is left alone). Keeps the \emph{Variables} and
+# \emph{Fit statistics} headers, which are self-consistent within the table.
+standardize_fe <- function(tx) {
+  out <- character(0); fe <- FALSE
+  for (line in tx) {
+    if (grepl("\\\\emph\\{Fixed-effects\\}", line)) { fe <- TRUE; next }
+    if (fe) {
+      if (grepl("\\\\midrule|\\\\bottomrule|\\\\end\\{tabular\\}", line)) {
+        fe <- FALSE
+      } else if (grepl("&", line) && !grepl("fixed effects", line)) {
+        line <- sub("^(\\s*)([^&]*[^&\\s])(\\s*)&", "\\1\\2 fixed effects &", line, perl = TRUE)
+      }
+    }
+    out <- c(out, line)
+  }
+  out
+}
+
 postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
                             addspace = TRUE, resize = TRUE) {
   tx <- readLines(file)
   tx <- bold_caption(tx)
+  tx <- standardize_fe(tx)
   tx <- tx[!grepl("standard-errors in parentheses", tx, fixed = TRUE)]
   tx <- tx[!grepl("Signif. Codes", tx, fixed = TRUE)]  # our own legend is in the note
   tx <- sub("\\begin{table}[htbp]", "\\begin{table}[H]", tx, fixed = TRUE)  # float placement

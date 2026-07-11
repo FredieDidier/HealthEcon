@@ -11,7 +11,7 @@
 # weekdays and dip on weekends and holidays; the effect is larger in the private
 # sector. Includes movable national holidays (Easter-based) and eve-of-rest-day
 # "pull-forward" bunching.
-#   Figure 2 → fig02_dow_cesarean ; Table 3 → tab03_scheduling
+#   Figure 2 → fig02_dow_cesarean (per-sector gradients now in tab_main_gradient, Panel B)
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -90,19 +90,8 @@ r_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Pr
 
 dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "National holiday",
           eve = "Eve of rest day", muni = "Municipality", year = "Year")
-f <- file.path(TABLE, "tab03_scheduling.tex")
-etable(r_pub, r_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("Public", "For-profit"),
-       title = "Weekend, holiday, and eve-of-rest-day effects on the cesarean rate",
-       label = "tab:scheduling",
-       notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",
-         "weighted by births. The dependent variable is the cesarean share of births.",
-         "\\emph{Eve of rest day} is a Friday or the day before a national holiday.",
-         "Movable holidays (Good Friday, Carnival, Corpus Christi) are included.",
-         "Standard errors, two-way clustered by municipality and date, are reported in parentheses.", SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
+# r_pub/r_priv are the per-sector gradients now shown in Panel B of tab_main_gradient
+# (built in 07); the standalone tab03_scheduling exhibit was retired.
 
 # --- console summary ----------------------------------------------------------
 cat("\nCesarean rate (%) by day type and sector:\n")
@@ -117,7 +106,7 @@ message("03_scheduling.R done")
 # Robson groups 1-2 are nulliparous, single, cephalic, term pregnancies — the
 # births where a cesarean is least likely to be medically necessary. If even
 # these cluster on weekdays / dip on weekends, the driver is scheduling, not need.
-#   Figure 3 → fig03_robson_dow ; Table 4 → tab04_robson
+#   Figure 3 → fig03_robson_dow (low-risk Robson dips now in tab_prelabor_lowrisk, Table 5)
 #
 # REQUIRES build/covariates/input/sinasc_births.parquet (from the richer SINASC
 # pull; see build/01d_sinasc_daily.R). Skips gracefully if not yet built.
@@ -169,19 +158,8 @@ if (!file.exists(BIRTHS)) {
 
   dict <- c(rate = "Cesarean rate", weekend = "Weekend",
             muni = "Municipality", year = "Year")
-  f <- file.path(TABLE, "tab04_robson.tex")
-  etable(r12_pub, r12_priv, r1_priv, tex = TRUE, file = f, replace = TRUE, dict = dict,
-         signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-         fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-         headers = c("Robson groups 1--2, public", "Robson groups 1--2, for-profit",
-                     "Robson group 1, for-profit"),
-         title = "Weekend dip among low-risk (Robson 1-2) cesareans",
-         label = "tab:robson",
-         notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells,",
-           "weighted by births, within Robson groups 1-2 (nulliparous, term,",
-           "singleton, cephalic). The dependent variable is the cesarean share.",
-           "Standard errors, two-way clustered by municipality and date, are reported in parentheses.", SIGNIF_NOTE))
-  postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
+  # The low-risk Robson weekend dips are reported in the body table
+  # tab_prelabor_lowrisk (Table 5); the standalone tab04_robson exhibit was retired.
   etable(r12_pub, r12_priv, r1_priv, dict = dict, fitstat = ~ n + r2, digits = 4)
 
   message("04_robson.R done")
@@ -373,12 +351,12 @@ kt <- wide[order(g), .(
   `Rate public`   = sprintf("%.1f", 100*rate_Public))]
 tex <- c(
   "\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{Decomposing the private--public cesarean gap (Kitagawa, Robson groups)}}",
+  "\\caption{\\textbf{Decomposing the for-profit--public cesarean gap (Kitagawa, Robson groups)}}",
   "\\label{tab:decomposition}",
   "\\small",
   "\\begin{tabular}{lcccc}",
   "\\toprule",
-  "Robson group & Share private (\\%) & Share public (\\%) & Cesarean private (\\%) & Cesarean public (\\%) \\\\",
+  "Robson group & Share for-profit (\\%) & Share public (\\%) & Cesarean for-profit (\\%) & Cesarean public (\\%) \\\\",
   "\\midrule",
   apply(kt, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
@@ -387,8 +365,9 @@ tex <- c(
   "\\bottomrule",
   "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (Robson",
-        "classification available from 2014). Kitagawa decomposition of the",
-        "private--public cesarean gap into Robson-group composition and",
+        "classification available from 2014). Kitagawa decomposition",
+        "\\citep{kitagawa1955} of the",
+        "for-profit--public cesarean gap into Robson-group composition and",
         "within-group rate differences."),
   "\\end{table}")
 writeLines(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))

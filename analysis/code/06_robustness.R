@@ -115,7 +115,7 @@ etable(did_sin, did_tiss, tex = TRUE, file = f, replace = TRUE,
        label = "tab:parto_adequado",
        notes = paste("\\footnotesize\\textit{Notes:} Treated = municipality with a",
          "participating \\emph{Parto Adequado} 2017--2021 dissemination-phase private hospital (a diluted",
-         "exposure; TISS has no hospital identifier). Weighted by private births",
+         "exposure; TISS has no hospital identifier). Weighted by for-profit births",
          "(SINASC) / deliveries (TISS). Standard errors, clustered by municipality, are reported in parentheses. \\emph{The",
          "SINASC event study rejects parallel pre-trends} (2010--2015 joint test",
          "$F=4.5$, $p<0.001$): treated municipalities are on a pre-existing differential",
@@ -149,7 +149,7 @@ etable(r_base, r_cov, r_trend, r_both, tex = TRUE, file = fb, replace = TRUE,
        headers = c("Baseline", "+ Covariates", "+ Treated trend", "+ Both"),
        title = "\emph{Parto Adequado}: covariate and treated-trend robustness",
        label = "tab:pretrend_robustness",
-       notes = paste("\\footnotesize\\textit{Notes:} SINASC private (for-profit)",
+       notes = paste("\\footnotesize\\textit{Notes:} SINASC for-profit",
          "cesarean rate, municipality-year 2010--2024, weighted by births. Column 1",
          "is the baseline difference-in-differences; column 2 adds time-varying",
          "municipal covariates; column 3 adds a treated-cohort linear time trend;",
@@ -271,14 +271,20 @@ etable(m_tv, m_sun, m_rest, m_ap, m_lb, tex = TRUE, file = f, replace = TRUE, di
                    "Cesarean rate, rest days", "Low Apgar (5-minute)", "Low birthweight"),
        title = "Robustness of the weekend dip: sector classification, rest-day definitions, and newborn composition",
        label = "tab:referee_robustness",
-       notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
+       notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each",
          "birth's establishment with the natureza jur\\'idica of its own year",
          "(2015--2024; earlier births use 2015). Columns 4--5 are composition checks:",
-         "weekend (unscheduled) private births include fewer healthy scheduled",
+         "weekend (unscheduled) for-profit births include fewer healthy scheduled",
          "term pregnancies, so newborn risk indicators shift mechanically.",
          "Standard errors, two-way clustered by municipality and date, are reported in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\footnotesize", tabcolsep = 3)
+# bracket the two dependent-variable groups so the column mapping is explicit
+.t13 <- readLines(f)
+.i13 <- grep("multicolumn\\{3\\}\\{c\\}\\{Cesarean rate\\}", .t13)
+if (length(.i13))
+  .t13 <- append(.t13, "      \\cmidrule(lr){2-4}\\cmidrule(lr){5-6}", after = .i13[1])
+writeLines(.t13, f)
 etable(m_tv, m_sun, m_rest, m_ap, m_lb, dict = dict, fitstat = ~ n, digits = 4,
        headers = c("TV sector", "Sunday", "Rest", "Apgar", "LBW"))
 
@@ -313,9 +319,9 @@ etable(c(list(m_clean), m_reg, m_pd), tex = TRUE, file = fc, replace = TRUE, dic
        fitstat = ~ n, digits = 4, digits.stats = 3,
        headers = c("Clinically clean low-risk", "North", "Northeast", "Southeast", "South",
                    "Center-West", "2010--2014", "2015--2019", "2020--2024"),
-       title = "The private weekend dip: clean clinical sample, regions, and periods",
+       title = "The for-profit weekend dip: clean clinical sample, regions, and periods",
        label = "tab:dip_region_period",
-       notes = paste("\\footnotesize\\textit{Notes:} Private-sector municipality-date",
+       notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
          "cells, weighted by births. \\emph{Clean low-risk} keeps births with no",
          "recorded schedulable indication: cephalic presentation, singleton, term",
          "(37--41 weeks), no prior cesarean (multiparity allowed, unlike Robson 1--2).",
@@ -350,7 +356,7 @@ m_b2 <- feols(csec ~ log_fee_gap | muni_b + year, by, weights = ~deliveries, clu
 
 fb2 <- file.path(TABLE, "tab13b_beneficiary_muni.tex")
 etable(m_b1, m_b2, tex = TRUE, file = fb2, replace = TRUE,
-       dict = c(csec = "For-profit cesarean rate",
+       dict = c(csec = "Private-insurance cesarean rate",
                 log_fee_gap = "Log economic fee gap (cesarean minus vaginal)",
                 state = "State", muni_b = "Municipality", year = "Year"),
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
@@ -417,7 +423,7 @@ tex <- c("\\begin{table}[H]\\centering",
   "Pseudo rest-day pair & For-profit cesarean dip (pp) \\\\", "\\midrule",
   res[, sprintf("%s%s & %.2f \\\\", days, ifelse(days == "Sun+Sat", " (true weekend)", ""), coef)],
   "\\bottomrule", "\\end{tabular}",
-  "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the private cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
+  "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the for-profit cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
   "\\end{table}")
 writeLines(tex, file.path(TABLE, "tab15_permutation.tex"))
 

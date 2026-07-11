@@ -7,9 +7,9 @@
 
 # =============================================================================
 # 02_not_a_price.R — "it is NOT a price story."
-# The private cesarean rate does not respond to the (economic) cesarean-vaginal
-# fee gap: the coefficient is small and flips sign across fixed-effects schemes.
-# Table 2 → analysis/output/tables/tab02_not_a_price.tex.
+# The private-insurance cesarean rate does not respond to the (economic)
+# cesarean-vaginal fee gap: the coefficient is small and flips sign across
+# fixed-effects schemes. Panel A of the merged body table tab_fees (Table 2).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -40,18 +40,8 @@ dict <- c(
   obstetricians_per_1k_births = "Obstetricians per 1,000 births",
   state = "State", year = "Year", muni6 = "Municipality")
 
-f <- file.path(TABLE, "tab02_not_a_price.tex")
-etable(m1, m2, m3, m4, tex = TRUE, file = f, replace = TRUE, dict = dict,
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n + r2, digits = 3, digits.stats = 3,
-       title = "The private cesarean rate and the economic fee gap",
-       label = "tab:not_a_price",
-       notes = paste("\\footnotesize\\textit{Notes:} Municipality-year regressions,",
-         "weighted by the number of private deliveries. The dependent variable is the",
-         "share of private deliveries by cesarean. The economic fee gap adds the",
-         "separately-billed hourly labor-assistance fee to the vaginal fee. Standard",
-         "errors clustered by the fixed-effect geography.", SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
+# Models m1-m4 feed Panel A of the merged body table tab_fees (built below); the
+# standalone tab02_not_a_price exhibit was retired.
 etable(m1, m2, m3, m4, dict = dict, fitstat = ~ n + r2, digits = 3)
 
 message("02_not_a_price.R done")
@@ -63,8 +53,7 @@ message("02_not_a_price.R done")
 # in the relative fee that occur within states, and ask whether the cesarean rate
 # responds. It does not: even ±2 log-point swings in the fee gap barely move the
 # cesarean rate, and the little movement is wrong-signed → fees do not drive it.
-#   Table 6 → tab06_fee_shock  (the former Figure 6 scatter was dropped as
-#   redundant with the table).
+#   Panel B of the merged body table tab_fees (Table 2).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -106,29 +95,8 @@ if (requireNamespace("fwildclusterboot", quietly = TRUE)) {
 }
 dict <- c(d_csec = "$\\Delta$ Cesarean rate", d_fee_gap = "$\\Delta$ Log fee gap",
           csec = "Cesarean rate", fee_gap = "Log fee gap", uf = "State", year = "Year")
-f <- file.path(TABLE, "tab06_fee_shock.tex")
-etable(m_fd, m_lvl, tex = TRUE, file = f, replace = TRUE, dict = dict,
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("First differences", "Levels"),
-       extralines = list("State clusters" = c(n_state, ""),
-         "Wild-cluster bootstrap $p$-value" =
-           c(ifelse(is.na(wild_p), "0.210", sprintf("%.3f", wild_p)), "")),
-       title = "Changes in the cesarean rate and changes in the fee gap",
-       label = "tab:fee_shock",
-       notes = paste("\\footnotesize\\textit{Notes:} A falsification of the price",
-         "channel based on Equation~\\eqref{eq:feegap}. State-year observations, weighted",
-         "by private deliveries. Column 1 first-differences both variables; column 2",
-         "is in levels with state and year fixed effects. Even large idiosyncratic",
-         "swings in the relative fee leave the cesarean rate essentially unchanged.",
-         "Inference for column 1 uses a 9,999-draw Webb-weight wild-cluster bootstrap",
-         "at the state level; the coefficient is not statistically distinguishable from",
-         "zero under this inference.", SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
-
-# NB: the companion scatter (former Figure 6, fig06_fee_shock) was dropped as
-# redundant with Table 6 (tab06_fee_shock); the table is the exhibit of record.
-
+# m_fd, m_lvl, wild_p and n_state feed Panel B of the merged body table tab_fees
+# (built below); the standalone tab06_fee_shock exhibit was retired.
 etable(m_fd, m_lvl, dict = dict, fitstat = ~ n + r2, digits = 4)
 message("06_fee_shock.R done")
 

@@ -63,9 +63,9 @@ dip_dens_lo <- coef(m_dens)["weekend"] + coef(m_dens)["weekend:low_dens"]
 dip_educ_lo <- coef(m_educ)["weekend"]                              # low education (ref)
 dip_educ_hi <- coef(m_educ)["weekend"] + coef(m_educ)["weekend:educ_hi"]
 implied_lines <- list(
-  "Implied dip, high obst.\\ density / low education" =
+  "Implied dip, high obstetrician density / low education" =
     c(sprintf("%.4f", dip_dens_hi), sprintf("%.4f", dip_educ_lo)),
-  "Implied dip, low obst.\\ density / high education" =
+  "Implied dip, low obstetrician density / high education" =
     c(sprintf("%.4f", dip_dens_lo), sprintf("%.4f", dip_educ_hi)))
 
 dict <- c(weekend = "Weekend", "weekend:low_dens" = "Weekend $\\times$ Low obstetrician density",

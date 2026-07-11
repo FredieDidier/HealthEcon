@@ -180,12 +180,12 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | Script (`analysis/code/`) | Paper exhibit(s) | Output file(s) in `analysis/output/` |
 |---|---|---|
 | `01_descriptives.R` | **Figure 1** | `graphs/fig01_csection_trend`; `graphs/fig07_hour_of_birth`; `maps/map01_csection_all`, `maps/map02_csection_private`; `tables/tab01_descriptives.tex`, `tables/tab07_business_hours.tex` |
-| `02_regressions.R` | **Table 2** | `tables/tab_fees.tex`; `tables/tab02_not_a_price.tex`, `tables/tab06_fee_shock.tex` |
-| `03_mechanisms.R` | **Table 5, Table 7** | `tables/tab_prelabor_lowrisk.tex`, `tables/tab11_decomposition.tex`; `tables/tab03_scheduling.tex`, `tables/tab04_robson.tex`, `tables/tab08_mechanism_checks.tex`; `graphs/fig02_dow_cesarean`, `graphs/fig03_robson_dow`, `graphs/fig08_daily_counts` |
+| `02_regressions.R` | **Table 2** | `tables/tab_fees.tex` |
+| `03_mechanisms.R` | **Table 5, Table 7** | `tables/tab_prelabor_lowrisk.tex`, `tables/tab11_decomposition.tex`, `tables/tab08_mechanism_checks.tex`; `graphs/fig02_dow_cesarean`, `graphs/fig03_robson_dow`, `graphs/fig08_daily_counts` |
 | `04_heterogeneity.R` | (supplement) | `tables/tab10_heterogeneity.tex`, `tables/tab10b_modality.tex` |
 | `05_cost.R` | **Table 6** | `tables/tab09_health.tex`; `tables/tab12_cost.tex`; `graphs/fig09_gestation`, `graphs/fig09b_gestation_by_timing` |
 | `06_robustness.R` | (supplement) | `tables/tab05_parto_adequado.tex`, `tab05b_pretrend_robustness.tex`, `tab13_referee_robustness.tex`, `tab13b_beneficiary_muni.tex`, `tab13c_dip_by_region_period.tex`, `tab14_neonatal_suggestive.tex`, `tab15_permutation.tex`, `tab15b_no_indication.tex`; `graphs/fig04_parto_adequado_es_sinasc`, `fig04b_parto_adequado_es_tiss`, `fig05_rn368_timeline` |
-| `07_main_specification.R` | **Table 3** | `tables/tab_main_gradient.tex` (legacy `tab_pooled_did*.tex` also written, not `\input` anywhere); `fam_A.rds` |
+| `07_main_specification.R` | **Table 3** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |

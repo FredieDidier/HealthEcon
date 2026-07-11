@@ -44,6 +44,7 @@ Pre-holiday excess, $\sum_{\ell=-3}^{-1}\theta_\ell$ & -0.3917$^{*}$ & -0.2018$^
 Window total, $\sum_{\ell=-3}^{+3}\theta_\ell$ & -1.1311$^{***}$ & -0.3470$^{***}$ & -0.2633$^{***}$ & -1.8876$^{***}$ \\
  & (0.2985) & (0.1290) & (0.0874) & (0.4133) \\
 \addlinespace[2pt]
+Observations & 1,116,015 & 1,116,015 & 1,116,015 & 1,116,015 \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
@@ -55,10 +56,12 @@ Columns 2--4 add for-profit $\times$ holiday-identity indicators, so the weekend
 falling holiday is the omitted category and the coefficients are identified within
 holiday and within day of week. Coefficients are in percentage points.
 Panel B: balanced municipality-date panel of the two sectors, counts in births,
-event time $\ell$ measured in days from the holiday, non-window days omitted;
+event time $\ell$ measured in days from the holiday, non-window days omitted,
+municipality and year-month fixed effects with day-of-week controls;
 $\theta_\ell$ is the for-profit minus public difference on event day $\ell$
-relative to an ordinary day of the same week day. Standard errors, two-way
-clustered by municipality and date, are reported in parentheses.
+relative to an ordinary day of the same week day. The observation count is the
+municipality-days of the balanced panel and is common to the four columns.
+Standard errors, two-way clustered by municipality and date, are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{minipage}

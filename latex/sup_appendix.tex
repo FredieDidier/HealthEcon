@@ -21,7 +21,7 @@ never became an actual fee change, as Section~\ref{sec:notprice} shows: the fee
 series has no jump. Second, \emph{Parto Adequado}, the flagship
 quality-improvement program, invites a cleaner test, because hospitals joined it
 from 2017. Figure~\ref{fig:pa_es} presents an event study for municipalities hosting
-a participating for-profit hospital, using the long pre-period the birth records
+a participating private hospital, using the long pre-period the birth records
 afford. The treated municipalities are on a downward path, but the path begins in
 2010, seven years before the dissemination phase, and shows no break at adoption. A
 joint test rejects parallel pre-trends, and controlling for a treated-specific
@@ -39,7 +39,7 @@ its policy timeline for reference.
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig04_parto_adequado_es_sinasc.pdf}
 \caption{Parto Adequado event study, treated versus control municipalities}\label{fig:pa_es}
-\fignotes{For-profit cesarean rate, treated (participating for-profit hospital)
+\fignotes{For-profit cesarean rate, treated (participating private hospital)
 minus control municipalities, relative to 2016. The pre-existing downward trend
 has no break at the 2017 onset (dashed line).}
 \end{figure}
@@ -153,8 +153,8 @@ showing the estimate is sign-unstable rather than a precise zero.
 Table~\ref{tab:fee_base_econ} shows the fee-gap null is unchanged when the vaginal
 fee is measured by the base delivery fee alone, so it does not depend on the
 endogenous billed labor-assistance hours. Table~\ref{tab:fewcluster} re-does
-inference on the fee-shock coefficient with a wild-cluster bootstrap over the small
-number of state clusters. Table~\ref{tab:sampleflow} documents sample construction,
+inference on the fee-shock coefficient with a wild-cluster bootstrap
+\citep{cameron2008,webb2023} over the small number of state clusters. Table~\ref{tab:sampleflow} documents sample construction,
 and Table~\ref{tab:timing_missing} shows that missingness of the cesarean-timing
 indicator is balanced across weekdays and weekends, so the prelabor/in-labor split
 is not a missingness artifact.
@@ -176,7 +176,7 @@ holiday, and eve interactions together. Family B is the supplemental
 heterogeneity of the weekend dip, comprising the obstetrician-density and
 maternal-education interactions of Table~\ref{tab:heterogeneity} and the
 cooperative-insurer contrast of Table~\ref{tab:modality}. Family C is the set of
-for-profit-versus-public outcome differences of Table~\ref{tab:health}: early-term
+for-profit--public outcome differences of Table~\ref{tab:health}: early-term
 birth, low birthweight, and low Apgar score. Family D is the long-weekend family
 of Table~\ref{tab:long_weekends}: the three holiday-type interactions and the
 pre-holiday displacement sum. Family E is the pair of organizational-capacity

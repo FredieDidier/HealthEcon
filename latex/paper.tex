@@ -168,7 +168,7 @@ gradient is thus common to both sectors, and weekly scheduling pervades Brazilia
 obstetrics; what distinguishes the for-profit model is the differential on top of it.
 The mechanism is visible in the components of the rate: the
 aggregate weekend dip is minus 9.7 percentage points for cesareans scheduled
-before labor and near zero for cesareans during labor, so it is concentrated in
+before labor and slightly positive, at 1.7 points, for cesareans during labor, so it is concentrated in
 surgery booked around the physician's calendar. It does not vanish among low-risk first-time
 mothers already in spontaneous labor, where the cesarean is intrapartum by
 definition; there it reflects weekend decision-making and selection rather than
@@ -182,7 +182,7 @@ estimated precisely. The evidence therefore identifies supply-side scheduling
 without identifying whose convenience it serves.
 
 Third, convenience has a quantity and a cost. A decomposition over Robson
-clinical groups attributes 71\% of the 35 percentage-point for-profit-public gap to
+clinical groups attributes 71\% of the 35 percentage-point for-profit--public gap to
 practice style within identical clinical groups, not to differences in case-mix.
 Benchmarking each municipality's weekday cesarean propensity against its own
 weekend rate places about 50,000 for-profit weekday cesareans per year above that
@@ -199,7 +199,7 @@ cesareans and earlier scheduled births harm newborn health
 
 The calendar regressions identify the ordering of deliveries across dates, not the
 total number of cesareans caused by scheduling. Equation~\eqref{eq:gradient}
-provides a within-municipality-day for-profit-public differential under a
+provides a within-municipality-day for-profit--public differential under a
 common-gradient assumption, while the gestational-age results remain
 associational. Section~\ref{sec:strategy} states these estimands and assumptions
 formally.
@@ -243,7 +243,7 @@ than patient case-mix \citep{finkelstein2016,molitor2018,cutler2019,%
 curriemacleod2016}. We show that in the most extreme cesarean system on record the
 operative practice pattern is a scheduling choice, and we quantify it: within
 identical clinical groups, practice style accounts for the majority of the
-private-public gap.
+for-profit--public gap.
 
 The second is the economics of childbirth, where the cesarean decision has
 become a workhorse for studying physician behavior \citep{currie2008,%
@@ -261,7 +261,7 @@ cesarean decisions; \citet{fabbri2016}, who analyze manipulation of the exact
 delivery time; \citet{jacobson2021}, who quantify holiday birth displacement; and
 \citet{melo2024}, who study birth-timing manipulation around Carnival in Brazil.
 Relative to this literature, our contribution is the national combination of
-billed physician fees, public--for-profit calendar contrasts, prelabor timing,
+billed physician fees, for-profit--public calendar contrasts, prelabor timing,
 and Robson-group composition.
 
 The third is the design of health policy in middle-income countries. Brazil aimed
@@ -296,9 +296,8 @@ private-health-insurance authority, the National Supplementary Health Agency
 single-payer system, the Unified Health System (Sistema \'Unico de Sa\'ude, SUS).
 Childbirth is covered by both, but the two sectors deliver very differently.
 Figure~\ref{fig:trend} plots the cesarean share of births by sector over time.
-In the private sector the rate sits near 80\% throughout, whether measured from
-insurance claims or from birth records at for-profit hospitals; in the public
-sector it is close to 44\%. Both are far above the 10--15\% range the World
+In both the private-insurance claims and the for-profit birth records the rate
+sits near 80\% throughout; in the public sector it is close to 44\%. Both are far above the 10--15\% range the World
 Health Organization uses as a reference.
 
 \begin{figure}[H]\centering
@@ -385,9 +384,8 @@ timing analysis. The organizational-capacity analysis of
 Section~\ref{sec:mechanism}\,D adds a third file, an establishment-year panel of
 obstetric beds and registered professionals from the facility registry, linked to
 each birth through the establishment code. Appendix~\ref{app:data} documents the
-construction and defines the main variables, the Supplemental Appendix reports
-summary statistics, and the complete codebook is distributed with the replication
-package.
+construction and defines the main variables, and the Supplemental Appendix reports
+summary statistics.
 
 % =============================================================================
 \section{Empirical strategy}\label{sec:strategy}
@@ -409,7 +407,7 @@ each, and close with a decomposition that sizes the result.
 
 \subsection{A. The price channel}
 
-The price channel is estimated by relating the private cesarean rate to the
+The price channel is estimated by relating the private-insurance cesarean rate to the
 relative price of a cesarean across municipality-years. For municipality $m$ in
 year $t$,
 \begin{equation}
@@ -457,7 +455,7 @@ scheduled cesarean, we read $\beta_1$ and $\beta_2$ as calendar sorting of
 cesarean deliveries, that is, as scheduling patterns, rather than as the causal
 effect of an as-good-as-random weekend assignment on medical need. We estimate
 Equation~\eqref{eq:scheduling} separately
-for the private and public sectors and, in extensions, within low-risk Robson
+for the for-profit and public sectors and, in extensions, within low-risk Robson
 groups, within a clinically clean sample, and separately for cesareans scheduled
 before as opposed to during labor. Birth-level regressions of gestational and
 neonatal outcomes on a for-profit-establishment indicator take the same two-way
@@ -494,7 +492,7 @@ sectors and days of the week. We probe it by re-estimating
 Equation~\eqref{eq:gradient} with each cell's own clinical and maternal composition
 as controls, namely the cell shares of Robson group, maternal age band, education,
 race, and parity. We therefore describe $\gamma_1$ and $\gamma_2$ as a tightly
-controlled for-profit-versus-public differential rather than an unconditional causal
+controlled for-profit--public differential rather than an unconditional causal
 effect.
 
 \subsection{D. Estimands}
@@ -503,8 +501,8 @@ Two features of the estimand deserve emphasis. First, the coefficients in
 Equations~\eqref{eq:scheduling} and~\eqref{eq:gradient} are shares, not counts, so
 they describe how the mode of delivery is ordered across the calendar and not how
 many cesareans are performed in total. Second, the design does not satisfy the
-stable-unit-treatment-value assumption in the sense a treatment-effect design would
-require. A cesarean avoided on Sunday is largely a cesarean performed on Friday or
+stable-unit-treatment-value assumption (SUTVA) in the sense a treatment-effect design would
+require. A cesarean avoided on Sunday is in part a cesarean performed on Friday or
 Monday, and a mother turned away from one establishment may deliver at another, so
 weekend and weekday cells are not independent units. Displacement across days is the
 mechanism we are documenting rather than a nuisance, and the eve-of-rest-day
@@ -528,8 +526,9 @@ descriptive ranking across all twenty-one two-day pairs places the actual weeken
 first, although the pairs are not exchangeable under a known assignment mechanism.
 Section~\ref{sec:mechanism} and the Supplemental Appendix report each of these.
 
-Finally, we gauge how much of the for-profit-public gap reflects practice style rather
-than case-mix with a Kitagawa decomposition over the ten Robson groups, and we
+Finally, we gauge how much of the for-profit--public gap reflects practice style rather
+than case-mix with a Kitagawa decomposition \citep{kitagawa1955} over the ten
+Robson groups, and we
 benchmark each municipality's weekday cesarean propensity against its own weekend
 rate to calculate the number of weekday cesareans above a mechanical
 own-municipality weekend benchmark.
@@ -561,7 +560,8 @@ Fees do move over time, and Panel B exploits that variation directly. State-leve
 fee gaps swing by as much as two log points from one year to the next, yet
 cesarean rates do not follow. In first differences the coefficient is small and
 wrong-signed; once the twenty-two states are treated as the clusters they are, a
-wild-cluster bootstrap cannot distinguish it from zero ($p=0.21$), and in levels
+wild-cluster bootstrap \citep{cameron2008,webb2023} cannot distinguish it from
+zero ($p=0.21$), and in levels
 with state and year fixed effects it is likewise insignificant. Consistent with
 all of this, the 2015 court order to triple vaginal pay produced no jump in the
 fee series and no change in the cesarean rate. Taken together, the associations
@@ -862,7 +862,7 @@ Section~\ref{sec:notprice}, the epidemic's margin lies in earlier, riskier birth
 rather than in higher billed amounts per delivery.
 
 \paragraph{The size of the margin.} Table~\ref{tab:decomposition} decomposes the
-35 percentage-point for-profit-public gap over Robson clinical groups. Only 29
+35 percentage-point for-profit--public gap over Robson clinical groups. Only 29
 percent reflects differences in case-mix; the remaining 71 percent is
 within-group practice style, the same women managed differently. That most of the
 gap is practice style rather than patient composition echoes the finding, in the
@@ -909,7 +909,7 @@ institutional activity, rather than the rearrangement of an individual's diary,
 would produce.
 
 The evidence identifies calendar sorting and a tightly controlled
-for-profit-public differential; it does not identify the total number of
+for-profit--public differential; it does not identify the total number of
 cesareans or neonatal outcomes caused by scheduling.
 
 The reading carries a policy lesson. If the operative margin is the organization of
@@ -919,7 +919,7 @@ analysis. The first acts on the convenience premium directly: detaching the
 delivery from a single attending physician's calendar, through laborist or
 shift-based on-call coverage and midwife-led continuity of care, socializes the
 cost of unschedulable time that the premium capitalizes. The second changes how
-care is organized rather than how it is priced. Because most of the private-public
+care is organized rather than how it is priced. Because most of the for-profit--public
 gap is supply-side practice style rather than case-mix, and because practice
 styles travel with providers rather than with patients
 \citep{finkelstein2016,molitor2018,cutler2019}, salaried or vertically integrated
@@ -933,7 +933,7 @@ evidence points to the organization of obstetric time as a promising policy
 margin.
 
 How far these conclusions travel depends on which part of the setting one carries
-along. Three features of Brazil's private sector are extreme rather than typical:
+along. Three features of Brazil's private maternity sector are extreme rather than typical:
 an 80\% cesarean rate that leaves little room for the margin to move further, a
 private-office fee-for-service model in which one obstetrician follows a patient
 through pregnancy and expects to attend the delivery personally, and a fee schedule

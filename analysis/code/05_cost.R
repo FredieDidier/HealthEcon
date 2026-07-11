@@ -91,7 +91,7 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
        title = "For-profit--public differences in early-term birth and newborn outcomes",
        label = "tab:health",
        notes = paste("\\footnotesize\\textit{Notes:} Birth-level regressions, SINASC",
-         "2010--2024, private (for-profit) vs public establishments, municipality and",
+         "2010--2024, for-profit vs public establishments, municipality and",
          "year fixed effects. Maternal controls: age, age$^2$, education, race.",
          "Mothers differ across sectors, so the early-term coefficient is an",
          "associational difference between establishment sectors and is not",

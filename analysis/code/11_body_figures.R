@@ -58,7 +58,9 @@ pb <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]), Vaginal = unname(PAL["blue"]))) +
   scale_x_continuous(breaks = seq(0, 24, 6)) +
   labs(x = "Hour of birth", y = "Share of births (%)", subtitle = "(b) Hour of birth") +
-  theme_paper(base = 12) + theme(plot.subtitle = element_text(size = 11, face = "bold"))
+  theme_paper(base = 12) +
+  theme(plot.subtitle = element_text(size = 11, face = "bold",
+                                     margin = ggplot2::margin(b = 8)))
 rm(b, hd); gc()
 
 # --- panel (c): event study around bridge holidays ---------------------------
@@ -99,7 +101,9 @@ qa <- ggplot(ga, aes(week, 100 * share, colour = sector)) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
        subtitle = "(a) By establishment sector") +
-  theme_paper(base = 12) + theme(plot.subtitle = element_text(size = 11, face = "bold"))
+  theme_paper(base = 12) +
+  theme(plot.subtitle = element_text(size = 11, face = "bold",
+                                     margin = ggplot2::margin(b = 8)))
 
 gp <- g[sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
 gp[, group := fcase(cesarean == 0, "Vaginal", cesarea_antes_parto == 1, "Prelabor cesarean",
@@ -114,7 +118,9 @@ qb <- ggplot(gd, aes(week, 100 * share, colour = group)) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
        subtitle = "(b) For-profit births, by delivery timing") +
-  theme_paper(base = 12) + theme(plot.subtitle = element_text(size = 11, face = "bold"))
+  theme_paper(base = 12) +
+  theme(plot.subtitle = element_text(size = 11, face = "bold",
+                                     margin = ggplot2::margin(b = 8)))
 
 fig3 <- qa | qb
 ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.pdf"), fig3, width = 11, height = 4.4)

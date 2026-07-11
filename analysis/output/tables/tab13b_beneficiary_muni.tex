@@ -5,7 +5,7 @@
 \small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcc}
       \toprule
-      Dependent Variable: & \multicolumn{2}{c}{Private cesarean rate}\\
+      Dependent Variable: & \multicolumn{2}{c}{Private-insurance cesarean rate}\\
       Model:                                        & (1)             & (2)\\
       \midrule
       \emph{Variables}\\
@@ -13,10 +13,9 @@
                                                     & (0.0176)        & (0.0062)\\   
 \addlinespace[2pt]
       \midrule
-      \emph{Fixed-effects}\\
-      State                                         & Yes             & \\  
-      Year                                          & Yes             & Yes\\  
-      Municipality                                  &                 & Yes\\  
+      State fixed effects & Yes             & \\  
+      Year fixed effects & Yes             & Yes\\  
+      Municipality fixed effects &                 & Yes\\  
       \midrule
       \emph{Fit statistics}\\
       Observations                                  & 10,722          & 10,722\\  
