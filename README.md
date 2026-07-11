@@ -184,7 +184,7 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `03_mechanisms.R` | **Table 5, Table 7** | `tables/tab_prelabor_lowrisk.tex`, `tables/tab11_decomposition.tex`, `tables/tab08_mechanism_checks.tex`; `graphs/fig02_dow_cesarean`, `graphs/fig03_robson_dow`, `graphs/fig08_daily_counts` |
 | `04_heterogeneity.R` | (supplement) | `tables/tab10_heterogeneity.tex`, `tables/tab10b_modality.tex` |
 | `05_cost.R` | **Table 6** | `tables/tab09_health.tex`; `tables/tab12_cost.tex`; `graphs/fig09_gestation`, `graphs/fig09b_gestation_by_timing` |
-| `06_robustness.R` | (supplement) | `tables/tab05_parto_adequado.tex`, `tab05b_pretrend_robustness.tex`, `tab13_referee_robustness.tex`, `tab13b_beneficiary_muni.tex`, `tab13c_dip_by_region_period.tex`, `tab14_neonatal_suggestive.tex`, `tab15_permutation.tex`, `tab15b_no_indication.tex`; `graphs/fig04_parto_adequado_es_sinasc`, `fig04b_parto_adequado_es_tiss`, `fig05_rn368_timeline` |
+| `06_robustness.R` | (supplement) | `tables/tab13_referee_robustness.tex`, `tab13c_dip_by_region_period.tex`, `tab14_neonatal_suggestive.tex`, `tab15_permutation.tex`, `tab15b_no_indication.tex`; `graphs/fig05_rn368_timeline` |
 | `07_main_specification.R` | **Table 3** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |

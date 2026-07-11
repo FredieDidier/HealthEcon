@@ -1,14 +1,20 @@
 # =============================================================================
-# 01_descriptives.R — descriptive tables, figures, hour-of-birth, and maps
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
-# =============================================================================
-
-# =============================================================================
-# 01_descriptives.R — descriptive facts on Brazil's private cesarean epidemic.
-# Figure 1: cesarean rate by sector over time. Table 1: municipality-year
-# summary statistics. Outputs to analysis/output/{graphs,tables}.
+# 01_descriptives.R — descriptive facts on Brazil's cesarean epidemic.
+#
+# WHAT THIS SCRIPT DOES. Three self-contained blocks (each re-loads config +
+# utils and its own data), producing:
+#   1. Figure 1 (body): cesarean rate by sector over time (TISS private-insurance
+#      claims, SINASC for-profit establishments, SINASC public births).
+#   2. Table 1 (moved to the Supplemental Appendix): municipality-year summary
+#      statistics; the body only cites it.
+#   3. Hour-of-birth fingerprint and the business-hours table (Supplement); the
+#      hour-of-birth panel is also re-drawn merged into body Figure 2 by
+#      11_body_figures.R.
+#   4. Municipal choropleth maps of the cesarean share (Supplement).
+#
+# WHY. Establish that the epidemic is real and extreme (for-profit ~79% vs public
+# ~44%) and that cesareans bunch in weekday business hours — the raw pattern the
+# scheduling channel then formalizes. Outputs → analysis/output/{graphs,tables,maps}.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -21,7 +27,12 @@ SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 WFO   <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
 TABLE <- here::here("analysis", "output", "tables")
 
-# --- Figure 1: cesarean rate by sector over time ------------------------------
+# =============================================================================
+# BLOCK 1 — Figure 1 (body): cesarean rate by sector over time.
+# Three series on one axis: TISS private-insurance claims (~82%), SINASC
+# for-profit establishments (~79%), SINASC public births (~44%). Establishes the
+# for-profit-vs-public gap that the rest of the paper explains.
+# =============================================================================
 panel <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parquet")))
 tiss_yr <- panel[!is.na(muni) & year <= 2024,
   .(rate = sum(n_cesarean) / sum(n_deliveries)), by = year][
@@ -55,7 +66,11 @@ fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
   theme_paper()
 save_fig(fig1, "fig01_csection_trend")
 
-# --- Table 1: municipality-year summary statistics ----------------------------
+# =============================================================================
+# BLOCK 2 — Table 1 (Supplement): municipality-year summary statistics.
+# One row per municipality-year; the body cites this table but prints it in the
+# Supplemental Appendix. Fees, rates, ICU use, obstetrician density, covariates.
+# =============================================================================
 w <- as.data.table(read_parquet(WFO))
 vars <- c(
   tiss_csection_rate           = "Cesarean rate, private (TISS)",
@@ -81,7 +96,7 @@ num <- setdiff(names(desc), c("Variable", "N"))
 desc[, (num) := lapply(.SD, function(x) formatC(x, format = "f", digits = 2, big.mark = ",")), .SDcols = num]
 desc[, N := formatC(N, format = "d", big.mark = ",")]
 
-# --- write as a booktabs LaTeX table (house style) ----------------------------
+# --- write as a booktabs LaTeX table (house style: bold caption) --------------
 hdr <- c("Variable", "Mean", "Std.\\ dev.", "10th pct.", "Median", "90th pct.", "$N$")
 body <- apply(desc, 1, function(r) paste(r, collapse = " & "))
 tex <- c(
@@ -105,12 +120,13 @@ print(desc)
 message("01_descriptives.R done")
 
 # =============================================================================
-# 07_hours.R — the within-day fingerprint: hour of birth.
-# If cesareans are scheduled around the physician's agenda, private cesareans
+# BLOCK 3 — the within-day fingerprint: hour of birth (Supplement + body Fig 2b).
+# If cesareans are scheduled around the physician's agenda, for-profit cesareans
 # should bunch in business hours (morning block) while vaginal births spread
-# around the clock (labor is uniform in the hour of onset). SINASC records the
+# around the clock (labor onset is uniform over the hour). SINASC records the
 # exact time of birth (hora_nascimento, "HH:MM:SS").
-#   Figure 7 → fig07_hour_of_birth ; Table 7 → tab07_business_hours
+#   fig07_hour_of_birth  — re-drawn into body Figure 2(b) by 11_body_figures.R
+#   tab07_business_hours — Supplement (business-hours share vs uniform benchmark)
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -129,7 +145,7 @@ b <- b[!is.na(hour) & hour %between% c(0, 23)]
 b[, `:=`(type    = fifelse(cesarean == 1, "Cesarean", "Vaginal"),
          weekday = dow %in% 2:6)]
 
-# --- Figure 7: hour-of-birth distribution, by type × sector -------------------
+# --- hour-of-birth distribution, by delivery type × sector --------------------
 hd <- b[, .N, by = .(sector, type, hour)]
 hd[, share := N / sum(N), by = .(sector, type)]
 fig7 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
@@ -142,7 +158,7 @@ fig7 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
   theme_paper()
 save_fig(fig7, "fig07_hour_of_birth", width = 9, height = 4.8)
 
-# --- Table 7: share of births in business hours (weekday, 8h-17h59) -----------
+# --- share of births in business hours (weekday, 8h-17h59) --------------------
 b[, business := as.integer(weekday & hour %between% c(8, 17))]
 bh <- b[, .(share = mean(business)), by = .(sector, type)]
 bh_w <- dcast(bh, sector ~ type, value.var = "share")
@@ -175,15 +191,15 @@ writeLines(tex, file.path(TABLE, "tab07_business_hours.tex"))
 cat("\nShare of births in weekday business hours (benchmark 29.8%):\n")
 print(bh_w[, .(sector, Cesarean = round(100 * Cesarean, 1), Vaginal = round(100 * Vaginal, 1))])
 
-message("07_hours.R done")
+message("01_descriptives.R: hour-of-birth block done")
 
 # =============================================================================
-# 12_maps.R — municipal choropleth maps of the cesarean epidemic.
+# BLOCK 4 — municipal choropleth maps of the cesarean epidemic (Supplement).
 #   Map 1: cesarean share of ALL births by municipality (SINASC, 2020-2024 avg).
-#   Map 2: cesarean share of PRIVATE deliveries by municipality (TISS, 2020-2024,
-#          municipalities with at least 100 private deliveries in the window).
-# Municipality polygons from geobr (IBGE 2020, simplified). Outputs to
-# analysis/output/maps/ as PDF + PNG.
+#   Map 2: cesarean share of PRIVATE-INSURANCE deliveries by municipality (TISS,
+#          2020-2024, municipalities with >= 100 private deliveries in the window).
+# Shows the epidemic is national, not a big-city artifact. Municipality polygons
+# from geobr (IBGE 2020, simplified). Outputs → analysis/output/maps/ (PDF + PNG).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -232,7 +248,7 @@ map1 <- ggplot(mp1) +
   theme_map()
 save_map(map1, "map01_csection_all")
 
-# --- Map 2: private (TISS) cesarean share (2020-2024) --------------------------
+# --- Map 2: private-insurance (TISS) cesarean share (2020-2024) ----------------
 p <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parquet")))
 m2 <- p[!is.na(muni) & year %between% c(2020, 2024),
         .(del = sum(n_deliveries), rate = sum(n_cesarean) / sum(n_deliveries)),
@@ -248,4 +264,4 @@ map2 <- ggplot(mp2) +
   theme_map()
 save_map(map2, "map02_csection_private")
 
-message("12_maps.R done")
+message("01_descriptives.R: maps block done")

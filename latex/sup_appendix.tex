@@ -19,17 +19,19 @@ operative margin is not the fee. First, the December 2015 court order directing 
 national regulator to make plans pay at least three times more for vaginal delivery
 never became an actual fee change, as Section~\ref{sec:notprice} shows: the fee
 series has no jump. Second, \emph{Parto Adequado}, the flagship
-quality-improvement program, invites a cleaner test, because hospitals joined it
-from 2017. Figure~\ref{fig:pa_es} presents an event study for municipalities hosting
-a participating private hospital, using the long pre-period the birth records
-afford. The treated municipalities are on a downward path, but the path begins in
-2010, seven years before the dissemination phase, and shows no break at adoption. A
-joint test rejects parallel pre-trends, and controlling for a treated-specific
-linear trend removes the estimated effect (Table~\ref{tab:pretrend_robustness}); the
-difference-in-differences estimates are in Table~\ref{tab:parto_adequado}. Two
-features compound the problem: hospitals adopted on a staggered schedule between 2017
-and 2021, which a common post-2017 indicator cannot capture, and our
-municipality-level exposure dilutes any hospital-level effect. We therefore do not
+quality-improvement program, invites a cleaner test, because hospitals joined it on
+a staggered schedule between 2017 and 2021. We estimate an event study at the
+hospital (establishment) level, comparing for-profit hospitals that participated
+with those that did not, over the long pre-period the birth records afford
+(Figure~\ref{fig:pa_hospital}). Because adoption is staggered and the dynamic
+effects may be heterogeneous across cohorts and event time, a two-way
+fixed-effects event study can be biased; we therefore use the interaction-weighted
+estimator of \citet{sun2021}. The ANS list does not record each hospital's exact
+entry date, so we impose a common 2017 onset, which makes this a refinement of the
+design rather than a full staggered-timing correction. The estimates show a
+pre-existing differential downward trend that begins well before 2017 and
+continues without a break at adoption, so the movement is a continuation of that
+trend rather than a treatment effect. We therefore do not
 read this comparison as an estimate of the program's effect; the available
 observational design does not identify it. The decline is real; its attribution to
 the program is not supported by the data, a caution for the short-window evaluations
@@ -37,15 +39,14 @@ that have credited it. Figure~\ref{fig:rn368} places the national monthly series
 its policy timeline for reference.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig04_parto_adequado_es_sinasc.pdf}
-\caption{Parto Adequado event study, treated versus control municipalities}\label{fig:pa_es}
-\fignotes{For-profit cesarean rate, treated (participating private hospital)
-minus control municipalities, relative to 2016. The pre-existing downward trend
-has no break at the 2017 onset (dashed line).}
+\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig_ref_c11_pa_hospital_es.pdf}
+\caption{Parto Adequado hospital-level event study, Sun--Abraham estimator}\label{fig:pa_hospital}
+\fignotes{Interaction-weighted event study of \citet{sun2021} for the for-profit
+cesarean rate at participating versus non-participating hospitals, common 2017
+onset, relative to the year before onset. Robust to heterogeneous dynamic effects
+across cohorts; the pre-onset coefficients trend and there is no clean break at
+adoption.}
 \end{figure}
-
-\input{../analysis/output/tables/tab05_parto_adequado.tex}
-\input{../analysis/output/tables/tab05b_pretrend_robustness.tex}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
@@ -101,10 +102,9 @@ vaginal counts are stable.}
 This subsection collects the supporting and robustness exhibits discussed in the
 text. Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
 time-varying sector classification, alternative rest-day definitions, and the
-composition of weekend newborns. Table~\ref{tab:beneficiary_muni} replicates the
-fee-gap null aggregating by the beneficiary's municipality, and
-Table~\ref{tab:dip_region_period} shows that the dip survives a clinically clean
-low-risk sample and is stable across regions and periods.
+composition of weekend newborns. Table~\ref{tab:dip_region_period} shows that the
+dip survives a clinically clean low-risk sample and is stable across regions and
+periods.
 Table~\ref{tab:permutation} reports a descriptive ranking of the weekend dip
 across all twenty-one two-day placebos, and Table~\ref{tab:no_indication} the
 share of for-profit cesareans with no recorded clinical indication.
@@ -127,7 +127,6 @@ smaller, not larger, for more-educated mothers, and the cooperative difference i
 not significant.
 
 \input{../analysis/output/tables/tab13_referee_robustness.tex}
-\input{../analysis/output/tables/tab13b_beneficiary_muni.tex}
 \input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
 \input{../analysis/output/tables/tab15_permutation.tex}
 \input{../analysis/output/tables/tab15b_no_indication.tex}

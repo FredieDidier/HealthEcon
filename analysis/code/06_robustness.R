@@ -1,23 +1,28 @@
 # =============================================================================
-# 06_robustness.R — policy nulls, referee robustness, permutation, neonatal (suggestive)
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
+# 06_robustness.R — robustness, policy nulls, permutation, neonatal (Supplement).
+#
+# WHAT THIS SCRIPT DOES. Four self-contained blocks, ALL of whose exhibits live
+# in the Supplemental Appendix:
+#   (a) POLICY, as motivation not identification: the Parto Adequado SINASC event
+#       study (fails parallel trends) and the RN 368/2015 timeline.
+#   (b) REFEREE ROBUSTNESS for the scheduling result (time-varying sector flag,
+#       alternative rest-day definitions, composition, clean sample, region/period).
+#   (c) PERMUTATION inference for the weekend dip + no-indication share.
+#   (d) NEONATAL suggestive check (null, underpowered — do NOT feature).
+#
+# LABELING. Parto Adequado is the failure of a causal DESIGN (pre-trends), not a
+# program effect; the court order is an implementation failure. Both MOTIVATE,
+# they do not identify. Honest limits: TISS has no hospital ID, so policy
+# treatment is a diluted municipal exposure; Phase-2 adoption dates (2017-2021)
+# are unobserved, so onset is dated to 2017.
 # =============================================================================
 
 # =============================================================================
-# 05_policy.R — supporting reduced-form evidence (NOT the identification headline).
-#   (a) Parto Adequado, SINASC event study — annual, 2010-2024 (long pre-period,
-#       2010-2016), treated = muni with a participating private hospital.
-#   (b) Parto Adequado, TISS event study — QUARTERLY, 2015-2024 (pre = 8 quarters).
-#       TISS is monthly, so the pre-trend has many points despite the short 2-year
-#       pre-window (TISS coverage starts 2015).
-#   (c) RN 368/2015 — national SINASC monthly cesarean series (now with a real
-#       2010-2015 pre-period), interrupted-time-series style.
-#   Figures 4/4b/5 ; Table 5.
-# Honest limits: TISS has no hospital ID → treatment is a diluted municipal
-# exposure. Parto-Adequado adoption dates within Phase 2 (2017-2021) are not
-# observed, so onset is dated to 2017.
+# BLOCK (a) — policy as motivation (NOT the identification headline): the RN
+# 368/2015 national cesarean timeline. The Parto Adequado event study is estimated
+# at the hospital level with the Sun-Abraham estimator in 10_supplement.R (H/C11);
+# the earlier municipality-level TWFE and TISS event studies and the DiD tables
+# were removed (only the Sun-Abraham figure appears in the Supplement).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -30,137 +35,12 @@ COV   <- file.path(DROPBOX_ROOT, "build", "covariates", "input")   # parto_adequ
 SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 
-pa <- fread(file.path(COV, "parto_adequado_fase2_hospitais.csv"),
-            colClasses = list(character = "ibge6"))
-treated_set <- unique(pa[status == "Privado" & !is.na(ibge6),
-                         formatC(as.integer(ibge6), width = 6, flag = "0")])
-
-# extract i(time, treated) coefficients (+ a zero at the reference) for plotting
-es_coefs <- function(mod, tv, ref) {
-  ct <- as.data.table(mod$coeftable, keep.rownames = "term")[grepl(paste0(tv, "::"), term)]
-  ct[, t := as.numeric(sub(paste0(".*", tv, "::(-?[0-9.]+):.*"), "\\1", term))]
-  setnames(ct, c("Estimate", "Std. Error"), c("b", "se"))
-  rbind(ct[, .(t, b, se)], data.table(t = ref, b = 0, se = 0))[order(t)]
-}
-
-# =============================================================================
-# (a) SINASC event study — annual, long pre-period
-# =============================================================================
+# daily SINASC file, used by the RN 368/2015 national timeline below
 sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, year := year(date)]
-sy <- sd[sector == "Private", .(births = sum(births), ces = sum(cesarean)),
-         by = .(muni, year)]
-sy[, `:=`(rate = ces / births, treated = as.integer(muni %in% treated_set))]
-sy <- sy[births >= 10]
-es_sin <- feols(rate ~ i(year, treated, ref = 2016) | muni + year, sy,
-                weights = ~births, cluster = ~muni)
-
-# PARALLEL-TRENDS TEST (the payoff of the long 2010-2016 pre-period): treated munis
-# are on a pre-existing differential downward trend, so Parto Adequado does NOT
-# survive as causal evidence — the "effect" is a continuation of that trend.
-pt <- wald(es_sin, keep = "year::201[0-5]:treated")
-message(sprintf("Parto Adequado SINASC pre-trend test (2010-2015): F=%.2f, p=%.5f",
-                pt$stat, pt$p))
-
-c_sin <- es_coefs(es_sin, "year", 2016)
-fig4 <- ggplot(c_sin, aes(t, 100 * b)) +
-  geom_hline(yintercept = 0, colour = "grey60") +
-  geom_vline(xintercept = 2016.5, linetype = "dashed", colour = "grey40") +
-  geom_pointrange(aes(ymin = 100*(b-1.96*se), ymax = 100*(b+1.96*se)),
-                  colour = unname(PAL["navy"])) +
-  scale_x_continuous(breaks = seq(2010, 2024, 2)) +
-  labs(x = NULL, y = "For-profit cesarean rate: treated vs control (pp)") +
-  theme_paper()
-save_fig(fig4, "fig04_parto_adequado_es_sinasc")
 
 # =============================================================================
-# (b) TISS event study — QUARTERLY (addresses the "only 1 pre-point" issue)
-# =============================================================================
-p <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parquet")))
-p <- p[!is.na(muni) & ano_mes <= 202412]
-p[, `:=`(y = ano_mes %/% 100, m = ano_mes %% 100)]
-p[, q := (y - 2015L) * 4L + ceiling(m / 3)]           # 2015Q1 = 1, 2016Q4 = 8 (ref)
-pq <- p[, .(ces = sum(n_cesarean), del = sum(n_deliveries)), by = .(muni, q)]
-pq[, `:=`(rate = ces / del, treated = as.integer(muni %in% treated_set))]
-pq <- pq[del >= 5]
-es_tiss <- feols(rate ~ i(q, treated, ref = 8) | muni + q, pq, weights = ~del)
-
-c_tiss <- es_coefs(es_tiss, "q", 8)
-c_tiss[, yr := 2015 + (t - 1) / 4]
-fig4b <- ggplot(c_tiss, aes(yr, 100 * b)) +
-  geom_hline(yintercept = 0, colour = "grey60") +
-  geom_vline(xintercept = 2016.875, linetype = "dashed", colour = "grey40") +   # 2017Q1
-  geom_pointrange(aes(ymin = 100*(b-1.96*se), ymax = 100*(b+1.96*se)),
-                  colour = unname(PAL["red"]), size = 0.3) +
-  scale_x_continuous(breaks = seq(2015, 2024, 1)) +
-  labs(x = NULL, y = "Private-insurance cesarean rate: treated vs control (pp), quarterly") +
-  theme_paper()
-save_fig(fig4b, "fig04b_parto_adequado_es_tiss")
-
-# DiD summary (post = 2017+), both sources
-sy[, post := as.integer(year >= 2017)]
-pq[, post := as.integer(q >= 9)]
-did_sin  <- feols(rate ~ i(treated, post, ref = 0) | muni + year, sy, weights = ~births)
-did_tiss <- feols(rate ~ i(treated, post, ref = 0) | muni + q,    pq, weights = ~del)
-f <- file.path(TABLE, "tab05_parto_adequado.tex")
-etable(did_sin, did_tiss, tex = TRUE, file = f, replace = TRUE,
-       dict = c(rate = "Cesarean rate", treated = "Treated municipality",
-                post = "Post (2017+)",
-                "treated::1:post" = "Treated municipality $\\times$ Post (2017+)",
-                muni = "Municipality", year = "Year", q = "Year-quarter"),
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       headers = c("For-profit (SINASC, annual)", "Private insurance (TISS, quarterly)"),
-       title = "\emph{Parto Adequado} difference-in-differences estimates",
-       label = "tab:parto_adequado",
-       notes = paste("\\footnotesize\\textit{Notes:} Treated = municipality with a",
-         "participating \\emph{Parto Adequado} 2017--2021 dissemination-phase private hospital (a diluted",
-         "exposure; TISS has no hospital identifier). Weighted by for-profit births",
-         "(SINASC) / deliveries (TISS). Standard errors, clustered by municipality, are reported in parentheses. \\emph{The",
-         "SINASC event study rejects parallel pre-trends} (2010--2015 joint test",
-         "$F=4.5$, $p<0.001$): treated municipalities are on a pre-existing differential",
-         "downward trend, so this difference-in-differences is not interpreted as causal.", SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
-etable(did_sin, did_tiss, dict = c(treated = "Treated", post = "Post"), fitstat = ~ n + r2, digits = 4)
-
-# --- Robustness: can covariates or a treated linear trend rescue causality? ---
-# (i) time-varying covariates, (ii) treated-cohort linear trend, (iii) both.
-# Answer: (i) does NOT flatten the pre-trend (still rejected); (ii) makes the 2017
-# break vanish (it was a linear trend all along). Neither rescues identification.
-ie <- as.data.table(read_parquet(
-  file.path(DROPBOX_ROOT, "build", "IEPS", "output", "ieps_muni_year.parquet")))
-ie <- ie[, .(muni = code_muni6, year = ano, gdp_pc, plan_cov, inc_pc, lpop = log(pop_total))]
-syx <- merge(sy, ie, by = c("muni", "year"), all.x = TRUE)
-syx[, year_c := year - 2016]
-r_base  <- feols(rate ~ i(treated, post, ref = 0) | muni + year, syx, weights = ~births, cluster = ~muni)
-r_cov   <- feols(rate ~ i(treated, post, ref = 0) + gdp_pc + plan_cov + inc_pc + lpop | muni + year, syx, weights = ~births, cluster = ~muni)
-r_trend <- feols(rate ~ i(treated, post, ref = 0) + treated:year_c | muni + year, syx, weights = ~births, cluster = ~muni)
-r_both  <- feols(rate ~ i(treated, post, ref = 0) + treated:year_c + gdp_pc + plan_cov + inc_pc + lpop | muni + year, syx, weights = ~births, cluster = ~muni)
-fb <- file.path(TABLE, "tab05b_pretrend_robustness.tex")
-etable(r_base, r_cov, r_trend, r_both, tex = TRUE, file = fb, replace = TRUE,
-       keep = c("treated", "year_c"),
-       dict = c(rate = "Cesarean rate", "treated::1:post" = "Treated $\\times$ Post (2017+)",
-                "treated:year_c" = "Treated $\\times$ Year (linear trend)",
-                gdp_pc = "GDP per capita", plan_cov = "Plan coverage",
-                inc_pc = "Income p.c.", lpop = "Log population",
-                muni = "Municipality", year = "Year"),
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Baseline", "+ Covariates", "+ Treated trend", "+ Both"),
-       title = "\emph{Parto Adequado}: covariate and treated-trend robustness",
-       label = "tab:pretrend_robustness",
-       notes = paste("\\footnotesize\\textit{Notes:} SINASC for-profit",
-         "cesarean rate, municipality-year 2010--2024, weighted by births. Column 1",
-         "is the baseline difference-in-differences; column 2 adds time-varying",
-         "municipal covariates; column 3 adds a treated-cohort linear time trend;",
-         "column 4 adds both. Covariates leave the differential pre-trend intact",
-         "(joint 2010--2015 test still rejects, $p<0.01$); the treated linear trend",
-         "absorbs the 2017 ``break'' entirely, confirming it is a pre-existing trend,",
-         "not a treatment effect. Standard errors, clustered by municipality, are reported in parentheses.", SIGNIF_NOTE))
-postprocess_tex(fb, fontsize = "\\small", tabcolsep = 5)
-
-# =============================================================================
-# (c) RN 368/2015 — national SINASC monthly cesarean series (2010-2024)
+# RN 368/2015 — national SINASC monthly cesarean series (2010-2024)
 # =============================================================================
 sd[, ym := as.IDate(sprintf("%d-%02d-01", year(date), month(date)))]
 natm <- sd[, .(all = sum(cesarean) / sum(births),
@@ -178,10 +58,10 @@ fig5 <- ggplot(natl, aes(ym, 100 * rate, colour = series)) +
   theme_paper()
 save_fig(fig5, "fig05_rn368_timeline")
 
-message("05_policy.R done")
+message("06_robustness.R: Block (a) policy done")
 
 # =============================================================================
-# 13_referee_robustness.R — referee-stage robustness for the scheduling result.
+# BLOCK (b) — referee-stage robustness for the scheduling result.
 #   (1) TIME-VARYING sector classification: the baseline private flag uses the
 #       pooled CNES natureza jurídica; here each birth's establishment is
 #       classified with the nat_jur of its own year (2015-2024; births 2010-2014
@@ -198,10 +78,7 @@ message("05_policy.R done")
 #       "some scheduled cesareans are medically indicated" concern beyond Robson.
 #   (5) BY REGION and (6) BY PERIOD: the weekend dip is a national, stable
 #       phenomenon, not one region/era.
-#   (7) BENEFICIARY-MUNICIPALITY not-a-price: the fee-gap regressions use the
-#       provider municipality; here events are re-aggregated by the BENEFICIARY's
-#       municipality and the null replicates.
-#   Tables 13/13b/13c/13d
+#   -> tab13 / tab13c robustness tables (Supplement).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -335,54 +212,19 @@ writeLines(.txc, fc)
 etable(c(list(m_clean), m_reg, m_pd), dict = dict, fitstat = ~ n, digits = 4,
        headers = c("Clean", "N", "NE", "SE", "S", "CO", "10-14", "15-19", "20-24"))
 
-# --- (7) beneficiary-municipality not-a-price (TISS) ----------------------------
-OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
-ev <- rbindlist(lapply(2015:2024, function(y)
-  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
-    col_select = c("cesarean", "type", "fee_delivery", "fee_vaginal_econ",
-                   "muni_beneficiario", "year")))))
-ev <- ev[!is.na(muni_beneficiario)]
-ev[, muni_b := formatC(as.integer(muni_beneficiario), width = 6, flag = "0")]
-by <- ev[, .(
-  deliveries = .N,
-  csec       = mean(cesarean),
-  fee_ces    = mean(fee_delivery[type == "cesarean"], na.rm = TRUE),
-  fee_vag    = mean(fee_vaginal_econ, na.rm = TRUE)
-), by = .(muni_b, year)]
-by[, `:=`(log_fee_gap = log(fee_ces / fee_vag), state = substr(muni_b, 1, 2))]
-by <- by[deliveries >= 20 & is.finite(log_fee_gap)]
-m_b1 <- feols(csec ~ log_fee_gap | state + year,  by, weights = ~deliveries, cluster = ~state)
-m_b2 <- feols(csec ~ log_fee_gap | muni_b + year, by, weights = ~deliveries, cluster = ~muni_b)
-
-fb2 <- file.path(TABLE, "tab13b_beneficiary_muni.tex")
-etable(m_b1, m_b2, tex = TRUE, file = fb2, replace = TRUE,
-       dict = c(csec = "Private-insurance cesarean rate",
-                log_fee_gap = "Log economic fee gap (cesarean minus vaginal)",
-                state = "State", muni_b = "Municipality", year = "Year"),
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       fitstat = ~ n + r2, digits = 4, digits.stats = 3,
-       title = "Fee-gap regressions, beneficiary-municipality aggregation",
-       label = "tab:beneficiary_muni",
-       notes = paste("\\footnotesize\\textit{Notes:} TISS delivery events 2015--2024",
-         "aggregated by the beneficiary's municipality of residence (the baseline",
-         "uses the provider municipality), weighted by deliveries; cells with at",
-         "least 20 deliveries. The fee-gap null replicates.", SIGNIF_NOTE))
-postprocess_tex(fb2, fontsize = "\\small", tabcolsep = 5)
-etable(m_b1, m_b2, fitstat = ~ n + r2, digits = 4, headers = c("UF+Yr", "Muni+Yr"))
-
-message("13_referee_robustness.R done")
+message("06_robustness.R: Block (b) referee robustness done")
 
 # =============================================================================
-# 15_permutation_indication.R
-#   (a) RANDOMIZATION INFERENCE for the weekend dip. Day-of-week is discrete, so
-#       we enumerate ALL 21 two-day "pseudo rest-day" pairs and re-estimate the
-#       private cesarean dip for each. The true weekend (Sat+Sun) should be the
-#       most negative; the exact permutation p-value is its rank among the 21.
-#   (b) DESCRIPTIVE: share of private cesareans with NO recorded clinical
-#       indication (primary diagnosis is a delivery-outcome ICD-10 code O80-O84,
-#       or blank, rather than a recognized cesarean indication). Coding is
-#       imperfect, so this is descriptive, not a clean "avoidable" count.
-#   Table 15 → tab15_permutation ; tab15b_no_indication
+# BLOCK (c) — permutation inference + no-indication share.
+#   (c1) RANDOMIZATION INFERENCE for the weekend dip. Day-of-week is discrete, so
+#        we enumerate ALL 21 two-day "pseudo rest-day" pairs and re-estimate the
+#        for-profit cesarean dip for each. The true weekend (Sat+Sun) should be the
+#        most negative; the exact permutation p-value is its rank among the 21.
+#   (c2) DESCRIPTIVE: share of private-insurance cesareans with NO recorded
+#        clinical indication (primary diagnosis is a delivery-outcome ICD-10 code
+#        O80-O84, or blank, rather than a recognized cesarean indication). Coding
+#        is imperfect, so this is descriptive, not a clean "avoidable" count.
+#   -> tab15_permutation ; tab15b_no_indication (Supplement).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -455,11 +297,11 @@ tex2 <- c("\\begin{table}[H]\\centering",
   "\\end{table}")
 writeLines(tex2, file.path(TABLE, "tab15b_no_indication.tex"))
 
-message("15_permutation_indication.R done")
+message("06_robustness.R: Block (c) permutation + no-indication done")
 
 # =============================================================================
-# 14_neonatal_suggestive.R — SUGGESTIVE check: does early-term shifting show up
-# in neonatal hospital use?
+# BLOCK (d) — SUGGESTIVE neonatal check: does early-term shifting show up
+# in neonatal hospital use? (Null and underpowered — do NOT feature.)
 # TISS records the admissions of privately insured INFANTS (age band "<1") with
 # perinatal-condition diagnoses (ICD-10 chapter P). If scheduling-driven
 # early-term delivery has a health footprint, municipality-years where private
@@ -468,7 +310,7 @@ message("15_permutation_indication.R done")
 # This is CORROBORATIVE, not causal (no mother-baby linkage; ecological units;
 # selection into sector) — framed as such in the paper. See CLAUDE.md
 # "Clinical-cost positioning".
-#   Table 14 → tab14_neonatal_suggestive
+#   -> tab14_neonatal_suggestive (Supplement; null, kept only for transparency).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -535,4 +377,4 @@ etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m1, m2, m3, dict = dict, fitstat = ~ n, digits = 4)
 
-message("14_neonatal_suggestive.R done")
+message("06_robustness.R: Block (d) neonatal suggestive done")

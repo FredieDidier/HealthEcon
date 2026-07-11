@@ -104,3 +104,46 @@ DELIV_CESAREAN <- c("31309054",   # Cesariana
                     "31309208")   # Cesariana com histerectomia
 DELIV_VAGINAL  <- c("31309127")   # Parto (via vaginal)
 DELIV_ALL      <- c(DELIV_CESAREAN, DELIV_VAGINAL)
+
+# -----------------------------------------------------------------------------
+# CNES-PF OCCUPATION CLASSIFIERS — CBO (Classificação Brasileira de Ocupações)
+# -----------------------------------------------------------------------------
+# The CNES professional file (CNES-PF) records each bond's occupation in a CBO
+# code that MIXES two vintages: the old 4-digit CBO-94 codes (e.g. 6145) and the
+# current 6-digit CBO-2002 codes (e.g. 225250), plus a handful of alphanumeric
+# residual codes (e.g. "2231A1"). The classifiers therefore coerce to numeric
+# for the range tests and fall back to an exact string match for the
+# alphanumeric ones. Pass the RAW CBO column (they coerce to character first, so
+# a character/integer/factor column is handled the same way).
+
+#' TRUE for any physician ("médico"), across CBO-94 and CBO-2002 vintages.
+is_medico <- function(cbo) {
+  cbo <- as.character(cbo)
+  cbo_num <- suppressWarnings(as.numeric(cbo))
+  (data.table::between(cbo_num, 6105,   6190)   |
+     data.table::between(cbo_num, 223101, 223157) |
+     data.table::between(cbo_num, 225103, 225350) |
+     cbo %in% c("2231A1","2231A2","2231F3","2231F4","2231F5",
+                "2231F6","2231F7","2231F8","2231F9","2231G1"))
+}
+
+#' TRUE for obstetricians / gynecologist-obstetricians only. The four codes are
+#' the CBO-2002 gineco-obstetra (225250) and clinical-obstetra (223132) plus
+#' their CBO-94 predecessors (6149, 6145).
+is_obstetra <- function(cbo) {
+  cbo_num <- suppressWarnings(as.numeric(as.character(cbo)))
+  cbo_num %in% c(225250, 223132, 6149, 6145)
+}
+
+#' TRUE for any nurse ("enfermeiro"). Not used in the current paper — kept as a
+#' reference classifier alongside is_enfermeiro_obstetra (the obstetric-nurse
+#' specialty, CBO 7145) in case midwife supply enters a later revision.
+is_enfermeiro <- function(cbo) {
+  cbo <- as.character(cbo)
+  cbo_num <- suppressWarnings(as.numeric(cbo))
+  (data.table::between(cbo_num, 7110,   7165)   |
+     data.table::between(cbo_num, 223505, 223565) |
+     cbo %in% c("2235C1","2235C2","2235C3"))
+}
+is_enfermeiro_obstetra <- function(cbo)
+  suppressWarnings(as.numeric(as.character(cbo))) == 7145

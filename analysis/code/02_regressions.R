@@ -1,15 +1,26 @@
 # =============================================================================
-# 02_regressions.R — the price channel (not-a-price fee regressions + fee-shock)
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
+# 02_regressions.R — the PRICE CHANNEL (Section 4A / Table 2, tab_fees).
+#
+# WHAT THIS SCRIPT DOES. Tests whether relative fees explain the cesarean rate,
+# and builds the merged body fee table (tab_fees) with two panels:
+#   Panel A — Equation (1): cesarean rate on the log economic fee gap across
+#             municipality-years, four fixed-effect schemes.
+#   Panel B — state-year first-difference falsification: do year-to-year swings
+#             in the state fee gap move the cesarean rate?
+#
+# WHY. To document the central negative result: there is NO robust positive price
+# relationship. Report it as "no robust positive price relationship," never
+# "fees don't matter." The coefficient is small and sign-unstable (+0.017 state
+# FE / -0.014 muni FE, n.s.); the economic fee gap is negative in the big states
+# yet they are ~80% cesarean. Panels A and B differ in unit of observation, so
+# they cannot be columns of one regression — hence the hand-built two-panel table.
 # =============================================================================
 
 # =============================================================================
-# 02_not_a_price.R — "it is NOT a price story."
-# The private-insurance cesarean rate does not respond to the (economic)
-# cesarean-vaginal fee gap: the coefficient is small and flips sign across
-# fixed-effects schemes. Panel A of the merged body table tab_fees (Table 2).
+# PANEL A — Equation (1): cesarean rate on the log economic fee gap.
+# The economic vaginal fee = delivery fee + separately billed hourly labor
+# assistance (TUSS 31309038). Four FE schemes (state / muni x with/without
+# municipal controls); the coefficient is small and flips sign across them.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -44,16 +55,15 @@ dict <- c(
 # standalone tab02_not_a_price exhibit was retired.
 etable(m1, m2, m3, m4, dict = dict, fitstat = ~ n + r2, digits = 3)
 
-message("02_not_a_price.R done")
+message("02_regressions.R: Panel A (fee-gap levels) done")
 
 # =============================================================================
-# 06_fee_shock.R — "not a price story", the causal (reduced-form) version.
+# PANEL B — the state-year first-difference falsification.
 # No clean institutional obstetric-fee reform is available (and TISS carries no
 # operadora ID). Instead we exploit the large idiosyncratic year-to-year swings
 # in the relative fee that occur within states, and ask whether the cesarean rate
-# responds. It does not: even ±2 log-point swings in the fee gap barely move the
-# cesarean rate, and the little movement is wrong-signed → fees do not drive it.
-#   Panel B of the merged body table tab_fees (Table 2).
+# responds. It does not: even +/-2 log-point swings in the fee gap barely move the
+# cesarean rate, and the little movement is wrong-signed. Fees do not drive it.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -78,7 +88,7 @@ uf[, `:=`(d_fee_gap = fee_gap - shift(fee_gap),
           d_csec    = csec - shift(csec)), by = uf]
 uf <- uf[n > 2000]
 
-# --- Table 6: cesarean rate does not respond to fee-gap changes ---------------
+# --- estimate: cesarean rate does not respond to fee-gap changes --------------
 # The first-difference has only ~22 state clusters, so we cluster on the state and
 # report a wild-cluster (Webb) bootstrap p-value: with few clusters, analytic stars
 # overstate significance (referee C3).
@@ -98,14 +108,14 @@ dict <- c(d_csec = "$\\Delta$ Cesarean rate", d_fee_gap = "$\\Delta$ Log fee gap
 # m_fd, m_lvl, wild_p and n_state feed Panel B of the merged body table tab_fees
 # (built below); the standalone tab06_fee_shock exhibit was retired.
 etable(m_fd, m_lvl, dict = dict, fitstat = ~ n + r2, digits = 4)
-message("06_fee_shock.R done")
+message("02_regressions.R: Panel B (fee-shock first difference) done")
 
 # =============================================================================
-# BODY TABLE — the fee evidence in one exhibit.
-# Panel A is Equation (1) across municipality-years; Panel B is the state-year
-# first-difference falsification. The two panels differ in unit of observation,
-# so they cannot be columns of a single regression table.
-#   -> tab_fees.tex  (BODY, Table 2)
+# ASSEMBLE the body fee table (Table 2, tab_fees) — the fee evidence in one
+# exhibit. Panel A = Equation (1) across municipality-years (models m1-m4);
+# Panel B = the state-year first-difference falsification (m_fd, m_lvl, wild_p).
+# Hand-built two-panel booktabs table because the panels use different units.
+#   -> analysis/output/tables/tab_fees.tex  (BODY, Table 2)
 # =============================================================================
 LEVELS <- list(m1, m2, m3, m4)
 tex <- c(

@@ -28,7 +28,7 @@ AOUT <- here::here("analysis", "output")
 # --- panel (a): cesarean rate by day of week and sector ----------------------
 sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
 sd[, `:=`(dow = wday(as.IDate(date)), year = year(as.IDate(date)))]
-sd <- sd[year <= 2024]
+sd <- sd[year <= 2024 & sector %in% SECTOR_LEVELS]   # drop "Other" (unmatched estabs)
 dow_tab <- sd[, .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
 dow_tab[, `:=`(dow_lab = factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")),
                sector = sector_display(sector))]

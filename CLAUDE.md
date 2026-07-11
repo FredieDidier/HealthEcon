@@ -42,7 +42,7 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   null honestly; it bounds the "whose convenience" claim.
 - **organizational-capacity heterogeneity** = "organizational redundancy
   attenuates the gradient," NOT "individual physician's calendar vs hospital."
-- **Kitagawa decomposition** = accounting; 71% practice style.
+- **Kitagawa decomposition** = accounting; 72% practice style.
 - **~50k excess weekday cesareans** = mechanical benchmark, not cesareans caused.
 - **early-term +10.9pp** = sector–gestational-age association.
 - **Parto Adequado** = failure of a causal *design* (pre-trends), not a program
@@ -60,7 +60,7 @@ flag. Enforced in code via `sector_display()` / `SECTOR_DISPLAY` in
 
 - **SINASC** → ownership of the birth **establishment** (natureza jurídica 2xxx).
   Call it **"for-profit"** (vs "nonprofit" 3xxx, "public" 1xxx). ~79% cesarean.
-  The `sector` column keeps raw levels `Private/Nonprofit/Public` because
+  The `sector` column keeps raw levels `Private/Nonprofit/Public/Other` because
   regressions subset on them; relabel only display/plot objects with
   `sector_display()`.
 - **TISS** → claims financed by **private insurance**, private by construction.
@@ -72,6 +72,26 @@ for-profit" (conflates payer and ownership). Headline contrast is **for-profit
 from headline tests. Do NOT lump 3xxx into for-profit (inflates the share to
 ~56%).
 
+**Natureza jurídica (`nat_jur`) → sector, by FIRST DIGIT** (built as explicit
+establishment sets from the CNES beds file in `01b`/`01d`):
+
+| first digit | IBGE/CONCLA group | sector |
+|---|---|---|
+| 1 | Administração Pública | **Public** |
+| 2 | Entidades Empresariais | **Private** (for-profit) |
+| 3 | Entidades sem Fins Lucrativos | **Nonprofit** |
+| 4 (Pessoas Físicas), 5 (Org. Internacionais), or unmatched | — | **Other** (excluded) |
+
+Priority for an establishment seen under several codes across competências:
+for-profit > nonprofit > public. Establishments *with beds* only carry 1/2/3, so
+4xxx/5xxx never appear; the real trap is the residual. **`Public` must be the
+EXPLICIT 1xxx set, never the `else` bucket** — the pre-2026-07-11 code sent every
+unmatched establishment to Public (~1.17M births, 6.4% of "Public"), which was a
+labeling bug. Impact on numbers was negligible (Public cesarean 42.73%→42.74%,
+because the unmatched behave like public/SUS facilities), but the corrected code
+labels them `Other` and drops them from the Private-vs-Public headline. Do NOT
+reintroduce `else → Public`.
+
 ## Core results
 
 1. **The epidemic is real and extreme** — for-profit cesarean ~82% (TISS) / ~79%
@@ -82,14 +102,16 @@ from headline tests. Do NOT lump 3xxx into for-profit (inflates the share to
    and sign-unstable (+0.017 UF FE / −0.014 muni FE, n.s.); ±2 log-point state
    swings move nothing; the 2015 court order never became an actual fee change.
 3. **A scheduling story** — cesareans cluster on weekdays and dip on weekends
-   (−8.3pp for-profit / −7.0 public) and holidays (−5.6 / −3.8); 8–11am OR spike;
+   (−8.3pp for-profit / −6.7 public) and holidays (−5.6 / −3.5); 8–11am OR spike;
    half of cesareans in weekday business hours vs 29.8% uniform benchmark.
    NB: the holiday coefficient must use `holiday_dates(2010:2024)` — the daily file
    spans 2010–2024, so an earlier `holiday_dates(2015:2024)` in `03_mechanisms.R`
    left 2010–2014 holidays unflagged and diluted the coefficient to −5.3/−3.5.
 4. **Eq. (3), the central estimate** — within the same municipality-day the
-   for-profit differential is **−1.8pp weekend / −2.4pp holiday**, essentially
-   unchanged (−1.8 / −2.3) after adjusting for predetermined maternal composition.
+   for-profit differential is **−2.3pp weekend / −2.9pp holiday**, essentially
+   unchanged (−2.2 / −2.6) after adjusting for predetermined maternal composition.
+   (Strengthened from −1.8/−2.4 by the 2026-07-11 nat_jur fix, which removed
+   misclassified unmatched clinics from Public; verified by fold-back.)
 5. **The dip lives in prelabor cesareans** — for-profit weekend dip −9.7pp
    prelabor vs +1.7pp in-labor; persists in low-risk Robson 1–2 (−7.4pp) and
    Robson 1 alone (−6.5pp, all intrapartum).
@@ -110,7 +132,7 @@ counts (prelabor/in-labor/vaginal/total), differencing for-profit minus public
 within municipality-day (algebraically = the muni×date FE), two-way clustered.
 **RESULT = NULL in the predicted direction, reported honestly:** bridge dip is NOT
 larger than isolated (γ_B=γ_I p≈0.68, prelabor p≈0.95); NO pre-holiday bunching
-(pre-window prelabor sum −0.39/day, a deficit); vaginal births also fall around
+(pre-window prelabor sum −0.46/day, a deficit); vaginal births also fall around
 holidays → some of it is a contraction of institutional activity, not diary
 rearrangement. This **bounds** the "whose convenience" claim: the calendar
 evidence identifies supply-side scheduling but not that it is the individual
@@ -120,11 +142,15 @@ physician's leisure. (`tab_displacement_robust` = supplement.)
 Establishment-date panel of for-profit births, capacity = **obstetric beds**
 (lagged one year, predetermined) + annual delivery volume as scale control,
 `estab^year + muni^date` FE, clustered estab+date, primary outcome prelabor
-cesarean share. **CRITICAL VALIDATION FINDING:** the CNES-PF obstetrician count
-FAILS — 46% of maternities (public AND for-profit) register ZERO obstetricians,
-median 1, because Brazilian obstetricians hold their CNES bond at their own
-practice, not the delivery hospital. So obstetrician count is reported only as a
-flagged weak proxy (col 5); beds carry the analysis. **RESULT is weak/mixed:**
+cesarean share. **VALIDATION FINDING (revised 2026-07-11 after the CBO/CNES-PF
+rebuild):** the CNES-PF obstetrician count is a WEAK proxy — among maternities
+with ≥50 deliveries, **14% (for-profit) / 27% (public) register ZERO
+obstetricians** (median 3/2), because Brazilian obstetricians hold their CNES bond
+at their own practice, not the delivery hospital, so the count reflects
+registration not the on-call roster. (The earlier "46%, equally, median 1" was an
+artifact of the wrong CBO set — only 225250, no 223132 — plus a 17-of-27-UF
+download; both fixed. Prose softened, do NOT reintroduce "half"/"equally".) Beds
+carry the analysis; obstetrician count is col 5 only. **RESULT is weak/mixed:**
 every interaction is positive (larger = flatter gradient) but only the
 delivery-**scale** interaction is significant (weekend×log deliveries ≈ +0.70pp);
 beds×weekend ≈ +0.45pp n.s. under muni×date FE; terciles flat. Permitted:
@@ -204,13 +230,25 @@ CNES-PF via `microdatasus`; IEPS manual export; Parto Adequado Fase-2 PDF.
 | Variable | Description | Source |
 |---|---|---|
 | `cesarean` | =1 if cesarean. TISS: TUSS 31309054/31309208 vs vaginal 31309127. SINASC: `tipo_parto==2`. | TISS/SINASC |
-| `sector`/`private` | Establishment sector (nat_jur 2xxx/3xxx/else). `private`=1 iff for-profit (2xxx). | SINASC×CNES |
+| `sector`/`private` | Establishment sector by `nat_jur` first digit: 1→Public, 2→Private (for-profit), 3→Nonprofit, else (4/5/unmatched)→Other. `private`=1 iff for-profit (2xxx). See the nat_jur table above. | SINASC×CNES |
 | `cesarea_antes_parto` | 1=prelabor, 2=in-labor. **Usable from 2012** (98% missing 2010, 53% 2011, <15% from 2012). | SINASC |
 | `fee_vaginal_econ` | Economic vaginal fee = delivery fee + hourly labor-assist (31309038). | TISS DET |
 | `log_fee_gap` | log(fee_cesarean/fee_vaginal_econ). Negative in big states. | TISS |
 | `tipo_robson` | Robson "01".."11" (01=spontaneous labor). Populated from ~2014. | SINASC |
 | `weekend`,`holiday`,`eve` | Easter-based movable holidays via the anonymous Gregorian algorithm (Good Friday, Carnival Mon+Tue, Corpus Christi). | derived |
-| establishment capacity | `beds_obstetric` (tipo_leito==4, December competência), `beds_total`, `n_obstetricians` (CBO 225250, WEAK — see above), `vol` (own deliveries), one-year-lagged. | CNES via 01d |
+| establishment capacity | `beds_obstetric` (tipo_leito==4, December competência), `beds_total`, `n_obstetricians` (CBO via `is_obstetra`, WEAK — see above), `n_physicians` (CBO via `is_medico`), `vol` (own deliveries), one-year-lagged. | CNES via 01d |
+
+**CBO (occupation) classifiers** — canonical definitions live in `build/00_utils.R`
+(`is_medico` / `is_obstetra` / `is_enfermeiro` / `is_enfermeiro_obstetra`); the
+CNES-PF field mixes 4-digit CBO-94 and 6-digit CBO-2002 codes, so they coerce to
+numeric for range tests and string-match the alphanumeric residuals. Used in
+`01b` (muni-year obstetrician count) and `01d` (establishment obstetrician +
+physician counts). **Obstetra = exactly {225250 gineco-obstetra, 223132 obstetra,
+6149, 6145}** (the old `225250`+`225270` set was wrong — `225270` is
+family-strategy, not obstetrics). **Médico (all)** = CBO-94 6105–6190, CBO-2002
+223101–223157 and 225103–225350, plus 2231A1–2231G1. **Enfermeiro (all)** =
+7110–7165, 223505–223565, 2235C1–2235C3; **enfermeiro obstetra = 7145** (nurses
+are not used in the current paper — kept for a possible midwife-supply revision).
 
 ## Exhibit map (current body: 3 figures + ~8 tables)
 
@@ -245,11 +283,13 @@ Robson-DOW figure, daily-counts figure, full mechanism-checks table (incl.
 Robson-10, which is NOT a clean placebo — interaction p=0.18), billed-cost table,
 `tab_displacement_robust`, `tab_org_capacity_valid`, municipality heterogeneity
 (`tab10_heterogeneity` — obstetrician density, education), `tab10b_modality`
-(cooperativas), referee robustness, beneficiary-muni fee null, region/period
+(cooperativas), referee robustness, region/period
 stability, permutation ranking, no-indication share, neonatal (null, underpowered
 — do NOT feature), fee CI/equivalence, base-vs-economic fee, few-cluster
-bootstrap, sample flow, timing missingness, Robson validation, **all Parto
-Adequado (event studies + DiD + pre-trend robustness)**, `tab_multiple_testing`
+bootstrap, sample flow, timing missingness, Robson validation, **the Parto
+Adequado hospital-level Sun–Abraham event study only** (`fig_ref_c11`, from
+`10_supplement.R` H/C11, styled: x-axis in years, dashed line at the 2017 onset,
+y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multiple_testing`
 (5 families A–E, incl. long weekends D and capacity E).
 
 ## Key numbers (sanity checks; SINASC = 2010–2024)
@@ -257,17 +297,17 @@ Adequado (event studies + DiD + pre-trend robustness)**, `tab_multiple_testing`
 | Fact | Value |
 |---|---|
 | Cesarean (all / for-profit / nonprofit / public) | ~57% / 79% / 60% / 44% |
-| Weekend dip (for-profit / public) | −8.3pp / −7.0pp |
-| Holiday dip (for-profit / public) | −5.6pp / −3.8pp (full 2010–2024 holiday range) |
-| **Eq (3) for-profit differential (muni×date FE)** | **weekend −1.8pp / holiday −2.4pp**; +predetermined −1.8 / −2.3; +Robson −1.5 / −2.0 |
+| Weekend dip (for-profit / public) | −8.3pp / −6.7pp |
+| Holiday dip (for-profit / public) | −5.6pp / −3.5pp (full 2010–2024 holiday range) |
+| **Eq (3) for-profit differential (muni×date FE)** | **weekend −2.3pp / holiday −2.9pp**; +predetermined −2.2 / −2.6; +Robson −1.9 / −2.3 |
 | Weekend dip: prelabor vs in-labor (for-profit) | −9.7pp vs +1.7pp |
 | Robson 1–2 / Robson 1 weekend dip (for-profit) | −7.4pp / −6.5pp |
 | Long-weekend: bridge = isolated test | p≈0.68 (prelabor p≈0.95) — NO larger bridge effect |
-| Pre-holiday prelabor bunching (bridge) | −0.39/day (deficit, NOT bunching) |
-| Org capacity: weekend×log(beds) prelabor | +0.45pp n.s. (muni×date FE); scale +0.70pp** |
-| Zero-obstetrician maternities (CNES-PF) | 46% (both sectors → measure discarded for beds) |
+| Pre-holiday prelabor bunching (bridge) | −0.46/day (deficit, NOT bunching) |
+| Org capacity: weekend×log(beds) prelabor | +0.45pp n.s. (muni×date FE); scale +0.70pp* (col 2) |
+| Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
 | Early-term (37–38wk) for-profit gap, maternal controls | +10.9pp*** |
-| Kitagawa: 35.4pp gap | 29% case-mix / 71% practice style |
+| Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
 | Excess weekday cesareans | ~50k/yr for-profit (~10.5%) |
 | `log_fee_gap` coef (UF / muni FE) | +0.017 / −0.014 (n.s.) |
 
@@ -359,4 +399,4 @@ transparency, do NOT feature.
 ## ACTION items for Fredie
 
 - Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes cited in
-  the Cost-section back-of-envelope.
+  the Cost-section back-of-envelope and verify citations.

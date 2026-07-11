@@ -1,17 +1,31 @@
 # =============================================================================
-# 03_mechanisms.R — scheduling, low-risk (Robson), prelabor split, decomposition
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
+# 03_mechanisms.R — the SCHEDULING CHANNEL (Section 4B/5).
+#
+# WHAT THIS SCRIPT DOES. Four self-contained blocks that build the mechanism
+# evidence:
+#   1. Calendar sorting (Eq. 2): cesareans cluster on weekdays and dip on
+#      weekends/holidays, more so for-profit. -> fig02_dow_cesarean (body Fig 2a).
+#   2. Low-risk restriction (Robson 1-2): the dip survives among births least
+#      likely to need a cesarean. -> fig03_robson_dow (Supplement).
+#   3. Mechanism checks: prelabor vs in-labor split, daily counts, Robson-10
+#      "placebo". -> tab08_mechanism_checks + fig08_daily_counts (Supplement),
+#      and the body table tab_prelabor_lowrisk (Table 5).
+#   4. Quantification: Kitagawa decomposition + excess weekday cesareans.
+#      -> tab11_decomposition (body, Table 7).
+#
+# LABELING (hold everywhere). The weekend/holiday gradients are CALENDAR SORTING
+# of deliveries, NOT the causal effect of a random weekend (the observed date is
+# partly chosen). The prelabor/in-labor split is MECHANISM evidence: the dip is
+# concentrated in prelabor cesareans; in-labor moves the other way (displacement).
 # =============================================================================
 
 # =============================================================================
-# 03_scheduling.R — the mechanism: physician convenience revealed by scheduling.
+# BLOCK 1 — calendar sorting (Eq. 2): the weekend/holiday gradient by sector.
 # Using SINASC (all Brazilian births, exact date), cesarean rates cluster on
-# weekdays and dip on weekends and holidays; the effect is larger in the private
-# sector. Includes movable national holidays (Easter-based) and eve-of-rest-day
-# "pull-forward" bunching.
-#   Figure 2 → fig02_dow_cesarean (per-sector gradients now in tab_main_gradient, Panel B)
+# weekdays and dip on weekends and holidays; the dip is larger for-profit.
+# Movable national holidays are Easter-based; "eve of rest day" captures the
+# Friday / day-before-holiday pull-forward. Feeds body Figure 2(a) (via 11) and
+# the per-sector gradients shown in tab_main_gradient Panel B (built in 07).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -60,8 +74,10 @@ sd[, day_type := fifelse(holiday == 1, "Holiday",
 # because the regressions below subset on them; display labels are applied to the
 # plotting and table objects only (see sector_display() in 00_utils.R).
 
-# --- Figure 2: cesarean rate by day-of-week, by sector ------------------------
-dow_tab <- sd[, .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
+# --- fig02_dow_cesarean: cesarean rate by day-of-week, by sector --------------
+# keep the three named sectors; "Other" (unmatched establishments) is excluded.
+dow_tab <- sd[sector %in% SECTOR_LEVELS,
+              .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
 dow_tab[, sector := sector_display(sector)]
 dow_tab[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
 fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
@@ -77,9 +93,9 @@ fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector
   theme_paper()
 save_fig(fig2, "fig02_dow_cesarean")
 
-# --- Table 3: weekend + holiday dip, private vs public ------------------------
-# Headline contrast: for-profit private (2xxx) vs public administration (1xxx);
-# nonprofit (3xxx, SUS-heavy) is shown in the figure but excluded from the test.
+# --- estimate: weekend + holiday dip, for-profit vs public --------------------
+# Headline contrast: for-profit (nat_jur 2xxx) vs public (1xxx); nonprofit
+# (3xxx, SUS-heavy) is shown in the figure but excluded from the headline test.
 cell <- sd[births > 0, .(rate = sum(cesarean) / sum(births), births = sum(births)),
            by = .(muni, date, sector, weekend, holiday, eve, year)]
 # two-way clustering: weekend/holiday are DATE-level shocks common to all munis
@@ -99,17 +115,18 @@ print(dcast(sd[, .(rate = round(100*sum(cesarean)/sum(births),1)), by = .(day_ty
             day_type ~ sector, value.var = "rate"))
 etable(r_pub, r_priv, dict = dict, fitstat = ~ n + r2, digits = 4)
 
-message("03_scheduling.R done")
+message("03_mechanisms.R: Block 1 (calendar sorting) done")
 
 # =============================================================================
-# 04_robson.R — the cleanest convenience signal: low-risk (Robson 1-2) cesareans.
+# BLOCK 2 — the cleanest convenience signal: low-risk (Robson 1-2) cesareans.
 # Robson groups 1-2 are nulliparous, single, cephalic, term pregnancies — the
 # births where a cesarean is least likely to be medically necessary. If even
 # these cluster on weekdays / dip on weekends, the driver is scheduling, not need.
-#   Figure 3 → fig03_robson_dow (low-risk Robson dips now in tab_prelabor_lowrisk, Table 5)
+#   fig03_robson_dow (Supplement); the low-risk dips also feed the body table
+#   tab_prelabor_lowrisk (Table 5), assembled at the end of Block 3.
 #
-# REQUIRES build/covariates/input/sinasc_births.parquet (from the richer SINASC
-# pull; see build/01d_sinasc_daily.R). Skips gracefully if not yet built.
+# REQUIRES the birth-level SINASC file sinasc_births.parquet (run the SINASC pull
+# + ingest_sinasc() in build/01b_sinasc_cnes.R). Skips gracefully if not built.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -133,7 +150,7 @@ if (!file.exists(BIRTHS)) {
            robson  = as.character(tipo_robson))]
   low <- b[robson %in% c("01", "02")]     # nulliparous, term, singleton, cephalic
 
-  # --- Figure 3: cesarean rate by day-of-week, Robson 1-2, private vs public ---
+  # --- fig03_robson_dow: cesarean rate by day-of-week, Robson 1-2, by sector --
   dow_tab <- low[sector %in% c("Private", "Public"),
                  .(rate = mean(cesarean, na.rm = TRUE)), by = .(sector, dow)]
   dow_tab[, sector := sector_display(sector, c("Private", "Public"))]
@@ -145,7 +162,7 @@ if (!file.exists(BIRTHS)) {
     theme_paper()
   save_fig(fig3, "fig03_robson_dow")
 
-  # --- Table 4: weekend dip within Robson 1-2 (and Robson 1 alone) ------------
+  # --- estimate: weekend dip within Robson 1-2 (and Robson 1 alone) -----------
   cell <- function(dat) dat[, .(rate = mean(cesarean, na.rm = TRUE), n = .N),
                             by = .(muni, date, weekend, year)]
   r12_pub  <- feols(rate ~ weekend | muni + year, cell(low[sector == "Public"]),
@@ -162,24 +179,25 @@ if (!file.exists(BIRTHS)) {
   # tab_prelabor_lowrisk (Table 5); the standalone tab04_robson exhibit was retired.
   etable(r12_pub, r12_priv, r1_priv, dict = dict, fitstat = ~ n + r2, digits = 4)
 
-  message("04_robson.R done")
+  message("03_mechanisms.R: Block 2 (low-risk Robson) done")
 }
 
 # =============================================================================
-# 08_mechanism_checks.R — referee-proofing the convenience mechanism.
+# BLOCK 3 — mechanism checks that isolate scheduling from staffing/composition.
 # Three checks that the weekend/holiday dip reflects physician scheduling of
 # cesareans, not hospital staffing or patient composition:
 #   (a) PRELABOR vs IN-LABOR cesareans (cesarea_antes_parto: 1 = cesarean done
 #       before labor started, 2 = during labor). Scheduling can only operate on
-#       prelabor cesareans → they should carry (almost) all the weekday
-#       clustering; in-labor cesareans respond to emergencies and should dip far
-#       less.
-#   (b) DAILY COUNTS, not shares: if weekends were just different (staffing,
+#       prelabor cesareans -> they should carry (almost) all the weekday
+#       clustering; in-labor cesareans respond to random onset and dip far less.
+#   (b) DAILY COUNTS, not shares: if weekends were merely different (staffing,
 #       admissions), vaginal counts would also crater; instead cesarean counts
 #       fall on weekends while vaginal counts barely move.
-#   (c) PLACEBO — Robson group 10 (preterm): preterm births cannot be freely
-#       scheduled → much smaller weekend dip.
-#   Table 8 → tab08_mechanism_checks ; Figure 8 → fig08_daily_counts
+#   (c) "PLACEBO" — Robson group 10 (preterm): preterm births are harder to
+#       schedule -> smaller weekend dip. NB this is NOT a clean placebo (the
+#       interaction is only p=0.18); it lives in the Supplement, so noted.
+# Outputs: tab08_mechanism_checks + fig08_daily_counts (Supplement). This block
+# also assembles the body table tab_prelabor_lowrisk (Table 5) at the end.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -244,7 +262,7 @@ postprocess_tex(f, fontsize = "\\small", tabcolsep = 4, resize = TRUE)
 .tx <- gsub("\\end{table}", "\\end{sidewaystable}", .tx, fixed = TRUE)
 writeLines(.tx, f)
 
-# --- (b) daily counts by day-of-week: cesarean vs vaginal, private vs public --
+# --- (b) daily counts by day-of-week: cesarean vs vaginal, by sector ----------
 cnt <- b[, .(births = .N), by = .(type = fifelse(cesarean == 1, "Cesarean", "Vaginal"),
              sector, dow, date)][
        , .(mean_daily = mean(births)), by = .(type, sector, dow)]
@@ -262,10 +280,11 @@ fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
 save_fig(fig8, "fig08_daily_counts", width = 9, height = 4.8)
 
 # =============================================================================
-# BODY TABLE — where the weekend dip lives: delivery timing and clinical risk.
-# Merges the prelabor/in-labor split with the low-risk (Robson) restriction, the
-# two pieces of evidence that locate the mechanism.
-#   -> tab_prelabor_lowrisk.tex  (BODY, Table 5)
+# ASSEMBLE the body table (Table 5, tab_prelabor_lowrisk) — where the weekend
+# dip lives. Merges the prelabor/in-labor split (cols 1-4) with the low-risk
+# Robson restriction (cols 5-6), the two pieces of evidence that locate the
+# mechanism. Requires r1_priv from Block 2, so guarded by exists().
+#   -> analysis/output/tables/tab_prelabor_lowrisk.tex  (BODY, Table 5)
 # =============================================================================
 if (exists("r1_priv")) {
   MECH <- list(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, r1_priv)
@@ -302,19 +321,19 @@ if (exists("r1_priv")) {
   message("tab_prelabor_lowrisk.tex written")
 }
 
-message("08_mechanism_checks.R done")
+message("03_mechanisms.R: Block 3 (mechanism checks) done")
 
 # =============================================================================
-# 11_decomposition.R — quantification.
-#   (a) KITAGAWA/OAXACA: how much of the private-public cesarean gap is Robson
-#       CASE-MIX (composition) vs WITHIN-GROUP practice style? If it is practice
-#       style, the epidemic is about how medicine is practiced, not who gives
-#       birth where.
-#   (b) EXCESS WEEKDAY CESAREANS: a transparent scheduling counterfactual — hold
-#       each municipality's weekend cesarean propensity as the "unscheduled"
-#       benchmark and count weekday cesareans above it. A lower bound on
-#       scheduling-driven cesareans per year.
-#   Table 11 → tab11_decomposition (+ headline numbers printed for the text)
+# BLOCK 4 — quantification (accounting, not causal counts).
+#   (a) KITAGAWA decomposition: how much of the for-profit-public cesarean gap is
+#       Robson CASE-MIX (composition) vs WITHIN-GROUP practice style? 71% is
+#       practice style -> the epidemic is about how medicine is practiced, not
+#       who gives birth where. Report as accounting, not caused cesareans.
+#   (b) EXCESS WEEKDAY CESAREANS: a transparent scheduling benchmark — hold each
+#       sector-year's weekend cesarean propensity as the "unscheduled" rate and
+#       count weekday cesareans above it (~50k/yr for-profit). A MECHANICAL
+#       benchmark, not the number of cesareans caused by scheduling.
+#   -> tab11_decomposition (body, Table 7) + headline numbers printed for the text.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -330,6 +349,8 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
 
 # --- (a) Kitagawa decomposition over Robson groups (2014+, when Robson exists) -
+# Symmetric weights: composition uses the average within-group rate, practice
+# style the average group share; the two terms sum to the raw 35.4pp gap.
 r <- b[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]
 tab <- r[, .(n = .N, rate = mean(cesarean)), by = .(sector, g = tipo_robson)]
 tab[, share := n / sum(n), by = sector]
@@ -385,4 +406,4 @@ print(exw[, .(mean_per_year = format(round(mean(excess)), big.mark = ","),
               share_of_cesareans = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0 + ces_1))),
           by = sector])
 
-message("11_decomposition.R done")
+message("03_mechanisms.R: Block 4 (decomposition) done")

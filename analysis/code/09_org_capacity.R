@@ -35,9 +35,16 @@
 # errors two-way clustered by establishment and date. Primary outcome: the share
 # of births delivered by prelabor cesarean.
 #
-# Exhibits:
-#   tab_org_capacity.tex        (BODY)       continuous + tercile heterogeneity
-#   tab_org_capacity_valid.tex  (SUPPLEMENT) link validation + alternative measures
+# RESULT (weak/mixed, reported honestly). Every interaction is positive (larger =
+# flatter gradient) but only the delivery-SCALE interaction is significant
+# (weekend x log deliveries ~ +0.70pp); beds x weekend ~ +0.45pp n.s. under
+# muni x date FE; terciles are flat. This exhibit was MOVED to the Supplement in
+# review round 2 (it came back weak, so featuring it in the body invited "why is
+# this here"); Section 6D now carries a one-paragraph summary pointing to it.
+#
+# Exhibits (BOTH in the Supplemental Appendix):
+#   tab_org_capacity.tex        continuous + tercile heterogeneity
+#   tab_org_capacity_valid.tex  link validation + alternative measures
 #
 # REQUIRES build/01d_cnes_estab.R to have been run (cnes_estab_year.parquet).
 # =============================================================================
@@ -149,7 +156,7 @@ print(d[, .(estab_days = .N, births = sum(births),
         by = terc][order(terc)])
 
 # =============================================================================
-# 3. Main table: continuous and tercile heterogeneity
+# 3. Capacity table (Supplement): continuous + tercile heterogeneity
 # =============================================================================
 ctrl <- "weekend:log_vol + holiday:log_vol"
 m1 <- feols(as.formula(paste("pre_share ~ weekend:log_beds + holiday:log_beds +", ctrl,

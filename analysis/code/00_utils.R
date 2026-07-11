@@ -94,13 +94,13 @@ tex_nobs <- function(models, label = "Observations") {
 }
 
 # ---------------------------------------------------------------------------
-#
 # postprocess_tex(): cleans a fixest `etable()` LaTeX file into the project's
-# house style (booktabs rules, no redundant SE/Signif footer, font-size + column
-# spacing for wide tables). Call it right after each etable() that writes to
-# `file`; pass the significance legend through etable's own `notes =` argument
-# together with `signif.code = NA`.
-# =============================================================================
+# house style (booktabs rules, bold caption, no redundant SE/Signif footer,
+# font-size + column spacing for wide tables). Call it right after each etable()
+# that writes to `file`; pass the significance legend through etable's own
+# `notes =` argument together with `signif.code = NA`. The helpers below
+# (bold_caption / standardize_fe / resize_tabular / unescape_refs) are its steps.
+# ---------------------------------------------------------------------------
 
 # Bold the title inside a \caption, matching the figure house style. Handles the
 # etable form \caption{\label{..} Title} and the plain \caption{Title}; idempotent

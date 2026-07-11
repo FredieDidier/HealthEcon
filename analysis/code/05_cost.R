@@ -1,22 +1,21 @@
 # =============================================================================
-# 05_cost.R — the cost of convenience: gestational-age shifting and newborn health
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
-# =============================================================================
-
-# =============================================================================
-# 09_gestation_health.R — the cost of convenience: gestational-age shifting and
-# newborn health. Scheduled (prelabor) cesareans are performed before labor
-# starts, mechanically shifting births to earlier gestational ages (37-38 weeks,
-# "early term") — which carries known neonatal risks. We document:
-#   (a) the gestational-age distribution by sector (private mass at 37-38 vs
-#       public at 39-40) and by cesarean timing (prelabor vs in-labor);
-#   (b) sector gaps in early-term birth, low birthweight and low Apgar, with and
-#       without maternal controls (age, education, race) and muni+year FE.
-# Associational (mothers differ across sectors), but the maternal controls and
-# the prelabor-cesarean channel make the scheduling interpretation concrete.
-#   Figure 9 → fig09_gestation ; Table 9 → tab09_health
+# 05_cost.R — the COST of convenience (Section 6): gestational-age shifting,
+#             newborn health, and billed cost.
+#
+# WHAT THIS SCRIPT DOES.
+#   (a) Gestational-age distribution by sector (for-profit mass at 37-38 vs
+#       public at 39-40) and by cesarean timing (prelabor vs in-labor). Feeds
+#       body Figure 3 (fig_gestation_panels), merged by 11_body_figures.R.
+#   (b) Sector gaps in early-term birth, low birthweight, and low Apgar, with and
+#       without maternal controls (age, education, race) + muni+year FE.
+#       -> tab09_health (body, Table 6).
+#   (c) Billed cost per delivery, cesarean vs vaginal (TISS). -> tab12_cost
+#       (Supplement).
+#
+# LABELING. The early-term result is a SECTOR-gestational-age ASSOCIATION (+10.9pp
+# with maternal controls), not a causal effect of scheduling: mothers differ
+# across sectors. We do NOT build new empirical programs on neonatal morbidity
+# (selection dominates; for-profit shows LOWER LBW/low-Apgar; power is inadequate).
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -33,7 +32,7 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
                       "muni", "year")))
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
 
-# --- (a) Figure 9: gestational-age distribution -------------------------------
+# --- (a) gestational-age distribution by sector (-> body Fig 3a) ---------------
 g <- b[semana_gestacao %between% c(32, 43)]
 ga <- g[, .N, by = .(sector, week = semana_gestacao)]
 ga[, share := N / sum(N), by = sector]
@@ -45,7 +44,7 @@ fig9a <- ggplot(ga, aes(week, 100 * share, colour = sector)) +
   theme_paper()
 save_fig(fig9a, "fig09_gestation")
 
-# same distribution, private only, by cesarean timing (the channel)
+# same distribution, for-profit only, by cesarean timing (the channel; -> Fig 3b)
 gp <- g[sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
 gp[, group := fcase(cesarean == 0, "Vaginal",
                     cesarea_antes_parto == 1, "Prelabor cesarean",
@@ -62,7 +61,7 @@ fig9b <- ggplot(gd, aes(week, 100 * share, colour = group)) +
   theme_paper()
 save_fig(fig9b, "fig09b_gestation_by_timing")
 
-# --- (b) Table 9: sector gaps in newborn-health margins -----------------------
+# --- (b) tab09_health (body Table 6): sector gaps in newborn-health margins ---
 b[, `:=`(
   early_term = as.integer(semana_gestacao %between% c(37, 38)),
   lbw        = as.integer(peso < 2500),
@@ -101,10 +100,10 @@ etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = 
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m_et0, m_et1, m_lb1, m_ap1, dict = dict, keep = "%private", fitstat = ~ n, digits = 4)
 
-message("09_gestation_health.R done")
+message("05_cost.R: gestation + health block done")
 
 # =============================================================================
-# Financial cost of the epidemic (TISS billed amounts) -> tab12_cost
+# (c) Financial cost of the epidemic (TISS billed amounts) -> tab12_cost (Supp.)
 # Total billed cost per delivery hospitalization = sum of ALL billed items
 # (procedures, materials/OPME, drugs, daily rates) under the delivery event,
 # built in build/02_deliveries.R as `total_billed`. It is the CHARGED/informed

@@ -43,6 +43,7 @@
 # =============================================================================
 
 source(here::here("config", "config.R"))
+source(here::here("build", "00_utils.R"))   # occupation classifiers (is_obstetra)
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(data.table, dplyr, arrow, here)
 pacman::p_load_gh("datazoompuc/datazoom.saude")
@@ -87,12 +88,10 @@ download_cnes_beds <- function(years = 2015:2024, ufs = "all") {
 # =============================================================================
 # CNES-PF obstetricians (microdatasus). CNES-PF is monthly; the stock moves
 # slowly, so take ONE competência per year (December) per UF, keep obstetrician
-# CBOs, count distinct professionals per municipality.
+# CBOs (is_obstetra: gineco-obstetra 225250 / obstetra 223132 and their CBO-94
+# codes 6149/6145), count distinct professionals per municipality.
 # =============================================================================
-OBSTETRIC_CBO <- c("225250",   # Médico ginecologista e obstetra
-                   "225270")   # Médico da estratégia de saúde da família (drop if noisy)
-download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST,
-                                        cbo = OBSTETRIC_CBO) {
+download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST) {
   out <- vector("list", 0L)
   for (uf in ufs) for (y in years) {
     message("CNES-PF ", uf, " ", y)
@@ -108,7 +107,7 @@ download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST,
     cbo_col  <- intersect(c("CBO","cbo"), names(dt))[1]
     id_col   <- intersect(c("CNS_PROF","CPF_PROF","cns_prof"), names(dt))[1]
     if (is.na(muni_col) || is.na(cbo_col)) { rm(raw, dt); gc(); next }
-    dt <- dt[substr(as.character(get(cbo_col)), 1, 6) %in% cbo]
+    dt <- dt[is_obstetra(get(cbo_col))]
     if (!is.na(id_col)) {
       agg <- dt[, .(n_obstetricians = uniqueN(get(id_col))), by = .(muni = get(muni_col))]
     } else {
@@ -126,14 +125,24 @@ download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST,
 # =============================================================================
 # SINASC ingest: targeted CSV → birth-level + daily parquets, CSV deleted after.
 # =============================================================================
-# CNES sets by natureza jurídica: for-profit (2xxx) and nonprofit (3xxx).
+# CNES establishment sets by natureza jurídica (nat_jur), first digit:
+#   1xxx Administração Pública            -> "Public"
+#   2xxx Entidades Empresariais           -> "Private" (for-profit)
+#   3xxx Entidades sem Fins Lucrativos    -> "Nonprofit"
+#   4xxx Pessoas Físicas / 5xxx Org. Int. -> NEITHER; must not fall into Public.
+# Each of the three sectors is built as an EXPLICIT establishment set (an estab
+# that has appeared under a given first digit in any competência). A SINASC
+# birth whose establishment matches none of them (unmatched, or a 4xxx/5xxx
+# establishment) is labeled "Other" in ingest_sinasc(), NOT Public — the former
+# code sent every unmatched establishment to Public, contaminating it.
 .cnes_sector_sets <- function() {
   beds <- data.table::as.data.table(
     arrow::read_parquet(file.path(CNES_INPUT, "cnes_beds_muni_year.parquet")))
   beds[, `:=`(cnes7 = formatC(as.integer(cnes), width = 7, flag = "0"),
               nj = as.character(nat_jur))]
   list(forprofit = unique(beds[grepl("^2", nj), cnes7]),
-       nonprofit = unique(beds[grepl("^3", nj), cnes7]))
+       nonprofit = unique(beds[grepl("^3", nj), cnes7]),
+       public    = unique(beds[grepl("^1", nj), cnes7]))
 }
 
 ingest_sinasc <- function(delete_csv = TRUE) {
@@ -149,8 +158,11 @@ ingest_sinasc <- function(delete_csv = TRUE) {
     cesarean = as.integer(tipo_parto == "2"),
     muni     = formatC(as.integer(substr(as.character(id_municipio_nascimento), 1, 6)),
                        width = 6, flag = "0"))]
+  # Priority: for-profit (2xxx) > nonprofit (3xxx) > public (1xxx); an
+  # establishment matching none (unmatched / 4xxx-5xxx) is "Other", not Public.
   dt[, sector := data.table::fifelse(estab %in% s$forprofit, "Private",
-                 data.table::fifelse(estab %in% s$nonprofit, "Nonprofit", "Public"))]
+                 data.table::fifelse(estab %in% s$nonprofit, "Nonprofit",
+                 data.table::fifelse(estab %in% s$public,    "Public", "Other")))]
   dt[, `:=`(private = as.integer(sector == "Private"),
             dow = data.table::wday(date), year = data.table::year(date))]
 

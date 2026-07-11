@@ -1,23 +1,22 @@
 # =============================================================================
 # 04_heterogeneity.R — theory-driven heterogeneity and operator modality
-# Consolidated analysis script. Sections below are self-contained (each loads
-# config + utils and its own data); they were merged from the former per-exhibit
-# scripts as part of the thematic reorganization.
-# =============================================================================
-
-# =============================================================================
-# 10_heterogeneity.R — heterogeneity as theory tests (not decoration).
-# The time-cost model predicts WHERE the scheduling motive binds hardest:
+#                      (all exhibits live in the Supplemental Appendix).
+#
+# WHAT THIS SCRIPT DOES. Three theory tests of WHERE the scheduling motive binds
+# hardest, from the time-cost model:
 #   (a) OBSTETRICIAN SCARCITY: where obstetricians per birth are scarce, the
-#       opportunity cost of an unschedulable delivery is higher → larger weekend
-#       dip in the private sector.
+#       opportunity cost of an unschedulable delivery is higher -> larger weekend
+#       dip among for-profit births.
 #   (b) MOTHER'S EDUCATION (demand-side check): if scheduling reflected educated
 #       mothers' own requests, the dip should be concentrated among them; similar
 #       dips across education groups point to a supply-side (physician) driver.
 #   (c) OPERATOR MODALITY (TISS): cooperativas médicas are physician-owned —
 #       agency predicts (weakly) higher cesarean use than in insurer-run plans,
 #       conditional on risk composition (maternal age band, muni, year).
-#   Table 10 → tab10_heterogeneity (panels a-b) ; Table 10b → tab10b_modality
+#
+# WHY / SCOPE. These are supplementary theory tests, not the identification;
+# outputs -> tab10_heterogeneity (panels a-b) and tab10b_modality, both cited
+# from the body but printed in the Supplement.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -30,7 +29,7 @@ OUT   <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
 WFO   <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
 TABLE <- here::here("analysis", "output", "tables")
 
-# --- (a) weekend dip × obstetrician scarcity (private cells) ------------------
+# --- (a) weekend dip × obstetrician scarcity (for-profit cells) ---------------
 b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("sector", "cesarean", "escolaridade_mae", "muni", "date",
                       "dow", "year")))
@@ -48,7 +47,7 @@ cell_a <- b[, .(rate = mean(cesarean), n = .N),
 m_dens <- feols(rate ~ weekend + weekend:low_dens | muni + year,
                 cell_a, weights = ~n, cluster = ~muni + date)
 
-# --- (b) weekend dip × mother's education (private births) --------------------
+# --- (b) weekend dip × mother's education (for-profit births) ------------------
 b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
               fifelse(escolaridade_mae %in% 1:3, 0L, NA_integer_))]
 cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
@@ -117,4 +116,4 @@ etable(m_mod0, m_mod1, tex = TRUE, file = f2, replace = TRUE,
 postprocess_tex(f2, fontsize = "\\small", tabcolsep = 5)
 etable(m_mod0, m_mod1, keep = "%coop", fitstat = ~ n, digits = 4)
 
-message("10_heterogeneity.R done")
+message("04_heterogeneity.R done")

@@ -21,7 +21,7 @@
 #
 #       VALIDATION RESULT (do not treat this variable as the obstetric team).
 #       Among establishments with at least fifty deliveries in the year, roughly
-#       half register ZERO obstetricians (CBO 225250) and the median of the rest
+#       half register ZERO obstetricians (is_obstetra) and the median of the rest
 #       is one, in the public sector as much as in the for-profit one. Brazilian
 #       obstetricians hold their CNES bond at their own practice rather than at
 #       the maternity where they deliver, so this count measures registration,
@@ -42,6 +42,7 @@
 # =============================================================================
 
 source(here::here("config", "config.R"))
+source(here::here("build", "00_utils.R"))   # occupation classifiers (is_obstetra / is_medico)
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(data.table, arrow, here)
 if (!requireNamespace("microdatasus", quietly = TRUE))
@@ -55,8 +56,9 @@ ESTAB_OUT  <- file.path(CNES_INPUT, "cnes_estab_year.parquet")
 UF_LIST <- c("AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
              "PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO")
 
-OBST_CBO <- "225250"   # Medico ginecologista e obstetra
-PHYS_CBO <- "2251"     # all "medicos" 2251xx-2252xx families start 225
+# Occupation sets come from is_obstetra() / is_medico() in build/00_utils.R:
+#   obstetricians = gineco-obstetra 225250 / obstetra 223132 + CBO-94 6149/6145
+#   physicians    = every "médico" CBO (CBO-94 6105-6190 + CBO-2002 families)
 
 # =============================================================================
 # (a) Establishment-year beds
@@ -96,17 +98,16 @@ download_estab_obstetricians <- function(years = 2013:2024, ufs = UF_LIST) {
     dt <- as.data.table(raw)
     need <- c("CNES", "CBO", "CNS_PROF")
     if (!all(need %in% names(dt))) { rm(raw, dt); gc(); next }
-    dt[, cbo6 := substr(as.character(CBO), 1, 6)]
     dt[, cnes7 := formatC(as.integer(CNES), width = 7, flag = "0")]
     hh <- if ("HORAHOSP" %in% names(dt)) as.integer(dt$HORAHOSP) else NA_integer_
     dt[, hours := fifelse(is.na(hh), 0L, hh)]
 
-    obst <- dt[cbo6 == OBST_CBO,
+    obst <- dt[is_obstetra(CBO),
                .(n_obstetricians  = uniqueN(CNS_PROF),
                  n_obst_bonds     = .N,
                  obst_hours_hosp  = sum(hours, na.rm = TRUE)),
                by = .(cnes = cnes7)]
-    phys <- dt[substr(cbo6, 1, 4) %in% c(PHYS_CBO, "2252"),
+    phys <- dt[is_medico(CBO),
                .(n_physicians = uniqueN(CNS_PROF)), by = .(cnes = cnes7)]
     agg <- merge(obst, phys, by = "cnes", all = TRUE)
     agg[, `:=`(uf = uf, year = y)]
@@ -132,8 +133,12 @@ build_estab_panel <- function() {
                  by = c("cnes", "year"), all.x = TRUE)
   for (cc in c("n_obstetricians", "n_obst_bonds", "obst_hours_hosp", "n_physicians"))
     set(panel, i = which(is.na(panel[[cc]])), j = cc, value = 0L)
+  # nat_jur first digit: 2xxx -> Private (for-profit), 3xxx -> Nonprofit,
+  # 1xxx -> Public; anything else (4xxx pessoa física, 5xxx, missing) -> Other,
+  # so it does not contaminate Public. (This panel is for-profit-only downstream.)
   panel[, sector := fifelse(grepl("^2", nat_jur), "Private",
-                    fifelse(grepl("^3", nat_jur), "Nonprofit", "Public"))]
+                    fifelse(grepl("^3", nat_jur), "Nonprofit",
+                    fifelse(grepl("^1", nat_jur), "Public", "Other")))]
   arrow::write_parquet(panel, ESTAB_OUT)
   message("saved cnes_estab_year.parquet (", nrow(panel), " rows, ",
           uniqueN(panel$cnes), " establishments)")

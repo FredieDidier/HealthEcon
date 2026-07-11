@@ -153,7 +153,7 @@ OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output"); TABLE <- here::here("
 
 evf <- list.files(OUT, pattern = "delivery_events_20[0-9]{2}\\.parquet$", full.names = TRUE)
 if (length(evf) == 0) {
-  message("07 [D/C6] skipped — delivery_events_<yr>.parquet not found.")
+  message("10 [D/C6] skipped — delivery_events_<yr>.parquet not found.")
 } else {
   ev <- rbindlist(lapply(evf, function(fp) as.data.table(read_parquet(fp,
           col_select = c("muni_prestador","uf","year","cesarean","fee_delivery","fee_assist")))))
@@ -373,12 +373,12 @@ SIN <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 PA  <- file.path(DROPBOX_ROOT, "build", "covariates", "input", "parto_adequado_fase2_hospitais.csv")
 
 if (!file.exists(PA)) {
-  message("07 [H/C11] skipped — Parto Adequado hospital list not found at ", PA)
+  message("10 [H/C11] skipped — Parto Adequado hospital list not found at ", PA)
 } else {
   palist <- fread(PA)
   cnes_col <- grep("cnes", tolower(names(palist)), value = TRUE)
   if (length(cnes_col) == 0) {
-    message("07 [H/C11] skipped — no CNES column in the Parto Adequado list; columns: ",
+    message("10 [H/C11] skipped — no CNES column in the Parto Adequado list; columns: ",
             paste(names(palist), collapse = ", "))
   } else {
     treated_cnes <- unique(as.character(palist[[cnes_col[1]]]))
@@ -396,11 +396,20 @@ if (!file.exists(PA)) {
     if (!is.null(es)) {
       cat("\n[H/C11] hospital-level Sun-Abraham event study (common 2017 onset):\n")
       print(coeftable(es))
-      p <- ggplot() + theme_paper()  # minimal; the coefplot is best viewed via fixest
-      pdf(here::here("analysis","output","graphs","fig_ref_c11_pa_hospital_es.pdf"), width = 8, height = 5)
-      iplot(es, main = "", xlab = "Years since Parto Adequado onset (2017)")
-      dev.off()
-      cat("  wrote fig_ref_c11_pa_hospital_es.pdf. Interpretation stays: no clean break; not identified.\n")
+      # Sun-Abraham event-time estimates -> calendar years (onset = 2017), styled
+      # with theme_paper: x-axis in years, dashed line at the 2017 onset.
+      ip <- as.data.table(fixest::iplot(es, only.params = TRUE)$prms)
+      ip[, year := 2017 + x]
+      es_fig <- ggplot(ip, aes(year, 100 * y)) +
+        geom_hline(yintercept = 0, colour = "grey60") +
+        geom_vline(xintercept = 2017, linetype = "dashed", colour = "grey40") +
+        geom_pointrange(aes(ymin = 100 * ci_low, ymax = 100 * ci_high),
+                        colour = unname(PAL["red"])) +
+        scale_x_continuous(breaks = seq(min(ip$year), max(ip$year), 1)) +
+        labs(x = NULL, y = "For-profit cesarean rate") +
+        theme_paper()
+      save_fig(es_fig, "fig_ref_c11_pa_hospital_es")
+      cat("  wrote fig_ref_c11_pa_hospital_es. Interpretation stays: no clean break; not identified.\n")
     }
   }
 }
@@ -444,11 +453,11 @@ readme <- c(
   "| analysis/code/03_mechanisms.R   | fig03, fig07, fig08, tab07, tab08, tab11, tab_prelabor_lowrisk |",
   "| analysis/code/04_heterogeneity.R| tab10, tab10b |",
   "| analysis/code/05_cost.R         | fig09, fig09b, tab09, tab12 |",
-  "| analysis/code/06_robustness.R   | fig04, fig04b, fig05, tab05, tab05b, tab13*, tab14, tab15* |",
+  "| analysis/code/06_robustness.R   | fig05, tab13, tab13c, tab14, tab15* |",
   "| analysis/code/07_main_specification.R | tab_main_gradient |",
   "| analysis/code/08_long_weekends.R | tab_long_weekends, tab_displacement_robust |",
   "| analysis/code/09_org_capacity.R | tab_org_capacity, tab_org_capacity_valid |",
-  "| analysis/code/10_supplement.R   | tab_multiple_testing, tab_ref_* |",
+  "| analysis/code/10_supplement.R   | tab_multiple_testing, tab_ref_*, fig_ref_c11_pa_hospital_es |",
   "| analysis/code/11_body_figures.R | fig_calendar_fingerprints, fig_gestation_panels |",
   "",
   "## Environment and runtime",
