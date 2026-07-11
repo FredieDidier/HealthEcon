@@ -47,14 +47,14 @@ sin_yr <- sd[year <= 2024, .(
 trend <- rbind(
   tiss_yr[, .(year, rate, series)],
   sin_yr[, .(year, rate = priv, series = "For-profit establishments (SINASC)")],
-  sin_yr[, .(year, rate = pub,  series = "Public (SINASC births)")])
+  sin_yr[, .(year, rate = pub,  series = "Public establishments (SINASC)")])
 trend[, series := factor(series, levels = c(
   "Private insurance (TISS claims)", "For-profit establishments (SINASC)",
-  "Public (SINASC births)"))]
+  "Public establishments (SINASC)"))]
 
-pal_sector <- c("Private insurance (TISS claims)"        = unname(PAL["red"]),
-                "For-profit establishments (SINASC)"     = unname(PAL["orange"]),
-                "Public (SINASC births)"   = unname(PAL["blue"]))
+pal_sector <- c("Private insurance (TISS claims)"    = unname(PAL["red"]),
+                "For-profit establishments (SINASC)" = unname(PAL["orange"]),
+                "Public establishments (SINASC)"     = unname(PAL["blue"]))
 
 fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
@@ -63,8 +63,10 @@ fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
   scale_y_continuous(breaks = seq(0, 90, 15)) +
   coord_cartesian(ylim = c(0, 90)) +                  # zoom, never drop points
   labs(x = NULL, y = "Cesarean rate (%)") +
+  # three long series labels: wrap the bottom legend to 2 rows so none is clipped
+  guides(colour = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_paper()
-save_fig(fig1, "fig01_csection_trend")
+save_fig(fig1, "fig01_csection_trend", width = 9, height = 5.4)
 
 # =============================================================================
 # BLOCK 2 — Table 1 (Supplement): municipality-year summary statistics.

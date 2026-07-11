@@ -44,7 +44,7 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   attenuates the gradient," NOT "individual physician's calendar vs hospital."
 - **Kitagawa decomposition** = accounting; 72% practice style.
 - **~50k excess weekday cesareans** = mechanical benchmark, not cesareans caused.
-- **early-term +10.9pp** = sector–gestational-age association.
+- **early-term +11.7pp** = sector–gestational-age association.
 - **Parto Adequado** = failure of a causal *design* (pre-trends), not a program
   effect; lives entirely in the Supplemental Appendix, one paragraph in the body.
 
@@ -115,7 +115,7 @@ reintroduce `else → Public`.
 5. **The dip lives in prelabor cesareans** — for-profit weekend dip −9.7pp
    prelabor vs +1.7pp in-labor; persists in low-risk Robson 1–2 (−7.4pp) and
    Robson 1 alone (−6.5pp, all intrapartum).
-6. **The cost** — +10.9pp early-term (37–38wk) with maternal controls; 71%
+6. **The cost** — +11.7pp early-term (37–38wk) with maternal controls; 72%
    practice style (Kitagawa); ~50k excess weekday cesareans/yr; near-parity in
    billed amounts.
 
@@ -306,7 +306,7 @@ y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multi
 | Pre-holiday prelabor bunching (bridge) | −0.46/day (deficit, NOT bunching) |
 | Org capacity: weekend×log(beds) prelabor | +0.45pp n.s. (muni×date FE); scale +0.70pp* (col 2) |
 | Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
-| Early-term (37–38wk) for-profit gap, maternal controls | +10.9pp*** |
+| Early-term (37–38wk) for-profit gap, maternal controls | +11.7pp*** |
 | Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
 | Excess weekday cesareans | ~50k/yr for-profit (~10.5%) |
 | `log_fee_gap` coef (UF / muni FE) | +0.017 / −0.014 (n.s.) |

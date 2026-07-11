@@ -15,6 +15,8 @@
 \usepackage{caption}
 \captionsetup{font=small,labelfont=bf}
 \usepackage{rotating}
+\usepackage{xcolor}
+\definecolor{fenacorlink}{HTML}{1B7A3D}   % green for the Fenacor footnote link only
 \usepackage{hyperref}
 \usepackage{xr}                    % cross-reference the online Supplementary Appendix
 \externaldocument[]{supplement}    % resolves \ref{tab:...}/\ref{fig:...} to their C./D. numbers
@@ -82,8 +84,10 @@ the range above which population-level gains in maternal and newborn survival
 disappear \citep{who2015cesarean}. Overuse is not innocuous: unnecessary
 cesareans raise maternal morbidity, respiratory distress and other neonatal
 complications, and costs \citep{sandall2018,boerma2018}. Brazil is the frontier
-case. Roughly 57\% of all Brazilian births are cesarean, and in the private-insurance sector, which covers about a quarter of the population, the rate
-reaches 80\%, the highest documented for any large health system. The excess is
+case. Roughly 57\% of all Brazilian births are cesarean. In the private-insurance
+sector, which covers about a quarter of the population, the rate reaches about
+82\%, and at for-profit birth establishments in the registry it is about 79\%, the
+highest documented for any large health system. The excess is
 not confined to complicated pregnancies. Among first-time mothers at term with a
 single, well-positioned baby who are already in spontaneous labor, the group for
 which surgery is hardest to justify on clinical grounds, two thirds of for-profit
@@ -192,7 +196,7 @@ Benchmarking each municipality's weekday cesarean propensity against its own
 weekend rate places about 50,000 for-profit weekday cesareans per year above that
 mechanical benchmark, about one in ten, a count of surgery above the weekend rate
 rather than of procedures that scheduling alone caused. Convenience is also
-associated with earlier births: for-profit births are 10.9 percentage points more likely to occur
+associated with earlier births: for-profit births are 11.7 percentage points more likely to occur
 at 37--38 weeks of gestation than public births after controlling for maternal
 age, education, and race, and prelabor cesareans mass exactly at those weeks.
 Early-term delivery is the margin that the clinical literature links
@@ -294,7 +298,9 @@ model.
 \section{Institutional background}\label{sec:background}
 % =============================================================================
 
-About a quarter of Brazilians hold private health insurance, a parallel system
+About a quarter of Brazilians hold private health
+insurance,\footnote{See \href{https://fenacor.org.br/noticias/ans-25-dos-brasileiros-tem-planos-de-saude}{\textcolor{fenacorlink}{Fenacor}}.}
+a parallel system
 of insurers and accredited hospitals regulated by the federal
 private-health-insurance authority, the National Supplementary Health Agency
 (Ag\^encia Nacional de Sa\'ude Suplementar, ANS). The rest rely on the public
@@ -302,7 +308,8 @@ single-payer system, the Unified Health System (Sistema \'Unico de Sa\'ude, SUS)
 Childbirth is covered by both, but the two sectors deliver very differently.
 Figure~\ref{fig:trend} plots the cesarean share of births by sector over time.
 In both the private-insurance claims and the for-profit birth records the rate
-sits near 80\% throughout; in the public sector it is close to 44\%. Both are far above the 10--15\% range the World
+sits near 80\% throughout; in the public sector it rises from about 37\% to about
+51\% over the period. Both are far above the 10--15\% range the World
 Health Organization uses as a reference.
 
 \begin{figure}[H]\centering
@@ -766,7 +773,7 @@ $-2.09$ births in total, all relative to ordinary days of the same week day and
 net of the public sector. Volume is not conserved within the window: for-profit
 obstetric activity is depressed across the whole holiday period rather than
 rearranged inside it. In the share versions reported in \satab{tab:displacement_robust},
-the prelabor cesarean share falls by 8.4 points over the window while
+the prelabor cesarean share falls by 8.3 points over the window while
 the overall cesarean share does not move at all, so what happens within the
 window is a substitution of in-labor for prelabor cesareans on top of a general
 reduction in deliveries.
@@ -815,7 +822,7 @@ organizational redundancy attenuates the calendar gradient, which is the margin 
 policy could act on.
 
 Because this section and Section~\ref{sec:cost} each report several tests, the
-Supplemental Appendix groups the hypotheses into pre-specified families and
+Supplementary Appendix groups the hypotheses into pre-specified families and
 reports Holm-Bonferroni adjusted $p$-values \citep{holm1979} and
 Benjamini-Hochberg $q$-values \citep{benjamini1995}
 within each (\satab{tab:multiple_testing}); no conclusion in the paper depends on
@@ -840,7 +847,7 @@ is a shift of births to earlier gestational ages. Figure~\ref{fig:gestation},
 panel (a), shows that for-profit births
 mass at 37 and 38 weeks where public births mass at 39 and 40, and panel (b) shows
 that the shift is concentrated among prelabor cesareans.
-Table~\ref{tab:health} estimates that for-profit births are 10.9 percentage points
+Table~\ref{tab:health} estimates that for-profit births are 11.7 percentage points
 more likely to be early-term (37--38 weeks) than public births, after controlling
 for maternal age, education, and race with municipality and year fixed effects.
 The estimate is associational. Sector and delivery mode are chosen, and the
@@ -903,7 +910,7 @@ benchmark, roughly one in ten. This counts cesareans above the own-municipality
 weekend rate; it does not separate procedures that would not have occurred from
 those merely shifted off the weekend, and the weekend rate itself need not be the
 clinical optimum. Consistent with the
-picture that most for-profit cesareans are elective, about 88 to 91 percent carry no
+picture that most for-profit cesareans are elective, about 87 to 91 percent carry no
 recorded clinical indication in the claims, only a delivery-outcome code
 (\satab{tab:no_indication}).
 
@@ -998,7 +1005,7 @@ verified by the authors against the source data.
 
 % =============================================================================
 % Essential appendices (A model, B data) precede the references, per AEA layout.
-% The Supplemental Appendix (additional results and robustness) is a separate
+% The Supplementary Appendix (additional results and robustness) is a separate
 % document, latex/supplement.tex, submitted as online supplementary material.
 % =============================================================================
 \appendix
@@ -1009,7 +1016,7 @@ verified by the authors against the source data.
 
 \input{appendix}       % Appendix A (model) + Appendix B (data & variables)
 
-\bibliographystyle{plainnat}
+\bibliographystyle{plainnat-rev}
 \bibliography{refs}
 
 \end{document}
