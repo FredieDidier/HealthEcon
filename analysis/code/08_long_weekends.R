@@ -32,7 +32,7 @@
 #
 # Exhibits:
 #   tab_long_weekends.tex        (BODY)       taxonomy + displacement sums
-#   fig_long_weekend_event.pdf   (BODY)       event study around bridge holidays
+#   fig_long_weekend_event.pdf   (SUPPLEMENT) event study around bridge holidays
 #   tab_displacement_robust.tex  (SUPPLEMENT) shares, isolated blocks, movable
 # =============================================================================
 
@@ -303,9 +303,11 @@ evt_coefs <- rbindlist(lapply(names(OUTC), function(y) {
 }))
 setnames(evt_coefs, c("Estimate", "Std. Error"), c("b", "se"))
 evt_coefs[, outcome := factor(outcome, levels = unname(OUTC))]
-# 11_body_figures.R assembles these into the merged calendar-fingerprints figure
+# cached for reference; the body no longer embeds this event study (it moved to the
+# supplement as the standalone fig_long_weekend_event.pdf built just below).
 saveRDS(evt_coefs, file.path(here::here("analysis", "output"), "evt_coefs.rds"))
 
+# supplement figure: displacement event study around bridge holidays
 fig_evt <- ggplot(evt_coefs[block == "Bridge"], aes(ell, b)) +
   geom_hline(yintercept = 0, colour = "grey40", linewidth = 0.3) +
   geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60", linewidth = 0.3) +

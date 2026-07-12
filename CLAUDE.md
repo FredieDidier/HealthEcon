@@ -198,7 +198,9 @@ dictionary/ ANS TISS dictionaries · build_dictionary.R · variable_dictionary.x
 Scripts are self-contained (each re-sources config + utils + its own data).
 **Order matters at the tail:** 07/08/09 each save a hypothesis family
 (`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R` reads for the
-multiple-testing table; 08 saves `evt_coefs.rds` that `11_body_figures.R` reads.
+multiple-testing table; 08 also builds `fig_long_weekend_event`, the displacement
+event study now shown in the supplement. `11_body_figures.R` is otherwise
+self-contained (it reads `sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
 **Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06) concurrently** — each
 loads `sinasc_births.parquet` and two together exhaust memory. Run sequentially.
 
@@ -255,16 +257,23 @@ are not used in the current paper — kept for a possible midwife-supply revisio
 | Exhibit | Script | Content |
 |---|---|---|
 | Figure 1 `fig01_csection_trend` | 01 | Cesarean rate by sector over time |
+| Figure 2 `fig_two_margins` | 11 | (a) price-margin binscatter (cesarean rate on log fee gap, muni+year FE removed); (b) scheduling margin: weekend/holiday/eve gradients for public + for-profit + the for-profit differential. The one exhibit showing both channels side by side. |
 | Table 2 `tab_fees` | 02 | Fee evidence: Panel A levels (Eq 1) + Panel B state-year first-diff |
 | Table 3 `tab_main_gradient` | 07 | **Eq (3)**: Panel A for-profit differential (baseline / +predetermined / +Robson / prelabor / in-labor); Panel B each sector's own gradient |
-| Figure 2 `fig_calendar_fingerprints` | 11 | (a) DOW × sector, (b) hour of birth, (c) bridge-holiday event study |
+| Figure 3 `fig_calendar_fingerprints` | 11 | (a) DOW × sector, (b) hour of birth (panel c bridge-holiday event study MOVED to supplement) |
 | Table 4 `tab_long_weekends` | 08 | Holiday taxonomy (Panel A) + displacement sums (Panel B) |
 | Table 5 `tab_prelabor_lowrisk` | 03 | Weekend dip by prelabor/in-labor × Robson 1–2 / Robson 1 |
-| Figure 3 `fig_gestation_panels` | 11 | (a) gestational age by sector, (b) by delivery timing |
 | Table 6 `tab09_health` | 05 | Early-term / LBW / low-Apgar sector differences |
 | Table 7 `tab11_decomposition` | 03 | Kitagawa + excess weekday cesareans |
 
-**Body is exactly 6 tables + 3 figures** (paper ≈29pp). `tab_org_capacity` (the
+**Body is exactly 6 tables + 3 figures** (paper ≈29pp): figures = trend (Fig 1),
+`fig_two_margins` (Fig 2, price binscatter + scheduling gradients — the summary
+exhibit, added 2026-07-12 per the ECON-GPT suggestion; built in `11`), and
+`fig_calendar_fingerprints` (Fig 3, now 2 panels). The gestational-age figure and
+the bridge-holiday displacement event study (former Fig-2 panel c) BOTH moved to the
+supplement (2026-07-12); the body cites them via `\safig{fig:gestation}` /
+`\safig{fig:displacement_event}` (the standalone `fig_long_weekend_event.pdf` from
+`08`). `tab_org_capacity` (the
 organizational-capacity result, Section 6D) was **moved to the supplement**
 (2026-07-10, review round 2): it came back weak/null, so featuring it in the body
 invited "why is this here"; Section 6D now carries a one-paragraph summary that
@@ -279,7 +288,10 @@ new table, keep the bold.
 
 **Supplement** (`sup_appendix.tex`, built by 10_supplement + 06_robustness + moved
 body exhibits): summary stats, for-profit-cesarean map, business-hours table,
-Robson-DOW figure, daily-counts figure, full mechanism-checks table (incl.
+Robson-DOW figure, daily-counts figure, gestational-age panels
+(`fig_gestation_panels`, moved from body 2026-07-12), bridge-holiday displacement
+event study (`fig_long_weekend_event`, the former Fig-2 panel c), full
+mechanism-checks table (incl.
 Robson-10, which is NOT a clean placebo — interaction p=0.18), billed-cost table,
 `tab_displacement_robust`, `tab_org_capacity_valid`, municipality heterogeneity
 (`tab10_heterogeneity` — obstetrician density, education), `tab10b_modality`

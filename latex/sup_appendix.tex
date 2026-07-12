@@ -67,7 +67,10 @@ plots mean daily births by day of week, which shows cesarean counts collapsing o
 weekends while vaginal counts barely move. Table~\ref{tab:mechanism_checks}
 reports the full timing split together with the Robson group 10 (preterm)
 comparison, which a formal test cannot distinguish from the Robson group 1 dip, so
-we do not treat preterm births as a placebo. Table~\ref{tab:cost} sums every item
+we do not treat preterm births as a placebo. Figure~\ref{fig:gestation} plots the
+distribution of gestational age at birth, by sector and, within the for-profit
+sector, by delivery timing; it is the descriptive counterpart to the early-term
+result of Table~\ref{tab:health}. Table~\ref{tab:cost} sums every item
 billed under each delivery hospitalization and finds that a cesarean and a vaginal
 delivery generate similar gross billed amounts.
 
@@ -95,6 +98,16 @@ vaginal counts are stable.}
 \end{figure}
 
 \input{../analysis/output/tables/tab08_mechanism_checks.tex}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{../analysis/output/graphs/fig_gestation_panels.pdf}
+\caption{Gestational age at birth}\label{fig:gestation}
+\fignotes{SINASC 2010--2024. Panel (a): for-profit births mass at 37--38 weeks,
+public births at 39--40. Panel (b): within for-profit establishments, prelabor
+cesareans mass at 37--38 weeks, while in-labor cesareans and vaginal births mass
+at 39--40.}
+\end{figure}
+
 \input{../analysis/output/tables/tab12_cost.tex}
 
 \subsection{Additional robustness}
@@ -112,9 +125,12 @@ Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
 weak, association between early-term shifting and neonatal admissions.
 
 Several exhibits accompany the extensions of Section~\ref{sec:mechanism}.
-Table~\ref{tab:displacement_robust} repeats the long-weekend event study with
-share outcomes, reports the isolated-holiday blocks alongside the bridge blocks,
-and re-estimates the holiday taxonomy with the movable national holidays added.
+Figure~\ref{fig:displacement_event} plots the displacement event study around bridge
+holidays for the four count outcomes, showing no pre-holiday bunching of prelabor
+cesareans and a general contraction of for-profit obstetric activity across the
+holiday window. Table~\ref{tab:displacement_robust} repeats the long-weekend event
+study with share outcomes, reports the isolated-holiday blocks alongside the bridge
+blocks, and re-estimates the holiday taxonomy with the movable national holidays added.
 Table~\ref{tab:org_capacity} reports the organizational-capacity regressions of
 Section~\ref{sec:mechanism}\,D in full, and
 Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
@@ -131,6 +147,17 @@ not significant.
 \input{../analysis/output/tables/tab15_permutation.tex}
 \input{../analysis/output/tables/tab15b_no_indication.tex}
 \input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{../analysis/output/graphs/fig_long_weekend_event.pdf}
+\caption{Displacement of deliveries around bridge holidays}\label{fig:displacement_event}
+\fignotes{Event-study coefficients $\theta^{k}_{\ell}$ from Equation~\eqref{eq:event}
+around bridge holidays, 2012--2024, with 95 percent confidence intervals. Each
+outcome is the for-profit minus public difference in daily counts within the
+municipality, relative to an ordinary day of the same week day. Standard errors are
+two-way clustered by municipality and date.}
+\end{figure}
+
 \input{../analysis/output/tables/tab_displacement_robust.tex}
 \input{../analysis/output/tables/tab_org_capacity.tex}
 \input{../analysis/output/tables/tab_org_capacity_valid.tex}

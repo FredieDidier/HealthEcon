@@ -549,6 +549,34 @@ benchmark each municipality's weekday cesarean propensity against its own weeken
 rate to calculate the number of weekday cesareans above a mechanical
 own-municipality weekend benchmark.
 
+Figure~\ref{fig:two_margins} previews the two designs on a single canvas. Panel (a)
+plots the price margin: a binscatter of the private-insurance cesarean rate against
+the log economic fee gap, after removing municipality and year fixed effects and the
+municipal controls. The relationship is essentially flat. Panel (b) plots the scheduling margin: the weekend,
+holiday, and eve gradients of Equation~\eqref{eq:scheduling} for each sector and the
+within-municipality-day for-profit differential of Equation~\eqref{eq:gradient}. Both
+sectors deliver far fewer cesareans on rest days, the for-profit sector more so, and
+a for-profit-specific differential of about two to three points survives the
+municipality-by-date comparison. The next two sections develop each panel in turn.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{../analysis/output/graphs/fig_two_margins.pdf}
+\caption{Two margins of cesarean supply}\label{fig:two_margins}
+\fignotes{Panel (a): binscatter of the private-insurance cesarean rate on the log
+economic fee gap across municipality-years with at least twenty private deliveries,
+weighted by deliveries, after partialling out municipality and year fixed effects and
+the municipal controls (log GDP per capita, private health-plan coverage, adequate
+prenatal care, and obstetrician density); each point is an equal-mass bin over the
+central 98 percent of the residualized fee gap, and the dashed line is the fitted
+within-municipality slope, which matches column~4 of Table~\ref{tab:fees}. Panel (b):
+weekend, national-holiday, and eve-of-rest-day coefficients, in percentage points,
+with 95 percent confidence intervals. ``Public'' and ``For-profit'' are each sector's
+own gradient from Equation~\eqref{eq:scheduling}; ``For-profit differential'' is the
+within-municipality-day for-profit interaction from Equation~\eqref{eq:gradient}.
+Standard errors are clustered by municipality (panel a) and two-way clustered by
+municipality and date (panel b).}
+\end{figure}
+
 % =============================================================================
 \section{Fees and the cesarean rate}\label{sec:notprice}
 % =============================================================================
@@ -645,18 +673,14 @@ are almost absent overnight and spike between eight and eleven in the morning,
 the operating-room block, while vaginal births are nearly uniform around the
 clock. Half of all cesareans occur in weekday business hours, against a benchmark
 of 29.8 percent under uniform timing, and only about a third of vaginal births
-do (\satab{tab:business_hours}). Panel (c) reports the displacement exercise of
-Section~\ref{sec:mechanism}\,C.
+do (\satab{tab:business_hours}).
 
 \begin{figure}[H]\centering
 \includegraphics[width=\textwidth]{../analysis/output/graphs/fig_calendar_fingerprints.pdf}
 \caption{Calendar fingerprints of scheduled delivery}\label{fig:calendar}
 \fignotes{SINASC. Panel (a): cesarean rate by day of week and establishment
 sector, 2010--2024. Panel (b): share of births by hour of birth, by delivery mode
-and sector, 2010--2024. Panel (c): event-study coefficients $\theta^{k}_{\ell}$
-from Equation~\eqref{eq:event} around bridge holidays, 2012--2024, with 95
-percent confidence intervals; the outcome is the for-profit minus public
-difference in daily counts within the municipality.}
+and sector, 2010--2024.}
 \end{figure}
 
 \subsection{B. Where the dip lives: prelabor cesareans and low-risk births}
@@ -776,7 +800,8 @@ rearranged inside it. In the share versions reported in \satab{tab:displacement_
 the prelabor cesarean share falls by 8.3 points over the window while
 the overall cesarean share does not move at all, so what happens within the
 window is a substitution of in-labor for prelabor cesareans on top of a general
-reduction in deliveries.
+reduction in deliveries. \safig{fig:displacement_event} plots the event-study
+coefficients $\theta^{k}_{\ell}$ around bridge holidays for each count outcome.
 
 We read this as follows. Prelabor scheduling is avoided across an entire holiday
 period, which is consistent with the calendar sorting the rest of the paper
@@ -843,7 +868,7 @@ themselves demand convenient timing.
 \paragraph{The gestational-age margin.} Scheduling a cesarean means performing it
 before labor, and to be sure of preceding labor the physician must book it before
 the natural rise in the delivery hazard around week 39. The mechanical consequence
-is a shift of births to earlier gestational ages. Figure~\ref{fig:gestation},
+is a shift of births to earlier gestational ages. \safig{fig:gestation},
 panel (a), shows that for-profit births
 mass at 37 and 38 weeks where public births mass at 39 and 40, and panel (b) shows
 that the shift is concentrated among prelabor cesareans.
@@ -874,15 +899,6 @@ The direction, however, is what both the clinical literature \citep{tita2009} an
 quasi-experimental evidence on non-indicated and early cesareans
 \citep{costaramon2018,card2023} would predict, and it locates the cost of the
 convenience margin in earlier, riskier births rather than in spending.
-
-\begin{figure}[H]\centering
-\includegraphics[width=\textwidth]{../analysis/output/graphs/fig_gestation_panels.pdf}
-\caption{Gestational age at birth}\label{fig:gestation}
-\fignotes{SINASC 2010--2024. Panel (a): for-profit births mass at 37--38 weeks,
-public births at 39--40. Panel (b): within for-profit establishments, prelabor
-cesareans mass at 37--38 weeks, while in-labor cesareans and vaginal births mass
-at 39--40.}
-\end{figure}
 
 \input{../analysis/output/tables/tab09_health.tex}
 

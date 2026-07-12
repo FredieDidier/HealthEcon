@@ -172,8 +172,9 @@ Then:
 Every script re-sources `config/config.R` and its utils, so scripts can also be
 run individually. **Order matters at the tail:** `07`/`08`/`09` each save a
 hypothesis family (`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R`
-reads for the multiple-testing table, and `08` saves `evt_coefs.rds` that
-`11_body_figures.R` reads; run them in numeric order.
+reads for the multiple-testing table; run them in numeric order. `08` also builds
+`graphs/fig_long_weekend_event`, the displacement event study now shown in the
+Supplementary Appendix.
 
 Body exhibits are **bold**. Everything else is Supplemental Appendix.
 
@@ -189,7 +190,7 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
-| `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_calendar_fingerprints`, `graphs/fig_gestation_panels` (merged multi-panel from earlier single-panel figures) |
+| `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth), `graphs/fig_gestation_panels` (Supplementary Appendix) |
 
 Figures are written as both `.pdf` and `.png`. The LaTeX in `latex/` `\input`s the
 `.tex` tables and `\includegraphics`es the `.pdf` figures to produce `paper.pdf`
