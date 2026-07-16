@@ -1,30 +1,33 @@
-
 \begin{table}[H]
-   \caption{\label{tab:health} \textbf{For-profit--public differences in early-term birth and newborn outcomes}}
-   \centering
-\small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
-   \begin{tabular}{lcccc}
-      \toprule
-      Dependent Variables: & \multicolumn{2}{c}{Early-term birth (37--38 weeks)} & Low birthweight ($<$2500g) & Five-minute Apgar $<$ 7\\
-      Model:                   & (1)            & (2)            & (3)             & (4)\\  
-      \midrule
-      \emph{Variables}\\
-      For-profit establishment & 0.1414$^{***}$ & 0.1173$^{***}$ & -0.0299$^{***}$ & -0.0053$^{***}$\\   
-                               & (0.0074)       & (0.0072)       & (0.0066)        & (0.0007)\\   
+\centering
+\caption{\textbf{For-profit--public differences in early-term birth and newborn outcomes}}
+\label{tab:health}
+\small\setlength{\tabcolsep}{5pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+ & (1) & (2) & (3) & (4) \\
+ & \multicolumn{2}{c}{Early-term birth} & Low birthweight & Five-minute \\
+ & \multicolumn{2}{c}{(37--38 weeks)} & ($<$2500g) & Apgar $<$ 7 \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-4}\cmidrule(lr){5-5}
+For-profit establishment & 14.14$^{***}$ & 11.73$^{***}$ & -2.99$^{***}$ & -0.53$^{***}$ \\
+ & (0.74) & (0.72) & (0.66) & (0.07) \\
 \addlinespace[2pt]
-      Maternal controls        & No             & Yes            & Yes             & Yes\\  
-      \midrule
-      Municipality fixed effects & Yes            & Yes            & Yes             & Yes\\  
-      Year fixed effects & Yes            & Yes            & Yes             & Yes\\  
-      \midrule
-      \emph{Fit statistics}\\
-      Observations             & 23,141,498     & 22,019,981     & 22,436,582      & 22,144,638\\  
+\midrule
+Maternal controls & No & Yes & Yes & Yes \\
+Municipality fixed effects & Yes & Yes & Yes & Yes \\
+Year fixed effects & Yes & Yes & Yes & Yes \\
+Observations & 23,141,498 & 22,019,981 & 22,436,582 & 22,144,638 \\
 \bottomrule
-   \end{tabular}
-}
-   
-   \par \raggedright 
-   \footnotesize\textit{Notes:} Birth-level regressions, SINASC 2010--2024, for-profit vs public establishments, municipality and year fixed effects. Maternal controls: age, age$^2$, education, race. Mothers differ across sectors, so the early-term coefficient is an associational difference between establishment sectors and is not interpreted as the causal effect of prelabor scheduling. Standard errors, clustered by municipality, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} Birth-level regressions, SINASC 2010--2024, for-profit vs
+public establishments; coefficients in percentage points. Maternal controls:
+age, age$^2$, education, race. Mothers differ across sectors, so the
+early-term coefficient is an associational difference between establishment
+sectors and is not interpreted as the causal effect of prelabor scheduling.
+Standard errors, clustered by municipality, are reported in parentheses.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
 \end{table}
-
-

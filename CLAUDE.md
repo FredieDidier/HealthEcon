@@ -8,7 +8,16 @@ the highest cesarean rate documented for any large health system (~80% of
 deliveries, vs a WHO reference of 10–15%), and answers by separating a **price
 channel** (do relative fees drive it? no) from a **scheduling channel** (do
 cesareans cluster on weekdays and dip on weekends and holidays? yes). Target
-journal: **AEJ: Economic Policy** (fallback: Journal of Health Economics).
+journal: **Journal of Health Economics** (decided 2026-07-16, after the Proof
+Patrol round on Parfitt & Goulart 2026 JDE judged AEJ:Policy a long shot without
+an exogenous organizational shock). The manuscript follows the JHE/Elsevier
+guide: single-column .tex; title page with superscript-letter affiliations and a
+marked corresponding author; JEL/keywords with semicolons; unnumbered
+declarations sections before the references (CRediT — DRAFT roles, Fredie must
+confirm; competing interests; funding; data availability; generative-AI use);
+`latex/highlights.txt` (≤85 chars per bullet) uploaded as a separate file.
+Author-year natbib references are acceptable at submission (Elsevier restyles at
+proof), so `plainnat-rev.bst` stays.
 
 **The paper's one recognizable design is Equation (3)**, a
 within-municipality-day for-profit-versus-public differential; everything else is
@@ -278,8 +287,8 @@ organizational-capacity result, Section 6D) was **moved to the supplement**
 (2026-07-10, review round 2): it came back weak/null, so featuring it in the body
 invited "why is this here"; Section 6D now carries a one-paragraph summary that
 points to the supplement. Table 1 (summary stats) lives in the
-supplement; the body just cites it. AEJ:Policy targets ~40pp/11pt or 45pp/12pt;
-the journal averages 33–34 typeset pages, so 45 is a ceiling, not a goal.
+supplement; the body just cites it. JHE publishes papers of any length and
+encourages short ones, so the trimmed ~34pp body is fine; do not re-inflate it.
 
 **All table and figure captions are bold** (`\caption{\textbf{...}}`), matching
 the house style. `postprocess_tex()` bolds the caption of every etable table on
@@ -287,7 +296,17 @@ re-run; hand-built `writeLines` tables include `\textbf` in source. If you add a
 new table, keep the bold.
 
 **Supplement** (`sup_appendix.tex`, built by 10_supplement + 06_robustness + moved
-body exhibits): summary stats, for-profit-cesarean map, business-hours table,
+body exhibits). **Reorganized 2026-07-16 into three appendices so a reader can
+tell robustness from description** (user request): **C = additional descriptive
+figures/tables** (summary stats, map, business hours, Robson-DOW, daily counts,
+mechanism-checks table, gestation panels, billed cost); **D = robustness,
+validation, and inference** (D.1 weekend-dip alternatives/placebos incl.
+neonatal-suggestive, D.2 long weekends/displacement, D.3 org capacity, D.4
+heterogeneity + demand-side alternatives, D.5 measurement validation +
+few-cluster inference + sample flow, D.6 multiple testing); **E = the policy
+record** (Parto Adequado Sun–Abraham event study + RN 368 timeline). Old labels
+`app:robustness`/`app:referee` → now `app:descriptive`/`app:robustness`/
+`app:policy`. Contents in detail: summary stats, for-profit-cesarean map, business-hours table,
 Robson-DOW figure, daily-counts figure, gestational-age panels
 (`fig_gestation_panels`, moved from body 2026-07-12), bridge-holiday displacement
 event study (`fig_long_weekend_event`, the former Fig-2 panel c), full
@@ -408,7 +427,60 @@ Card, Fenizia & Silver 2023 AEJ:Policy; Sandall 2018 Lancet). The suggestive TIS
 neonatal check (`06_robustness.R` → `tab14`) is null and underpowered — keep for
 transparency, do NOT feature.
 
+## The 2026-07-16 revision (Proof Patrol round 3: Parfitt positioning + JHE)
+
+Two Proof Patrol reports (PDF in Downloads, "GPT Feedback") drove this round:
+- **Parfitt & Goulart (2026 JDE, heatwaves in Brazilian maternity wards) is now
+  cited and distinguished** in the intro contributions ("closest contemporaneous
+  study"; our muni×date FE absorb temperature; different estimand), with a
+  footnote that sector definitions are NOT comparable across Parfitt (public
+  wards), Melo (bed-allocation classes), and us (natureza jurídica).
+- **New literature block** (capacity/staffing/crowding): maibom2021 (JHE),
+  bensnes2026 (Health Econ), facchini2022 (JEBO), bachner2024 (IZA DP 16981);
+  timing lit expanded with cohen1983, spetz2001, spinola2025 (the published
+  EJHE version of Rocha–Spinola 2016), gans2012, lo2003. All verified.
+- **Language softened** (3 exact substitutions): "identifies supply-side
+  scheduling without identifying whose convenience" → "documents an
+  ownership-specific supply-side calendar pattern consistent with scheduling,
+  without identifying the causal effect of scheduling or whose constraints
+  generate it"; "If the operative margin is..." → "If, as the combined evidence
+  suggests, an important margin is..."; conclusion's "The cesarean converts..."
+  → "The observed patterns are consistent with cesareans being used to
+  convert...".
+- **Carnival reconciled**: "Neither prediction survives in our fixed-date
+  holiday design" + explicit non-contradiction of Melo (Carnival is movable,
+  long, salient, excluded from eq:blocks) + closing sentence that displacement
+  may depend on holiday duration/salience. All long-weekend claims qualified as
+  "ordinary fixed-date national holidays".
+- **Contribution reframed as fees-versus-time joint diagnosis** (opens the
+  contribution block); Sec 5 opens with the scope disclaimer (observed billed
+  compensation only); educated-mothers sentence no longer "rules out" demand;
+  org-capacity paragraph cites the crowding literature and disclaims causality.
+- **Table cleanups (user request)**: tab_fees Panel B now shows the wild-cluster
+  bootstrap p for BOTH columns (FD 0.210 / levels 0.145 — boottest needs the FE
+  as formula dummies for the weighted levels model), FD and levels coefficients
+  on separate labeled rows, State/Year FE rows; ", Equation (N)" removed from
+  panel titles in tab_fees and tab_main_gradient; tab_main_gradient Panel B got
+  Municipality/Year FE + Observations rows (public 3,480,217 / for-profit
+  1,455,272); tab_long_weekends Panel B got DOW/muni/year-month FE rows;
+  tab09_health rebuilt hand-made in the tab_prelabor_lowrisk layout, in pp
+  (14.14/11.73/−2.99/−0.53), with a Maternal-controls row; fig_two_margins note
+  no longer cites "column 4 of Table 1". `clean_etable_header()` in
+  `analysis/code/00_utils.R` (now part of `postprocess_tex()`) strips etable's
+  "Dependent Variables:"/"Model:"/"\emph{Variables}"/"\emph{Fit statistics}"
+  clutter from every etable table; applied to all 9 supplement etables.
+
 ## ACTION items for Fredie
 
 - Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes cited in
   the Cost-section back-of-envelope and verify citations.
+- **Temperature robustness (Proof Patrol R1 C4, still open):** acquire municipal
+  daily temperature (INMET or ERA5) and re-estimate Eq (3) adding
+  ForProfit×temperature-bin controls (+ precipitation if available; + dropping
+  days above the local 95th percentile), reported next to the main spec in the
+  supplement, to show the calendar gradient is not an unmodeled Parfitt climate
+  channel. No temperature data exists in the repo yet, so this was NOT done.
+- **Confirm the CRediT roles** drafted in paper.tex (marked TODO) before
+  submission; Elsevier requires them to be accurate.
+- Prepare the Elsevier declarations-tool entries (competing interests Word doc)
+  and consider the free SSRN preprint option at submission.

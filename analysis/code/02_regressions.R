@@ -95,13 +95,21 @@ uf <- uf[n > 2000]
 m_fd  <- feols(d_csec ~ d_fee_gap, uf[!is.na(d_fee_gap)], weights = ~n, cluster = ~uf)
 m_lvl <- feols(csec ~ fee_gap | uf + year, uf, weights = ~n, cluster = ~uf)
 n_state <- uniqueN(uf[!is.na(d_fee_gap), uf])
-wild_p <- NA_real_
+wild_p <- NA_real_; wild_p_lvl <- NA_real_
 if (requireNamespace("fwildclusterboot", quietly = TRUE)) {
   suppressMessages(library(fwildclusterboot)); set.seed(1)
   if (requireNamespace("dqrng", quietly = TRUE)) dqrng::dqset.seed(1)
   bt <- tryCatch(boottest(m_fd, clustid = "uf", param = "d_fee_gap", B = 9999, type = "webb"),
                  error = function(e) NULL)
   if (!is.null(bt)) wild_p <- bt$p_val
+  # boottest() cannot handle a weighted fixest model with a fixed-effects slot;
+  # refit the identical levels model with the FE as formula dummies.
+  m_lvl_dum <- feols(csec ~ fee_gap + factor(uf) + factor(year), uf,
+                     weights = ~n, cluster = ~uf)
+  bt_lvl <- tryCatch(boottest(m_lvl_dum, clustid = "uf", param = "fee_gap",
+                              B = 9999, type = "webb"),
+                     error = function(e) NULL)
+  if (!is.null(bt_lvl)) wild_p_lvl <- bt_lvl$p_val
 }
 dict <- c(d_csec = "$\\Delta$ Cesarean rate", d_fee_gap = "$\\Delta$ Log fee gap",
           csec = "Cesarean rate", fee_gap = "Log fee gap", uf = "State", year = "Year")
@@ -125,7 +133,7 @@ tex <- c(
   "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
   "\\begin{tabular}{lcccc}", "\\toprule",
   " & (1) & (2) & (3) & (4) \\\\", "\\midrule",
-  "\\multicolumn{5}{l}{\\emph{Panel A. Municipality-year levels, Equation~\\eqref{eq:feegap}}} \\\\",
+  "\\multicolumn{5}{l}{\\emph{Panel A. Municipality-year levels}} \\\\",
   "\\addlinespace[2pt]",
   tex_row("Log economic fee gap (cesarean minus vaginal)", LEVELS,
           "log_fee_gap", mult = 1, dig = 4),
@@ -147,12 +155,19 @@ fdc <- tex_coef(fd[[1]], fd[[2]], fd[[4]], mult = 1, dig = 4)
 lvc <- tex_coef(lv[[1]], lv[[2]], lv[[4]], mult = 1, dig = 4)
 tex <- c(tex,
   paste0("Change in the log fee gap & \\multicolumn{2}{c}{", fdc[1],
-         "} & \\multicolumn{2}{c}{", lvc[1], "} \\\\"),
-  paste0(" & \\multicolumn{2}{c}{", fdc[2], "} & \\multicolumn{2}{c}{", lvc[2], "} \\\\"),
+         "} & \\multicolumn{2}{c}{} \\\\"),
+  paste0(" & \\multicolumn{2}{c}{", fdc[2], "} & \\multicolumn{2}{c}{} \\\\"),
+  "\\addlinespace[2pt]",
+  paste0("Log fee gap & \\multicolumn{2}{c}{} & \\multicolumn{2}{c}{", lvc[1], "} \\\\"),
+  paste0(" & \\multicolumn{2}{c}{} & \\multicolumn{2}{c}{", lvc[2], "} \\\\"),
   "\\addlinespace[2pt]",
   paste0("Wild-cluster bootstrap $p$-value & \\multicolumn{2}{c}{",
          ifelse(is.na(wild_p), "0.210", sprintf("%.3f", wild_p)),
-         "} & \\multicolumn{2}{c}{} \\\\"),
+         "} & \\multicolumn{2}{c}{",
+         ifelse(is.na(wild_p_lvl), "", sprintf("%.3f", wild_p_lvl)), "} \\\\"),
+  "\\midrule",
+  "State fixed effects & \\multicolumn{2}{c}{No} & \\multicolumn{2}{c}{Yes} \\\\",
+  "Year fixed effects & \\multicolumn{2}{c}{No} & \\multicolumn{2}{c}{Yes} \\\\",
   paste0("State clusters & \\multicolumn{2}{c}{", n_state, "} & \\multicolumn{2}{c}{",
          n_state, "} \\\\"),
   paste0("Observations & \\multicolumn{2}{c}{", formatC(nobs(m_fd), big.mark = ",", format = "d"),
@@ -169,7 +184,7 @@ tex <- c(tex,
   "aggregates to state-years with more than 2,000 private deliveries and asks whether",
   "year-to-year swings in the state fee gap move the cesarean rate; the levels column",
   "adds state and year fixed effects. Because there are only twenty-two state clusters,",
-  "inference for the first difference uses a 9,999-draw Webb-weight wild-cluster",
+  "inference in both columns is complemented by a 9,999-draw Webb-weight wild-cluster",
   "bootstrap. Standard errors, clustered by state, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 writeLines(tex, file.path(TABLE, "tab_fees.tex"))

@@ -77,28 +77,38 @@ m_et1 <- feols(as.formula(paste("early_term ~ private +", ctrl, "| muni + year")
 m_lb1 <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 m_ap1 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 
-dict <- c(private = "For-profit establishment",
-          early_term = "Early-term birth (37--38 weeks)", lbw = "Low birthweight ($<$2500g)",
-          low_apgar = "Five-minute Apgar $<$ 7", idade_mae = "Mother's age",
-          muni = "Municipality", year = "Year")
-f <- file.path(TABLE, "tab09_health.tex")
-etable(m_et0, m_et1, m_lb1, m_ap1, tex = TRUE, file = f, replace = TRUE, dict = dict,
-       keep = "%private",
-       signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
-       extralines = list("Maternal controls" = c("No", "Yes", "Yes", "Yes")),
-       fitstat = ~ n, digits = 4, digits.stats = 3,
-       title = "For-profit--public differences in early-term birth and newborn outcomes",
-       label = "tab:health",
-       notes = paste("\\footnotesize\\textit{Notes:} Birth-level regressions, SINASC",
-         "2010--2024, for-profit vs public establishments, municipality and",
-         "year fixed effects. Maternal controls: age, age$^2$, education, race.",
-         "Mothers differ across sectors, so the early-term coefficient is an",
-         "associational difference between establishment sectors and is not",
-         "interpreted as the causal effect of prelabor scheduling.",
-         "Standard errors, clustered by municipality, are reported in parentheses.",
-         SIGNIF_NOTE))
-postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
-etable(m_et0, m_et1, m_lb1, m_ap1, dict = dict, keep = "%private", fitstat = ~ n, digits = 4)
+# Hand-built in the layout of tab_prelabor_lowrisk (body Table 3): clean column
+# header, coefficient rows in percentage points, then Maternal controls /
+# fixed-effects / Observations rows.
+HEALTH <- list(m_et0, m_et1, m_lb1, m_ap1)
+tex <- c(
+  "\\begin{table}[H]", "\\centering",
+  "\\caption{\\textbf{For-profit--public differences in early-term birth and newborn outcomes}}",
+  "\\label{tab:health}",
+  "\\small\\setlength{\\tabcolsep}{5pt}",
+  "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
+  "\\begin{tabular}{lcccc}", "\\toprule",
+  " & (1) & (2) & (3) & (4) \\\\",
+  " & \\multicolumn{2}{c}{Early-term birth} & Low birthweight & Five-minute \\\\",
+  " & \\multicolumn{2}{c}{(37--38 weeks)} & ($<$2500g) & Apgar $<$ 7 \\\\",
+  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-4}\\cmidrule(lr){5-5}",
+  tex_row("For-profit establishment", HEALTH, "private", mult = 100, dig = 2),
+  "\\midrule",
+  "Maternal controls & No & Yes & Yes & Yes \\\\",
+  "Municipality fixed effects & Yes & Yes & Yes & Yes \\\\",
+  "Year fixed effects & Yes & Yes & Yes & Yes \\\\",
+  tex_nobs(HEALTH),
+  "\\bottomrule", "\\end{tabular}}",
+  "\\begin{minipage}{\\linewidth}\\footnotesize",
+  "\\textit{Notes:} Birth-level regressions, SINASC 2010--2024, for-profit vs",
+  "public establishments; coefficients in percentage points. Maternal controls:",
+  "age, age$^2$, education, race. Mothers differ across sectors, so the",
+  "early-term coefficient is an associational difference between establishment",
+  "sectors and is not interpreted as the causal effect of prelabor scheduling.",
+  "Standard errors, clustered by municipality, are reported in parentheses.",
+  "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
+writeLines(tex, file.path(TABLE, "tab09_health.tex"))
+etable(m_et0, m_et1, m_lb1, m_ap1, keep = "%private", fitstat = ~ n, digits = 4)
 
 message("05_cost.R: gestation + health block done")
 

@@ -1,61 +1,21 @@
 % =============================================================================
 % sup_appendix.tex — the supplemental (online) appendix, shared body.
-%   Appendix C: the policy record and additional robustness.
-%   Appendix D: supplementary robustness and inference.
+%   Appendix C: additional descriptive figures and tables (context, no tests).
+%   Appendix D: robustness, validation, and inference (sensitivity of results).
+%   Appendix E: the policy record (design failures, not program evaluations).
 % Compiled two ways: \input by supplement.tex (standalone online supplement), and
-% available to paper.tex if the two documents are ever merged. Numbering (C, D)
+% available to paper.tex if the two documents are ever merged. Numbering (C, D, E)
 % is set by \numberwithin in the host preamble.
 % =============================================================================
 
 % =============================================================================
-\section{The policy record and additional robustness}\label{app:robustness}
+\section{Additional descriptive figures and tables}\label{app:descriptive}
 % =============================================================================
 
-\subsection{The fee-based policy record and \emph{Parto Adequado}}
-
-A decade of Brazilian policy aimed the fee schedule and mandatory disclosure at the
-cesarean epidemic. Two episodes bear directly on the paper's reading that the
-operative margin is not the fee. First, the December 2015 court order directing the
-national regulator to make plans pay at least three times more for vaginal delivery
-never became an actual fee change, as Section~\ref{sec:notprice} shows: the fee
-series has no jump. Second, \emph{Parto Adequado}, the flagship
-quality-improvement program, invites a cleaner test, because hospitals joined it on
-a staggered schedule between 2017 and 2021. We estimate an event study at the
-hospital (establishment) level, comparing for-profit hospitals that participated
-with those that did not, over the long pre-period the birth records afford
-(Figure~\ref{fig:pa_hospital}). Because adoption is staggered and the dynamic
-effects may be heterogeneous across cohorts and event time, a two-way
-fixed-effects event study can be biased; we therefore use the interaction-weighted
-estimator of \citet{sun2021}. The ANS list does not record each hospital's exact
-entry date, so we impose a common 2017 onset, which makes this a refinement of the
-design rather than a full staggered-timing correction. The estimates show a
-pre-existing differential downward trend that begins well before 2017 and
-continues without a break at adoption, so the movement is a continuation of that
-trend rather than a treatment effect. We therefore do not
-read this comparison as an estimate of the program's effect; the available
-observational design does not identify it. The decline is real; its attribution to
-the program is not supported by the data, a caution for the short-window evaluations
-that have credited it. Figure~\ref{fig:rn368} places the national monthly series in
-its policy timeline for reference.
-
-\begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig_ref_c11_pa_hospital_es.pdf}
-\caption{Parto Adequado hospital-level event study, Sun--Abraham estimator}\label{fig:pa_hospital}
-\fignotes{Interaction-weighted event study of \citet{sun2021} for the for-profit
-cesarean rate at participating versus non-participating hospitals, common 2017
-onset, relative to the year before onset. Robust to heterogeneous dynamic effects
-across cohorts; the pre-onset coefficients trend and there is no clean break at
-adoption.}
-\end{figure}
-
-\begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
-\caption{National cesarean rate and the policy timeline}\label{fig:rn368}
-\fignotes{Monthly cesarean rate, for-profit and all births.
-Dashed line marks RN 368/2015.}
-\end{figure}
-
-\subsection{Supplementary descriptive exhibits}
+This appendix collects the descriptive exhibits that complement the main text.
+They document the setting and the raw patterns behind the body figures and
+tables; none of them is a robustness test, and the sensitivity of the paper's
+estimates is examined in Appendix~\ref{app:robustness}.
 
 Table~\ref{tab:descriptives} reports summary statistics for the
 municipality-year analysis file. Figure~\ref{fig:map_private} maps the for-profit
@@ -110,10 +70,18 @@ at 39--40.}
 
 \input{../analysis/output/tables/tab12_cost.tex}
 
-\subsection{Additional robustness}
+% =============================================================================
+\section{Robustness, validation, and inference}\label{app:robustness}
+% =============================================================================
 
-This subsection collects the supporting and robustness exhibits discussed in the
-text. Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
+This appendix collects the robustness and sensitivity analyses proper: exercises
+that re-estimate a result of the paper under alternative samples, definitions,
+specifications, or inference procedures, together with the validation of the key
+measurement choices.
+
+\subsection{The weekend dip: alternative samples, definitions, and placebos}
+
+Table~\ref{tab:referee_robustness} re-estimates the weekend dip under a
 time-varying sector classification, alternative rest-day definitions, and the
 composition of weekend newborns. Table~\ref{tab:dip_region_period} shows that the
 dip survives a clinically clean low-risk sample and is stable across regions and
@@ -124,29 +92,20 @@ share of for-profit cesareans with no recorded clinical indication.
 Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
 weak, association between early-term shifting and neonatal admissions.
 
-Several exhibits accompany the extensions of Section~\ref{sec:mechanism}.
+\input{../analysis/output/tables/tab13_referee_robustness.tex}
+\input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
+\input{../analysis/output/tables/tab15_permutation.tex}
+\input{../analysis/output/tables/tab15b_no_indication.tex}
+\input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
+
+\subsection{Long weekends and displacement}
+
 Figure~\ref{fig:displacement_event} plots the displacement event study around bridge
 holidays for the four count outcomes, showing no pre-holiday bunching of prelabor
 cesareans and a general contraction of for-profit obstetric activity across the
 holiday window. Table~\ref{tab:displacement_robust} repeats the long-weekend event
 study with share outcomes, reports the isolated-holiday blocks alongside the bridge
 blocks, and re-estimates the holiday taxonomy with the movable national holidays added.
-Table~\ref{tab:org_capacity} reports the organizational-capacity regressions of
-Section~\ref{sec:mechanism}\,D in full, and
-Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
-measures and samples. Table~\ref{tab:heterogeneity} reports the
-municipality-level heterogeneity of the weekend dip by obstetrician density and
-by maternal education, and Table~\ref{tab:modality} contrasts physician-owned
-cooperative insurers with insurer-run plans. Neither the education split nor the
-cooperative contrast supports a demand-side reading: the implied weekend dip is
-smaller, not larger, for more-educated mothers, and the cooperative difference is
-not significant.
-
-\input{../analysis/output/tables/tab13_referee_robustness.tex}
-\input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
-\input{../analysis/output/tables/tab15_permutation.tex}
-\input{../analysis/output/tables/tab15b_no_indication.tex}
-\input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
 
 \begin{figure}[H]\centering
 \includegraphics[width=\textwidth]{../analysis/output/graphs/fig_long_weekend_event.pdf}
@@ -159,15 +118,34 @@ two-way clustered by municipality and date.}
 \end{figure}
 
 \input{../analysis/output/tables/tab_displacement_robust.tex}
+
+\subsection{Organizational capacity}
+
+Table~\ref{tab:org_capacity} reports the organizational-capacity regressions of
+Section~\ref{sec:mechanism}\,D in full, and
+Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
+measures and samples.
+
 \input{../analysis/output/tables/tab_org_capacity.tex}
 \input{../analysis/output/tables/tab_org_capacity_valid.tex}
+
+\subsection{Heterogeneity and demand-side alternatives}
+
+Table~\ref{tab:heterogeneity} reports the
+municipality-level heterogeneity of the weekend dip by obstetrician density and
+by maternal education, and Table~\ref{tab:modality} contrasts physician-owned
+cooperative insurers with insurer-run plans. Neither the education split nor the
+cooperative contrast supports a simple demand-side reading: the implied weekend
+dip is smaller, not larger, for more-educated mothers, and the cooperative
+difference is not significant; neither pattern rules out unobserved maternal
+preferences or joint physician--patient scheduling decisions.
+
 \input{../analysis/output/tables/tab10_heterogeneity.tex}
 \input{../analysis/output/tables/tab10b_modality.tex}
 
-% =============================================================================
-\section{Supplementary robustness and inference}\label{app:referee}
-% =============================================================================
-This appendix reports supplementary validation of the timing indicator, few-cluster
+\subsection{Measurement validation and few-cluster inference}
+
+This subsection reports validation of the timing indicator, few-cluster
 inference for the fee channel, and sample-construction accounting.
 Table~\ref{tab:robson_validation} verifies that the cesarean-timing indicator is
 internally consistent across Robson groups: group 1 (spontaneous labor) carries no
@@ -217,3 +195,50 @@ begin with stay insignificant. The precision comes from sample sizes in the
 millions rather than from a fortunate choice among tests.
 
 \input{../analysis/output/tables/tab_multiple_testing.tex}
+
+% =============================================================================
+\section{The policy record}\label{app:policy}
+% =============================================================================
+
+A decade of Brazilian policy aimed the fee schedule and mandatory disclosure at the
+cesarean epidemic. Two episodes bear directly on the paper's reading that the
+operative margin is not the fee; we report them here because neither supports a
+causal program evaluation. First, the December 2015 court order directing the
+national regulator to make plans pay at least three times more for vaginal delivery
+never became an actual fee change, as Section~\ref{sec:notprice} shows: the fee
+series has no jump. Second, \emph{Parto Adequado}, the flagship
+quality-improvement program, invites a cleaner test, because hospitals joined it on
+a staggered schedule between 2017 and 2021. We estimate an event study at the
+hospital (establishment) level, comparing for-profit hospitals that participated
+with those that did not, over the long pre-period the birth records afford
+(Figure~\ref{fig:pa_hospital}). Because adoption is staggered and the dynamic
+effects may be heterogeneous across cohorts and event time, a two-way
+fixed-effects event study can be biased; we therefore use the interaction-weighted
+estimator of \citet{sun2021}. The ANS list does not record each hospital's exact
+entry date, so we impose a common 2017 onset, which makes this a refinement of the
+design rather than a full staggered-timing correction. The estimates show a
+pre-existing differential downward trend that begins well before 2017 and
+continues without a break at adoption, so the movement is a continuation of that
+trend rather than a treatment effect. We therefore do not
+read this comparison as an estimate of the program's effect; the available
+observational design does not identify it. The decline is real; its attribution to
+the program is not supported by the data, a caution for the short-window evaluations
+that have credited it. Figure~\ref{fig:rn368} places the national monthly series in
+its policy timeline for reference.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig_ref_c11_pa_hospital_es.pdf}
+\caption{Parto Adequado hospital-level event study, Sun--Abraham estimator}\label{fig:pa_hospital}
+\fignotes{Interaction-weighted event study of \citet{sun2021} for the for-profit
+cesarean rate at participating versus non-participating hospitals, common 2017
+onset, relative to the year before onset. Robust to heterogeneous dynamic effects
+across cohorts; the pre-onset coefficients trend and there is no clean break at
+adoption.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{../analysis/output/graphs/fig05_rn368_timeline.pdf}
+\caption{National cesarean rate and the policy timeline}\label{fig:rn368}
+\fignotes{Monthly cesarean rate, for-profit and all births.
+Dashed line marks RN 368/2015.}
+\end{figure}

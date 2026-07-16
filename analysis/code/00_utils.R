@@ -142,11 +142,27 @@ standardize_fe <- function(tx) {
   out
 }
 
+# Clean etable's header block into the hand-built house style: drop the
+# "Dependent Variables:" / "Model:" row labels, put the column-number row first
+# (numbers, then outcome names), and remove the "\emph{Variables}" and
+# "\emph{Fit statistics}" section headers. Idempotent.
+clean_etable_header <- function(tx) {
+  dep <- grep("^\\s*Dependent Variables?:\\s*&", tx)
+  mod <- grep("^\\s*Model:\\s*&", tx)
+  if (length(dep) == 1L && length(mod) == 1L && mod > dep) {
+    tx[dep] <- sub("^\\s*Dependent Variables?:\\s*&", " &", tx[dep])
+    modline <- sub("^\\s*Model:\\s*&", " &", tx[mod])
+    tx <- append(tx[-mod], modline, after = dep - 1L)  # numbers row on top
+  }
+  tx[!grepl("^\\s*\\\\emph\\{(Variables|Fit statistics)\\}\\\\\\\\", tx)]
+}
+
 postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
                             addspace = TRUE, resize = TRUE) {
   tx <- readLines(file)
   tx <- bold_caption(tx)
   tx <- standardize_fe(tx)
+  tx <- clean_etable_header(tx)
   tx <- tx[!grepl("standard-errors in parentheses", tx, fixed = TRUE)]
   tx <- tx[!grepl("Signif. Codes", tx, fixed = TRUE)]  # our own legend is in the note
   tx <- sub("\\begin{table}[htbp]", "\\begin{table}[H]", tx, fixed = TRUE)  # float placement

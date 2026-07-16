@@ -5,11 +5,10 @@
 \footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccccc}
       \toprule
-      Dependent Variables: & \multicolumn{3}{c}{Prelabor cesarean share} & Cesarean share & Prelabor cesarean share\\
+ & (1)            & (2)          & (3)                   & (4)           & (5)\\  
+ & \multicolumn{3}{c}{Prelabor cesarean share} & Cesarean share & Prelabor cesarean share\\
        & \multicolumn{2}{c}{Prelabor} & Prelabor (terciles) & All cesareans & Prelabor (weak measure) \\ 
-      Model:                                                       & (1)            & (2)          & (3)                   & (4)           & (5)\\  
       \midrule
-      \emph{Variables}\\
       Weekend $\times$ log(1 + obstetric beds)                     & 0.0048         & 0.0045       &                       & 0.0046$^{*}$  &   \\   
                                                                    & (0.0034)       & (0.0037)     &                       & (0.0025)      &   \\   
 \addlinespace[2pt]
@@ -45,7 +44,6 @@
       Date fixed effects & Yes            &              &                       &               & \\  
       Municipality-Date fixed effects &                & Yes          & Yes                   & Yes           & Yes\\  
       \midrule
-      \emph{Fit statistics}\\
       Observations                                                 & 1,279,380      & 1,279,380    & 1,279,380             & 1,279,380     & 1,279,380\\  
       R$^2$                                                        & 0.537          & 0.803        & 0.803                 & 0.774         & 0.803\\  
 \bottomrule

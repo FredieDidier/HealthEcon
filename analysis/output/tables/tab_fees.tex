@@ -8,7 +8,7 @@
 \toprule
  & (1) & (2) & (3) & (4) \\
 \midrule
-\multicolumn{5}{l}{\emph{Panel A. Municipality-year levels, Equation~\eqref{eq:feegap}}} \\
+\multicolumn{5}{l}{\emph{Panel A. Municipality-year levels}} \\
 \addlinespace[2pt]
 Log economic fee gap (cesarean minus vaginal) & 0.0469$^{*}$ & -0.0163$^{*}$ & 0.0166 & -0.0143 \\
  & (0.0238) & (0.0091) & (0.0229) & (0.0091) \\
@@ -25,10 +25,16 @@ Observations & 5,176 & 5,176 & 4,684 & 4,684 \\
  & \multicolumn{2}{c}{First differences} & \multicolumn{2}{c}{Levels} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 \addlinespace[2pt]
-Change in the log fee gap & \multicolumn{2}{c}{-0.0127} & \multicolumn{2}{c}{-0.0269} \\
- & \multicolumn{2}{c}{(0.0113)} & \multicolumn{2}{c}{(0.0205)} \\
+Change in the log fee gap & \multicolumn{2}{c}{-0.0127} & \multicolumn{2}{c}{} \\
+ & \multicolumn{2}{c}{(0.0113)} & \multicolumn{2}{c}{} \\
 \addlinespace[2pt]
-Wild-cluster bootstrap $p$-value & \multicolumn{2}{c}{0.210} & \multicolumn{2}{c}{} \\
+Log fee gap & \multicolumn{2}{c}{} & \multicolumn{2}{c}{-0.0269} \\
+ & \multicolumn{2}{c}{} & \multicolumn{2}{c}{(0.0205)} \\
+\addlinespace[2pt]
+Wild-cluster bootstrap $p$-value & \multicolumn{2}{c}{0.210} & \multicolumn{2}{c}{0.145} \\
+\midrule
+State fixed effects & \multicolumn{2}{c}{No} & \multicolumn{2}{c}{Yes} \\
+Year fixed effects & \multicolumn{2}{c}{No} & \multicolumn{2}{c}{Yes} \\
 State clusters & \multicolumn{2}{c}{22} & \multicolumn{2}{c}{22} \\
 Observations & \multicolumn{2}{c}{188} & \multicolumn{2}{c}{207} \\
 \bottomrule
@@ -44,7 +50,7 @@ births; standard errors are clustered on the fixed-effect geography. Panel B
 aggregates to state-years with more than 2,000 private deliveries and asks whether
 year-to-year swings in the state fee gap move the cesarean rate; the levels column
 adds state and year fixed effects. Because there are only twenty-two state clusters,
-inference for the first difference uses a 9,999-draw Webb-weight wild-cluster
+inference in both columns is complemented by a 9,999-draw Webb-weight wild-cluster
 bootstrap. Standard errors, clustered by state, are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.

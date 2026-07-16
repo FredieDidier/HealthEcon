@@ -5,13 +5,12 @@
 \footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccccc}
       \toprule
-      Dependent Variables: & \multicolumn{3}{c}{Cesarean rate} & \multicolumn{2}{c}{Newborn outcome}\\
+ & (1)                                & (2)                        & (3)                      & (4)                  & (5)\\  
+ & \multicolumn{3}{c}{Cesarean rate} & \multicolumn{2}{c}{Newborn outcome}\\
       \cmidrule(lr){2-4}\cmidrule(lr){5-6}
                                     & Cesarean rate, time-varying sector & Cesarean rate, Sunday only & Cesarean rate, rest days & Low Apgar (5-minute) & Low birthweight \\   
 \addlinespace[2pt]
-      Model:                        & (1)                                & (2)                        & (3)                      & (4)                  & (5)\\  
       \midrule
-      \emph{Variables}\\
       Weekend                       & -0.0769$^{***}$                    &                            &                          & 0.0019$^{***}$       & 0.0132$^{***}$\\   
                                     & (0.0046)                           &                            &                          & (0.0002)             & (0.0013)\\   
 \addlinespace[2pt]
@@ -25,7 +24,6 @@
       Municipality fixed effects & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
       Year fixed effects & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
       \midrule
-      \emph{Fit statistics}\\
       Observations                  & 1,380,183                          & 1,455,272                  & 1,455,272                & 1,447,875            & 1,455,272\\  
 \bottomrule
    \end{tabular}
