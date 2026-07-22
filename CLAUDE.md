@@ -26,7 +26,7 @@ followed a detailed referee report; see "The 2026-07-10 revision" below for what
 changed and why.
 
 **Authors (in order):** Fredie Didier (IDP; corresponding, fdidier@terra.com.br),
-Pablo Castro (UFBA), Vinicius Mendes (UFBA), Lucas Emanuel (UFBA). Written in the
+Vinicius Mendes (UFBA), Pablo Castro (UFBA), Lucas Emanuel (UFBA). Written in the
 first person plural. No acknowledgments footnote (removed 2026-07-10).
 
 ## Evidence taxonomy (hold this labeling everywhere)
@@ -51,6 +51,15 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   null honestly; it bounds the "whose convenience" claim.
 - **organizational-capacity heterogeneity** = "organizational redundancy
   attenuates the gradient," NOT "individual physician's calendar vs hospital."
+- **Robson-group profile + term/preterm + maternal-age splits** (2026-07-22) =
+  *corroboration, NOT a placebo*. Robson group and gestational age at birth are
+  partly determined by the same decisions under study, so these are heuristic
+  falsifications. Say "the excess for-profit gradient is concentrated where the
+  delivery date can be chosen in advance"; never "preterm births are a clean
+  control." Preterm ≠ unschedulable (preeclampsia, IUGR, elective late-preterm
+  are all booked). The maternal-age split is exploratory and NOT in the
+  pre-specified families A–E; always pair it with the ceiling caveat (a pp
+  differential compresses mechanically as the base rate approaches 1).
 - **Kitagawa decomposition** = accounting; 72% practice style.
 - **~50k excess weekday cesareans** = mechanical benchmark, not cesareans caused.
 - **early-term +11.7pp** = sector–gestational-age association.
@@ -147,7 +156,7 @@ rearrangement. This **bounds** the "whose convenience" claim: the calendar
 evidence identifies supply-side scheduling but not that it is the individual
 physician's leisure. (`tab_displacement_robust` = supplement.)
 
-**Organizational capacity (`09_org_capacity.R`, Table 6 = `tab_org_capacity`).**
+**Organizational capacity (`09_org_capacity.R`, supplement Table D.8 = `tab_org_capacity`).**
 Establishment-date panel of for-profit births, capacity = **obstetric beds**
 (lagged one year, predetermined) + annual delivery volume as scale control,
 `estab^year + muni^date` FE, clustered estab+date, primary outcome prelabor
@@ -173,10 +182,10 @@ Physician weighs fee gap $f_c-f_v$ against a convenience premium $\Pi$ (value of
 converting an unschedulable, long, calendar-blocking event into a ~1h scheduled
 procedure). Sections iff $(f_c-f_v)+\Pi > \alpha\theta$. $\Pi>0$ even when the
 fee gap is negative — exactly what the data show. Predictions: P1 fees not
-operative (Table 2 nulls); P2 prelabor bunch weekday business hours, in-labor
-inherit random onset (Table 3 cols 4–5); P3 dip larger where obstetric time
+operative (Table 1 nulls); P2 prelabor bunch weekday business hours, in-labor
+inherit random onset (Table 2 cols 4–5); P3 dip larger where obstetric time
 scarce (now the org-capacity extension, weaker than hoped); P4 booking before the
-wk-39 hazard → early-term excess (Table 5).
+wk-39 hazard → early-term excess (Table 5, `tab09_health`).
 
 ## Repository layout
 
@@ -197,7 +206,9 @@ analysis/ code/  00_utils.R (theme_paper, PAL, sector_display, tex_row/tex_coef/
                  04_heterogeneity.R (supp) · 05_cost.R · 06_robustness.R (policy
                  nulls, permutation, neonatal) · 07_main_specification.R (Eq 3 →
                  tab_main_gradient) · 08_long_weekends.R · 09_org_capacity.R ·
-                 10_supplement.R · 11_body_figures.R (merged panels)
+                 10_supplement.R · 12_subgroups.R (Robson/gestation/age splits →
+                 tab_subgroup_gradients + robson_grad.rds) · 11_body_figures.R
+                 (merged panels; RUN AFTER 12)
           output/ {graphs, tables, maps}      committed to git
 latex/    paper.tex · model.tex (App A) · appendix.tex (A+B) · supplement.tex
           (standalone) · sup_appendix.tex (shared C+D body) · refs.bib
@@ -208,10 +219,14 @@ Scripts are self-contained (each re-sources config + utils + its own data).
 **Order matters at the tail:** 07/08/09 each save a hypothesis family
 (`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R` reads for the
 multiple-testing table; 08 also builds `fig_long_weekend_event`, the displacement
-event study now shown in the supplement. `11_body_figures.R` is otherwise
-self-contained (it reads `sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
-**Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06) concurrently** — each
-loads `sinasc_births.parquet` and two together exhaust memory. Run sequentially.
+event study now shown in the supplement. **`12_subgroups.R` runs BEFORE `11`**
+despite its number: it saves `robson_grad.rds`, the coefficients `11` draws as
+Figure 3 panel (c) (`11` falls back to the old two-panel layout if the file is
+absent). `11_body_figures.R` is otherwise self-contained (it reads
+`sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
+**Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06, 12) concurrently** —
+each loads `sinasc_births.parquet` and two together exhaust memory (12 alone peaks
+around 14GB of R vector cells). Run sequentially.
 
 ## Data (Dropbox, not git)
 
@@ -261,34 +276,41 @@ family-strategy, not obstetrics). **Médico (all)** = CBO-94 6105–6190, CBO-20
 7110–7165, 223505–223565, 2235C1–2235C3; **enfermeiro obstetra = 7145** (nurses
 are not used in the current paper — kept for a possible midwife-supply revision).
 
-## Exhibit map (current body: 3 figures + ~8 tables)
+## Exhibit map (current body: 3 figures + 6 tables)
 
-| Exhibit | Script | Content |
-|---|---|---|
-| Figure 1 `fig01_csection_trend` | 01 | Cesarean rate by sector over time |
-| Figure 2 `fig_two_margins` | 11 | (a) price-margin binscatter (cesarean rate on log fee gap, muni+year FE removed); (b) scheduling margin: weekend/holiday/eve gradients for public + for-profit + the for-profit differential. The one exhibit showing both channels side by side. |
-| Table 2 `tab_fees` | 02 | Fee evidence: Panel A levels (Eq 1) + Panel B state-year first-diff |
-| Table 3 `tab_main_gradient` | 07 | **Eq (3)**: Panel A for-profit differential (baseline / +predetermined / +Robson / prelabor / in-labor); Panel B each sector's own gradient |
-| Figure 3 `fig_calendar_fingerprints` | 11 | (a) DOW × sector, (b) hour of birth (panel c bridge-holiday event study MOVED to supplement) |
-| Table 4 `tab_long_weekends` | 08 | Holiday taxonomy (Panel A) + displacement sums (Panel B) |
-| Table 5 `tab_prelabor_lowrisk` | 03 | Weekend dip by prelabor/in-labor × Robson 1–2 / Robson 1 |
-| Table 6 `tab09_health` | 05 | Early-term / LBW / low-Apgar sector differences |
-| Table 7 `tab11_decomposition` | 03 | Kitagawa + excess weekday cesareans |
+**The numbers below are the ones LaTeX actually prints** (verified against
+`paper.aux`, 2026-07-22). Summary statistics used to be body Table 1 and moved to
+the supplement, which shifted every body table down by one; the map had never been
+renumbered. **If you move an exhibit, re-derive this map from `paper.aux`**
+(`grep -o "newlabel{tab:[^}]*}{{[^}]*}" paper.aux`), do not renumber by hand.
 
-**Body is exactly 6 tables + 3 figures** (paper ≈29pp): figures = trend (Fig 1),
+| Exhibit | Label | Script | Content |
+|---|---|---|---|
+| Figure 1 `fig01_csection_trend` | `fig:trend` | 01 | Cesarean rate by sector over time |
+| Figure 2 `fig_two_margins` | `fig:two_margins` | 11 | (a) price-margin binscatter (cesarean rate on log fee gap, muni+year FE removed); (b) scheduling margin: weekend/holiday/eve gradients for public + for-profit + the for-profit differential. The one exhibit showing both channels side by side. |
+| Figure 3 `fig_calendar_fingerprints` | `fig:calendar` | 11 (+12) | (a) DOW × sector, (b) hour of birth, (c) weekend gradient by Robson group (coefficients from `12`; added 2026-07-22). Bridge-holiday event study MOVED to supplement. |
+| Table 1 `tab_fees` | `tab:fees` | 02 | Fee evidence: Panel A levels (Eq 1) + Panel B state-year first-diff |
+| Table 2 `tab_main_gradient` | `tab:main_gradient` | 07 | **Eq (3)**: Panel A for-profit differential (baseline / +predetermined / +Robson / prelabor / in-labor); Panel B each sector's own gradient |
+| Table 3 `tab_prelabor_lowrisk` | `tab:prelabor_lowrisk` | 03 | Weekend dip by prelabor/in-labor × Robson 1–2 / Robson 1 |
+| Table 4 `tab_long_weekends` | `tab:long_weekends` | 08 | Holiday taxonomy (Panel A) + displacement sums (Panel B) |
+| Table 5 `tab09_health` | `tab:health` | 05 | Early-term / LBW / low-Apgar sector differences |
+| Table 6 `tab11_decomposition` | `tab:decomposition` | 03 | Kitagawa + excess weekday cesareans |
+
+**Body is exactly 6 tables + 3 figures**: figures = trend (Fig 1),
 `fig_two_margins` (Fig 2, price binscatter + scheduling gradients — the summary
 exhibit, added 2026-07-12 per the ECON-GPT suggestion; built in `11`), and
-`fig_calendar_fingerprints` (Fig 3, now 2 panels). The gestational-age figure and
-the bridge-holiday displacement event study (former Fig-2 panel c) BOTH moved to the
-supplement (2026-07-12); the body cites them via `\safig{fig:gestation}` /
-`\safig{fig:displacement_event}` (the standalone `fig_long_weekend_event.pdf` from
-`08`). `tab_org_capacity` (the
+`fig_calendar_fingerprints` (Fig 3, 3 panels since 2026-07-22). The gestational-age
+figure and the bridge-holiday displacement event study (former Fig-3 panel c) BOTH
+moved to the supplement (2026-07-12); the body cites them via `\safig{fig:gestation}`
+(now Figure C.4) / `\safig{fig:displacement_event}` (now Figure D.1, the standalone
+`fig_long_weekend_event.pdf` from `08`). `tab_org_capacity` (the
 organizational-capacity result, Section 6D) was **moved to the supplement**
-(2026-07-10, review round 2): it came back weak/null, so featuring it in the body
-invited "why is this here"; Section 6D now carries a one-paragraph summary that
-points to the supplement. Table 1 (summary stats) lives in the
-supplement; the body just cites it. JHE publishes papers of any length and
-encourages short ones, so the trimmed ~34pp body is fine; do not re-inflate it.
+(2026-07-10, review round 2), where it is Table D.8: it came back weak/null, so
+featuring it in the body invited "why is this here"; Section 6D now carries a
+one-paragraph summary that points to the supplement. The summary statistics
+(`tab01_descriptives`, once body Table 1) live in the supplement as Table C.1; the
+body just cites them. JHE publishes papers of any length and encourages short ones,
+so the trimmed body is fine; do not re-inflate it.
 
 **All table and figure captions are bold** (`\caption{\textbf{...}}`), matching
 the house style. `postprocess_tex()` bolds the caption of every etable table on
@@ -301,7 +323,9 @@ tell robustness from description** (user request): **C = additional descriptive
 figures/tables** (summary stats, map, business hours, Robson-DOW, daily counts,
 mechanism-checks table, gestation panels, billed cost); **D = robustness,
 validation, and inference** (D.1 weekend-dip alternatives/placebos incl.
-neonatal-suggestive, D.2 long weekends/displacement, D.3 org capacity, D.4
+neonatal-suggestive and `tab_subgroup_gradients` = Table D.3, the
+term/preterm + maternal-age splits added 2026-07-22; D.2 long
+weekends/displacement, D.3 org capacity, D.4
 heterogeneity + demand-side alternatives, D.5 measurement validation +
 few-cluster inference + sample flow, D.6 multiple testing); **E = the policy
 record** (Parto Adequado Sun–Abraham event study + RN 368 timeline). Old labels
@@ -333,6 +357,9 @@ y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multi
 | **Eq (3) for-profit differential (muni×date FE)** | **weekend −2.3pp / holiday −2.9pp**; +predetermined −2.2 / −2.6; +Robson −1.9 / −2.3 |
 | Weekend dip: prelabor vs in-labor (for-profit) | −9.7pp vs +1.7pp |
 | Robson 1–2 / Robson 1 weekend dip (for-profit) | −7.4pp / −6.5pp |
+| Robson profile, for-profit vs public weekend dip (Fig 3c) | G1 −6.3/−3.7 · G2 −5.2/−3.8 · G3 −8.0/−3.0 · G4 −9.1/−4.2 · G5 −3.6/−5.8 · G10 **−5.1/−5.2 (identical)** |
+| Eq (3) differential, term vs preterm | −2.5pp vs **+0.8pp**; difference +3.4pp, p<0.001 |
+| Eq (3) differential, mother <35 vs 35+ | −3.0pp vs +1.3pp (diff +4.3, p<0.001); within Robson 1–2, −5.0 vs −1.4 (diff +3.6, p<0.001) |
 | Long-weekend: bridge = isolated test | p≈0.68 (prelabor p≈0.95) — NO larger bridge effect |
 | Pre-holiday prelabor bunching (bridge) | −0.46/day (deficit, NOT bunching) |
 | Org capacity: weekend×log(beds) prelabor | +0.45pp n.s. (muni×date FE); scale +0.70pp* (col 2) |
@@ -344,13 +371,20 @@ y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multi
 
 ## Compile
 
-`paper.tex` first (supplement uses `xr`/`\externaldocument{paper}`, needs
-`paper.aux`; do not clean it between):
+The `xr` dependency runs **BOTH ways** — `supplement.tex` needs `paper.aux` and
+`paper.tex` needs `supplement.aux` (the ~29 `\satab`/`\safig` cross-references).
+So the cycle must be run twice, paper → supplement → paper, and **the `.aux`
+files must survive between passes** (never clean between). Running only
+`paper → supplement` on a clean checkout is what makes every supplement
+reference print as `??` in paper.pdf:
 ```
 cd latex
-pdflatex paper; bibtex paper; pdflatex paper; pdflatex paper
-pdflatex supplement; bibtex supplement; pdflatex supplement; pdflatex supplement
+pdflatex paper; bibtex paper
+pdflatex supplement; bibtex supplement; pdflatex supplement
+pdflatex paper; pdflatex paper
+pdflatex supplement
 ```
+Verify with `grep -c "Reference .* undefined" paper.log` → must be 0.
 Supplement needs its OWN bibtex pass (cites holm1979 + benjamini1995 in App D).
 `paper.tex` \inputs `appendix.tex` (A model + B data) before the bibliography;
 the Supplemental Appendix is a separate document.
@@ -465,10 +499,48 @@ Two Proof Patrol reports (PDF in Downloads, "GPT Feedback") drove this round:
   1,455,272); tab_long_weekends Panel B got DOW/muni/year-month FE rows;
   tab09_health rebuilt hand-made in the tab_prelabor_lowrisk layout, in pp
   (14.14/11.73/−2.99/−0.53), with a Maternal-controls row; fig_two_margins note
-  no longer cites "column 4 of Table 1". `clean_etable_header()` in
+  no longer cites the fee table by column number. `clean_etable_header()` in
   `analysis/code/00_utils.R` (now part of `postprocess_tex()`) strips etable's
   "Dependent Variables:"/"Model:"/"\emph{Variables}"/"\emph{Fit statistics}"
   clutter from every etable table; applied to all 9 supplement etables.
+
+## The 2026-07-22 revision (Vinicius's requests + numbering audit)
+
+New script **`12_subgroups.R`** (runs BEFORE `11`, see the master), answering the
+three coauthor requests. All three came back *supporting* the mechanism, which is
+the opposite of the 2026-07-10 extensions:
+
+- **Robson-group profile → body Figure 3 panel (c).** Each sector's own weekend
+  gradient, estimated group by group (2014–2024). The for-profit *excess* dip is
+  concentrated in groups 1–4 (term, singleton, cephalic, no previous cesarean =
+  real discretion), vanishes in 6–9 (near-ceiling cesarean rates, no room for a
+  gradient), and is exactly zero in group 10 (preterm: −5.1 vs −5.2). Coefficients
+  cached slim in `analysis/output/robson_grad.rds`.
+- **Term vs preterm → supplement Table D.3.** Eq (3) differential −2.5pp term vs
+  +0.8pp preterm, difference +3.4pp (p<0.001). Much stronger than the old
+  Robson-10 "placebo" (p=0.18), which stays in `tab_mechanism_checks`.
+- **Maternal age → same table, Panels B–C.** Gradient concentrated among mothers
+  under 35 (−3.0 vs +1.3 overall; −5.0 vs −1.4 within Robson 1–2). ALWAYS report
+  with the ceiling caveat — the paper does not separate arithmetic compression
+  from a genuinely larger discretionary margin.
+
+**Answered directly (do not re-litigate):** there is no term/preterm split inside
+Robson 1–2, because those groups are DEFINED as ≥37 weeks and group 10 as ≤36.
+The term-vs-preterm contrast *is* Robson 1–2 vs Robson 10.
+
+**Exhibit-numbering audit (same day).** Every body table number in CLAUDE.md,
+README.md, and the script header comments was **off by one** (the map still
+assumed summary stats were body Table 1, but they moved to the supplement long
+ago), and several figure pointers named the wrong figure entirely
+(`01_descriptives` and `03_mechanisms` said the hour-of-birth and DOW panels feed
+Figure 2, they feed Figure 3; `05_cost` said the gestation panels are body Figure
+3, they are supplement Figure C.4). All corrected against `paper.aux`. The `.tex`
+sources were never affected — they use `\ref{}` throughout, so the compiled PDF
+was always right.
+
+**Compile-order bug found and documented.** `xr` runs both ways, so a
+paper→supplement-only pass leaves all ~29 `\satab`/`\safig` references as `??` in
+paper.pdf. See the Compile section for the corrected cycle.
 
 ## ACTION items for Fredie
 

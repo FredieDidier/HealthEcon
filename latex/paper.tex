@@ -26,8 +26,8 @@
 \captionsetup{font=small,labelfont=bf}
 \usepackage{rotating}
 \usepackage{xcolor}
-\definecolor{fenacorlink}{HTML}{1B7A3D}   % green for the Fenacor footnote link only
-\usepackage{hyperref}
+\definecolor{citegreen}{RGB}{0,120,60}    % house green, as in HomeOfficePNAD
+\usepackage[colorlinks=true,citecolor=citegreen,urlcolor=citegreen,linkcolor=citegreen]{hyperref}
 \usepackage{xr}                    % cross-reference the online Supplementary Appendix
 \externaldocument[]{supplement}    % resolves \ref{tab:...}/\ref{fig:...} to their C./D. numbers
 \newcommand{\satab}[1]{Supplementary Appendix Table~\ref{#1}}
@@ -49,8 +49,8 @@
 in Brazil}
 \author{Fredie Didier\textsuperscript{a,}\thanks{Corresponding author.
 E-mail: fdidier@terra.com.br.}
-\and Pablo Castro\textsuperscript{b}
 \and Vinicius Mendes\textsuperscript{b}
+\and Pablo Castro\textsuperscript{b}
 \and Lucas Emanuel\textsuperscript{b}}
 \date{}
 
@@ -62,8 +62,8 @@ E-mail: fdidier@terra.com.br.}
 \textsuperscript{a}\,Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa
 (IDP), Bras\'ilia, DF, Brazil\\
 \textsuperscript{b}\,Federal University of Bahia (UFBA), Salvador, BA, Brazil\\[2pt]
-E-mail addresses: fdidier@terra.com.br (F. Didier), pablocastro@ufba.br
-(P. Castro), vdmendes@ufba.br (V. Mendes), lucasemanuel@ufba.br (L. Emanuel).
+E-mail addresses: fdidier@terra.com.br (F. Didier), vdmendes@ufba.br
+(V. Mendes), pablocastro@ufba.br (P. Castro), lucasemanuel@ufba.br (L. Emanuel).
 \end{center}
 
 \begin{abstract}
@@ -207,7 +207,11 @@ before labor and slightly positive, at 1.7 points, for cesareans during labor, s
 surgery booked around the physician's calendar. It does not vanish among low-risk first-time
 mothers already in spontaneous labor, where the cesarean is intrapartum by
 definition; there it reflects weekend decision-making and selection rather than
-prelabor scheduling. Two extensions discipline the reading. Holidays that create
+prelabor scheduling. The same pattern appears across the clinical
+classification: the excess for-profit weekend gradient is concentrated in the
+term, singleton, cephalic pregnancies without a previous cesarean, where the
+delivery date is genuinely open, and the two sectors are indistinguishable among
+preterm births, whose date is not. Two extensions discipline the reading. Holidays that create
 a long weekend do not produce larger dips than genuinely isolated Wednesday
 holidays, and there is no bunching of prelabor cesareans in the days before a
 long block; instead, for-profit obstetric activity is depressed across the entire
@@ -377,7 +381,7 @@ model.
 % =============================================================================
 
 About a quarter of Brazilians hold private health
-insurance,\footnote{See \href{https://fenacor.org.br/noticias/ans-25-dos-brasileiros-tem-planos-de-saude}{\textcolor{fenacorlink}{Fenacor}}.}
+insurance,\footnote{See \href{https://fenacor.org.br/noticias/ans-25-dos-brasileiros-tem-planos-de-saude}{Fenacor}.}
 a parallel system
 of insurers and accredited hospitals regulated by the federal
 private-health-insurance authority, the National Supplementary Health Agency
@@ -761,7 +765,14 @@ do (\satab{tab:business_hours}).
 \caption{Calendar fingerprints of scheduled delivery}\label{fig:calendar}
 \fignotes{SINASC. Panel (a): cesarean rate by day of week and establishment
 sector, 2010--2024. Panel (b): share of births by hour of birth, by delivery mode
-and sector, 2010--2024.}
+and sector, 2010--2024. Panel (c): the weekend change in the cesarean rate,
+in percentage points, estimated separately within each Robson group for each
+sector from Equation~\eqref{eq:scheduling}, with 95 percent confidence intervals
+from standard errors two-way clustered by municipality and date; Robson groups
+are recorded from 2014, so panel (c) uses 2014--2024. Groups 1--2 are nulliparous
+term singleton cephalic pregnancies and group 5 is a previous cesarean, the
+groups in which delivery can be booked in advance; group 10 is preterm, which
+cannot.}
 \end{figure}
 
 \subsection{B. Where the dip lives: prelabor cesareans and low-risk births}
@@ -793,6 +804,26 @@ that the weekly calendar reaches even the births that scheduling cannot directly
 move. \safig{fig:robson_dow} plots the day-of-week profile within these low-risk
 groups, and \satab{tab:robson_validation} reports the formal Robson-group
 validation.
+
+Panel (c) of Figure~\ref{fig:calendar} extends the exercise to the full Robson
+classification, estimating each sector's own weekend gradient separately within
+every group. The for-profit gradient is steepest, and clearly steeper than the
+public one, in groups 1 through 4: term singleton cephalic pregnancies without a
+previous cesarean, the deliveries in which the choice between labor and surgery
+is genuinely open. The for-profit dip there runs from 5.2 to 9.1 percentage
+points against 3.0 to 4.2 points in the public sector. It is small in groups 6
+through 9, breech, multiple, and abnormal-lie pregnancies, where the cesarean
+rate is close to its ceiling in both sectors and little room for a gradient
+remains. In group 10, preterm delivery, the two sectors are statistically
+indistinguishable, at 5.1 and 5.2 points. The excess weekend gradient of the
+for-profit sector is therefore concentrated in the groups whose delivery date can
+be chosen in advance, and absent in the group whose date cannot. We read this as
+corroboration rather than as a placebo: Robson group membership is partly
+determined by the same decisions we are studying, and preterm delivery is not
+synonymous with unschedulable delivery.
+\satab{tab:subgroup_gradients} reports the same contrast in the form of
+Equation~\eqref{eq:gradient}, splitting births at 37 completed weeks, and adds a
+split by maternal age.
 
 \input{../analysis/output/tables/tab_prelabor_lowrisk.tex}
 
@@ -1110,8 +1141,8 @@ elsewhere is an empirical question our data cannot settle for other countries.
 % a draft allocation and the journal requires it to be accurate.
 \textbf{Fredie Didier:} Conceptualization, Methodology, Software, Formal
 analysis, Data curation, Writing -- original draft, Writing -- review \&
-editing. \textbf{Pablo Castro:} Conceptualization, Methodology, Writing --
-review \& editing. \textbf{Vinicius Mendes:} Conceptualization, Methodology,
+editing. \textbf{Vinicius Mendes:} Conceptualization, Methodology, Writing --
+review \& editing. \textbf{Pablo Castro:} Conceptualization, Methodology,
 Writing -- review \& editing. \textbf{Lucas Emanuel:} Conceptualization,
 Methodology, Writing -- review \& editing.
 

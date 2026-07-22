@@ -1,0 +1,86 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{The for-profit calendar gradient by gestational age and maternal age}}
+\label{tab:subgroup_gradients}
+\small\setlength{\tabcolsep}{4pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+ & (1) & (2) & (3) & (4) \\
+\midrule
+\multicolumn{5}{l}{\emph{Panel A. Gestational age at birth}} \\
+\addlinespace[2pt]
+ & All births & Term & Preterm & Preterm \\
+ &  & ($\geq$37 weeks) & ($<$37 weeks) & $-$ term \\
+\addlinespace[3pt]
+For-profit $\times$ Weekend & -2.294$^{***}$ & -2.549$^{***}$ & 0.822 & 3.371$^{***}$ \\
+ & (0.673) & (0.648) & (0.769) & (0.451) \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -2.851$^{***}$ & -3.177$^{***}$ & 0.532 & 3.709$^{***}$ \\
+ & (0.494) & (0.502) & (0.893) & (0.729) \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -1.050$^{***}$ & -1.063$^{***}$ & -1.002$^{***}$ & 0.061 \\
+ & (0.348) & (0.384) & (0.323) & (0.309) \\
+\addlinespace[2pt]
+\midrule
+Observations & 4,935,489 & 4,169,856 & 1,228,894 & 5,398,750 \\
+\midrule
+\multicolumn{5}{l}{\emph{Panel B. Maternal age, all births}} \\
+\addlinespace[2pt]
+ & All births & Under 35 & 35 or older & 35+ \\
+ &  &  &  & $-$ under 35 \\
+\addlinespace[3pt]
+For-profit $\times$ Weekend & -2.294$^{***}$ & -3.043$^{***}$ & 1.276 & 4.319$^{***}$ \\
+ & (0.673) & (0.600) & (1.040) & (0.590) \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -2.851$^{***}$ & -3.211$^{***}$ & -0.806 & 2.406$^{***}$ \\
+ & (0.494) & (0.499) & (0.650) & (0.469) \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -1.050$^{***}$ & -1.108$^{***}$ & -1.097$^{***}$ & 0.011 \\
+ & (0.348) & (0.358) & (0.345) & (0.139) \\
+\addlinespace[2pt]
+\midrule
+Observations & 4,935,455 & 4,715,435 & 1,526,589 & 6,242,024 \\
+\midrule
+\multicolumn{5}{l}{\emph{Panel C. Maternal age, low-risk births (Robson groups 1--2)}} \\
+\addlinespace[2pt]
+ & All Robson 1--2 & Under 35 & 35 or older & 35+ \\
+ &  &  &  & $-$ under 35 \\
+\addlinespace[3pt]
+For-profit $\times$ Weekend & -4.650$^{***}$ & -4.950$^{***}$ & -1.384 & 3.566$^{***}$ \\
+ & (0.484) & (0.456) & (1.002) & (0.852) \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -3.994$^{***}$ & -4.028$^{***}$ & -3.870$^{*}$ & 0.158 \\
+ & (0.646) & (0.663) & (2.260) & (2.314) \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -1.448$^{***}$ & -1.502$^{***}$ & -1.253 & 0.248 \\
+ & (0.513) & (0.526) & (0.802) & (0.656) \\
+\addlinespace[2pt]
+\midrule
+Observations & 1,972,141 & 1,928,638 & 247,121 & 2,175,759 \\
+\midrule
+Municipality $\times$ date fixed effects & Yes & Yes & Yes & Yes \\
+Sample & \multicolumn{3}{c}{2010--2024 (Panel C: 2014--2024)} & \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;
+coefficients in percentage points. Every column estimates the for-profit
+differential of Equation~\eqref{eq:gradient}. Columns 2--3 fit it separately
+within each subgroup; column 4 reports the interaction of each term with the
+subgroup indicator, estimated jointly with municipality$\times$date$\times$subgroup
+and municipality$\times$sector$\times$subgroup fixed effects, and is the formal
+test that the two subgroups share a gradient. Panel A splits births at 37
+completed weeks. Gestational age at birth is partly an outcome of the scheduling
+we study, so Panel A is a heuristic falsification test rather than a clean
+placebo, and preterm delivery is not synonymous with unschedulable delivery.
+Maternal age in Panels B and C is predetermined. Panel C restricts to Robson
+groups 1--2 (nulliparous, term, singleton, cephalic), the births least likely to
+require surgery; Robson groups are recorded from 2014. These are exploratory
+subgroup splits and are not among the pre-specified hypothesis families of
+Table~\ref{tab:multiple_testing}. Standard errors, two-way clustered by
+municipality and date, are in parentheses.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
+\end{table}

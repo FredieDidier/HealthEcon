@@ -14,6 +14,11 @@
 #   fig_calendar_fingerprints.pdf  (Figure 3)
 #     (a) cesarean rate by day of week and sector          [was fig02]
 #     (b) hour-of-birth distribution by delivery mode      [was fig07]
+#     (c) weekend gradient by Robson group and sector      [coefficients from 12]
+#
+# Panel (c) reads analysis/output/robson_grad.rds, the slim coefficient table
+# saved by 12_subgroups.R, so RUN 12 BEFORE 11. If the file is absent the panel
+# is skipped and the figure falls back to its two-panel layout.
 #
 # The gestational-age panels (fig_gestation_panels.pdf) are built here but now live
 # in the Supplementary Appendix. The bridge-holiday displacement event study, which
@@ -112,7 +117,7 @@ pb <- ggplot(gd, aes(margin, b, colour = series, group = series)) +
                                      margin = ggplot2::margin(b = 8)))
 
 # --- panel (a): price margin binscatter --------------------------------------
-# Matches Table 2, Panel A, column 4: the private-insurance cesarean rate on the
+# Matches Table 1, Panel A, column 4: the private-insurance cesarean rate on the
 # log economic fee gap, municipality and year fixed effects plus the municipal
 # controls (log GDP per capita, plan coverage, prenatal care, obstetrician
 # density), weighted by deliveries. The binscatter partials the controls and the
@@ -201,9 +206,37 @@ pb3 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
                                      margin = ggplot2::margin(b = 8)))
 rm(b, hd); gc()
 
-fig3 <- pa3 | pb3
-ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.pdf"), fig3, width = 11, height = 4.4)
-ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.png"), fig3, width = 11, height = 4.4, dpi = 300)
+# --- panel (c): weekend gradient by Robson group ------------------------------
+# The dip should track schedulability: large in the nulliparous term groups (1-2)
+# and in the previous-cesarean group (5), small in the preterm group (10).
+# Coefficients come from 12_subgroups.R; skip the panel if it has not been run.
+RG <- file.path(AOUT, "robson_grad.rds")
+if (file.exists(RG)) {
+  rg <- as.data.table(readRDS(RG))[!is.na(b)]
+  rg[, `:=`(sector = sector_display(sector, c("Private", "Public")),
+            g = factor(as.integer(robson), levels = 1:10))]
+  pc3 <- ggplot(rg, aes(g, b, colour = sector, group = sector)) +
+    geom_hline(yintercept = 0, colour = "grey40", linewidth = 0.3) +
+    geom_errorbar(aes(ymin = b - 1.96 * se, ymax = b + 1.96 * se), width = 0.18,
+                  position = position_dodge(width = 0.45), linewidth = 0.5) +
+    geom_point(aes(shape = sector), position = position_dodge(width = 0.45), size = 2.2) +
+    scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]),
+                                   Public = unname(PAL["blue"]))) +
+    scale_shape_manual(values = c(`For-profit` = 17, Public = 16)) +
+    labs(x = "Robson group", y = "Weekend change in cesarean rate (pp)",
+         subtitle = "(c) Weekend gradient by Robson group") +
+    theme_paper(base = 12) +
+    theme(plot.subtitle = element_text(size = 11, face = "bold",
+                                       margin = ggplot2::margin(b = 8)))
+  fig3 <- pa3 | pb3 | pc3
+  fw <- 15
+} else {
+  message("11: robson_grad.rds not found — run 12_subgroups.R for Figure 3 panel (c).")
+  fig3 <- pa3 | pb3
+  fw <- 11
+}
+ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.pdf"), fig3, width = fw, height = 4.4)
+ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.png"), fig3, width = fw, height = 4.4, dpi = 300)
 
 # =============================================================================
 # Gestational-age panels (Supplementary Appendix figure)

@@ -4,14 +4,14 @@
 # WHAT THIS SCRIPT DOES. Four self-contained blocks that build the mechanism
 # evidence:
 #   1. Calendar sorting (Eq. 2): cesareans cluster on weekdays and dip on
-#      weekends/holidays, more so for-profit. -> fig02_dow_cesarean (body Fig 2a).
+#      weekends/holidays, more so for-profit. -> fig02_dow_cesarean (body Fig 3a).
 #   2. Low-risk restriction (Robson 1-2): the dip survives among births least
 #      likely to need a cesarean. -> fig03_robson_dow (Supplement).
 #   3. Mechanism checks: prelabor vs in-labor split, daily counts, Robson-10
 #      "placebo". -> tab08_mechanism_checks + fig08_daily_counts (Supplement),
-#      and the body table tab_prelabor_lowrisk (Table 5).
+#      and the body table tab_prelabor_lowrisk (Table 3).
 #   4. Quantification: Kitagawa decomposition + excess weekday cesareans.
-#      -> tab11_decomposition (body, Table 7).
+#      -> tab11_decomposition (body, Table 6).
 #
 # LABELING (hold everywhere). The weekend/holiday gradients are CALENDAR SORTING
 # of deliveries, NOT the causal effect of a random weekend (the observed date is
@@ -24,7 +24,7 @@
 # Using SINASC (all Brazilian births, exact date), cesarean rates cluster on
 # weekdays and dip on weekends and holidays; the dip is larger for-profit.
 # Movable national holidays are Easter-based; "eve of rest day" captures the
-# Friday / day-before-holiday pull-forward. Feeds body Figure 2(a) (via 11) and
+# Friday / day-before-holiday pull-forward. Feeds body Figure 3(a) (via 11) and
 # the per-sector gradients shown in tab_main_gradient Panel B (built in 07).
 # =============================================================================
 
@@ -123,7 +123,7 @@ message("03_mechanisms.R: Block 1 (calendar sorting) done")
 # births where a cesarean is least likely to be medically necessary. If even
 # these cluster on weekdays / dip on weekends, the driver is scheduling, not need.
 #   fig03_robson_dow (Supplement); the low-risk dips also feed the body table
-#   tab_prelabor_lowrisk (Table 5), assembled at the end of Block 3.
+#   tab_prelabor_lowrisk (Table 3), assembled at the end of Block 3.
 #
 # REQUIRES the birth-level SINASC file sinasc_births.parquet (run the SINASC pull
 # + ingest_sinasc() in build/01b_sinasc_cnes.R). Skips gracefully if not built.
@@ -176,7 +176,7 @@ if (!file.exists(BIRTHS)) {
   dict <- c(rate = "Cesarean rate", weekend = "Weekend",
             muni = "Municipality", year = "Year")
   # The low-risk Robson weekend dips are reported in the body table
-  # tab_prelabor_lowrisk (Table 5); the standalone tab04_robson exhibit was retired.
+  # tab_prelabor_lowrisk (Table 3); the standalone tab04_robson exhibit was retired.
   etable(r12_pub, r12_priv, r1_priv, dict = dict, fitstat = ~ n + r2, digits = 4)
 
   message("03_mechanisms.R: Block 2 (low-risk Robson) done")
@@ -197,7 +197,7 @@ if (!file.exists(BIRTHS)) {
 #       schedule -> smaller weekend dip. NB this is NOT a clean placebo (the
 #       interaction is only p=0.18); it lives in the Supplement, so noted.
 # Outputs: tab08_mechanism_checks + fig08_daily_counts (Supplement). This block
-# also assembles the body table tab_prelabor_lowrisk (Table 5) at the end.
+# also assembles the body table tab_prelabor_lowrisk (Table 3) at the end.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -280,11 +280,11 @@ fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
 save_fig(fig8, "fig08_daily_counts", width = 9, height = 4.8)
 
 # =============================================================================
-# ASSEMBLE the body table (Table 5, tab_prelabor_lowrisk) — where the weekend
+# ASSEMBLE the body table (Table 3, tab_prelabor_lowrisk) — where the weekend
 # dip lives. Merges the prelabor/in-labor split (cols 1-4) with the low-risk
 # Robson restriction (cols 5-6), the two pieces of evidence that locate the
 # mechanism. Requires r1_priv from Block 2, so guarded by exists().
-#   -> analysis/output/tables/tab_prelabor_lowrisk.tex  (BODY, Table 5)
+#   -> analysis/output/tables/tab_prelabor_lowrisk.tex  (BODY, Table 3)
 # =============================================================================
 if (exists("r1_priv")) {
   MECH <- list(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, r1_priv)
@@ -333,7 +333,7 @@ message("03_mechanisms.R: Block 3 (mechanism checks) done")
 #       sector-year's weekend cesarean propensity as the "unscheduled" rate and
 #       count weekday cesareans above it (~50k/yr for-profit). A MECHANICAL
 #       benchmark, not the number of cesareans caused by scheduling.
-#   -> tab11_decomposition (body, Table 7) + headline numbers printed for the text.
+#   -> tab11_decomposition (body, Table 6) + headline numbers printed for the text.
 # =============================================================================
 
 source(here::here("config", "config.R"))

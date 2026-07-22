@@ -1,5 +1,5 @@
 # =============================================================================
-# 02_regressions.R — the PRICE CHANNEL (Section 4A / Table 2, tab_fees).
+# 02_regressions.R — the PRICE CHANNEL (Section 4A / Table 1, tab_fees).
 #
 # WHAT THIS SCRIPT DOES. Tests whether relative fees explain the cesarean rate,
 # and builds the merged body fee table (tab_fees) with two panels:
@@ -119,11 +119,11 @@ etable(m_fd, m_lvl, dict = dict, fitstat = ~ n + r2, digits = 4)
 message("02_regressions.R: Panel B (fee-shock first difference) done")
 
 # =============================================================================
-# ASSEMBLE the body fee table (Table 2, tab_fees) — the fee evidence in one
+# ASSEMBLE the body fee table (Table 1, tab_fees) — the fee evidence in one
 # exhibit. Panel A = Equation (1) across municipality-years (models m1-m4);
 # Panel B = the state-year first-difference falsification (m_fd, m_lvl, wild_p).
 # Hand-built two-panel booktabs table because the panels use different units.
-#   -> analysis/output/tables/tab_fees.tex  (BODY, Table 2)
+#   -> analysis/output/tables/tab_fees.tex  (BODY, Table 1)
 # =============================================================================
 LEVELS <- list(m1, m2, m3, m4)
 tex <- c(

@@ -27,7 +27,7 @@
 # Columns 4-5 use 2012-2024, the years in which the before/during-labor indicator
 # is recorded for more than 85 percent of cesareans.
 #
-#   -> tab_main_gradient.tex  (BODY, Table 3)
+#   -> tab_main_gradient.tex  (BODY, Table 2)
 # =============================================================================
 
 source(here::here("config", "config.R"))

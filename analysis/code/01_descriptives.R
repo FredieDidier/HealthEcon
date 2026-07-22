@@ -5,10 +5,10 @@
 # utils and its own data), producing:
 #   1. Figure 1 (body): cesarean rate by sector over time (TISS private-insurance
 #      claims, SINASC for-profit establishments, SINASC public births).
-#   2. Table 1 (moved to the Supplemental Appendix): municipality-year summary
-#      statistics; the body only cites it.
+#   2. Summary statistics (moved to the Supplemental Appendix, Table C.1):
+#      municipality-year statistics; the body only cites them.
 #   3. Hour-of-birth fingerprint and the business-hours table (Supplement); the
-#      hour-of-birth panel is also re-drawn merged into body Figure 2 by
+#      hour-of-birth panel is also re-drawn merged into body Figure 3(b) by
 #      11_body_figures.R.
 #   4. Municipal choropleth maps of the cesarean share (Supplement).
 #
@@ -69,7 +69,7 @@ fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
 save_fig(fig1, "fig01_csection_trend", width = 9, height = 5.4)
 
 # =============================================================================
-# BLOCK 2 — Table 1 (Supplement): municipality-year summary statistics.
+# BLOCK 2 — summary statistics (Supplement, Table C.1): municipality-year.
 # One row per municipality-year; the body cites this table but prints it in the
 # Supplemental Appendix. Fees, rates, ICU use, obstetrician density, covariates.
 # =============================================================================
@@ -122,12 +122,12 @@ print(desc)
 message("01_descriptives.R done")
 
 # =============================================================================
-# BLOCK 3 — the within-day fingerprint: hour of birth (Supplement + body Fig 2b).
+# BLOCK 3 — the within-day fingerprint: hour of birth (Supplement + body Fig 3b).
 # If cesareans are scheduled around the physician's agenda, for-profit cesareans
 # should bunch in business hours (morning block) while vaginal births spread
 # around the clock (labor onset is uniform over the hour). SINASC records the
 # exact time of birth (hora_nascimento, "HH:MM:SS").
-#   fig07_hour_of_birth  — re-drawn into body Figure 2(b) by 11_body_figures.R
+#   fig07_hour_of_birth  — re-drawn into body Figure 3(b) by 11_body_figures.R
 #   tab07_business_hours — Supplement (business-hours share vs uniform benchmark)
 # =============================================================================
 

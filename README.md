@@ -1,7 +1,7 @@
 # Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean Delivery in Brazil — Replication Package
 
 **Authors:** Fredie Didier (IDP; corresponding author, fdidier@terra.com.br),
-Pablo Castro (UFBA, pablocastro@ufba.br), Vinicius Mendes (UFBA, vdmendes@ufba.br),
+Vinicius Mendes (UFBA, vdmendes@ufba.br), Pablo Castro (UFBA, pablocastro@ufba.br),
 Lucas Emanuel (UFBA, lucasemanuel@ufba.br)
 
 ## Repository layout
@@ -24,7 +24,8 @@ analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
                         #   08_long_weekends.R       (holiday taxonomy + displacement)
                         #   09_org_capacity.R        (establishment-capacity heterogeneity)
                         #   10_supplement.R          (Supplemental Appendix exhibits)
-                        #   11_body_figures.R        (merged multi-panel body figures)
+                        #   12_subgroups.R           (Robson / gestational-age / maternal-age splits)
+                        #   11_body_figures.R        (merged multi-panel body figures; needs 12)
 analysis/output/        # tables/, graphs/, maps/ (committed)
 latex/                  # paper.tex, model.tex (Appendix A), appendix.tex (A+B),
                         #   sup_appendix.tex (shared body of Appendices C+D),
@@ -174,23 +175,26 @@ run individually. **Order matters at the tail:** `07`/`08`/`09` each save a
 hypothesis family (`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R`
 reads for the multiple-testing table; run them in numeric order. `08` also builds
 `graphs/fig_long_weekend_event`, the displacement event study now shown in the
-Supplementary Appendix.
+Supplementary Appendix. `12_subgroups.R` runs **before** `11` despite its number:
+it saves `analysis/output/robson_grad.rds`, the coefficients `11` draws as panel
+(c) of Figure 3.
 
 Body exhibits are **bold**. Everything else is Supplemental Appendix.
 
 | Script (`analysis/code/`) | Paper exhibit(s) | Output file(s) in `analysis/output/` |
 |---|---|---|
 | `01_descriptives.R` | **Figure 1** | `graphs/fig01_csection_trend`; `graphs/fig07_hour_of_birth`; `maps/map01_csection_all`, `maps/map02_csection_private`; `tables/tab01_descriptives.tex`, `tables/tab07_business_hours.tex` |
-| `02_regressions.R` | **Table 2** | `tables/tab_fees.tex` |
-| `03_mechanisms.R` | **Table 5, Table 7** | `tables/tab_prelabor_lowrisk.tex`, `tables/tab11_decomposition.tex`, `tables/tab08_mechanism_checks.tex`; `graphs/fig02_dow_cesarean`, `graphs/fig03_robson_dow`, `graphs/fig08_daily_counts` |
+| `02_regressions.R` | **Table 1** | `tables/tab_fees.tex` |
+| `03_mechanisms.R` | **Table 3, Table 6** | `tables/tab_prelabor_lowrisk.tex`, `tables/tab11_decomposition.tex`, `tables/tab08_mechanism_checks.tex`; `graphs/fig02_dow_cesarean`, `graphs/fig03_robson_dow`, `graphs/fig08_daily_counts` |
 | `04_heterogeneity.R` | (supplement) | `tables/tab10_heterogeneity.tex`, `tables/tab10b_modality.tex` |
-| `05_cost.R` | **Table 6** | `tables/tab09_health.tex`; `tables/tab12_cost.tex`; `graphs/fig09_gestation`, `graphs/fig09b_gestation_by_timing` |
+| `05_cost.R` | **Table 5** | `tables/tab09_health.tex`; `tables/tab12_cost.tex`; `graphs/fig09_gestation`, `graphs/fig09b_gestation_by_timing` |
 | `06_robustness.R` | (supplement) | `tables/tab13_referee_robustness.tex`, `tab13c_dip_by_region_period.tex`, `tab14_neonatal_suggestive.tex`, `tab15_permutation.tex`, `tab15b_no_indication.tex`; `graphs/fig05_rn368_timeline` |
-| `07_main_specification.R` | **Table 3** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
+| `07_main_specification.R` | **Table 2** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
-| `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth), `graphs/fig_gestation_panels` (Supplementary Appendix) |
+| `12_subgroups.R` | (supplement) | `tables/tab_subgroup_gradients.tex` (gestational-age + maternal-age splits of Equation 3), `graphs/fig_robson_gradient`, `robson_grad.rds` (feeds **Figure 3** panel c) |
+| `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth + Robson gradient), `graphs/fig_gestation_panels` (Supplementary Appendix) |
 
 Figures are written as both `.pdf` and `.png`. The LaTeX in `latex/` `\input`s the
 `.tex` tables and `\includegraphics`es the `.pdf` figures to produce `paper.pdf`

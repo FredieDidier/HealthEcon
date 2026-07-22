@@ -19,7 +19,9 @@
 \usepackage{caption}
 \captionsetup{font=small,labelfont=bf}
 \usepackage{rotating}
-\usepackage{hyperref}
+\usepackage{xcolor}
+\definecolor{citegreen}{RGB}{0,120,60}    % house green, as in HomeOfficePNAD
+\usepackage[colorlinks=true,citecolor=citegreen,urlcolor=citegreen,linkcolor=citegreen]{hyperref}
 \usepackage{xr}                 % external cross-references to the main paper
 \externaldocument{paper}        % resolves \eqref{eq:...} and \ref{tab:...} etc.
 
