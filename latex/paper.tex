@@ -1181,10 +1181,14 @@ source data, and take full responsibility for the content of the published
 article.
 
 % =============================================================================
-% Essential appendices (A model, B data) precede the references, per AEA layout.
-% The Supplementary Appendix (additional results and robustness) is a separate
-% document, latex/supplement.tex, submitted as online supplementary material.
+% References come before the appendices, per the Elsevier/JHE layout. The
+% essential appendices (A model, B data) follow; the Supplementary Appendix
+% (additional results and robustness) is a separate document,
+% latex/supplement.tex, submitted as online supplementary material.
 % =============================================================================
+\bibliographystyle{plainnat-rev}
+\bibliography{refs}
+
 \appendix
 % Number appendix tables/figures by their appendix section (A.1, B.1 ...),
 % so a cross-reference makes clear which appendix an exhibit lives in.
@@ -1192,8 +1196,5 @@ article.
 \numberwithin{figure}{section}
 
 \input{appendix}       % Appendix A (model) + Appendix B (data & variables)
-
-\bibliographystyle{plainnat-rev}
-\bibliography{refs}
 
 \end{document}

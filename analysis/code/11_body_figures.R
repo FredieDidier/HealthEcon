@@ -31,6 +31,17 @@ if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(data.table, arrow, fixest, ggplot2, patchwork, here)
 source(here::here("analysis", "code", "00_utils.R"))
 
+# Panel titles for the merged figures. theme_paper() blanks plot.subtitle, so an
+# element_text() override inherits vjust = 0.5 from `text` and the title floats
+# in the middle of whatever vertical space patchwork allots the title row --
+# which is padded to the tallest panel and therefore leaves a panel whose plot
+# needs less headroom with its title drifting up, away from its own axes. Anchor
+# it to the top (vjust = 1) so every panel title sits the same distance above
+# its panel.
+panel_title <- ggplot2::theme(
+  plot.subtitle = ggplot2::element_text(size = 11, face = "bold", hjust = 0.5,
+                                        vjust = 1, margin = ggplot2::margin(b = 8)))
+
 SIN  <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 WFO  <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
 AOUT <- here::here("analysis", "output")
@@ -112,9 +123,7 @@ pb <- ggplot(gd, aes(margin, b, colour = series, group = series)) +
   scale_shape_manual(values = c(Public = 16, `For-profit` = 17, `For-profit differential` = 15)) +
   labs(x = NULL, y = "Change in cesarean rate (pp)",
        subtitle = "(b) The scheduling margin: weekend and holiday gradients") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(b = 8)))
+  theme_paper(base = 12) + panel_title
 
 # --- panel (a): price margin binscatter --------------------------------------
 # Matches Table 1, Panel A, column 4: the private-insurance cesarean rate on the
@@ -155,9 +164,7 @@ pa <- ggplot() +
   labs(x = "Relative fee, cesarean vs vaginal (log)",
        y = "Private-insurance cesarean rate (%)",
        subtitle = "(a) The price margin: fees and the cesarean rate") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(b = 8)))
+  theme_paper(base = 12) + panel_title
 rm(w, wb); gc()
 
 fig2 <- pa | pb
@@ -180,9 +187,7 @@ pa3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)
                                  Public = unname(PAL["blue"]))) +
   scale_y_continuous(breaks = seq(30, 90, 10)) +
   labs(x = NULL, y = "Cesarean rate (%)", subtitle = "(a) Cesarean rate by day of week") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(t = 18, b = 8)))
+  theme_paper(base = 12) + panel_title
 rm(sd, dsec); gc()
 
 # --- panel (b): hour-of-birth distribution, for-profit vs public -------------
@@ -195,15 +200,17 @@ b[, `:=`(type = fifelse(cesarean == 1, "Cesarean", "Vaginal"),
          sector = sector_display(sector, c("Private", "Public")))]
 hd <- b[, .N, by = .(sector, type, hour)]
 hd[, share := N / sum(N), by = .(sector, type)]
+# The sector strips go BELOW the panel: a strip above it would push this panel's
+# title up relative to the unfaceted panels (a) and (c), which is exactly the
+# asymmetry the shared `panel_title` element is there to avoid. The x-axis title
+# is dropped because the panel title already names the axis.
 pb3 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
   geom_line(linewidth = 0.9) +
-  facet_wrap(~sector) +
+  facet_wrap(~sector, strip.position = "bottom") +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]), Vaginal = unname(PAL["blue"]))) +
   scale_x_continuous(breaks = seq(0, 24, 6)) +
-  labs(x = "Hour of birth", y = "Share of births (%)", subtitle = "(b) Hour of birth") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(b = 8)))
+  labs(x = NULL, y = "Share of births (%)", subtitle = "(b) Hour of birth") +
+  theme_paper(base = 12) + panel_title + theme(strip.placement = "outside")
 rm(b, hd); gc()
 
 # --- panel (c): weekend gradient by Robson group ------------------------------
@@ -225,9 +232,7 @@ if (file.exists(RG)) {
     scale_shape_manual(values = c(`For-profit` = 17, Public = 16)) +
     labs(x = "Robson group", y = "Weekend change in cesarean rate (pp)",
          subtitle = "(c) Weekend gradient by Robson group") +
-    theme_paper(base = 12) +
-    theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                       margin = ggplot2::margin(b = 8)))
+    theme_paper(base = 12) + panel_title
   fig3 <- pa3 | pb3 | pc3
   fw <- 15
 } else {

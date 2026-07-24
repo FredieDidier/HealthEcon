@@ -386,8 +386,9 @@ pdflatex supplement
 ```
 Verify with `grep -c "Reference .* undefined" paper.log` → must be 0.
 Supplement needs its OWN bibtex pass (cites holm1979 + benjamini1995 in App D).
-`paper.tex` \inputs `appendix.tex` (A model + B data) before the bibliography;
-the Supplemental Appendix is a separate document.
+`paper.tex` puts the bibliography FIRST and \inputs `appendix.tex` (A model +
+B data) after it, per the Elsevier/JHE layout (changed 2026-07-24); the
+Supplemental Appendix is a separate document.
 
 ## Conventions
 
