@@ -399,6 +399,18 @@ Supplemental Appendix is a separate document.
   `save_fig()`. **Never `scale_y_continuous(limits=)`** — it silently drops
   out-of-range points; use `breaks` or `coord_cartesian`. Multi-panel body figures
   use `patchwork`.
+- **Figure size = printed size (`FIG_WIDTH = 6.5` in `analysis/code/00_utils.R`).**
+  Both documents are 12pt `article` with 1in margins, so the text block is exactly
+  6.5in and every ggplot figure is included at `width=\textwidth` (the maps at
+  `0.8\textwidth` = 5.2in, and `save_map()` matches). Saving wider than the printed
+  width makes `\includegraphics` scale the figure DOWN and the type with it: before
+  2026-07-27 Figure 3 was saved 15in wide and printed at 6.5in, rendering its 10pt
+  labels at 4.3pt. `theme_paper(base = 10)` then means exactly 10pt on the page.
+  **Never widen a `\textwidth` figure past 6.5in — add a row instead of a column**
+  (this is why Figure 3 is `(a|b)/c` and supplement Figure D.1 is 2x2), and keep a
+  half-width panel's subtitle under ~35 characters and its legend to items that fit
+  in 3.25in (wrap with `guide_legend(nrow=)`/`ncol=`, or collect the guides when
+  only one panel has a legend, as Figure 2 does).
 - Tables via `etable` + `dict` (full names, never abbreviate; always `dict` the
   outcome). For hand-built multi-panel tables use `tex_row`/`tex_coef`/`tex_nobs`
   from `00_utils.R`. `postprocess_tex()` (booktabs + shrink-only `\resizebox`);

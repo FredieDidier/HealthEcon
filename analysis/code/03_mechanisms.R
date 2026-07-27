@@ -277,7 +277,7 @@ fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
                                  Vaginal = unname(PAL["blue"]))) +
   labs(x = NULL, y = "Mean daily births (Tuesday = 100)") +
   theme_paper()
-save_fig(fig8, "fig08_daily_counts", width = 9, height = 4.8)
+save_fig(fig8, "fig08_daily_counts", height = 3.8)
 
 # =============================================================================
 # ASSEMBLE the body table (Table 3, tab_prelabor_lowrisk) — where the weekend

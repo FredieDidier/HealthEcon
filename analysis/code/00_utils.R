@@ -33,27 +33,47 @@ sector_display <- function(x, levels = SECTOR_LEVELS) {
          levels = unname(SECTOR_DISPLAY[levels]))
 }
 
-theme_paper <- function(base = 14) {
+# ---------------------------------------------------------------------------
+# FIGURE GEOMETRY — save at the size the figure is PRINTED at.
+#
+# paper.tex and supplement.tex are 12pt article with 1in margins, so the text
+# block is exactly 6.5in wide and every figure is included at \textwidth. A
+# figure saved wider than that is scaled DOWN by \includegraphics, and the
+# scaling hits the type: a figure saved at 15in and printed at 6.5in renders its
+# 10pt axis labels at 4.3pt on the page, which is what made Figures 2 and 3
+# unreadable before 2026-07-27. Saving at FIG_WIDTH puts the PDF on the page at
+# scale 1, so a point in the figure is a point on the page and the `base` size
+# below is literally the size the reader sees. NEVER save a \textwidth figure
+# wider than FIG_WIDTH: add a row instead of a column.
+# ---------------------------------------------------------------------------
+FIG_WIDTH <- 6.5
+
+theme_paper <- function(base = 10) {
   ggplot2::theme_bw(base_size = base) +
     ggplot2::theme(
       legend.position    = "bottom",
       legend.title       = ggplot2::element_blank(),
-      legend.text        = ggplot2::element_text(size = base - 2),
-      legend.key.width   = ggplot2::unit(1.1, "cm"),
+      legend.text        = ggplot2::element_text(size = base),
+      legend.key.width   = ggplot2::unit(0.9, "cm"),
+      legend.margin      = ggplot2::margin(t = 0, b = 0),
+      legend.box.spacing = ggplot2::unit(5, "pt"),
       panel.grid.minor   = ggplot2::element_blank(),
       panel.grid.major   = ggplot2::element_line(colour = "grey92"),
-      axis.text          = ggplot2::element_text(size = base - 2),
-      axis.title         = ggplot2::element_text(size = base - 1),
-      strip.text         = ggplot2::element_text(size = base - 1, face = "bold"),
+      axis.text          = ggplot2::element_text(size = base - 1),
+      axis.title         = ggplot2::element_text(size = base),
+      strip.text         = ggplot2::element_text(size = base, face = "bold"),
       strip.background   = ggplot2::element_rect(fill = "grey94", colour = NA),
       plot.title         = ggplot2::element_blank(),
       plot.subtitle      = ggplot2::element_blank(),
-      plot.caption       = ggplot2::element_blank()
+      plot.caption       = ggplot2::element_blank(),
+      plot.margin        = ggplot2::margin(2, 4, 2, 2)
     )
 }
 
-# Save a figure as both PDF and PNG (300 dpi), the repo convention.
-save_fig <- function(plot, name, width = 8, height = 5) {
+# Save a figure as both PDF and PNG (300 dpi), the repo convention. The default
+# width is the printed width (see FIG_WIDTH above); only override it for a figure
+# that is included at less than \textwidth, and then pass the printed width.
+save_fig <- function(plot, name, width = FIG_WIDTH, height = 4) {
   d <- here::here("analysis", "output", "graphs")
   ggplot2::ggsave(file.path(d, paste0(name, ".pdf")), plot, width = width, height = height)
   ggplot2::ggsave(file.path(d, paste0(name, ".png")), plot, width = width, height = height, dpi = 300)

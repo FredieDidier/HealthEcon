@@ -314,11 +314,16 @@ fig_evt <- ggplot(evt_coefs[block == "Bridge"], aes(ell, b)) +
   geom_errorbar(aes(ymin = b - 1.96 * se, ymax = b + 1.96 * se), width = 0.12,
                 colour = unname(PAL["red"]), linewidth = 0.4) +
   geom_point(colour = unname(PAL["red"]), size = 1.6) +
-  facet_wrap(~ outcome, scales = "free_y", nrow = 1) +
+  # 2x2 rather than a single row: at the printed width of 6.5in four panels in a
+  # row leave 1.5in each, too narrow for the nine event-time tick labels.
+  facet_wrap(~ outcome, scales = "free_y", nrow = 2) +
   scale_x_continuous(breaks = -4:4) +
-  labs(x = "Days relative to the holiday", y = "For-profit minus public (births per municipality-day)") +
+  # The axis title is wrapped over two lines: as one line it is longer than the
+  # panel is tall, and ggplot clips it at both ends rather than shrinking it.
+  labs(x = "Days relative to the holiday",
+       y = "For-profit minus public\n(births per municipality-day)") +
   theme_paper()
-save_fig(fig_evt, "fig_long_weekend_event", width = 11, height = 3.6)
+save_fig(fig_evt, "fig_long_weekend_event", height = 5.0)
 
 fig_evt_iso <- ggplot(evt_coefs, aes(ell, b, colour = block, group = block)) +
   geom_hline(yintercept = 0, colour = "grey40", linewidth = 0.3) +
@@ -329,9 +334,10 @@ fig_evt_iso <- ggplot(evt_coefs, aes(ell, b, colour = block, group = block)) +
   scale_colour_manual(values = c(Bridge = unname(PAL["red"]), Isolated = unname(PAL["navy"]))) +
   facet_wrap(~ outcome, scales = "free_y", nrow = 2) +
   scale_x_continuous(breaks = -4:4) +
-  labs(x = "Days relative to the holiday", y = "For-profit minus public (births per municipality-day)") +
+  labs(x = "Days relative to the holiday",
+       y = "For-profit minus public\n(births per municipality-day)") +
   theme_paper()
-save_fig(fig_evt_iso, "fig_long_weekend_event_blocks", width = 9, height = 6)
+save_fig(fig_evt_iso, "fig_long_weekend_event_blocks", height = 5.4)
 
 # =============================================================================
 # 6. BODY TABLE — taxonomy (Panel A) + displacement sums (Panel B)

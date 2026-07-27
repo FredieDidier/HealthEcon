@@ -66,7 +66,7 @@ fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
   # three long series labels: wrap the bottom legend to 2 rows so none is clipped
   guides(colour = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_paper()
-save_fig(fig1, "fig01_csection_trend", width = 9, height = 5.4)
+save_fig(fig1, "fig01_csection_trend", height = 4.2)
 
 # =============================================================================
 # BLOCK 2 — summary statistics (Supplement, Table C.1): municipality-year.
@@ -158,7 +158,7 @@ fig7 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
   scale_x_continuous(breaks = seq(0, 24, 4)) +
   labs(x = "Hour of birth", y = "Share of births (%)") +
   theme_paper()
-save_fig(fig7, "fig07_hour_of_birth", width = 9, height = 4.8)
+save_fig(fig7, "fig07_hour_of_birth", height = 3.8)
 
 # --- share of births in business hours (weekday, 8h-17h59) --------------------
 b[, business := as.integer(weekday & hour %between% c(8, 17))]
@@ -217,16 +217,19 @@ dir.create(MAP, recursive = TRUE, showWarnings = FALSE)
 # elegant diverging-warm gradient (navy → sand → deep red)
 GRAD <- c("#1A3A5C", "#2E6F9E", "#8FBBD9", "#F4E9D8", "#EFB366", "#D35D3F", "#8E1E20")
 
-save_map <- function(plot, name, width = 7.5, height = 7.5) {
+# The maps are included at 0.8\textwidth = 5.2in, so save them at that width
+# (see FIG_WIDTH in 00_utils.R): a map saved larger has its legend shrunk on the
+# page in exactly the same way an over-wide figure does.
+save_map <- function(plot, name, width = 5.2, height = 5.4) {
   ggsave(file.path(MAP, paste0(name, ".pdf")), plot, width = width, height = height, bg = "white")
   ggsave(file.path(MAP, paste0(name, ".png")), plot, width = width, height = height, dpi = 300, bg = "white")
 }
 
 theme_map <- function() {
-  theme_void(base_size = 13) +
+  theme_void(base_size = 10) +
     theme(legend.position = "bottom",
-          legend.key.width = unit(1.6, "cm"), legend.key.height = unit(0.35, "cm"),
-          legend.title = element_text(size = 11), legend.text = element_text(size = 10))
+          legend.key.width = unit(1.3, "cm"), legend.key.height = unit(0.3, "cm"),
+          legend.title = element_text(size = 10), legend.text = element_text(size = 9))
 }
 
 # --- municipality polygons (7-digit code → 6-digit key) ------------------------

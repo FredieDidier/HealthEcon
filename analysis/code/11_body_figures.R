@@ -38,9 +38,12 @@ source(here::here("analysis", "code", "00_utils.R"))
 # needs less headroom with its title drifting up, away from its own axes. Anchor
 # it to the top (vjust = 1) so every panel title sits the same distance above
 # its panel.
+#
+# Sizes are the sizes the reader sees: every figure here is saved at FIG_WIDTH
+# (6.5in) and included at \textwidth, so \includegraphics places it at scale 1.
 panel_title <- ggplot2::theme(
-  plot.subtitle = ggplot2::element_text(size = 11, face = "bold", hjust = 0.5,
-                                        vjust = 1, margin = ggplot2::margin(b = 8)))
+  plot.subtitle = ggplot2::element_text(size = 10.5, face = "bold", hjust = 0.5,
+                                        vjust = 1, margin = ggplot2::margin(b = 6)))
 
 SIN  <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 WFO  <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
@@ -116,14 +119,21 @@ pb <- ggplot(gd, aes(margin, b, colour = series, group = series)) +
   geom_hline(yintercept = 0, colour = "grey40", linewidth = 0.3) +
   geom_errorbar(aes(ymin = b - 1.96 * se, ymax = b + 1.96 * se), width = 0.18,
                 position = position_dodge(width = 0.55), linewidth = 0.5) +
-  geom_point(aes(shape = series), position = position_dodge(width = 0.55), size = 2.6) +
+  geom_point(aes(shape = series), position = position_dodge(width = 0.55), size = 2.4) +
   scale_colour_manual(values = c(Public = unname(PAL["blue"]),
                                  `For-profit` = unname(PAL["red"]),
                                  `For-profit differential` = unname(PAL["navy"]))) +
   scale_shape_manual(values = c(Public = 16, `For-profit` = 17, `For-profit differential` = 15)) +
+  # Half of a 6.5in figure is 3.25in of panel: the tick labels are wrapped over two
+  # lines and the three-series legend is stacked in two rows so neither the labels
+  # nor the legend run past the panel.
+  scale_x_discrete(labels = c(Weekend = "Weekend", `National holiday` = "National\nholiday",
+                              `Eve of rest day` = "Eve of\nrest day")) +
+  guides(colour = guide_legend(nrow = 2, byrow = TRUE),
+         shape  = guide_legend(nrow = 2, byrow = TRUE)) +
   labs(x = NULL, y = "Change in cesarean rate (pp)",
-       subtitle = "(b) The scheduling margin: weekend and holiday gradients") +
-  theme_paper(base = 12) + panel_title
+       subtitle = "(b) The scheduling margin") +
+  theme_paper() + panel_title
 
 # --- panel (a): price margin binscatter --------------------------------------
 # Matches Table 1, Panel A, column 4: the private-insurance cesarean rate on the
@@ -163,13 +173,19 @@ pa <- ggplot() +
   coord_cartesian(ylim = c(60, 90)) +
   labs(x = "Relative fee, cesarean vs vaginal (log)",
        y = "Private-insurance cesarean rate (%)",
-       subtitle = "(a) The price margin: fees and the cesarean rate") +
-  theme_paper(base = 12) + panel_title
+       subtitle = "(a) The price margin") +
+  theme_paper() + panel_title
 rm(w, wb); gc()
 
+# Plain composition. Do NOT add plot_layout(guides = "collect") here: the
+# installed patchwork puts the collected guide on the RIGHT and there is no way
+# to move it to the bottom without the `&` theme operator, which this patchwork
+# does not define against a theme. Both were tried on 2026-07-27; the collected
+# legend stole roughly a third of the width and the two panel titles overlapped.
+# Panel (b) keeps its own two-row legend instead (see guides() above).
 fig2 <- pa | pb
-ggsave(file.path(AOUT, "graphs", "fig_two_margins.pdf"), fig2, width = 11, height = 4.6)
-ggsave(file.path(AOUT, "graphs", "fig_two_margins.png"), fig2, width = 11, height = 4.6, dpi = 300)
+ggsave(file.path(AOUT, "graphs", "fig_two_margins.pdf"), fig2, width = FIG_WIDTH, height = 3.6)
+ggsave(file.path(AOUT, "graphs", "fig_two_margins.png"), fig2, width = FIG_WIDTH, height = 3.6, dpi = 300)
 
 # =============================================================================
 # FIGURE 3 — calendar fingerprints
@@ -187,7 +203,7 @@ pa3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)
                                  Public = unname(PAL["blue"]))) +
   scale_y_continuous(breaks = seq(30, 90, 10)) +
   labs(x = NULL, y = "Cesarean rate (%)", subtitle = "(a) Cesarean rate by day of week") +
-  theme_paper(base = 12) + panel_title
+  theme_paper() + panel_title
 rm(sd, dsec); gc()
 
 # --- panel (b): hour-of-birth distribution, for-profit vs public -------------
@@ -208,9 +224,10 @@ pb3 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
   geom_line(linewidth = 0.9) +
   facet_wrap(~sector, strip.position = "bottom") +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]), Vaginal = unname(PAL["blue"]))) +
-  scale_x_continuous(breaks = seq(0, 24, 6)) +
+  # drop the 24 break: next to the 0 of the neighbouring facet the two labels touch
+  scale_x_continuous(breaks = seq(0, 18, 6)) +
   labs(x = NULL, y = "Share of births (%)", subtitle = "(b) Hour of birth") +
-  theme_paper(base = 12) + panel_title + theme(strip.placement = "outside")
+  theme_paper() + panel_title + theme(strip.placement = "outside")
 rm(b, hd); gc()
 
 # --- panel (c): weekend gradient by Robson group ------------------------------
@@ -232,16 +249,20 @@ if (file.exists(RG)) {
     scale_shape_manual(values = c(`For-profit` = 17, Public = 16)) +
     labs(x = "Robson group", y = "Weekend change in cesarean rate (pp)",
          subtitle = "(c) Weekend gradient by Robson group") +
-    theme_paper(base = 12) + panel_title
-  fig3 <- pa3 | pb3 | pc3
-  fw <- 15
+    theme_paper() + panel_title
+  # Two rows, not three columns. The printed width is fixed at 6.5in, so a third
+  # column would leave each panel 2.2in wide and force \includegraphics to scale
+  # the whole figure down; stacking (c) on its own row keeps every panel legible
+  # at scale 1 and gives the ten Robson groups the full width they need.
+  fig3 <- (pa3 | pb3) / pc3
+  fh <- 6.6
 } else {
   message("11: robson_grad.rds not found — run 12_subgroups.R for Figure 3 panel (c).")
   fig3 <- pa3 | pb3
-  fw <- 11
+  fh <- 3.6
 }
-ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.pdf"), fig3, width = fw, height = 4.4)
-ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.png"), fig3, width = fw, height = 4.4, dpi = 300)
+ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.pdf"), fig3, width = FIG_WIDTH, height = fh)
+ggsave(file.path(AOUT, "graphs", "fig_calendar_fingerprints.png"), fig3, width = FIG_WIDTH, height = fh, dpi = 300)
 
 # =============================================================================
 # Gestational-age panels (Supplementary Appendix figure)
@@ -258,9 +279,9 @@ qa <- ggplot(ga, aes(week, 100 * share, colour = sector)) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
        subtitle = "(a) By establishment sector") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(b = 8)))
+  theme_paper() +
+  theme(plot.subtitle = element_text(size = 10.5, face = "bold",
+                                     margin = ggplot2::margin(b = 6)))
 
 gp <- g[sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
 gp[, group := fcase(cesarean == 0, "Vaginal", cesarea_antes_parto == 1, "Prelabor cesarean",
@@ -273,14 +294,16 @@ qb <- ggplot(gd2, aes(week, 100 * share, colour = group)) +
                                  "In-labor cesarean" = unname(PAL["orange"]),
                                  "Vaginal" = unname(PAL["blue"]))) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
+  # three long labels in a 3.25in panel: one per row, otherwise the last is clipped
+  guides(colour = guide_legend(ncol = 1)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
-       subtitle = "(b) For-profit births, by delivery timing") +
-  theme_paper(base = 12) +
-  theme(plot.subtitle = element_text(size = 11, face = "bold",
-                                     margin = ggplot2::margin(b = 8)))
+       subtitle = "(b) For-profit, by delivery timing") +
+  theme_paper() +
+  theme(plot.subtitle = element_text(size = 10.5, face = "bold",
+                                     margin = ggplot2::margin(b = 6)))
 
 fig_gest <- qa | qb
-ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.pdf"), fig_gest, width = 11, height = 4.4)
-ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.png"), fig_gest, width = 11, height = 4.4, dpi = 300)
+ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.pdf"), fig_gest, width = FIG_WIDTH, height = 4.0)
+ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.png"), fig_gest, width = FIG_WIDTH, height = 4.0, dpi = 300)
 
 message("11_body_figures.R done")
