@@ -108,10 +108,14 @@ download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST) {
     id_col   <- intersect(c("CNS_PROF","CPF_PROF","cns_prof"), names(dt))[1]
     if (is.na(muni_col) || is.na(cbo_col)) { rm(raw, dt); gc(); next }
     dt <- dt[is_obstetra(get(cbo_col))]
+    # Collapse the DF administrative regions onto 530010 BEFORE the distinct
+    # count — see fix_muni_df() in build/00_utils.R. Recoding after the count
+    # would double-count anyone practising in two regions.
+    dt[, muni_fix := fix_muni_df(get(muni_col))]
     if (!is.na(id_col)) {
-      agg <- dt[, .(n_obstetricians = uniqueN(get(id_col))), by = .(muni = get(muni_col))]
+      agg <- dt[, .(n_obstetricians = uniqueN(get(id_col))), by = .(muni = muni_fix)]
     } else {
-      agg <- dt[, .(n_obstetricians = .N), by = .(muni = get(muni_col))]
+      agg <- dt[, .(n_obstetricians = .N), by = .(muni = muni_fix)]
     }
     agg[, `:=`(uf = uf, year = y)]
     out[[length(out) + 1L]] <- agg

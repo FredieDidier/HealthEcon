@@ -555,6 +555,85 @@ was always right.
 paper→supplement-only pass leaves all ~29 `\satab`/`\safig` references as `??` in
 paper.pdf. See the Compile section for the corrected cycle.
 
+## The 2026-08-10 fix: DATASUS codes the Distrito Federal by administrative region
+
+**The bug.** CNES codes the DF by ADMINISTRATIVE REGION — 530010 (Brasília),
+530020, 530030 ... 530180 — while IBGE, TISS and SINASC all use 530010 alone. Any
+municipality-level CNES aggregate therefore splits Brasília across up to 19 keys,
+and the merge onto the TISS spine picks up only the 530010 slice. Nothing is
+dropped and nothing errors; the number is just wrong.
+
+**Where it bit.** `cnes_obstetricians_muni_year.parquet` only:
+
+| year | DF keys | obstetricians, all keys | under 530010 | share lost |
+|---|---|---|---|---|
+| 2015 | 18 | 1,138 | 451 | 60% |
+| 2016 | 19 | 1,167 | 470 | 60% |
+| 2017+ | 1 | — | — | 0% |
+
+CNES switched to a single code in 2017, so only 2015 and 2016 are affected —
+**which is worse than a constant bias**, because it produced a spurious +76% jump
+in Brasília's obstetrician count between 2016 and 2017 that municipality fixed
+effects read as genuine within-municipality variation.
+
+**⚠️ The recode must happen BEFORE `uniqueN()`, never after.** An obstetrician
+practising in two administrative regions appears under two keys, so summing the
+per-key distinct counts double-counts: the naive 2015 sum of 1,138 overstates just
+as the 451 understates. Recoding first and counting once gives **857**. The fix is
+`fix_muni_df()` in `build/00_utils.R`, applied in `01b_sinasc_cnes.R`.
+
+Brasília's corrected series, now smooth: 857, 862, 826, 865, 895, 971, 1012,
+1078, 1070, 1122 (was 451, 470, 826, ...).
+
+**What was re-run:** the DF rows of 2015 and 2016 were rebuilt surgically from
+`PFDF1512`/`PFDF1612` (a full re-run of `download_cnes_obstetricians()` reproduces
+exactly this and nothing else, since `fix_muni_df()` is a no-op for every other
+state; the 530010-only recomputation reproduced the stored 451 and 470 exactly,
+which is what proves the two pipelines are equivalent). Then `03_workfile.R` and
+every script that touches the variable: **01, 02, 04, 10, 11**.
+
+**Impact on the paper: negligible, and that is the honest finding.** Body Table 1
+(`tab_fees`) is byte-identical. The only number that moved anywhere is the mean
+obstetricians per 1,000 births in the summary statistics, **115.44 → 115.45**. Two
+municipality-years out of 11,567, in regressions weighted by TISS deliveries and
+carrying municipality fixed effects, cannot move much. The data file is now right
+and the spurious jump is gone; the results did not depend on it.
+
+**Verified NOT affected, so do not re-check:**
+- `09_org_capacity.R` — takes `muni` from SINASC (`sinasc_daily_estab.parquet`) and
+  reads only `cnes, year, n_obstetricians, beds_obstetric, beds_total` from the
+  establishment panel. It never touches `codufmun`, and establishment-level counts
+  are immune to municipality coding.
+- `cnes_beds_muni_year.parquet` — carries 16 DF keys in 2015–2017, but is used
+  keyed by establishment CNES for the `nat_jur` sector classification, never by
+  municipality. If it ever becomes a municipality covariate, apply `fix_muni_df()`.
+- **SINASC** — one DF code (530010) in every year 2010–2024, 0% lost. Checked.
+- **TISS** — one DF code in BOTH `CD_MUNICIPIO_BENEFICIARIO` and
+  `CD_MUNICIPIO_PRESTADOR`, every year 2015–2025, 0% lost. Checked.
+
+Sibling projects hit by the same bug: **HealthHeat** (SIH `MUNIC_RES` loses 86/92/93%
+of DF admissions in 2015/2016/2017; CNES establishments ~49% in 2015–2016) and
+**WorldCupHealth** (SIH broken 2008–2017, CNES 2008–2016; fixed there by
+`fix_muni6()`). SIH cleans up in 2018, CNES in 2017 — do not infer one from the other.
+
+## Language and typography fixes (2026-08-10)
+
+- **`natureza jurídica` → "legal-entity type"** in the note of
+  `tab13_referee_robustness` (supplement). Source: `06_robustness.R`.
+- **`PREVIOUS` → `previous`** in the note of `tab_org_capacity` (supplement
+  Table D.8) — an ordinary word shouting in caps. Source: `09_org_capacity.R`.
+
+Both were fixed **in the R source and in the generated `.tex` with the identical
+string**, so a re-run cannot silently revert them. `09` and `06` were not re-run
+(they are the 42M-row scripts and their numbers are untouched by the DF fix).
+
+Everything else that looks Portuguese in the PDF is correct and must stay: dataset
+citations keep their **original Portuguese titles** (`refs.bib`: TISS Padrão,
+SINASC), institution names are given in English with the Portuguese in parentheses
+(ANS, IBGE, IEPS, SUS, CNES), and `HOSPITALAR` appears only inside a literal URL.
+The remaining all-caps tokens in the compiled PDF are DATASUS, UFBA and RAND (the
+journal) — all legitimate.
+
 ## ACTION items for Fredie
 
 - Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes cited in

@@ -150,7 +150,7 @@ etable(m_tv, m_sun, m_rest, m_ap, m_lb, tex = TRUE, file = f, replace = TRUE, di
        label = "tab:referee_robustness",
        notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each",
-         "birth's establishment with the natureza jur\\'idica of its own year",
+         "birth's establishment with the legal-entity type recorded for its own year",
          "(2015--2024; earlier births use 2015). Columns 4--5 are composition checks:",
          "weekend (unscheduled) for-profit births include fewer healthy scheduled",
          "term pregnancies, so newborn risk indicators shift mechanically.",

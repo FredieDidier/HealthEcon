@@ -135,6 +135,31 @@ is_obstetra <- function(cbo) {
   cbo_num %in% c(225250, 223132, 6149, 6145)
 }
 
+#' Collapse DATASUS's Distrito Federal codes onto the single IBGE municipality.
+#'
+#' CNES codes the DF by ADMINISTRATIVE REGION — 530010 (Brasilia), 530020,
+#' 530030 ... 530180 — while IBGE, TISS and SINASC all use 530010 alone. Any
+#' municipality-level CNES aggregate therefore splits Brasilia across up to 19
+#' keys, and a merge onto TISS/SINASC picks up only the 530010 slice.
+#'
+#' Measured on `cnes_obstetricians_muni_year.parquet` before the fix: 2015 had
+#' 18 DF keys carrying 1,138 obstetricians of which only 451 sat under 530010
+#' (60% lost), 2016 had 19 keys and 470 of 1,167 (60% lost). CNES switched to a
+#' single code in 2017, so **only 2015 and 2016 are affected** — which is worse
+#' than a constant bias, because it produced a spurious +76% jump in Brasilia's
+#' obstetrician count between 2016 and 2017 that municipality fixed effects read
+#' as real within-municipality variation.
+#'
+#' ⚠️ APPLY THIS BEFORE ANY `uniqueN()`, never after. An obstetrician who
+#' practises in two administrative regions appears under two keys, so summing
+#' the per-key distinct counts double-counts: the naive 2015 sum of 1,138 is an
+#' overcount just as the 451 is an undercount. Recoding first and counting once
+#' is the only way to get it right.
+fix_muni_df <- function(x) {
+  v <- suppressWarnings(as.integer(as.character(x)))
+  data.table::fifelse(!is.na(v) & v %/% 10000L == 53L, 530010L, v)
+}
+
 #' TRUE for any nurse ("enfermeiro"). Not used in the current paper — kept as a
 #' reference classifier alongside is_enfermeiro_obstetra (the obstetric-nurse
 #' specialty, CBO 7145) in case midwife supply enters a later revision.
