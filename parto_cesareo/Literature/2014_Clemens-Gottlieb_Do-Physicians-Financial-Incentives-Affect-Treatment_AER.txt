@@ -1,0 +1,1326 @@
+
+Do Physicians’ Financial Incentives Affect
+Medical Treatment and Patient Health?
+Jeffrey Clemens, SIEPR
+and
+Joshua D. Gottlieb, Harvard University∗
+Job Market Paper
+November 11, 2011
+Abstract
+We investigate whether physicians’ financial incentives influence health care
+supply, technology diffusion, and resulting patient outcomes. In 1997, Medicare consolidated the geographic regions across which it adjusts payments for
+physician services, generating area-specific price shocks that are plausibly exogenous with respect to health care demand. Areas with higher payment shocks
+experience significant increases in health care supply. On average, a 2 percent
+increase in payment rates leads to a 5 percent increase in care provision per
+patient. Elective procedures such as cataract surgery respond twice as strongly
+as less discretionary services like dialysis. Higher reimbursements also increase
+the pace of technology diffusion, as non-radiologists acquire magnetic resonance
+imaging scanners more readily when prices increase. The magnitudes of our empirical findings imply that changing provider incentives explain up to one third
+of recent growth in spending on physician services. The incremental care has no
+significant impacts on mortality, hospitalizations, or heart attacks.
+∗Clemens: jclemens@stanford.edu, Gottlieb: jdgottl@fas.harvard.edu. We are deeply indebted to
+Amitabh Chandra, David Cutler, Edward Glaeser, Lawrence Katz, and Andrei Shleifer for invaluable advice
+and guidance, and to Philippe Aghion, Joe Altonji, Kate Baicker, Laurence Baker, Shai Bernstein, Rebecca
+Diamond, Martin Feldstein, Amy Finkelstein, John Friedman, Claudia Goldin, Gautam Gowrisankaran,
+Naomi Hausman, Stephanie Hurder, Erik Hurst, Erzo Luttmer, Tom McGuire, Mandy Pallais, Carolin
+Pflueger, Jim Poterba, Dan Sacks, Jesse Shapiro, Jon Skinner, Doug Staiger, Seth Stephens-Davidowitz,
+Lawrence Summers, Jonathan Sunshine, Heidi Williams, Danny Yagan, and many seminar participants
+for extremely helpful comments and suggestions. We received crucial assistance from Dan Feenberg, Jean
+Roth, Mohan Ramanujan, and Scott Walker with data and computing; from Janna Friedly, Daniel Gottlieb,
+Stephen Gottlieb, Joseph Vita and Weiping Zhou with understanding treatments and their coding; and
+excellent research assistance from Theu Dinh and Oren Ziv. We gratefully acknowledge support from the
+Taubman Center for State and Local Government and the Institute for Humane Studies, as well as support
+and data provided by the National Institute on Aging under grant 5P01AG031098-02 to the National Bureau of Economic Research. Gottlieb further thanks the NIA for a training fellowship provided under grant
+T32-AG000186-23 to the NBER.
+Critics have charged that fee-for-service medicine leads to high medical expenditures
+without improving patient health.1 The incentives embedded in volume-based compensation
+could drive physicians to provide large quantities of both beneficial and unnecessary care
+when payment rates are high (Ellis and McGuire, 1986). Another view emphasizes that high
+health care consumption may also reflect high demand from patients (Hall and Jones, 2007).2
+Determining the consequences of payment policy choices is thus a pressing empirical task.
+We study how changes in physicians’ financial incentives influence the health care they
+provide.3 Since payment policies may influence medical innovation through their effect on
+technology adoption, we also examine their impact on physician investment decisions.4 Finally, we investigate the consequences of incremental treatments and technologies for patient
+health, a crucial outcome for any intervention in health care delivery.
+We estimate the effects of payment rates using an overhaul of geographic adjustments to
+provider reimbursements in the Medicare program. In 1997, Medicare consolidated the areas
+across which it adjusts physician payments, reducing the number of payment regions from
+210 to 89. This consolidation led to area-specific price shocks that are plausibly exogenous
+with respect to other changes in local health care demand and supply. We use these payment
+changes to estimate the effect of prices on care provision, technology diffusion, and patient
+health.
+We find that price increases lead to large, positive responses in the supply of physician and
+outpatient services, with a long-run elasticity of around 2.5 with respect to reimbursement
+rates. The response is twice as large for relatively elective procedures, including cataract
+removal and colonoscopy, as for less discretionary services, such as oncological procedures and
+dialysis. Theory predicts exactly this pattern; services with a clear benefit for some patients,
+and none for others, should respond less to payment rates (Chandra and Skinner, 2011).
+Increases in reimbursement rates lead physicians to adjust treatment patterns along several margins. More providers serve Medicare patients and those who do adjust both the
+number and composition of services they supply. The responses unfold over several years,
+1For instance, see Arrow et al. (2009), Ginsburg (2011), and Hackbarth, Reischauer and Mutti (2008).
+2The care physicians provide has significant financial consequences, as 60 percent are self-employed
+(Wassenaar and Thran, 2003, Table 2; 2001, Table 57) and 85 percent of those in group practices have
+compensation linked to patient care revenues (Medical Group Management Association, 1998, Table 12).
+3The existence, direction, and magnitude of any such influences are theoretically unclear and empirically disputed. The Congressional Budget Office (2007) and Centers for Medicare and Medicaid Services
+(Codespote, London and Shatto, 1998) assume that income effects drive a 30 to 50 percent “volume offset,”
+or negative supply response (Gruber and Owings, 1996; Rice, 1982; 1983; 1984). But higher reimbursement
+rates expand treatment along some margins (Mitchell and Cromwell, 1982; Paringer, 1980; McKnight, 2007),
+and Staiger, Auerbach and Buerhaus (2010) argue that fee cuts reduced physician hours.
+4Finkelstein (2007) finds that Medicare leads hospitals to expand capacity, and Acemoglu and Finkelstein
+(2008) find that payment policies change hospitals’ capital intensity. Weisbrod (1991) and Chandra and
+Skinner (2011) point to the interaction between insurance and innovation as driving spending growth.
+2
+suggesting that changes in profitability induce gradual changes in treatment.5
+One such adjustment is investment in new technology. We investigate the vertical integration of office visits and imaging services that occurs when non-radiologists invest in
+magnetic resonance scanners. Reimbursement rates influence these investment decisions and
+hence the diffusion of medical technology. Just as Acemoglu and Finkelstein (2008) find in
+the context of hospitals, Medicare’s payment policies spur technological investments. These
+investments increase profit margins and medical spending.
+Patients with cardiovascular disease may face significant potential gains from medical
+treatments, as new technologies like cardiac catheterization have expanded treatment options. They also have much at risk since heart disease is the leading cause of mortality in
+the United States (Cutler, 2004; Murphy and Topel, 2006). Consistent with our aggregate
+results, price increases significantly expand the supply of health care to this group, with an
+overall price elasticity of 1.2.
+However, we find that new investment and expanded care have no significant effect on
+mortality or health status. Among the overall Medicare population, we are able to rule out
+mortality reductions that would be cost effective at conventional values of extending life.
+Among elderly survey respondents, we find no evidence of impacts of additional care on
+health status. Incremental care also has no significant effects on the occurrence of hospitalizations, heart attacks, and mortality for patients with cardiovascular disease.6
+If anything,
+incremental outpatient care is positively associated with hospital expenditures.7
+These results are consistent with the RAND Health Insurance Experiment’s finding that
+care induced by reductions in patient cost-sharing has little impact on health (Manning et
+al., 1987; Newhouse, 1993). But they contrast with those of Chandra, Gruber and McKnight
+(2010), who find that preventative care reduces subsequent hospital expenditures. The
+broader packages of outpatient care we study appear not to generate offsets of this form.8
+Physicians’ substantial responses to price changes suggest that payment rates play an
+important role in driving medical care consumption. While extrapolation to other time
+5Jacobson et al. (2010) find that chemotherapy prescribing choices respond increasingly to price changes
+over time. Their results imply substantially lower elasticities than we find here, perhaps because our average
+services is more elective. Cutler (1990) also finds lower elasticities for hospital services in Massachusetts upon
+the transition to prospective payments, consistent with the more discretionary nature of general outpatient
+care and with the weaker incentives at the hospital level relative to more strongly incentivized physicians.
+6Existing literature studies the effects of differences in health care over time (Cutler and McClellan, 2001)
+and across space (Fisher et al., 2003) on patient outcomes, using a sixfold increase in spending over four
+decades (Cutler, Rosen and Vijan, 2006), a threefold difference across places (Gottlieb et al., 2010), and
+the availability of Medicare upon turning 65 years old (McWilliams et al., 2007; Card, Dobkin and Maestas,
+2009). We complement this work by examining the impacts of incremental care engendered by price changes.
+7Our confidence intervals imply that at least $1 million in incremental care is required to prevent a single
+heart attack.
+8Cohen, Neumann and Weinstein (2008) compare the effectiveness of different types of preventative care.
+3
+periods is naturally imperfect, we find that increases in profitability can explain up to one
+third of the growth in health care spending since 1982. Together with changes in patient cost
+sharing (Finkelstein, 2007) and increases in the demand for health driven by rising incomes
+(Hall and Jones, 2007), providers’ financial incentives appear to drive technology adoption,
+influence patient treatments, and expand the health care sector.
+1 Reimbursement Rates, Service Supply and New Technologies
+Physicians face major decisions about the organization of their practices and the quantities of care they provide. A variety of investments in capital and skills can shift physicians,
+and by extension their patients, into more and less intense treatment regimes. Orthopedists can acquire advanced imaging equipment, urologists can invest in radiation therapy
+units, and cardiologists can integrate nuclear stress testing into their practices.9 These arrangements involve up-front investments that increase profit margins going forward.10 We
+integrate these investment decisions, and their implications for the development of new health
+care technologies, into a model of medical treatment under administered prices.
+1.1 Medical Care Supply
+All physicians can practice medicine using a standard practice style (S) that has a variable
+cost of ¯c per unit of care. Physicians in some specialties also have access to an intense
+practice style (I) that reduces unit costs to c but costs k > 0 to adopt. For instance,
+acquiring a computed tomography (CT) scanner allows the practice to generate revenue
+with low marginal costs and minimal use of the doctors’ valuable time. An innovation sector
+works to develop technologies that enable physicians to adopt the intense practice style.11
+Physician demand for the intense practice style shifts the research sector along its supply
+curve, thereby influencing the extent of health care innovation (Acemoglu, 2002).
+Because insurance diminishes or eliminates price sensitivity (Feldstein, 1973) and consumers lack information about treatment options, physicians make many health care decisions on their patients’ behalf (Arrow, 1963). We assume that demand is unsatiated, so that
+9Affendulis and Kessler (2007) and Shah et al. (2011) show that vertically integrated cardiology practices
+influence patients’ treatment courses, as does Baker (2010) for self-referral to magnetic resonance imaging.
+10Since 80 percent of group practices have eight or fewer physicians (Wassenaar and Thran, 2003, Table
+32), the lumpiness of small firms’ investments (Doms and Dunne, 1998) likely applies to physicians.
+11Innovation also acts on other margins, such as making technology cheaper and increasing its productivity.
+Trajtenberg (1990) finds that the real cost of a CT scanner declined by 55 percent per year during the decade
+following its invention. We focus only on availability for purposes of simplicity.
+4
+physicians’ supply decisions drive the quantity of health care their patients receive.12 Since
+physicians act, at least in part, as agents on each patient’s behalf, the patient’s benefit curve
+influences supply decisions.13 Using Q to denote the market’s aggregate supply, we let b(Q)
+capture the health benefit of marginal care. This benefit enters directly into the physician’s
+utility function and drives different supply responses across service types. Marginal benefits
+are decreasing in Q and individual physicians take b(Q) as given.
+A continuum of physicians in specialty j has productivity γi distributed over (0,∞)
+according to F(·), already known when they make investment decisions. Doctor i takes 1/γi
+units of time to produce one unit of care. They each select a technology S or I and a quantity
+of care q. Public health insurance programs compensate providers for this care according
+to administratively set payments at reimbursement rate r per unit of care, as opposed to
+competitively set prices (Newhouse, 2003). Physicians’ utility is quasilinear in income,14 and
+for those adopting the standard and intense practice styles, respectively, utility is:
+US(q; γi) = (r − c¯)q − e
+
+q
+γi
+
++ αb(Q)q
+UI (q; γi) = (r − c)q − k − e
+
+q
+γi
+
++ αb(Q)q (1)
+where e is an increasing and convex function of physician time that captures decreasing
+returns to leisure.15 The last term, αb(Q)q, captures physicians’ desire to provide beneficial
+care. This agency benefit is linear in the value of care, b(Q), the amount supplied q, and the
+weight placed on patient benefits α. Proposition 1 defines physicians’ investment decisions.
+Proposition 1 For specialties that have an intense practice style available, there exists a
+threshold productivity γ
+∗
+such that physicians invest if and only if γ > γ∗. The threshold decreases in the reimbursement rate r and in the weight placed on patient benefits α. Aggregate
+12While traditional Medicare does have co-payments, 90 percent of beneficiaries have either supplemental
+insurance or are eligible for a state-funded Medicaid supplemental that reduces or eliminates patient costs
+at the margin (Medicare Payment Advisory Commission, 2011).
+13This contrasts with standard markets in which the benefit curve would simply describe demand.
+14This treatment of income, which implies high-powered financial incentives, applies quite directly to the
+three-fifths of American physicians that are self-employed (self-employment data are available in Wassenaar
+and Thran, 2003, Table 2; 2001, Table 57). It is also a reasonable approximation of the incentives faced by
+the 85 percent of physicians in group practices who, as of 1997, had their compensation directly linked to
+revenue (Medical Group Management Association, 1998, Table 12).
+The quasilinear utility assumption simplifies the analysis and predicts positive supply responses, which
+are borne out in our empirical work.
+15We assume that e(·) satisfies e(0) = 0, e0
+(0) = 0, e0(·) > 0, e00(·) > 0.
+5
+supply increases in the reimbursement rate, with a slope given by
+dQ
+dr =
+Z γ
+∗(r)
+0
+dq∗
+S
+(γ)
+dr f(γ)dγ
+| {z }
+Standard practice style
++
+Z ∞
+γ
+∗(r)
+dq∗
+I
+(γ)
+dr f(γ)dγ
+| {z }
+Intensive practice style
+−
+dγ∗
+dr f(γ
+∗
+) [q
+∗
+I
+(γ
+∗
+) − q
+∗
+S
+(γ
+∗
+)]
+| {z }
+Physicians switching practice styles
+. (2)
+The equilibrium described in Proposition 1, which is proven in Appendix A, involves two
+classes of physicians. At a given reimbursement rate, firms above the productivity threshold
+γ
+∗
+invest and have higher optimal production levels than firms with γ < γ∗, who do not
+invest. The more productive firms are shown on the right in Figure 1, and the vertical part
+of the solid line depicts the investment threshold γ
+∗
+.
+The supply elasticity given in equation (2) is composed of three parts, corresponding
+to the three regions of the figure. The first term, which integrates over the lower part of
+the effort cost distribution, captures the supply shift from firms that do not invest at either
+reimbursement rate. The second term captures a similar continuous shift from firms that
+invest at either price. The “practice style effect” drives some firms to invest only after the
+reimbursement rate increases, illustrated by the the shift in the vertical line. These firms
+expand supply quantity dramatically after the return to investing increases. The magnitude
+of this effect depends on the density of firms near the investment threshold (Caballero and
+Engel, 1999), and is likely to be larger following a period of high uncertainty (Bloom, Bond
+and Van Reenen, 2007),
+This structure applies separately to each specialty along a continuum of specialties. Each
+specialty j has Nj doctors, and Njis distributed across specialties with distribution H(·).
+Within each specialty, physicians’ practice style decisions drive their demand for investing in
+the intense treatment technology. The health care innovation sector can develop an intense
+technology for one specialty by spending a fixed amount s on innovative activity. This development is profitable for all specialties large enough to overcome the fixed development cost,
+namely those with Njk [1 − F (γ
+∗
+)] ≥ s. Higher reimbursement rates increase the demand
+for productivity-enhancing innovation in each specialty, leading to additional research and
+technology adoption by new physicians.
+Proposition 2 The intense practice style is available for more specialties as reimbursement
+rates r and the importance of patient benefits α increase.
+1.2 Health Care Supply and Patient Welfare
+Welfare in this market depends directly on patient health benefits. Physicians supply care
+up to the point where their margins equal effort costs less the marginal impact on patient
+6
+health. When physicians value health gains (α > 0), supply responds less strongly to prices
+than it would on the basis of financial motives alone. Supply responses are particularly small
+when health benefits diminish rapidly as the market moves down the marginal benefit curve
+(b
+0
+(Q) is very negative).16 This is likely true with emergency care, which has high benefits for
+a small fraction of the population and no benefit for the remainder, and treatments such as
+chemotherapy, which has significant side effects and is only worthwhile for cancer patients.
+In contrast, elective procedures like cataracts surgery offer modest or moderate benefits for
+large swaths of the population, implying flatter marginal benefit curves (b
+0
+(Q) is small) and
+hence relatively large supply elasticities.
+The quantity is only optimal when the social benefits of marginal care equal its cost.
+Physicians’ optimization ensures that marginal costs equal the reimbursement rate. So the
+equilibrium is socially efficient when r = b(Q∗), which only holds if payments are set optimally.17 A sufficient statistic (Chetty, 2009) for the welfare impact of price changes is:
+dW
+dr = [b(Q) − r]
+dQ
+dr .
+Higher reimbursements reduce welfare when prices r exceed marginal health benefits b(Q).
+While we can directly measure r using Medicare’s reimbursement rates, the supply response and health impacts must be estimated using price variation. We employ a previously
+unexploited natural experiment for this task.
+2 Price Shock From 1997 Payment Area Consolidation
+We estimate the influence of price shocks on health care provision, technological diffusion,
+and health outcomes in the context of Medicare Part B. This program finances outpatient
+care and physician services for the overwhelming majority of elderly Americans.18 Any
+private health care provider can offer care to Medicare patients in exchange for compensation
+16Holding practice style fixed, a given physician’s physician’s supply response to reimbursement rates is
+dq∗
+dr =
+h
+1 + αb0(Q)
+dQ
+dr i
+γ
+2
+i
+e
+00 (q/γi)
+. With a more general utility function in income, supply responses would
+depend on the relative magnitudes of substitution effects (Staiger et al., 2010) and income effects (Gruber
+and Owings, 1996; Congressional Budget Office, 2007).
+17This model analyzes the insurance market in isolation from the remainder of the economy. We thus
+ignore both the production of other goods and the use of taxation to finance the consumption of medical
+services (Baicker and Skinner, 2011). Any welfare analysis in this setting is consequently partial equilibrium.
+18Medicare covers nearly every American over age 65, and some additional beneficiaries eligible due to endstage renal disease or disability. We study only those over 65. According to the Centers for Medicare and Medicaid Services, at https://www.cms.gov/MedicareMedicaidStatSupp/downloads/05SS_CostShare_z.zip
+(Table 19a; accessed October 16, 2011), beneficiaries’ cost-sharing was 15.6 percent of total spending as of
+2003, including that part paid by private supplemental insurance.
+7
+at rates determined administratively by the federal government. Hence the incentives facing
+providers, consumers, innovators, and the exogenous determination of prices closely match
+the setting we examined theoretically.
+Since 1992, Medicare has paid physicians and other outpatient providers through a system
+of centrally administered prices, based on a national fee schedule. While the fee schedule
+assigns constant relative values to specific health care services,19 it also recognizes that
+goods and services have different production costs in different parts of the country; Congress
+mandates price adjustments to offset the higher input costs in high-cost regions.20 For service
+j, supplied by a provider in payment area a, the provider’s fee is approximately:21
+Reimbursementa(i),j,t = Conversion Factort × Relative Value Unitsj
+× Geographic Adjustment Factora(i). (3)
+The Conversion Factor is a national adjustment factor, updated annually and generally
+identical across all services; it was equal to $37.8975 in 2005.22 The Relative Value Units
+(RVUs) associated with service j are intended to measure the resources required to provide
+that service. RVUs are constant across areas while varying across services, and one RVU is
+approximately one brief office visit. Finally, the Geographic Adjustment Factor (GAF) is
+the federal government’s adjustment for differences in input costs across payment regions.
+The adjustments are derived from Census and other data on area-level rents, wages, and
+malpractice insurance premiums. Reimbursements for physicians in county i depend on the
+beneficiary-weighted average of input costs across all counties in payment area a. When
+weighted by the health care provided in each county, the GAF has a mean of 1 and standard
+deviation of 0.08.
+We estimate the influence of prices on health care supply using changes in the GAFs.
+Because input costs are correlated with factors that can independently influence demand for
+and supply of medical care, a cross-sectional regression of treatment patterns on GAFs will
+produce biased estimates of the effect of prices on care provision.23 To avoid this concern,
+we identify the effect of reimbursement rates using GAF changes induced by a federal pol19These values are determined according to the Resource-Based Relative Value Scale (RBRVS), initially
+developed by Hsiao et al. (1988).
+20Pub. L. 101-239 (1989)
+21This is a slight simplification; Appendix B.1 offers additional details on the structure of payments.
+22The annual political wrangling over the “doc fix” results from the statutory formula, known as the
+Sustainable Growth Rate, that drives the evolution of the Conversion Factor.
+23Hadley et al. (2009) and Hadley and Reschovsky (2006) aim to overcome these challenges using the
+imperfect nature of the area-level adjustments embodied in the GAFs. They estimate supply elasticities for
+ten services off of differences between actual area costs and the Medicare reimbursement and find results
+consistent with ours.
+8
+icy shift. In 1997, the Health Care Financing Administration consolidated many of the fee
+schedule areas, leading to reimbursement rate shocks that vary across the pre-consolidation
+regions. The 210 payment areas that existed as of 1996 were consolidated to 89 distinct
+regions, as shown in Figure 2. The top panel of Figure 2 presents the regions as of 1996,
+with darker colors indicating higher GAFs; the bottom panel shows the post-consolidation
+payment regions.24 As the maps indicate, the consolidation of payment regions dramatically
+changed the county groupings in many states, leading to differential price shocks. We estimate the responses of medical care supply, technology adoption, and patient welfare to these
+shocks.25
+A comparison of the maps in Figure 2, summarized in Figure 3, reveals several key
+features of the payment area consolidation. First, substantial variation in reimbursement
+rates was eliminated in many states. Wisconsin, Kentucky, Alabama, and other states were
+collapsed from many regions to a single statewide payment area. The number of regions
+was also reduced substantially in large states like Texas and California. Second, increases
+in reimbursement rates generally took place in states’ rural areas while decreases took place
+in their urban areas, as shown in Appendix Figure E.1.26 We address the possibility of
+differential trends across these areas by flexibly controlling for time-varying rural-urban
+differences, by directly controlling for a time trend in the price shock, and by using a matching
+estimator.
+2.1 Empirical Specification
+Using the price changes described above, we estimate the effect of reimbursements on
+care provision with specifications of the following form:
+ln(RVUsi,s(i),t) = X
+t6=1996
+βt· Price Changei × It +
+X
+t6=1996
+ζt· ln(1990 pop.i) × It
++ γi + δt + ηs(i),t + ζ
+0Xi,s(i),t + εi,s(i),t. (4)
+24Alaska, Hawaii, Puerto Rico, and the U.S. Virgin Islands, which are omitted from the maps, were each
+already a unified payment region before 1996.
+25Geographic adjustments to hospital reimbursements under Medicare Part A are structured differently
+from the physician and outpatient reimbursements discussed here, so were not affected by this consolidation.
+26An anecdotally notable exception to this pattern is McAllen, Texas, the city highlighted as a highspending region in Gawande (2009). McAllen has particularly low costs, and hence was paid less than the
+surrounding rural areas when it comprised its own payment region before the consolidation took place (top
+panel of Figure 2). After it was consolidated together with almost all of the rest of Texas, its relative
+reimbursements increased despite its continued lower input costs.
+9
+Our measure of health care supply is the log of total RVUs provided per patient seen in
+county i in state s(i) during year t. We subsequently divide total care across service and
+provider types. We also decompose care into the number of services and the intensity of the
+average service to learn what care responds.
+We estimate this equation using data at the county-by-year level. We interact the price
+changed induced by the payment locality consolidation, Price Changei, with an indicator It
+for observations in year t. We exclude the interaction for 1996, so 1996 is the base year
+relative to which each βtis estimated. Estimates of βtfor years prior to 1996 provide a
+sense for the importance of pre-existing trends that are correlated with Price Changei, while
+estimates of βtfor years following 1996 measure the effect of reimbursement rates on care
+provision. Since the quantity of RVUs per beneficiary is expressed in logs and the GAF is
+an index normalized to a mean of 1, these βt can be interpreted as elasticities.27 We denote
+county fixed effects by γi, year fixed effects by δt, and state-by-year effects by ηs(i),t. These
+fixed effects capture the effects of other changes to payment policies and the structure of
+medical care that took place during this time period, which we discuss in Appendix B.2.
+In implementing equation (4) we calculate standard errors under the assumption that
+the error term εi,s(i),t is clustered at the level of pre-1997 payment areas. The old payment
+regions are the largest geographic units to be affected uniformly by the consolidation. There
+are 200 such payment regions in our dataset, meaning that we allow for 200 clusters with
+arbitrary within-cluster (including both cross-county and cross-year) covariance.28
+We control for county characteristics Xi,s(i),t that were correlated with the consolidationinduced GAF changes in various ways. Most importantly, price increases occurred primarily
+in rural areas while decreases occurred in urban areas. In our baseline specification we allow
+for differential urban-rural trends by controlling for interactions between year indicator variables and the log of each county’s 1990 population. We confirm that the baseline estimates
+are robust to controlling similarly for base-year quantities of care, population density, and
+whether or not a county is located within a metropolitan statistical area. To reduce noise
+resulting from changes in the health of the beneficiaries sampled from small counties, we use
+standard controls for the fraction of each county’s sample that meets particular health and
+demographic criteria. These controls have minimal effects on our estimates, and we describe
+them fully in Appendix C.1.
+27As discussed in section 6.2, this elasticity of care with respect to reimbursement rates is not the same
+as a traditional labor supply elasticity. Roughly half of the reimbursement for each service is associated
+with variable “practice” costs (such as staff time and non-durable equipment). The remaining half of the
+reimbursement rate thus constitutes the physician’s accounting margin. The elasticity of care provision with
+respect to this accounting margin is more directly akin to an elasticity of labor supply with respect to an
+individual’s wage.
+28Additional details on the pre-consolidation payment regions are in Appendix B.3.
+10
+Medicare periodically updates its geographic adjustments as it obtains new information
+on local input costs.29 These updates could bias our reduced-form estimates if they are correlated with the consolidation-induced price shocks and we fail to control for them. To confirm
+that the updates are not biasing our results, we explicitly use our price shocks as instruments
+within a Generalized Method of Moments (GMM) framework. For this estimation, we group
+the years in our sample into four categories: the four years prior to the consolidation, and
+the short-, medium-, and long-run following the consolidation. These groupings are guided
+by our initial estimates of the year-by-year evolution of care, as revealed in the estimates of
+βtfrom equation (4). We interpret the two years following the consolidation (1997–1998) as
+the short term, the following two years (1999–2000) as the medium term, and the following
+four years (2001–2005) as the long run. We can then model the impact of the consolidation
+on prices as:
+Actual changei,T ime × T imet =
+X
+t6=1996
+α
+T ime
+t
+· Price changei × It
++
+X
+t6=1996
+ζ
+T ime
+t
+· ln(1990 pop.i) × It
++ γ
+T ime
+i + δ
+T ime
+t + η
+T ime
+s(i),t + ζ
+T ime0Xi,s(i),t + uT ime
+i,s(i),t, (5)
+where
+T ime ∈ {Short-Run, Medium-Run, Long-Run}.
+Three equations of the form given in equation (5)—for the short-run, medium-run, and longrun post-consolidation time periods, respectively—constitute our model for the impact of
+the consolidation on prices. We estimate these three sets of coefficients while simultaneously
+modeling the impact of changing prices on health care quantity. We assume that this effect
+has the form:
+ln(RVUsi,s(i),t) = β
+S
+· Actual changei,Short-Run × Short-Runt
++ β
+M · Actual changei,Medium-Run × Medium-Runt
++ β
+L
+· Actual changei,Long-Run × Long-Runt +
+X
+t6=1996
+ζ
+Supply
+t
+· ln(1990 pop.i) × It
++ γ
+Supply
+i + δ
+Supply
+t + η
+Supply
+s(i),t + ζ
+Supply0Xi,s(i),t + ε
+Supply
+i,s(i),t . (6)
+29A single interaction between the price change and years after the consolidation explains 65 percent of
+the county-level variation in GAF during our sample, after controlling for county and state-by-year fixed
+effects. A regression of county-level GAF on this same interaction variable yields an extremely significant
+coefficient of 0.87.
+11
+By assuming that the price changes are orthogonal to the supply residuals, ε
+Supply
+i,s(i),t , we can
+jointly estimate this system of equations (5) and (6) through GMM. We use a weighting
+matrix that accounts for arbitrary correlations within clusters by pre-consolidation payment
+region. Our results are extremely similar between the OLS and GMM estimations.
+2.2 Medicare Data
+Our data on health care provision come from claims submitted by providers to Medicare
+for reimbursement. The data document all claims associated with a 5 percent random sample
+of the Medicare Part B beneficiary population for each year from 1993 through 2005.30 The
+same individuals are sampled each year, and the data contain line-by-line reports on all
+health care Medicare buys for them. We compute a variety of statistics describing this
+care. We obtain demographic information about our sample of beneficiaries from Medicare’s
+Denominator files, and summary statistics for our sample are in Table 1.
+We compute the aggregate quantity of health care supplied to this sample of beneficiaries
+using the same scaling of individual services that the Centers for Medicare and Medicaid
+Services (CMS) use in reimbursing providers. To each service we assign the number of
+Relative Value Units that CMS associated with the service during the year in which it was
+provided.31 Since the GAF is associated with the location of the service provider, we assign
+services to counties using providers’ zip codes. We discuss details of these data in Appendix
+C.1.
+3 The Impact of Price Changes on Aggregate Care
+3.1 Overall Supply Response
+Our initial estimates of the effect of changes in reimbursement rates on aggregate quantities of care are shown in Figure 4. Panel A displays the year-by-year βt coefficients that
+result from estimating equation (4). The estimates provide evidence that Medicare services
+30Part B, formally known as Supplementary Medical Insurance, is the part of Medicare that covers physician services and outpatient care, including all of the fee schedule care we study. By including only beneficiaries participating in Part B, we are ignoring those recipients of Part A hospital insurance who choose
+not to enroll in Part B, as well as those who choose a Medicare Advantage managed care plan instead of
+traditional Part B.
+31Assignments of RVUs to individual billing codes comes from annual files made available on the CMS
+website at http://www.cms.gov/PhysicianFeeSched/01_overview.asp (accessed October 16, 2011). For
+services provided in a year in which that billing code did not appear in the CMS file, we assigned RVUs based
+on the closest year in which that billing code is observed, with a preference for preceding over subsequent
+years.
+12
+respond significantly to prices, building towards an elasticity around 3 over the years following the price shock. Estimates for years prior to 1996 are suggestive of an imprecisely
+measured pre-existing trend in service supply. Panel B displays a similar set of estimates in
+which control counties—ones unaffected by the consolidation—were dropped if propensity
+score matching failed to link them to an affected county.32 The coefficients are quite similar
+to those in Panel A, with the long-run elasticity approaching 2.5. The βt coefficients for
+years before 1996 give no hint of a pre-existing trend.
+The year-by-year coefficients suggest that supply responses unfold over several years.
+These results motivate our imposition of a short- (1997 and 1998), medium- (1999 and
+2000), and long-run (2001 through 2005) structure on the response for subsequent analysis.
+These year groupings allow us to both improve precision and summarize our results in a
+smaller number of coefficients.
+The baseline results in columns 1 through 4 of Table 2 reflect the results illustrated in
+Figure 4. When we do not control for a pre-existing trend in the treatment variable (column
+1 of this table) we estimate a short-run elasticity on the order of 1, a medium-run elasticity
+on the order of 2, and a long-run elasticity on the order of 3. When controlling for the trend
+in column 2, we estimate a short-run elasticity slightly below 1, a medium-run elasticity of
+about 1.5, and a long-run elasticity slightly below 2.
+We next estimate the reimbursement elasticities using GMM, as described in equations
+(5) and (6). The results of this estimation are shown in column 3. They appear very similar to
+the reduced-form estimates from column 1, suggesting that there is little correlation between
+price changes that occurred independent of the consolidation and health care supply shocks.
+Column 4 reports coefficients from a matching estimator, corresponding to Panel B of Figure
+4. The point estimates remain stable and precision improves. Additional robustness checks
+are reported in Appendix E.1.
+3.2 Which Services Respond?
+The implications of medical care responding to reimbursement rates depend on what
+types of services are changing. We investigate differential responses across service types by
+splitting health care using a standard classification of services, known as Betos categories.33
+Table 3 presents separate reimbursement elasticities for procedures, office visits, diagnostic
+tests, and imaging. The results imply large elasticities, ranging from 1.5 to 3.6 for these
+32The matching procedure is detailed in Appendix E.1.
+33The Berenson–Eggers Type of Service (Betos) categories (Berenson and Holahan, 1990) provide a mapping between each specific medical service and 106 aggregate categories of services. They are updated
+by CMS annually to incorporate new service codes, and are available online at http://www.cms.gov/
+HCPCSReleaseCodeSets/20_Betos.asp (accessed October 16, 2011).
+13
+broad service categories. Further analysis, presented in Appendix E, shows that the large
+elasticity for procedures is particularly robust.
+We further investigate the response of procedures by using the medical literature to split
+Betos subcategories into procedures that are more or less discretionary. More discretionary
+procedures include a variety of non-essential procedures for which the timing of the treatment is highly discretionary (e.g., major joint replacement, cataract removal, and a variety
+of musculoskeletal procedures), intensive diagnostic services (e.g., catheterization and endoscopy) and procedures related to cardiac care, the intensity of which varies widely around
+the country (Pilote et al., 1995). Less discretionary procedures include cancer and dialysis
+treatments and procedures categorized explicitly as “repairs,” such as hip fracture repair.34
+Year-by-year estimates for these subcategories of care are shown in Figure 5. The coefficients for supply of the most elective procedures increase sharply after the consolidation,
+while those for other procedures are much lower and increase much more gradually after 1997.
+As reported in columns 2 and 3 of Table 3, the long run response of elective procedures is
+twice that of less discretionary procedures. This result means that health benefits play an
+important role in determining service supply. As shown in section 1, physician concern for
+patient benefits will result in relatively small elasticities when marginal benefits drop off
+sharply for marginal patients. This is precisely how one might describe benefits from the
+category of less discretionary services. Once all hip fractures are repaired the marginal health
+benefit of an additional hip fracture repair is zero. These differential responses by electivity
+imply that the overall composition of services shifts towards more elective procedures as
+reimbursement rates increase.
+The composition of health care may also change along other dimensions, such as service
+intensity and the nature of inputs. We study these adjustment margins in columns 5 and 6 of
+Table 2. These regressions decompose the baseline result into the margins of RVUs per service
+and services per beneficiary. RVUs per service approximates the intensity of individual
+services patients receive. The results suggest that the total response comes through both
+margins roughly equally; intensive services thus exhibit larger elasticities than minor services.
+In other analysis, presented in Appendix E, we examine which providers drive these
+effects and where they are located. We find strong responses in the number of providers
+seen by each patient, and we find that generalists and specialists both respond strongly to
+reimbursement rates. We investigate the possibility that reimbursement rate changes have
+non-linear effects and we find no supportive evidence. Physician responses appear to be
+stronger in metropolitan counties than in relatively rural areas.
+34A detailed classification of the Betos codes is available in Appendix C.2.
+14
+3.3 Health Impacts
+In column 7 of Table 2 we estimate the impact of reimbursement rates on mortality and
+find no significant effect. Short- and long-run point estimates suggest increased mortality
+in areas with price increases, and the medium-run coefficient indicates the opposite. Even
+at the lower bound of the 95 percent confidence interval—a mortality decline of 0.0095
+percentage points per percentage point increase in reimbursements—incremental care would
+not be cost-effective at conventional values of a life-year (Cutler et al., 2006).
+We also measure the effect of incremental care on self-reported health and on use of
+preventative care. Column 8 reports the effect of price changes on self-reported health
+status using survey data from the Behavioral Risk Factor Surveillance System. The point
+estimates are negative and insignificantly different from zero. We can rule out health gains
+of 5 percent of one standard deviation or larger, and declines larger than 27 percent of one
+standard deviation, resulting from a 2 percent price change. Appendix Table E.7 reports
+results for additional health outcomes, and finds no significant effects.
+The results suggest that the care expansions induced by price increases had no detectable
+patient benefits. They provide little specificity, however, regarding the manner in which
+reimbursement rates dictate courses of testing, referral, and treatment for specific patient
+groups. They are also silent about the responsiveness of specific treatments with strong
+likelihoods of helping patients, and do not allow us to look at health outcomes short of
+mortality. To gain more insight into these issues we next analyze patients with heart disease.
+4 The Impact of Price Changes on Cardiac Patients
+We now focus our analysis on patients with comparable medical conditions. Among
+beneficiaries with heart disease, we look at how intensively different patients are treated and
+determine the effects of price changes on relevant treatments and significant health outcomes.
+4.1 Treating Cardiovascular Disease
+Heart disease is the leading cause of mortality in the United States (Lloyd-Jones et al.,
+2010) and its treatment has made a large contribution to increased life expectancy in aggregate (Cutler et al., 2006). Appendix D describes our protocol for assembling cohorts of
+individuals with cardiovascular disease and measuring their treatments.
+We study the effect of reimbursement rates on three imaging, testing, and evaluative
+services that are non-invasive, low intensity and low risk. The first, echocardiography, is a
+standard imaging technique for visualizing a patient’s heart, which allow the cardiologist to
+15
+evaluate its function and anatomy. The Medicare fee schedule pays $100–$200 for the test,
+mostly as reimbursement for the associated practice expenses. The second, a stress test, is a
+standard test in which a patient’s blood flow and symptoms are monitored during exercise
+(usually, walking on a treadmill). Third, we record the number of distinct evaluative office
+visits experienced by each patient.
+We also study the effect of reimbursement rates on the frequency of three relatively intensive procedures involving cardiac catheterization. Catheterization, which requires threading
+a catheter up an artery into the heart, can be both diagnostic and interventional. In addition to diagnostic catheterization, we study two related interventions: angioplasty and the
+insertion of stents. Angioplasty reverses arterial occlusion by expanding a balloon catheter
+within a blood vessel to push plaque out of the bloodstream. A stent is a metal sheath
+that can be installed in a coronary artery to prevent future occlusion. Catheterization itself
+is intensive, but low-risk, and earns the doctor roughly $300–$400. The medical literature
+contains extensive debate regarding the risks associated with angioplasty and stent insertion,
+for which Medicare reimburses physicians as much as $1,000.
+We begin our analysis by identifying cardiac patients in the Medicare claims data according to the protocol described in Appendix D. Based on where patients live in the year
+when they are first identified by this protocol, we assign them to a county and year cohort.
+We then analyze the impact of our price shocks on the treatments they receive. We estimate
+linear probability models of the following form:
+Servicek =
+X
+t6=1995
+βt· Price Changei(k) × It +
+X
+t6=1995
+ζt· ln(1990 pop.i(k)) × It
++ γi(k) + δt + ηs(i(k)),t + ζ
+0Xk,i(k),t + εk. (7)
+This patient-level regression uses either an indicator for whether patient k received a given
+service, or a count of the number of services received, as the outcome variable. Treatment is
+modeled as a function of the price change (Price Changei(k)) linked to the county i(k) where
+patient k was diagnosed. We omit those diagnosed in 1996 since their one-year followup would
+include episodes of exposure to both pre-consolidation and post-consolidation reimbursement
+rates. We therefore use 1995 as the base year in regressions of treatment outcomes on
+reimbursement rate shocks (hence the t 6= 1995 index under the summations). In other
+respects this regression follows equation (4), including county fixed effects, state-by-year
+effects, and population-by-year controls. We control for patient-level demographic variables
+and Elixhauser et al. (1998) comorbidities.
+Summary statistics on these patients’ demographics and subsequent medical care are
+16
+presented in Table 4. Patients are distributed evenly across counties with different price
+shocks, with the mean patient experiencing a shock of zero. Unsurprisingly, they come
+disproportionately from higher-population counties. These patients require more care than
+average, as they receive nearly $2,000 in physician services during the year following diagnosis
+and more than $4,000 in hospital admissions. These numbers are around three times higher
+for the subset diagnosed following a heart attack.
+4.2 The Impact of Price Changes on Patient Care
+We begin our analysis of patients with cardiovascular disease by examining the effect
+of reimbursement rates on the care they receive. Figure 6 shows the impact of the 1997
+price changes on the log RVUs received within one year of diagnosis. Care responds quickly
+after the payment area consolidation, with the estimates for all post-1996 years implying an
+elasticity on the order of 1. Column 1 of Table 5 reports the elasticity of 1.21 that results
+when the effect is pooled across of these years. Column 2 expresses the result in levels of
+care rather than logs. Columns 3 through 5 report the effect of reimbursement rates on the
+probability that a patient receives relatively intensive procedures, specifically catheterization
+(whether purely diagnostic or interventional), catheterization coupled with angioplasty, and
+catheterization coupled with stent insertion. Column 6 reports the effect on the number
+of patients’ evaluation and management visits, column 7 on the probability of receiving an
+echocardiogram, and column 8 on the probability of receiving a stress test. Services of all
+types exhibit significant responses to reimbursement rates. Consistent with results presented
+in section 3, the implied elasticities are particularly large (in excess of 2) for the procedures.
+Office visits exhibit the smallest elasticity, around 0.5, while the elasticities are intermediate
+for imaging and testing, on the order of 1.
+In Panels B and C we divide the sample into areas in the top and bottom half of the distribution of states when ranked by the frequency with which intensive interventions are used.
+We proxy for this frequency using the probability that cardiac patients receive catheterizations. The elasticity of care provision is twice as large in the states that use catheterizations
+most frequently. Among the specific treatments, the strongest differential responses appear
+for diagnostic catheterizations, stenting, and echocardiographic testing. In results not reported, we similarly divide states by the average number of RVUs associated with care for
+each cardiac patient. This second division produces relatively similar total care elasticities
+across the groups, with more striking differentials across types of services. Catheterizations
+responds more elastically in high RVU states while office visits respond more elastically in
+low RVU states. High resource intensity thus predicts high price responsiveness of intensive
+procedures while while low resource intensity predicts high price responsiveness of less inten17
+sive services. In a similar vein, Jacobson, Earle and Newhouse (2011) find different effects
+of reimbursement rates on physicians’ choice of chemotherapy drug across states.
+Panel A of Table 6 summarizes our results for total care elasticities across patient groups,
+adding a division of the cohorts into relatively young and old beneficiaries. Much like the differences in responses across states, where resource intensive states exhibit larger elasticities,
+we find that care responds most elastically for resource-intensive patients. The estimated
+elasticity of care for relatively old beneficiaries is nearly 40 percent larger than that for
+relatively young beneficiaries.
+4.3 The Impact of Price Changes on Patient Outcomes
+Panel B of Table 6 reports effects on the probability that beneficiaries die within 4 years
+of their initial diagnosis. The mortality result for the full cardiac cohort suggests that a 1
+percent increase in reimbursement rates reduces the probability that a patient dies within 4
+years by 0.04 percent. The standard error of 0.04 is sufficiently large that this value cannot
+be statistically distinguished from either 0 or from substantially larger values.
+Comparisons of mortality impacts across sub-groups of the cardiac cohorts yields richer
+results. Mortality reductions accrue entirely to relatively healthy and less intensively treated
+(at baseline) populations. Relatively unhealthy and intensively treated populations appear,
+if anything, to experience increased mortality probabilities as their care regimes become
+even more intensive. The mortality results are consistent with the view that care for these
+intensively-treated populations has approached “the flat of the curve.” Coupled with the
+large elasticities associated with care for these groups, our results imply that incremental
+care is inefficiently allocated across the patient population.35
+Panel D reports results for the probability that cohort members are admitted to the
+hospital for treatment associated with an MI in the year following diagnosis. This constitutes an outcome of immediate concern for this particular cohort, as heart attacks are one
+of the principal outcomes that cardiac care is intended to prevent. The results provide no
+evidence that incremental care reduces the likelihood that a patient receives hospital care
+associated with an MI. For the full cohort, we can rule out (with 95 percent confidence) the
+possibility that a heart attack is avoided for any less than $1,000,000 in incremental expenditures. Indeed, for the older subset of beneficiaries the increases in outpatient care were
+associated with a statistically significant increase in hospitalizations. This result need not
+35We estimate the effect of reimbursement rates on life expectancy more directly using Cox proportional
+hazard models, which are reported in Panel C. The results of this analysis exhibit a pattern similar to
+those in Panel B; modest overall mortality gains appear to be concentrated among the relatively young and
+among those in states associated with less intensive care regimes. Results from these models can never be
+distinguished statistically from zero.
+18
+imply an increase in the occurrence of heart attacks among these individuals; it may reflect
+complementarities between hospital care and incremental outpatient services. The evidence,
+for older beneficiaries in particular, rejects the hypothesis that incremental outpatient care
+generates significant offsetting reductions in spending on inpatient care. The offsets found by
+Chandra, Gruber, and McKnight (2010), who focus on office visits and prescription drugs,
+do not materialize for the broader packages of outpatient care that we analyze.36
+4.4 Fracture Treatment
+Theory predicts that supply elasticities will be small for services that are relevant, and
+associated with large benefits, for clearly defined populations. We test this prediction by
+looking at care for beneficiaries diagnosed with hip fractures. In columns 1 through 3 of Table
+7 we estimate the effect of price changes on the provision of fracture-specific treatments and
+general office visits to these beneficiaries. Column 1 shows that, as theory predicts, fracturespecific treatments do not respond to prices. Columns 2 and 3 show that general office visits
+exhibit substantial price responsiveness (estimated in levels and logs respectively). Columns
+4 and 5 report the effect of prices on the broader packages of care received by these patients,
+with imprecise results in both instances.
+5 The Impact of Prices on MRI Technology Diffusion
+The results in sections 3 and 4 raise two questions: why are health care supply elasticities
+relatively large, and what drives the dynamic nature of the response? In this and the
+following section we consider margins likely to contribute to these features of the response.
+We first study investments associated with the diffusion of advanced imaging technology. In
+section 6 we consider adjustments in the mix of patients physicians choose to treat.
+5.1 Physician Ownership of MRI Equipment
+In recent years, physicians have increasingly acquired financial interests in the provision
+of auxiliary services, many of which require substantial capital investments and subsequently
+have large margins. As modeled in section 1, investments that influence profit margins can
+have important implications for supply elasticities. A key feature of such responses—which
+may include reorganization of the incentives within small-group practices, investment in new
+36Appendix E.6 presents additional results for subgroups of cardiac patients, which are consistent with
+those presented here.
+19
+skills, and investment in referral networks—is that they amplify the direct incentive effects
+of changes in reimbursement rates.
+When a patient complains of back pain, a traditional physician’s office might take a detailed patient history, prescribe a painkiller, and schedule follow-up appointments. Suppose
+that variable costs, such as the staff time allocated to this patient, average 50 percent of
+a practice’s typical service. For this practice, a 2 percent increase in reimbursement rates
+would imply a 4 percent increase in the profit margin. Suppose the practice were to install a magnetic resonance (MR) scanner and schedule back pain patients for an immediate
+MRI appointment, with negligible marginal costs, rather than the traditional labor-intensive
+treatment course. Then the profitability of providing additional services will rise further. If
+the adjustment reduces variable costs by 10 percent, the reimbursement change’s dynamic
+effect on the profit margin will be more than twice its static effect.
+Non-radiologists have increasingly installed MR and computed tomography (CT) scanners in their offices (Levin et al., 2008), in particular since the Stark law banned physician
+referrals to outside entities with which the doctor has a financial relationship (Medicare
+Payment Advisory Commission, 2009, p. 86). This installation involves a variety of financial
+arrangements that have the common and crucial feature of giving the physician a financial
+incentive to use the scanner more frequently (Mitchell, 2007). While their result may be
+driven by either this financial incentive or by selection into MR scanner acquisition, Hillman
+et al. (1990; 1992) show that self-referring physicians—those who recommend patients receive
+an MRI that the physicians provide themselves—end up referring more of their patients for
+MRIs and referring them more frequently. Baker (2010) finds that physicians increase the
+use of MRIs following the acquisition of a machine.
+5.2 How Do Prices Influence Physician Provision of MRIs?
+To empirically study physician acquisition of MR scanners, we follow the procedures used
+by Baker (2010) to identify MRI services and determine whether they were provided by a nonradiologist. We first identify all claims within the Betos categories representing MRIs. We
+next consider the specialty of the provider listed on the claim. When the claim represents the
+actual performance of an MRI and is provided by an orthopedist or neurologist, we identify
+it as a non-radiologist MRI.37
+We compute three statistics describing the non-radiologist share of MRI services in each
+county. These are the share of total MRI services, the share of total MRI-related RVUs, and
+the fraction of unique MRI-providing firms that are associated with non-radiologists.
+37Additional details on this procedure are provided in Appendix C.3.
+20
+MRI provision expanded dramatically, both within our sample and for the broader population, during the period we study. Figure 7 shows the fraction of MRI provision undertaken
+by physician-owned facilities. The share of revenues accruing to physician-owned facilities,
+and the physician-owned share of firms taking these images, have both increased from around
+2 percent in 1993 to 17 percent by 2005. The gain in the share of physician-owned services
+was slightly smaller.
+Table 8 presents evidence regarding the effect of reimbursement rates on the decision
+to invest in MR scanners. The regressions follow those in equation 4, with the prevalence
+of non-radiologist scanner ownership as the dependent variables. Columns 1 and 2 show
+the impact of the shock to reimbursement rates on the fraction of MRI-performing firms
+that are non-radiologist physician practices. We find a significant coefficient of 0.5 for nonhead/neck MRIs, and a marginally significant coefficient of 0.2 for MRIs of the head and
+neck. These results suggest that a one percentage point increase in reimbursement rates
+drives physicians’ share of MRI equipment up by 0.5 percentage points for general MRIs and
+by 0.2 percentage points for head/neck MRIs. The differential is consistent with our findings
+regarding elective and less-discretionary services, since MRIs of the back, in particular, tend
+to be elective. In columns 3 through 6, we investigate whether this change in the composition
+of MRI-providing firms translates into a change in market shares. We find that it does, again
+for non-head/neck MRIs only. A one percentage point increase in reimbursement rates leads
+to a 0.3 percentage point increase in the fraction of non-head/neck MRI services that are
+supplied by non-radiologist physicians, and to a 0.46 percentage point increase in the share
+of RVUs supplied by these physicians.
+5.3 Back Pain Patients
+To describe how changes in the provision of non-head/neck MRIs relate to changes in a
+broader package of care, we focus on cohorts of individuals with lower back pain. Back pain
+does not lead to adverse health outcomes that are measurable in the Medicare data (primarily
+mortality), so we cannot estimate the welfare implications of this treatment. However, we
+can study the effect of reimbursement rates on a broad set of treatment courses, ranging
+from physical therapy to invasive surgery.
+Back pain is common (Deyo et al., 2009) and often presents with no apparent cause. Deyo
+and Weinstein (2001) document wide cross-sectional variations in patterns of treatment, and
+the national time series shows a secular increase in back pain treatment intensity (Friedly
+et al., 2007). We identify 880,236 back pain patients, as shown in Table 4, according to the
+protocol in Appendix D.
+21
+By definition, back pain is diagnosed on the basis of symptoms, but physicians use
+advanced imaging techniques to pinpoint the source of the pain. While these techniques
+suffer a high rate of false positives (Jensen et al., 1994), they are nonetheless employed
+frequently (Deyo et al., 2009). We measure the use of magnetic resonance imaging (MRI) in
+the lumbar spine of back pain patients. As shown in Table 4, 8 percent of back pain patients
+receive an MRI within the year after diagnosis.
+We study three treatments using the linear probability model of equation (7). The least
+intensive treatment is physical therapy, which twenty percent of our sample receives despite
+minimal evidence of effectiveness (Cherkin et al., 1998). We also study spinal injection of
+corticosteroids, which may generate moderate short-term benefits (Weiner et al., 2006), but
+which have not been shown to reduce pain over the long term (Lilius et al., 1989; Carette
+et al., 1991; Yelland et al., 2004). Back pain patients can also receive spinal surgery (e.g.,
+arthrodesis, diskectomy, laminectomy, or laminotomy) in an effort to resolve problems with
+vertebrae or intervertebral disks. These surgeries are major operations with serious risks and
+limited benefits (Weinstein et al., 2006; Atlas et al., 2005). They are performed on only two
+percent of our cohort members.
+5.4 Back Pain Treatments
+Table 9 presents our estimates of the effect of reimbursement rates on courses of treatment
+for back pain. Confirming the results from section 5.2, column 1 shows that MRI provision
+rises with reimbursement rates, with an implied elasticity around 2.
+Columns 2 and 3 investigate the extent to which the incremental MRIs found in Table 9
+are provided by non-radiologists. Column 2 looks exclusively at patients receiving MRIs, and
+asks whether the image was taken by a physician-owned facility. We find a strong impact
+of prices on that probability, with a coefficient of 0.75. A 3 percent price shock increases
+the probability that patients who receive MRIs have them taken by strongly-incentivized
+providers by 2.25 percentage points.
+The combination of the overall MRI response and the conditional ownership response is
+shown in column 3. This regression shows the effect of price changes on the unconditional
+probability that the back pain patient receives a physician-owned MRI. The estimated effect
+is positive and economically large (implying an elasticity of 2.6), but is not estimated very
+precisely.
+Results for the treatments show that, in this setting where the literature finds minimal
+benefits from all treatment courses, the least risky and least invasive service, physical therapy, responds most strongly to price changes. The implied elasticity is around 3, which
+22
+comes relative to an already high baseline rate of provision. The responses of injections and
+surgeries are statistically indistinguishable from 0. Moderate changes in financial incentives
+do not sway the typical physician to expose patients to treatments with substantial risks
+and minimal expected benefits. But these incentives do influence investments and provision
+of lucrative services with less potential for harm.
+6 Substitution and Total Labor Supply
+6.1 Substitution Across Patient Types
+McGuire and Pauly (1991) emphasize that one potentially important response to reimbursement rates involves physicians’ decisions of whom to treat. Providers can substitute
+between treating more profitable and less profitable patients due to either income or price
+effects, and changes in the incentives associated with one set of patients can influence the
+treatment of others (Glied and Graff Zivin, 2002). We explore the possibility that Medicare
+payments affect other patients’ treatments using data on privately insured patients from the
+ThompsonReuters MarketScan (“MedStat”) database.
+We extract all 45 to 64-year-old privately insured patients from this database, in order
+to have a sample as comparable as possible to the Medicare population while not being itself
+eligible for Medicare. We run a regression like that described by equation (4), using the log
+quantity of care supplied to privately-insured patients as the outcome variable. We examine
+how this care response to our Medicare-specific price changes.
+Results from this regression are shown in Figure 8. The point estimates are economically
+quite close to zero. Even so, our confidence intervals encompass a wide range of possible
+effects. We cannot rule out the possibility that increases in Medicare reimbursements lead to
+substantial substitution away from the treatment of private patients. Similarly, we cannot
+rule out the increases in such treatment that would result if physicians apply uniform practice
+styles to all of their patients.
+6.2 Physician Labor Supply Elasticities
+Our baseline supply estimates yield an elasticity of Medicare services with respect to
+Medicare reimbursement rates of 2.5. This differs from a more traditional labor supply
+elasticity because the reimbursement rate is not equivalent to the physician’s wage; variable
+costs associated with providing incremental services imply that net wages are smaller than
+reimbursement rates. Medicare’s accounting of resource intensity implies that a physician’s
+23
+own work accounts for 40 percent of the cost of providing a typical service.38 Consequently,
+we estimate that variable costs are 60 percent of baseline reimbursement rates. It follows that
+a 1 percent change in reimbursement rates represents a 2.5 percent change in the physician’s
+net wage. Hence the price elasticity of 2.5 that we have estimated represents a wage elasticity
+of 1.
+This elasticity is large relative to standard population-wide estimates. But it is quite
+comparable to estimates specific to the self-employed or to other individuals with flexible
+labor supply. Most directly relevant to our setting, Showalter and Thurston (1997) estimate a
+labor supply elasticity of 0.6 for self-employed physicians in sole proprietorships. Saez (2010)
+estimates elasticities around 1 for self-employed individuals with relatively low incomes, while
+Gruber and Saez (2002) estimate a taxable income elasticity of 0.65 for individuals who
+itemize their deductions.
+This large elasticity likely reflects both the flexibility of physicians’ labor supply and
+their adoption of fixed cost, high margin production styles. When many firms are on the
+margin of making a significant investment, their responses to news about future productivity
+are likely to be particularly dramatic (Caballero and Engel, 1999). More firms are likely to
+be at this margin following a period of high uncertainty (Bloom et al., 2007), and the time
+we study was such a period. Medicare’s fee schedule had only recently been introduced and
+providers were learning how to respond (Newhouse, 2002). Failure of the Clinton administration’s health care reform efforts had resolved substantial uncertainty about the medical
+sector’s immediate future (Cutler and Gruber, 2002), while managed care limited physicians’
+discretion in treating privately-insured patients and could have made them particularly responsive to profitable opportunities in the public sector (McGuire and Pauly, 1991). While
+this setting might have shaped the nature and size of the responses we find, it means that
+generalization to other contexts is risky. With this caveat in mind, we now ask if these
+results can help to explain broader trends in the health care sector.
+7 Implications for U.S. Health Care Spending
+Over the last half century, the U.S. health sector grew from 5 to 18 percent of GDP. The
+category of health expenditures we study in this paper, physician and clinical services, grew
+from 1 percent of GDP to nearly 4 percent. To determine the importance of supply responses
+for this growth, we need to know how profit margins changed over time. We take physician
+hourly income as an imperfect proxy for these margins, since it reflects the difference between
+38This 40 percent margin is consistent with data from the American Medical Association (Wassenaar and
+Thran, 2003, Tables 32, 35; 2001, Tables 22, 32).
+24
+reimbursements and input costs, adjusted for a measure of the quantity of care provided.
+As shown in Figure 9, physicians’ real hourly incomes grew by 46 percent from 1982
+to 2008. Over this same time period, real spending on physician services grew by 254
+percent.39 According to our estimates, each one percent increase in margins leads to a one
+percent increase in care.40 The observed increase in hourly incomes may thus have generated
+nearly a fifth (46 of the 254 percent) of the increase in spending through its effect on the
+quantity of health care provided.
+This supply response is in addition to the direct effect of margins on spending. Since
+physician income is 40 percent of revenue, a 46 percent increase in earnings translates into
+an 18 percent increase in spending. Adding this direct effect to the behavioral response
+suggests that changing margins explain 64 percent spending growth.
+A similar calculation allows us to estimate the effect of reducing reimbursements in line
+with the Sustainable Growth Rate (SGR) formula—the rates that would prevail absent the
+annual Congressional intervention. The SGR currently calls for a 29 percent reduction in
+Part B reimbursements, which would entail a two-thirds reduction in physician margins
+(Congressional Budget Office, 2011). Our results imply that following the SGR since its
+introduction in 1997 would have reduced Part B expenditure growth by 100 percentage
+points, or nearly all of its actual 114 percent growth from 1997 to 2009 (Medicare Board of
+Trustees, 2002; 2010).
+Finally, the growing importance of fixed expenditures adds to the effect of changes in
+margins on medical spending. As fixed costs grow as a share of income, income data will
+understate growth in profits from incremental care provision.41 CMS data suggest that
+capital’s share of physician practice revenue increased by around 4 percentage points from
+1989 to 2006, or by around 10 percent of profit margins.42 Using the elasticity of 1 with
+respect to margins, our estimates imply that increases in the capital intensity of care provision
+may thus have led spending on physician services to rise by an additional 10 percent.43 In
+total, we estimate that volume-expanding forces within fee-for-service payment systems led
+to a 74 percent increase in spending on physician services. This is between one quarter and
+one third of the 254 percent increase in spending on physician and clinical services over this
+time period.
+39We are grateful to Sean Nicholson and Peter Buerhaus for sharing income and hours data, respectively,
+which we combine with other sources discussed in Appendix C.4.
+40We discuss the relationship between margin and reimbursement rate elasticities in section 6.2.
+41If the physician works h hours with a margin of m, and has capital costs of k then income is y = mh−k.
+Letting κ = k/y denote capital costs as a share of income, and assuming κ is small enough that ln(1−κ) ≈ −κ,
+then the change in margin is ∆ ln(m) ≈ ∆ ln(y) − ∆ ln(h) + ∆κ.
+42These data are discussed in Appendix C.4, and are consistent with changes in hospitals’ capital share.
+43We make the conservative assumption that capital’s share was constant before 1989 and after 2006.
+25
+When volume expansions generate minimal health gains, as in our setting, they can
+be viewed as reflecting supply-side moral hazard. Supply-side moral hazard is more potent when patients are well insured, so physicians can increase supply without encountering
+significant demand-side constraints. As analyzed by Finkelstein (2007) in the context of
+Medicare’s introduction, insurance expansions ensured generous physician reimbursements
+while significantly reducing consumer exposure to out-of-pocket costs. Our analysis complements Finkelstein’s by isolating the role of reimbursement rates at a time when consumers’
+exposure to these costs was low. The advance of demand-side forces has also been of clear
+importance over the broader time period. From 1970 to 2000, the share of spending on
+physician services that was paid out-of-pocket declined from 45 percent to 11 percent. Resulting increases in demand-side moral hazard, coupled with increases in willingness to pay
+for longevity (Murphy and Topel, 2006; Hall and Jones, 2007), may explain the growth in
+spending for which purely supply-side forces cannot account.
+Because of the growing costs of health care financing, policymakers have recently proposed
+reducing health-care spending by dampening suppliers’ financial incentives. The Patient Protection and Affordable Care Act (PPACA) introduces a program of bundled payments, which
+aims to eliminate the volume-expanding incentives associated with fee-for-service payments.
+Under this system, an Accountable Care Organization (ACO) makes its own financial arrangements with individual providers. Similarly, the Health and Social Care Bill 2011 in the
+United Kingdom introduces Clinical Commissioning Groups of general practitioners who are
+financially liable for their patients’ care. How might these bundled payment systems affect
+the quantity of care consumed?
+Bundling payments is intended to give ACOs incentives to reduce costs. These incentives
+could lead them to bargain with providers and reduce profit margins to the minimum required for physicians to accept their patients (Glied and Graff Zivin, 2002). This bargaining
+may be particularly effective at reducing profit margins for technology-intensive specialties, which currently benefit from average cost reimbursement (Newhouse, 2003), relative to
+other specialties. One way to estimate the likely importance of these differences in margin
+growth across more and less capital-intensive specialties is to compare their hourly income
+growth. Hourly incomes for technology-intensive specialists, including surgeons, radiologists,
+and anesthesiologists, grew by 50 percent from 1982 to 2008. Family practitioners and internists had lower hourly income growth of 40 percent over this period. If this difference
+represents higher margins, and ACOs are able to reduce this margin, payment bundling may
+reduce expenditures in technology-intensive specialties by 14 percentage points relative to
+others. As with other changes in care provision driven by payment reforms, the desirability of differential changes in care across specialties depends on the consequences for patient
+26
+health.
+8 Conclusion
+This paper finds that financial incentives significantly influence physicians’ supply of
+health care. We estimate that a two percent increase in reimbursement rates across the
+board leads to a five percent increase in care. Physicians disproportionately adjust their
+provision of relatively intensive and elective treatments as reimbursements rise, and they
+invest in new technologies in order to do so. Our results suggest that changes in physician
+profit margins can explain up to one third of the growth in health spending over recent
+decades.
+Escalating health expenditures create risks for public budgets (Baicker and Skinner, 2011)
+and raise concerns about the efficiency of care provision (Garber and Skinner, 2008). Contrary to assumptions embedded in the federal budgeting process, which err towards implying payment-rate neutrality, we find that spending rises substantially with reimbursement
+rates.44 We find no evidence that the incremental care induced by higher reimbursement
+rates improves patient health. These results have important implications for payment reforms designed to maintain quality while reducing cost. Analyzing the empirical effects of
+such reform efforts will be an important task for future work.
+44Federal agencies (Codespote et al., 1998; Congressional Budget Office, 2007) have long assumed a “volume offset” to Medicare price changes. Academic studies (Rice, 1982; Rice, 1983; Rice, 1984; Gruber and
+Owings, 1996) have found supportive evidence by looking at individual services provided by existing physicians. But even the study conducted by the Office of the Actuary in CMS (Codespote et al., 1998, Tables 1,
+2) finds a positive quantity responses to price changes when looking across different services.
+27
+References
+Acemoglu, Daron, “Directed Technical Change,” Review of Economic Studies, October
+2002, 69 (4), 781–809.
+and Amy Finkelstein, “Input and Technology Choices in Regulated Industries:
+Evidence from the Health Care Sector,” Journal of Political Economy, October 2008,
+116 (5), 837–880.
+Afendulis, Christopher C. and Daniel P. Kessler, “Tradeoffs from Integrating Diagnosis and Treatment in Markets for Health Care,” American Economic Review, June
+2007, 97 (3), 1013–1020.
+Arrow, Kenneth J., “Uncertainty and the Welfare Economics of Medical Care,” American
+Economic Review, December 1963, 53 (5), 941–973.
+et al., “Toward a 21st-Century Health Care System: Recommendations for Health
+Care Reform,” Annals of Internal Medicine, April 7 2009, 150 (7), 493–495.
+Atlas, Steven J., Robert B. Keller, Yen A. Wu, Richard A. Deyo, and Daniel E.
+Singer, “Long-Term Outcomes of Surgical and Nonsurgical Management of Lumbar
+Spinal Stenosis: 8 to 10 Year Results from the Maine Lumbar Spine Study,” Spine,
+April 15 2005, 30 (8), 936–943.
+Baicker, Katherine and Jonathan S. Skinner, “Health Care Spending Growth and the
+Future of U.S. Tax Rates,” Working Paper No. 16772, National Bureau of Economic
+Research February 2011.
+Baker, Laurence C., “Acquisition Of MRI Equipment By Doctors Drives Up Imaging Use
+And Spending,” Health Affairs, December 2010, 29 (12), 2252–2259.
+Berenson, Robert and John Holahan, “Using A New Type-of-Service Classification
+System to Examine the Growth in Medicare Physician Expenditures, 1985–1988,” NTIS
+Publication PB91-188599, Urban Institute Health Policy Center December 1990.
+Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan, “How Much Should
+We Trust Differences-in-Differences Estimates?,” Quarterly Journal of Economics,
+February 2004, 119 (1), 249–275.
+Bloom, Nick, Stephen Bond, and John Van Reenen, “Uncertainty and Investment
+Dynamics,” Review of Economic Studies, April 2007, 74 (2), 391–415.
+Bureau of Health Professions, “Area Resource File, 1940-1990,” Rockville, MD:
+U.S. Dept. of Health and Human Services, Office of Data Analysis and Management
+1991.
+Burney, Ira and George Schieber, “Medicare physicians’ services: the composition of
+spending and assignment rates,” Health Care Financing Review, Fall 1985, 7 (1), 81–96.
+28
+Caballero, Ricardo J. and Eduardo M. R. A. Engel, “Explaining Investment Dynamics in U.S. Manufacturing: A Generalized (S, s) Approach,” Econometrica, July 1999,
+67 (4), 783–826.
+Card, David, Carlos Dobkin, and Nicole Maestas, “Does Medicare Save Lives?,”
+Quarterly Journal of Economics, May 2009, 124 (2), 597–636.
+Carette, Simon, Sylvie Marcoux, Ren´e Truchon, Charlotte Grondin, Jacques
+Gagnon, Yves Allard, and Marie Latulippe, “A Controlled Trial of Corticosteroid Injections into Facet Joints for Chronic Low Back Pain,” New England Journal
+of Medicine, October 3 1991, 325, 1002–1007.
+Chandra, Amitabh and Jonathan S. Skinner, “Technology Growth and Expenditure
+Growth in Health Care,” Working Paper No. 16953, National Bureau of Economic
+Research April 2011.
+, Jonathan Gruber, and Robin McKnight, “Patient Cost-Sharing and Hospitalization Offsets in the Elderly,” American Economic Review, March 2010, 100 (1), 193–213.
+Cherkin, Daniel C., Richard A. Deyo, Ernest Volinn, and John D. Loeser, “Use
+of the International Classification of Diseases (ICD-9-CM) to Identify Hospitalizations
+for Mechanical Low Back Problems in Administrative Databases,” Spine, July 1992, 17
+(7), 817–825.
+, , Michele Batti´e, Janet Street, and William Barlow, “A Comparison of
+Physical Therapy, Chiropractic Manipulation, and Provision of an Educational Booklet
+for the Treatment of Patients with Low Back Pain,” New England Journal of Medicine,
+October 8 1998, 339 (15), 1021–1029.
+Chetty, Raj, “Sufficient Statistics for Welfare Analysis: A Bridge Between Structural and
+Reduced-Form Methods,” Annual Review of Economics, 2009, 1, 451–488.
+, Adam Looney, and Kory Kroft, “Salience and Taxation: Theory and Evidence,”
+American Economic Review, September 2009, 99 (4), 1145–1177.
+Clemens, Jeffrey, “Regulatory Redistribution in the Market for Health Insurance,” August
+2011. Stanford Institute for Economic Policy Research, mimeo. Available online at
+http://www.stanford.edu/~jclemens/RegulatoryRedistribution.pdf.
+Codespote, Suzanne M., William J. London, and John D. Shatto, “Physician
+Volume & Intensity Response,” Memorandum to Richard S. Foster, Office of the Actuary, Health Care Financing Administration August 13 1998. Available online at
+https://www.cms.gov/ActuarialStudies/downloads/PhysicianResponse.pdf.
+Cohen, Joshua T., Peter J. Neumann, and Milton C. Weinstein, “Does Preventive
+Care Save Money? Health Economics and the Presidential Candidates,” New England
+Journal of Medicine, February 14 2008, 358 (7), 661–663.
+29
+Congressional Budget Office, “Factors Underlying the Growth in Medicare’s Spending
+for Physicians’ Service,” Background Paper 2597, CBO 2007. Available online at http:
+//www.cbo.gov/ftpdocs/81xx/doc8193/06-06-MedicareSpending.pdf.
+, “Medicares Payments to Physicians: The Budgetary Impact of Alternative Policies,”
+June 2011. Available online at http://www.cbo.gov/ftpdocs/122xx/doc12240/SGR_
+Menu_2011.pdf.
+Cutler, David M., “Empirical Evidence on Hospital Delivery Under Prospective Payment,” November 1990. Harvard University, mimeo. Available online at http:
+//www.economics.harvard.edu/faculty/cutler/files/Empirical\%20Evidence\
+%20on\%20Hospital\%20Delivery\%20under\%20Prospective\%20Payment.pdf.
+, Your Money Or Your Life: Strong Medicine for America’s Health Care System, Oxford: Oxford University Press, 2004.
+, Allison B. Rosen, and Sandeep Vijan, “The Value of Medical Spending in the
+United States, 1960–2000,” New England Journal of Medicine, August 31 2006, 355 (9),
+920–927.
+and Jonathan Gruber, “Health Policy in the Clinton Era: Once Bitten, Twice Shy,”
+in Jeffrey A. Frankel and Peter R. Orzag, eds., American Economic Policy in the 1990s,
+Cambridge, Mass.: MIT Press, 2002, chapter 12, pp. 825–874.
+and Mark McClellan, “Is Technological Change In Medicine Worth It?,” Health
+Affairs, September 2001, 20 (5), 11–29.
+Deyo, Richard A. and James N. Weinstein, “Low Back Pain,” New England Journal
+of Medicine, February 1 2001, 344, 363–370.
+, Sohail K. Mirza, Judith A. Turner, and Brook I. Martin, “Overtreating
+Chronic Back Pain: Time to Back Off?,” Journal of the American Board of Family
+Medicine, January–February 2009, 22 (1), 62–68.
+Doms, Mark and Timothy Dunne, “Capital Adjustment Patterns in Manufacturing
+Plants,” Review of Economic Dynamics, April 1998, 1 (2), 402–429.
+Elixhauser, Anne, Claudia Steiner, D. Robert Harris, and Rosanna M. Coffey,
+“Comorbidity Measures for Use with Administrative Data,” Medical Care, January
+1998, 36 (1), 8–27.
+Ellis, Randall P. and Thomas G. McGuire, “Provider Behavior Under Prospective
+Reimbursement: Cost Sharing and Supply,” Journal of Health Economics, June 1986,
+5 (2), 129–152.
+Feldstein, Martin S., “The Welfare Loss of Excess Health Insurance,” Journal of Political
+Economy, March–April 1973, 81 (2), 251–280.
+30
+Finkelstein, Amy, “The Aggregate Effects of Health Insurance: Evidence from the Introduction of Medicare,” Quarterly Journal of Economics, February 2007, 122 (1), 1–37.
+Fisher, Elliott S., David E. Wennberg, Th´er`ese A. Stukel, Daniel J. Gottlieb,
+F. L. Lucas, and Etoile L. Pinder ´ , “The Implications of Regional Variations in
+Medicare Spending. Part 2: Health Outcomes and Satisfaction with Care,” Annals of
+Internal Medicine, February 2003, 138 (4), 288–298.
+Friedly, Janna, Leighton Chan, and Richard Deyo, “Increases in Lumbosacral Injections in the Medicare Population: 1994 to 2001,” Spine, 15 July 2007, 32 (16),
+1754–1760.
+Friedman, Milton and Rose D. Friedman, Two Lucky People: Memoirs, Chicago:
+University of Chicago Press, 1998.
+Garber, Alan M. and Jonathan Skinner, “Is American Health Care Uniquely Inefficient?,” Journal of Economic Perspectives, Fall 2008, 22 (4), 27–50.
+Gawande, Atul, “The Cost Conundrum,” The New Yorker, June 1 2009.
+Ginsburg, Paul B., “Reforming Provider Payment—The Price Side of the Equation,” New
+England Journal of Medicine, October 6 2011, 365 (14), 1268–1270.
+Glaeser, Edward L., “Should Transfer Payments be Indexed to Local Price Levels?,”
+Regional Science and Urban Economics, January 1998, 28 (1), 1–20.
+Glied, Sherry and Joshua Graff Zivin, “How do doctors behave when some (but not
+all) of their patients are in managed care?,” Journal of Health Economics, March 2002,
+21 (2), 337–353.
+Gottlieb, Daniel J., Weiping Zhou, Yunjie Song, Kathryn Gilman Andrews,
+Jonathan S. Skinner, and Jason M. Sutherland, “Prices Don’t Drive Regional
+Medicare Spending Variations,” Health Affairs, March 2010, 29 (3), 537–543.
+Government Accountability Office, “Geographic Adjustment Indices Are Valid in Design, but Data and Methods Need Refinement,” Report GAO-05-119, GAO 2005.
+, “Geographic Areas Used to Adjust Physician Payments for Variation in Practice Costs
+Should Be Revised,” Report GAO-07-466, GAO 2007.
+Gruber, Jon and Emmanuel Saez, “The elasticity of taxable income: evidence and
+implications,” Journal of Public Economics, April 2002, 84 (1), 1–32.
+Gruber, Jonathan and Maria Owings, “Physician Financial Incentives and Cesarean
+Section Delivery,” RAND Journal of Economics, Spring 1996, 27 (1), 99–123.
+Hackbarth, Glenn, Robert Reischauer, and Anne Mutti, “Collective Accountability for Medical Care—Toward Bundled Medicare Payments,” New England Journal of
+Medicine, July 3 2008, 359 (1), 3–5.
+31
+Hadley, Jack and James D. Reschovsky, “Medicare fees and physicians. medicare service volume: Beneficiaries treated and services per beneficiary,” International Journal
+of Health Care Finance and Economics, June 2006, 6 (2), 131–150.
+, , Catherine Corey, and Stephen Zuckerman, “Medicare Fees and the Volume of Physicians’ Services,” Inquiry, Winter 2009, 46 (4), 372–390.
+Hall, Robert E. and Charles I. Jones, “The Value of Life and the Rise in Health
+Spending,” Quarterly Journal of Economics, February 2007, 122 (1), 39–72.
+He, Jiang, Lorraine G. Ogden, Lydia A. Bazzano, Suma Vupputuri, Catherine
+Loria, and Paul K. Whelton, “Risk Factors for Congestive Heart Failure in US
+Men and Women: NHANES I Epidemiologic Follow-up Study,” Archives of Internal
+Medicine, April 9 2001, 161 (7), 996–1002.
+Health Care Financing Administration, “Medicare Program; Fee Schedule for Physicians’ Services,” Federal Register, November 25 1991, 56 (227), 59502–59819. Final
+Rule.
+, “Medicare Program; Revisions to Payment Policies and Five-Year Review of and
+Adjustments to the Relative Value Units Under the Physician Fee Schedule for Calendar
+Year 1997,” Federal Register, November 22 1996, 61 (227), 59490–59640. Final Rule
+With Comment Period.
+, “Medicare Program; Revisions to Payment Policies Under the Physician Fee Schedule
+for Calendar Year 1997,” Federal Register, July 2 1996, 61 (128), 34614–34662. Proposed
+Rule.
+Helbing, Charles, Viola B. Latta, and Roger E. Keene, “Medicare expenditures for
+physician and supplier services, 1970-88,” Health Care Financing Review, Spring 1991,
+12 (3), 109–120.
+Hillman, Bruce J., Catherine A. Joseph, Michael R. Mabry, Jonathan H. Sunshine, Stephen D. Kennedy, and Monica Noether, “Frequency and Costs of
+Diagnostic Imaging in Office Practice—A Comparison of Self-Referring and RadiologistReferring Physicians,” New England Journal of Medicine, December 6 1990, 323 (23),
+1604–1608.
+, George T. Olson, Patricia E. Griffith, Jonathan H. Sunshine, Catherine A.
+Joseph, Stephen D. Kennedy, William R. Nelson, and Lee B. Bernhardt,
+“Physicians’ Utilization and Charges for Outpatient Diagnostic Imaging in a Medicare
+Population,” Journal of the American Medical Association, October 21 1992, 268 (15),
+2050–2054.
+Hsiao, William C., Peter Braun, Douwe Yntema, and Edmund R. Becker, “Estimating physicians’ work for a resource-based relative-value scale,” New England Journal
+of Medicine, September 29 1988, 319 (13), 835–841.
+32
+Jacobson, Mireille, Craig C. Earle, and Joseph P. Newhouse, “Geographic Variation in Physicians’ Responses to a Reimbursement Change,” New England Journal of
+Medicine, November 2 2011.
+, , Mary Price, and Joseph P. Newhouse, “How Medicare’s Payment Cuts
+For Cancer Chemotherapy Drugs Changed Patterns Of Treatment,” Health Affairs, July
+2010, 29, 1391–1399.
+Jensen, Maureen C., Michael N. Brant-Zawadzki, Nancy Obuchowski,
+Michael T. Modic, Dennis Malkasian, and Jeffrey S. Ross, “Magnetic Resonance Imaging of the Lumbar Spine in People Without Back Pain,” New England
+Journal of Medicine, July 14 1994, 331 (2), 69–73.
+Kaplow, Louis, “Regional Cost-of-Living Adjustments in Tax-Transfer Schemes,” Tax Law
+Review, Regional Cost-of-Living Adjustments in Tax-Transfer Schemes 1996, 51, 175.
+Levin, David C., Vijay M. Rao, Laurence Parker, Andrea J. Frangos, and
+Jonathan H. Sunshine, “Ownership or Leasing of MRI Facilities by Nonradiologist
+Physicians Is a Rapidly Growing Trend,” Journal of the American College of Radiology,
+February 2008, 5 (2), 105–109.
+Lilius, G., E.M. Laasonen, P. Myllynen, A. Harilainen, and G. Gronlund, “Lumbar Facet Joint Syndrome: A Randomised Clinical Trial,” Journal of Bone and Joint
+Surgery, British Volume, August 1989, 71B (4), 681–684.
+Lloyd-Jones, Donald et al., “Heart Disease and Stroke Statistics–2010 Update: A Report
+from the American Heart Association,” Circulation, January 26 2010, 121, E1–E170.
+Manning, Willard G., Joseph P. Newhouse, Naihua Duan, Emmett B. Keeler,
+Arleen Leibowitz, and M. Susan Marquis, “Health Insurance and the Demand for
+Medical Care: Evidence from a Randomized Experiment,” American Economic Review,
+June 1987, 77 (3), 251–277.
+Maxwell, Stephanie, Stephen Zuckerman, and Pablo Aliaga, “Effects of the Implementation of Resource-Based Practice Expense Relative Value Units Under the Medicare Physician Fee Schedule, 1998-2002,” Technical Report No. 05-1, The Urban Institute March 2005. Available online at http://permanent.access.gpo.gov/lps78543/
+Mar05_PE_RVU.pdf.
+McGuire, Thomas G. and Mark V. Pauly, “Physician response to fee changes with
+multiple payers,” Journal of Health Economics, 1991, 10 (4), 385–410.
+McKnight, Robin, “Medicare Balance Billing Restrictions: Impacts on Physicians and
+Beneficiaries,” Journal of Health Economics, March 2007, 26 (2), 326–341.
+McWilliams, J. Michael, Ellen Meara, Alan M. Zaslavsky, and John Z. Ayanian,
+“Health of Previously Uninsured Adults After Acquiring Medicare Coverage,” Journal
+of the American Medical Association, December 26 2007, 298 (24), 2886–2894.
+33
+Medical Group Management Association, Physician Compensation and Production
+Survey: 1998 Report Based on 1997 Data, Englewood, Colo., 1998.
+Medicare Payment Advisory Commission, “Impact of physician self-referral on use of
+imaging services within an episode,” in “Report to the Congress; Improving Incentives
+in the Medicare Program,” Washington, D.C.: Medicare Payment Advisory Commission, June 2009, chapter 4, pp. 81–100. Available online at http://www.medpac.gov/
+chapters/Jun09_Ch04.pdf.
+, “A Data Book: Healthcare Spending and the Medicare Program,” June 2011. Available
+online at http://www.medpac.gov/documents/Jun11DataBookEntireReport.pdf.
+Mitchell, Janet B. and Jerry Cromwell, “Physician Behavior Under the Medicare Assignment Option,” Journal of Health Economics, December 1982, 1 (3), 245–264.
+Mitchell, Jean M., “The Prevalence Of Physician Self-Referral Arrangements After Stark
+II: Evidence From Advanced Diagnostic Imaging,” Health Affairs, April 2007, 26 (3),
+w415–w424.
+Murphy, Kevin M. and Robert H. Topel, “The Value Of Health And Longevity,”
+Journal of Political Economy, August 2006, 114 (4), 871–904.
+Newhouse, Joseph P., Free for All? Lessons from the RAND Health Insurance Experiment, Cambridge, Mass.: Harvard University Press, 1993.
+, “Medicare Policy,” in Jeffrey A. Frankel and Peter R. Orzag, eds., American Economic
+Policy in the 1990s, Cambridge, Mass.: MIT Press, 2002, chapter 13, pp. 899–955.
+, Pricing the Priceless: A Health Care Conundrum, Cambridge, Mass.: MIT Press,
+2003.
+Nicholson, Sean and Nicholas S. Souleles, “Physician Income Expectations and Specialty Choice,” Working Paper No. 8536, National Bureau of Economic Research October 2001.
+Paringer, Lynn, “Medicare assignment rates of physicians: their responses to changes in
+reimbursement policy.,” Health Care Financing Review, 1980, 1, 75–89.
+Pilote, Louise, Robert M. Califf, Shelly Sapp, Dave P. Miller, Daniel B. Mark,
+W. Douglas Weaver, Joel M. Gore, Paul W. Armstrong, E. Magnus Ohman,
+and Eric J. Topol, “Regional Variation across the United States in the Management
+of Acute Myocardial Infarction,” New England Journal of Medicine, August 31 1995,
+333, 565–572.
+Rice, Thomas H., “Economic Incentive and Physician Practice: An Examination Of Medicare Participation Decisions and Physician-Induced Demand.” PhD dissertation, University of California at Berkeley 1982.
+34
+, “The Impact of Changing Medicare Reimbursement Rates on Physician-Induced Demand,” Medical Care, August 1983, 21 (8), 803–815.
+, “Physician-Induced Demand for Medical Care: New Evidence from the Medicare
+Program,” Advances in Health Economics and Health Services Research, 1984, 5, 129–
+160.
+and Nelda McCall, “Changes in Medicare reimbursement in Colorado: impact on
+physicians’ economic behavior,” Health Care Financing Review, June 1982, 4, 67–85.
+Ruggles, Steven, J. Trent Alexander, Katie Genadek, Ronald Goeken,
+Matthew B. Schroeder, and Matthew Sobek., “Integrated Public Use Microdata Series: Version 5.0,” Minneapolis: University of Minnesota. 2010. Available online
+at http://usa.ipums.org/.
+Saez, Emmanuel, “Do Taxpayers Bunch at Kink Points?,” American Economic Journal:
+Economic Policy, August 2010, 2 (3), 180–212.
+Shah, Bimal R., Patricia A. Cowper, Sean M. OBrien, Neil Jensen, Manesh R.
+Patel, Pamela S. Douglas, and Eric D. Peterson, “Association Between Physician
+Billing and Cardiac Stress Testing Patterns Following Coronary Revascularization,”
+Journal of the American Medical Association, November 9 2011, 306 (18), 1993–2000.
+Showalter, Mark H. and Norman K. Thurston, “Taxes and labor supply of highincome physicians,” Journal of Public Economics, October 1997, 66 (1), 73–97.
+Staiger, Douglas O., David I. Auerbach, and Peter I. Buerhaus, “Trends in the
+Work Hours of Physicians in the United States,” Journal of the American Medical
+Association, February 24 2010, 303 (8), 747–753.
+The Boards of Trustees, Federal Hospital Insurance and Federal Supplementary
+Medical Insurance Trust Funds, “2002 Annual Report of the Boards of Trustees
+of the Federal Hospital Insurance Trust Fund and the Federal Supplementary Medical Insurance Trust Fund,” March 2002. Available online at https://www.cms.gov/
+reportstrustfunds/downloads/tr2002.pdf.
+, “2010 Annual Report of the Boards of Trustees of the Federal Hospital Insurance Trust
+Fund and the Federal Supplementary Medical Insurance Trust Fund,” August 2010.
+Available online at https://www.cms.gov/reportstrustfunds/downloads/tr2010.
+pdf.
+Trajtenberg, Manuel, “Product Innovations, Price Indices and the (Mis)Measurement
+of Economic Performance,” Working Paper No. 3261, National Bureau of Economic
+Research February 1990.
+U.S. Congress, “The Omnibus Budget Reconciliation Act of 1989,” 1989. Pub. L. 101-239.
+, “Medicare Prescription Drug, Improvement, and Modernization Act of 2003,” 1993.
+Pub. L. 109-173.
+35
+, “Balanced Budget Act of 1997,” 1997. Pub. L. 105-33.
+, “Medicare, Medicaid, and SCHIP Balanced Budget Refinement Act of 1999,” 1997.
+Pub. L. 106-113.
+Wassenaar, John D. and Sara L. Thran, eds, Physician Socioeconomic Statistics:
+2000–2002 Edition, American Medical Association, 2001.
+and , eds, Physician Socioeconomic Statistics: 2003 Edition, American Medical
+Association, 2003.
+Weiner, Debra K., Young-Sin Kim, Paula Bonino, and Tracy Wang, “Low Back
+Pain in Older Adults: Are We Utilizing Healthcare Resources Wisely?,” Pain Medicine,
+March 2006, 7 (2), 143–150.
+Weinstein, James N. et al., “Surgical vs Nonoperative Treatment for Lumbar Disk Herniation The Spine Patient Outcomes Research Trial (SPORT): A Randomized Trial,”
+Journal of the American Medical Association, November 22/29 2006, 296 (20), 2441–
+2450.
+Weisbrod, Burton A., “The Health Care Quadrilemma: An Essay on Technological
+Change, Insurance, Quality of Care, and Cost Containment,” Journal of Economic
+Literature, June 1991, 29 (2), 523–552.
+Welch, H. Gilbert, Sandra M. Sharp, Dan J. Gottlieb, Jonathan S. Skinner, and
+John E. Wennberg, “Geographic Variation in Diagnosis Frequency and Risk of Death
+Among Medicare Beneficiaries,” Journal of the American Medical Association, March
+16 2011, 305 (11), 1113–1118.
+Wilson, Peter W. F., Ralph B. D’Agostino, Daniel Levy, Albert M. Belanger,
+Halit Silbershatz, and William B. Kannel, “Prediction of Coronary Heart Disease
+Using Risk Factor Categories,” Circulation, May 12 1998, 97, 1837–1847.
+Yelland, Michael J., Paul P. Glasziou, Nikolai Bogduk, Philip J. Schluter,
+and Mary McKernon, “Prolotherapy Injections, Saline Injections, and Exercises for
+Chronic Low-Back Pain: A Randomized Trial,” Spine, January 1 2004, 29 (1), 9–16.
+36
+Figure 1: Supply and Effort Costs for Physicians at Two Reimbursement Rates
+2.5 3 3.5 4 4.5 5
+500
+1000
+1500
+2000
+2500
+3000
+3500
+Quantity (Physician Hour−Equivalents)
+Productivity (γ)
+Physician supply with price change
+q(γ, rH)→
+← q(γ, rL)
+← Practice style adjustments:
+20% of total quantity growth
+q(γ, rL)
+q(γ, rH)
+This figure illustrates the effect of reimbursement rates change on physicians’ threshold γ
+∗
+for investing in
+an intensive practice style. At a given reimbursement rate, whether rL or rH, more productive physicians
+(γ > γ∗) invest in the intensive practice style, and quantity supplied is increasing with productivity γ. As
+shown in Proposition 1, an increase in reimbursement rates from rL to rH increases the quantity supplied for
+a physician with any fixed productivity γ, and also reduces the investment threshold γ
+∗
+, meaning that more
+physicians invest. The increase in supply due to the threshold shift is labeled “Practice Style Adjustments.”
+The parameters underlying this calibration are given in Appendix A.3
+37
+Figure 2: Medicar

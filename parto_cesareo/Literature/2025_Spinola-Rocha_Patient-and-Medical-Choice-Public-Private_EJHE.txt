@@ -1,0 +1,800 @@
+Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil - The European Journal of Health Economics
+
+---
+canonical: https://link.springer.com/article/10.1007/s10198-025-01835-x
+meta-360-site-verification: 1268d79b5e96aecf3ff2a7dac04ad990
+meta-DOI: 10.1007/s10198-025-01835-x
+meta-access: No
+meta-applicable-device: pc,mobile
+meta-citation_article_type: Original Paper
+meta-citation_author: Rocha, Rudi
+meta-citation_author_email: rudi.rocha@fgv.br
+meta-citation_author_institution: Instituto de Estudos para Políticas de Saúde, São Paulo, Brazil
+meta-citation_cover_date: 2026/07/01
+meta-citation_doi: 10.1007/s10198-025-01835-x
+meta-citation_firstpage: 1117
+meta-citation_fulltext_html_url: https://link.springer.com/article/10.1007/s10198-025-01835-x
+meta-citation_issn: 1618-7601
+meta-citation_issue: 5
+meta-citation_journal_abbrev: Eur J Health Econ
+meta-citation_journal_title: The European Journal of Health Economics
+meta-citation_language: en
+meta-citation_lastpage: 1148
+meta-citation_online_date: 2025/12/29
+meta-citation_pdf_url: https://link.springer.com/content/pdf/10.1007/s10198-025-01835-x.pdf
+meta-citation_publication_date: 2026/07
+meta-citation_publisher: Springer Berlin Heidelberg
+meta-citation_reference: Robinson, S., Royer, H., Silver, D.: Geographic Variation in Cesarean Sections in the United States: Trends, Correlates, and Other Interesting Facts, NBER Work. Pap., vol. WP 31871, 2023, [Online]. Available:
+                  http://www.nber.org/papers/w31871
+  
+  
+meta-citation_springer_api_url: http://api.springer.com/xmldata/jats?q=doi:10.1007/s10198-025-01835-x&amp;api_key=
+meta-citation_title: Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil
+meta-citation_volume: 27
+meta-dc.copyright: 2025 The Author(s), under exclusive licence to Springer-Verlag GmbH Germany, part of Springer Nature
+meta-dc.creator: Rocha, Rudi
+meta-dc.date: 2025-12-29
+meta-dc.description: In this paper we assess the extent to which patient and physician preferences determine birth timing manipulation in public and private hospitals, among white and black mothers, using data from approximately 37&amp;nbsp;million births in Brazil. Our findings show that manipulation is markedly salient in the private sector and among white women. While the timing of births in the public sector is also influenced by specific incentives, their impact is less pronounced and more evenly distributed across racial groups. The analysis provides a comprehensive and integrated assessment of how treatment decisions respond to different individual incentives, for different population groups, and within distinct institutional settings, thus allowing for comparison of magnitude of estimates across health systems and populations.
+meta-dc.format: text/html
+meta-dc.identifier: doi:10.1007/s10198-025-01835-x
+meta-dc.language: En
+meta-dc.publisher: Springer
+meta-dc.rights: 2025 The Author(s), under exclusive licence to Springer-Verlag GmbH Germany, part of Springer Nature
+meta-dc.rightsAgent: journalpermissions@springernature.com
+meta-dc.source: The European Journal of Health Economics 2025 27:5
+meta-dc.subject: Health Care Management
+meta-dc.title: Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil
+meta-dc.type: OriginalPaper
+meta-description: In this paper we assess the extent to which patient and physician preferences determine birth timing manipulation in public and private hospitals, among wh
+meta-format-detection: telephone=no
+meta-journal_id: 10198
+meta-og:description: In this paper we assess the extent to which patient and physician preferences determine birth timing manipulation in public and private hospitals, among white and black mothers, using data from approximately 37 million births in Brazil. Our findings show that manipulation is markedly salient in the private sector and among white women. While the timing of births in the public sector is also influenced by specific incentives, their impact is less pronounced and more evenly distributed across racial groups. The analysis provides a comprehensive and integrated assessment of how treatment decisions respond to different individual incentives, for different population groups, and within distinct institutional settings, thus allowing for comparison of magnitude of estimates across health systems and populations.
+meta-og:image: https://media.springernature.com/m685/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig1_HTML.png
+meta-og:site_name: SpringerLink
+meta-og:title: Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil - The European Journal of Health Economics
+meta-og:type: article
+meta-og:url: https://link.springer.com/article/10.1007/s10198-025-01835-x
+meta-prism.copyright: 2025 The Author(s), under exclusive licence to Springer-Verlag GmbH Germany, part of Springer Nature
+meta-prism.doi: doi:10.1007/s10198-025-01835-x
+meta-prism.endingPage: 1148
+meta-prism.issn: 1618-7601
+meta-prism.number: 5
+meta-prism.publicationDate: 2025-12-29
+meta-prism.publicationName: The European Journal of Health Economics
+meta-prism.rightsAgent: journalpermissions@springernature.com
+meta-prism.section: OriginalPaper
+meta-prism.startingPage: 1117
+meta-prism.url: https://link.springer.com/article/10.1007/s10198-025-01835-x
+meta-prism.volume: 27
+meta-robots: max-image-preview:large
+meta-size: 797996
+meta-theme-color: #e6e6e6
+meta-twitter:card: summary_large_image
+meta-twitter:description: The European Journal of Health Economics - In this paper we assess the extent to which patient and physician preferences determine birth timing manipulation in public and private hospitals, among...
+meta-twitter:image: https://media.springernature.com/m685/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig1_HTML.png
+meta-twitter:image:alt: Content cover image
+meta-twitter:site: @SpringerLink
+meta-twitter:title: Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil
+meta-viewport: width=device-width, initial-scale=1
+title: Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil | The European Journal of Health Economics | Springer Nature Link
+---
+
+[Skip to main content](#main)
+
+Advertisement
+
+[![Advertisement](https://pubads.g.doubleclick.net/gampad/ad?iu=/270604982/springerlink/10198/article&amp;sz=728x90&amp;pos=top&amp;articleid=s10198-025-01835-x)](https://pubads.g.doubleclick.net/gampad/jump?iu=/270604982/springerlink/10198/article&sz=728x90&pos=top&articleid=s10198-025-01835-x)
+
+[![Springer Nature Link](https://link.springer.com/oscar-static/images/darwin/header/img/logo-springer-nature-link-05805fde18.svg)](https://link.springer.com)
+
+[Log in](https://idp.springer.com/auth/personal/springernature?redirect_uri=https://link.springer.com/article/10.1007/s10198-025-01835-x?)
+
+[Menu](#eds-c-header-nav)
+
+[Find a journal](https://link.springer.com/journals/) [Publish with us](https://www.springernature.com/gp/authors) [Track your research](https://link.springernature.com/home/)
+
+[Search](#eds-c-header-popup-search)
+
+[Saved research](https://link.springer.com/saved-research)
+
+[Cart](https://order.springer.com/public/cart)
+
+1. [Home](https://link.springer.com/)
+2. [The European Journal of Health Economics](https://link.springer.com/journal/10198)
+3. Article
+
+# Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil
+
+- Original Paper
+- Published: 29 December 2025
+
+- Volume 27, pages 1117–1148 (2026)
+- [Cite this article](#citeas)
+
+[Save article](https://link.springer.com/article/10.1007/s10198-025-01835-x/save-research?_csrf=JLuz5rVVSLMOWcMwJrCAwzD9571KgDGk)
+
+[View saved research](https://link.springer.com/saved-research)
+
+[![](https://media.springernature.com/w72/springer-static/cover-hires/journal/10198?as=webp) The European Journal of Health Economics](https://link.springer.com/journal/10198) [Aims and scope](https://link.springer.com/journal/10198/aims-and-scope) [Submit manuscript](https://submission.springernature.com/new-submission/10198/3)
+
+- [Paula Spinola](#auth-Paula-Spinola-Aff1)[1](#Aff1) &
+- [Rudi Rocha](#auth-Rudi-Rocha-Aff2-Aff3)[2](#Aff2),[3](#Aff3) 
+
+- 125 Accesses
+
+- 1 Citation
+
+- [Explore all metrics](https://link.springer.com/article/10.1007/s10198-025-01835-x/metrics)
+
+## Abstract
+
+In this paper we assess the extent to which patient and physician preferences determine birth timing manipulation in public and private hospitals, among white and black mothers, using data from approximately 37 million births in Brazil. Our findings show that manipulation is markedly salient in the private sector and among white women. While the timing of births in the public sector is also influenced by specific incentives, their impact is less pronounced and more evenly distributed across racial groups. The analysis provides a comprehensive and integrated assessment of how treatment decisions respond to different individual incentives, for different population groups, and within distinct institutional settings, thus allowing for comparison of magnitude of estimates across health systems and populations.
+
+This is a preview of subscription content, [log in via an institution](https://wayf.springernature.com?redirect_uri=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10198-025-01835-x%3Fcode%3Dbd60aca8-d0a6-4d4c-8652-fe10d24edc15%26error%3Dcookies_not_supported) to check access.
+
+## Access this article
+
+[Log in via an institution](https://wayf.springernature.com?redirect_uri=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10198-025-01835-x%3Fcode%3Dbd60aca8-d0a6-4d4c-8652-fe10d24edc15%26error%3Dcookies_not_supported)
+
+## Subscribe and save
+
+Springer+
+
+from $39.99 /Month
+
+- Starting from 10 chapters or articles per month
+- Access and download chapters and articles from more than 300k books and 2,500 journals
+- Cancel anytime
+[View plans](https://link.springer.com/product/springer-plus)
+
+## Buy Now
+
+Buy article PDF USD 39.95
+
+Price excludes VAT (USA)  
+Tax calculation will be finalised during checkout.
+
+Instant access to the full article PDF.
+
+[Institutional subscriptions](https://www.springernature.com/gp/librarians/licensing/agc/journals)
+
+***Fig. 1***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig1_HTML.png)
+
+***Fig. 2***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig2_HTML.png)
+
+***Fig. 3***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig3_HTML.png)
+
+***Fig. 4***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig4_HTML.png)
+
+***Fig. 5***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig5_HTML.png)
+
+***Fig. 6***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig6_HTML.png)
+
+***Fig. 7***
+![](https://media.springernature.com/m312/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig7_HTML.png)
+
+### Similar content being viewed by others
+
+![](https://media.springernature.com/w215h120/springer-static/image/art%3Aplaceholder%2Fimages/placeholder-figure-springernature.png)
+
+### [Born in Brazil: shining a light for change](https://link.springer.com/10.1186/s12978-016-0247-4?fromPaywallRec=true)
+
+Article Open access 17 October 2016
+
+![](https://media.springernature.com/w215h120/springer-static/image/art%3Aplaceholder%2Fimages/placeholder-figure-springernature.png)
+
+### [Women’s Experiences of Childbirth in Serbian Public Healthcare Institutions: a Qualitative Study](https://link.springer.com/10.1007/s12529-017-9672-1?fromPaywallRec=true)
+
+Article 28 July 2017
+
+![](https://media.springernature.com/w215h120/springer-static/image/art%3Aplaceholder%2Fimages/placeholder-figure-springernature.png)
+
+### [The unified health system of Brazil and the effectiveness of health services](https://link.springer.com/10.1007/s10389-020-01404-x?fromPaywallRec=true)
+
+Article 26 October 2020
+
+### Explore related subjects
+
+Discover the latest articles, books and news in related subjects, suggested using machine learning.
+
+- [Assisted Reproductive Techniques](https://link.springer.com/subjects/assisted-reproductive-techniques)
+- [Medical Ethics](https://link.springer.com/subjects/medical-ethics)
+- [Medical Sociology](https://link.springer.com/subjects/medical-sociology)
+- [Race and Ethnicity](https://link.springer.com/subjects/race-and-ethnicity)
+- [Public Choice and Political Economy](https://link.springer.com/subjects/public-choice-and-political-economy)
+- [Social Choice and Welfare](https://link.springer.com/subjects/social-choice-and-welfare)
+- [Demographic Transitions and Fertility Patterns in Historical Contexts](https://link.springer.com/subjects/demographic-transitions-and-fertility-patterns-in-historical-contexts)
+
+## Notes
+
+1. Sosnaud [[13](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR13 "Sosnaud, B.: Cross-State differences in the processes generating Black–White disparities in neonatal mortality. Demography. (2021).
+                  https://doi.org/10.1215/00703370-9510578
+  
+                ")] shows that racial disparities in neonatal mortality in some US states persists after controlling for differences in birth weight distribution and socioeconomic characteristics. The author reads his findings as indicative of differential receipt of appropriate medical care during and after birth, either in access or quality.
+
+2. Greenwood et al. [[19](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR19 "Greenwood, B.N., Hardeman, R.R., Huang, L., Sojourner, A.: Physician-patient racial concordance and disparities in birthing mortality for newborns. Proc. Natl. Acad. Sci. U. S. A. 117(35), 21194–21200 (2020).
+                  https://doi.org/10.1073/pnas.1913405117
+  
+                ")], for instance, document evidence that black newborns cared by black physicians experience improved chances of surviving.
+
+3. Although risk of delivering during congress days might also increase given that higher skilled doctors are usually more likely to unavailable, risk increase is expectedly lower than that associated with bank holidays. This is because congress events are unlikely to substantially affect the operation of hospitals. Additionally, women who would have had births delivered by high-skilled doctors who become unavailable because of the congress are likely to be directed to other skilled physicians not attending the conference.
+
+4. Black/brown mothers constitute 98% of the sample of women of colour, while the remaining 2% is composed of women who identify as yellow or indigenous.
+
+5. In the remainder of this study, we define *public* (*private*) hospitals as those with 100% (0%) of obstetric beds reserved to SUS.
+
+6. Hospitals serving SUS have procedures reimbursed by the federal government based on a fee-for-service model combined with fixed-budget payment scheme [[20](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR20 "Levin, J.: A Influência das Políticas de Saúde nos Indicadores Gerados pelo Sistema de Informações Hospitalares do SUS, Universidade do Estado do Rio de Janeiro, [Online]. (2006). Available:
+                  https://www.bdtd.uerj.br:8443/handle/1/4268
+  
+                ")]. In the private sector, fees vary according to insurance plans.
+
+7. Approximately 50% of licensed physicians in Brazil work in both private and public hospitals [[21](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR21 "Scheffer, M., Guilloux, A.G.A., Miotto, B.A., de Almeida, C.: Demografia Médica no Brasil 2023. [Online]. (2023). Available:
+                  https://amb.org.br/
+  
+                ")].
+
+8. They are usually assisted by physicians and nurses during the prenatal period, and typically have a different doctor for their delivery [[22](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR22 "Domingues, R.M.S.M., et al.: Process of decision-making regarding the mode of birth in brazil: From the initial preference of women to the final mode of birth. Cad Saude Publica. 30(SUPPL1), 1–16 (2014).
+                  https://doi.org/10.1590/0102-311X00105113
+  
+                ")].
+
+9. This study uses terms such as racial gradient, racial gap, racial differences, racial disparities, and racial inequalities interchangeably when describing differences in patterns in which the timing of deliveries from black mothers, as compared to white mothers, is manipulated around inconvenient days within the same hospital-day.
+
+10. The labor induction indicator was added to the birth certificate database in 2010. Initially, it was poorly reported, with only 27% of births including this information in 2010 and 2011. Reporting increased significantly thereafter, with the variable being recorded for 95% of births delivered between 2012 and 2019.
+
+11. In other words, for analyses of exclusively public or exclusively private hospitals, we dropped births that occurred in hospitals that served simultaneously the public and the private sectors for at least one month during the entire period.
+
+12. Note that the proportion of births involving any medical intervention is not necessarily the sum of the shares of C-sections and labor induction attempts. While labor induction is typically performed when a vaginal delivery is planned, the course of events during labor could lead to the decision to pursue a C-section.
+
+13. While the higher prevalence of labor induction in the public sector is notable, it may be somewhat expected given the lower incidence of C-sections in these facilities, which results in more births being eligible for induction, as labor is a necessary condition for vaginal delivery.
+
+14. For the year of 2007, the Brazilian congress lasted for 5 (instead of 4) days. Our estimate on the 5th congress day will, therefore, be very imprecise.
+
+15. Because our estimations rely on hospital-level variation, using the optimal manipulation window adopted by Jacobson et al. [[32](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR32 "Jacobson, M., Kogelnik, M., Royer, H.: Holiday, just one day out of life: Birth timing and postnatal outcomes. J. Labor Econ. 39, S651–S702 (2021).
+                  https://doi.org/10.1086/712493
+  
+                ")] and Melo and Menezes-Filho [[31](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR31 "Melo, C., Menezes-Filho, N.: The effect of birth timing manipulation around carnival on birth indicators in Brazil. Heal Econ 33(9), 2013–2058 (2024).
+                  https://doi.org/10.1002/hec.4858
+  
+                ")] is inappropriate, as it would impose the strong assumption that there is no migration of births across hospitals. While these papers use larger windows than ours, their results show that the bulk of manipulation occurs during the week before and after the inconvenient days. Expanding the time window in our context may lead to the inclusion of other inconvenient dates, which could complicate the analysis.
+
+16. Most inauspicious dates have fixed month and day of month each year (April 1, February 29) but occur in different days of the week across different years. The same happens with most bank holidays (e.g., Independence Day). Other inconvenient days have fixed weekdays but may fall in different months across years (e.g., Carnival, Friday the 13th). Congress days have fixed month (November, every two years) but different weekdays across different years.
+
+17. When constructing the panel of daily births per hospital, we assign zero births to all days between the first and last birth registered at each hospital. The final panel contains approximately 23.5 million observations.
+
+18. The indicator variable \(\:D\left(SU{S}_{r}\right)\) is equal to 1 if the share of obstetric beds in hospital *h* affiliated to SUS during year/month *y*/*m* lies in category *r*, and 0 otherwise.
+
+19. The location where the congress takes place varies across years between one of the 27 state capitals in the country.
+
+20. This applies to employed physicians, hospital staff, and visitors to parents. Mothers are entitled to maternity leave starting from the end of pregnancy, while fathers can take paternity leave from the time of birth. These benefits apply as long as employees have formal work contracts.
+
+21. Coefficients and standard errors are reported in the appendix (Tables [3](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab3), [4](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab4), [5](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab5) and [6](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab6)).
+
+22. We replace \(\:{d}_{n}\) by \(\:+{d}_{n}\) for positive values of *n* and by \(\:-{d}_{\left|n\right|}\) for negative values of *n*.
+
+23. Again, the coefficients and standard errors are reported in the appendix (Tables [3](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab3), [4](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab4), [5](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab5) and [6](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab6)).
+
+24. The coefficients of inauspicious day for the sample of white and back mothers who deliver in private hospital are \(\:{d}_{1}\)= -0.126 (95% CI -0.979 to -0.153) and \(\:{d}_{1}\)= -0.028 (95% CI -0.188 to -0.381), respectively. These are reported in Fig. [2](https://link.springer.com/article/10.1007/s10198-025-01835-x#Fig2) (Panel A, plot on the right) and Table [3](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab3). Given the average of 1.30 and 0.58 births per day for these two population samples, informed in Table [1](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab1), these reductions correspond to 10% and 5%, respectively.
+
+25. Furthermore, women in the private sector have more time and opportunity to influence the decision on the day of birth as the obstetrician who assists their delivery is usually the same professional that has treated them during prenatal care. They are also more likely to deliver through C-section (see Table [1](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab1)), thus having the possibility to schedule their delivery from the start.
+
+26. Unfortunately, we do not have information on the attendees of the Brazilian Obstetrician-Gynaecologist Congress. Based on existing evidence that physicians in the private sector tend to be more specialized than those in the public sector [[40](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR40 "Miotto, B.A., Guilloux, A.G.A., Cassenote, A.J.F., Mainardi, G.M., Russo, G., Scheffer, M.C.: Physician’s sociodemographic profile And distribution across public And private health care: An insight into physicians’ dual practice in Brazil. BMC Health Serv. Res. 18, 1–10 (2018)")], we would expect private sector physicians to be more likely to attend the Congress.
+
+27. Specifically, the coefficients around the middle of the time window of conferences is \(\:{d}_{3}\) = -0.104 (95% CI -0.073 to -0.134) for white and − 0.037 (95% CI -0.019 to -0.055) for black mothers delivering in the private sector. This represents a relative decrease of 8% and 6%, respectively.
+
+28. When expectant mothers choose their obstetrician, around the 4th month of pregnancy, they are unlikely to be aware of daily time constraints of physicians many months ahead (and, probably, so are the physicians themselves). Besides, it is hard to precisely predict the due date of delivery at the time of the initial consultation with the obstetrician.
+
+29. While physician convenience is likely to drive births away from bank holidays, the opposite could be true for mothers. If members of their social network are more available to accompany them during childbirth on these days, delivering on bank holidays could be more convenient for mothers.
+
+30. During one-day bank holidays, the decreases relative to the respective sample average correspond to 17% vs. 11% and 6% vs. 5% for white vs. black women for the private and public sectors, respectively. The respective effects are 21% vs. 18% and 2% vs. 3% for the first day and 22% vs. 17% and 7% vs. 6% for the second day of two-day bank holidays.
+
+31. Coefficients and standard errors can be found in Appendix Table [7](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab7).
+
+32. To check whether these results simply reflect the higher proportions of black women delivering in SUS and of white women in private hospitals, we estimate the same model for the share of births by black mothers as the outcome variable. Results, which we present in the Appendix (Fig. [8](https://link.springer.com/article/10.1007/s10198-025-01835-x#Fig8)), are largely in line with our previous argument.
+
+33. Among the universe of 5,752 hospitals, 2,900 hospitals present shares of SUS obstetric beds fixed at 100% (i.e., exclusively public) while 875 hospitals present shares of SUS obstetric beds fixed at 0% (i.e., exclusively private) as reported in Table [1](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab1). There are 323 facilities who report fixed shares at values other than 0% or 100%. The remaining 1,654 hospitals present varying shares over the months of our analysis’ time sample. This is the sample we refer to in this section.
+
+34. In Eq. ([2](https://link.springer.com/article/10.1007/s10198-025-01835-x#Equ2)), we regress the difference in the number of births delivered by black relative to white mothers at the hospital-day level on indicator variables of the share of SUS obstetric beds reported by the given hospital in the respective month, dummy indicators of day during or in the vicinity of inconvenient periods, and interaction terms between the former and the latter. Time fixed effect (year, month, and day of the week) and hospital-specific effects are also included. Point estimates and standard errors, clustered at the hospital level, are presented in Table [8.](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab8) Although identification comes from hospitals for which exposure to SUS vary throughout our time sample, our estimation includes the entire sample of births in order to gain precision.
+
+35. This is computed as \(\:\widehat{\kappa\:}+{\widehat{\beta\:}}_{r}\), where each term represents the OLS estimate of the respective parameter in Eq. ([2](https://link.springer.com/article/10.1007/s10198-025-01835-x#Equ2)), and index r (represented in the plots’ horizontal axis) informs the degree of hospital affiliation to SUS.
+
+36. Since bank holidays are perceived as valuable time off, providers are likely to prioritize leisure over work due to the higher opportunity cost of their time. In contrast, from the mother’s perspective, delivering on these days could be more convenient, as members of their social network are more likely to be off work, thus increasing the likelihood of being accompanied by loved ones during childbirth.
+
+37. There is a large number of studies pointing to a negative association between hospital admissions during off-hour periods (i.e., bank holidays, weekends, evening hours) and health outcomes in case of childbirth [[41](#ref-CR41 "Gould, J.B., Qin, C., Marks, A.R., Chavez, G.: Neonatal mortality in weekend vs weekday births. J. Am. Med. Assoc. 289(22), 2958–2962 (2003).
+                  https://doi.org/10.1001/jama.289.22.2958
+  
+                "),[42](#ref-CR42 "Hong, J., et al.: A comparison of perinatal mortality in Korea on holidays and working days. BJOG 113(11), 1235–1238 (2006).
+                  https://doi.org/10.1111/j.1471-0528.2006.01054.x
+  
+                "),[43](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR43 "Palmer, W.L., Bottle, A., Aylin, P.: Association between day of delivery and obstetric outcomes. BMJ. 351 (2015).
+                  https://doi.org/10.1136/bmj.h5774
+  
+                ")] as well as other procedures [[44](#ref-CR44 "Zapf, M.A.C., et al.: The weekend effect in urgent general operative procedures. Surgery 158(2), 508–514 (2015).
+                  https://doi.org/10.1016/j.surg.2015.02.024
+  
+                "),[45](#ref-CR45 "Becker, D.J.: Do hospitals provide lower quality care on weekends?? Health Serv. Res. 42(4), 1589–1612 (2007).
+                  https://doi.org/10.1111/j.1475-6773.2006.00663.x
+  
+                "),[46](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR46 "Magid, D.J.: Relationship between time of day, day of week, timeliness of reperfusion, and in-hospital mortality for patients with acute ST-segment elevation myocardial infarction. J. Am. Med. Assoc. 294(7), 803–812 (2005).
+                  https://doi.org/10.1001/jama.294.7.803
+  
+                ")]. The literature suggests that variations in health outcomes between regular business hours and off-hours are not fully explained by differences in the case-mix, and that differences in organizational factors may be an important contributor [[42](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR42 "Hong, J., et al.: A comparison of perinatal mortality in Korea on holidays and working days. BJOG 113(11), 1235–1238 (2006).
+                  https://doi.org/10.1111/j.1471-0528.2006.01054.x
+  
+                "), [45](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR45 "Becker, D.J.: Do hospitals provide lower quality care on weekends?? Health Serv. Res. 42(4), 1589–1612 (2007).
+                  https://doi.org/10.1111/j.1475-6773.2006.00663.x
+  
+                "), [47](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR47 "Hamilton, K.E.S., Redshaw, M.E., Tarnow-Mordi, W.: Nurse staffing in relation to risk-adjusted mortality in neonatal care. Archives of Disease in Childhood 92(2), F99–F103 (2007).
+                  https://doi.org/10.1136/adc.2006.102988
+  
+                ")].
+
+38. There is documentation of inferior nurse-to-patient ratio and lower compliance to standardized protocols and guidelines in Brazilian ICUs during leisure days [[49](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR49 "Zampieri, F.G., et al.: Role of organisational factors on the ’weekend effect’in critically ill patients in brazil: A retrospective cohort analysis. BMJ Open 8(1), e018541 (2018).
+                  https://doi.org/10.1136/bmjopen-2017-018541
+  
+                ")]. Most evidence highlighting the negative association between time of admission and health outcomes in Brazil has focused on emergency hospital admissions due to heart attack [[50](#ref-CR50 "Leivas, P.H.S.: Três ensaios em economia hospitalar. Weekend effect nos atendimentos de urgência no Brasil: O caso do Infarto Agudo do Miocárdio, Pontifícia Universidade Católica do Rio Grande do Sul, 2017. [Online]. Available:
+                  https://tede2.pucrs.br/tede2/handle/tede/7695
+  
+                "),[51](#ref-CR51 "Evangelista, P.A., Barreto, S.M., Guerra, H.L.: Hospital admission and hospital death associated to ischemic heart diseases at the National health system (SUS). Arq. Bras. Cardiol. 90(2), 119–126 (2008).
+                  https://doi.org/10.1590/s0066-782x2008000200009
+  
+                "),[52](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR52 "Barros, J.B., Goulart, A.C., Alencar, A.P., Lotufo, P.A., Benseno, I.M.: The influence of the day of the week of hospital admission on the prognosis of stroke patients. Cad Saude Publica. 29(4), 769–777 (2013).
+                  https://doi.org/10.1590/0102-311X00146212
+  
+                ")], where longer times to treatment seems to be one of the main reasons explaining worse outcomes during off-hour periods [[45](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR45 "Becker, D.J.: Do hospitals provide lower quality care on weekends?? Health Serv. Res. 42(4), 1589–1612 (2007).
+                  https://doi.org/10.1111/j.1475-6773.2006.00663.x
+  
+                "), [46](https://link.springer.com/article/10.1007/s10198-025-01835-x#ref-CR46 "Magid, D.J.: Relationship between time of day, day of week, timeliness of reperfusion, and in-hospital mortality for patients with acute ST-segment elevation myocardial infarction. J. Am. Med. Assoc. 294(7), 803–812 (2005).
+                  https://doi.org/10.1001/jama.294.7.803
+  
+                ")]. If waiting times are also longer for women who go into labour during off-hours, there would be higher scope for emergency C-sections to go undetected in case labour does not go as expected.
+
+## References
+
+1. Gans, J.S., Leigh, A.: Born on the first of july: An (un)natural experiment in birth timing. Journal of Public Economics (2009). <https://doi.org/10.1016/j.jpubeco.2008.07.004>
+
+    [Article](https://doi.org/10.1016%2Fj.jpubeco.2008.07.004) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Born%20on%20the%20first%20of%20july%3A%20An%20%28un%29natural%20experiment%20in%20birth%20timing&journal=Journal%20of%20Public%20Economics&doi=10.1016%2Fj.jpubeco.2008.07.004&publication_year=2009&author=Gans%2CJS&author=Leigh%2CA)
+
+2. Lo, J.C.: Patients’ attitudes vs. physicians’ determination: Implications for Cesarean sections. Soc. Sci. Med. **57**(1), 91–96 (2003). <https://doi.org/10.1016/S0277-9536(02)00301-5>
+
+    [Article](https://doi.org/10.1016%2FS0277-9536%2802%2900301-5) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=12753818) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Patients%E2%80%99%20attitudes%20vs.%20physicians%E2%80%99%20determination%3A%20Implications%20for%20Cesarean%20sections&journal=Soc.%20Sci.%20Med.&doi=10.1016%2FS0277-9536%2802%2900301-5&volume=57&issue=1&pages=91-96&publication_year=2003&author=Lo%2CJC)
+
+3. Dickert-Conlin, S., Chandra, A.: Taxes and the timing of births. J. Polit Econ. **107**(1), 161–177 (1999). <https://doi.org/10.1086/250054>
+
+    [Article](https://doi.org/10.1086%2F250054) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Taxes%20and%20the%20timing%20of%20births&journal=J.%20Polit%20Econ.&doi=10.1086%2F250054&volume=107&issue=1&pages=161-177&publication_year=1999&author=Dickert-Conlin%2CS&author=Chandra%2CA)
+
+4. Brown, H.S.: Physician demand for leisure: Implications for Cesarean section rates. J. Health Econ. **15**(2), 233–242 (1996). <https://doi.org/10.1016/0167-6296(95)00039-9>
+
+    [Article](https://doi.org/10.1016%2F0167-6296%2895%2900039-9) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=10159111) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Physician%20demand%20for%20leisure%3A%20Implications%20for%20Cesarean%20section%20rates&journal=J.%20Health%20Econ.&doi=10.1016%2F0167-6296%2895%2900039-9&volume=15&issue=2&pages=233-242&publication_year=1996&author=Brown%2CHS)
+
+5. Gans, J., Leigh, A., Varganova, E.: Minding the shop: The case of obstetrics conferences. Soc. Sci. Med. **65**(7), 1458–1465 (2007). <https://doi.org/10.1016/j.socscimed.2007.05.034>
+
+    [Article](https://doi.org/10.1016%2Fj.socscimed.2007.05.034) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=17600606) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Minding%20the%20shop%3A%20The%20case%20of%20obstetrics%20conferences&journal=Soc.%20Sci.%20Med.&doi=10.1016%2Fj.socscimed.2007.05.034&volume=65&issue=7&pages=1458-1465&publication_year=2007&author=Gans%2CJ&author=Leigh%2CA&author=Varganova%2CE)
+
+6. Lefevre, M.: Physician induced demand for C-Sections: Does the convenience incentive matter? **14/08**, (2014). <https://doi.org/10.2139/ssrn.2310646>
+
+7. Woolf, S.H., Grol, R., Hutchinson, A., Eccles, M., Grimshaw, J.: Clinical guidelines. Potential benefits, limitations, and harms of clinical guidelines. Br. Med. J. **318**(7182), 527–530 (1999). <https://doi.org/10.1136/bmj.318.7182.527>
+
+    [Article](https://doi.org/10.1136%2Fbmj.318.7182.527) [CAS](https://link.springer.com/articles/cas-redirect/1:STN:280:DyaK1M7kslyqsA%3D%3D) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Clinical%20guidelines.%20Potential%20benefits%2C%20limitations%2C%20and%20harms%20of%20clinical%20guidelines&journal=Br.%20Med.%20J.&doi=10.1136%2Fbmj.318.7182.527&volume=318&issue=7182&pages=527-530&publication_year=1999&author=Woolf%2CSH&author=Grol%2CR&author=Hutchinson%2CA&author=Eccles%2CM&author=Grimshaw%2CJ)
+
+8. Weisz, G., Cambrosio, A., Keating, P., Knaapen, L., Schlich, T., Tournay, V.J.: The emergence of clinical practice guidelines. Milbank Q **85**(4), 691–727 (2007). <https://doi.org/10.1111/j.1468-0009.2007.00505.x>
+
+    [Article](https://doi.org/10.1111%2Fj.1468-0009.2007.00505.x) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=18070334) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2690350) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20emergence%20of%20clinical%20practice%20guidelines&journal=Milbank%20Q&doi=10.1111%2Fj.1468-0009.2007.00505.x&volume=85&issue=4&pages=691-727&publication_year=2007&author=Weisz%2CG&author=Cambrosio%2CA&author=Keating%2CP&author=Knaapen%2CL&author=Schlich%2CT&author=Tournay%2CVJ)
+
+9. Timmermans, S.: From autonomy to accountability: The role of clinical practice guidelines in professional power. Perspect. Biol. Med. **48**(4), 490–501 (2005). <https://doi.org/10.1353/pbm.2005.0096>
+
+    [Article](https://doi.org/10.1353%2Fpbm.2005.0096) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=16227662) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=From%20autonomy%20to%20accountability%3A%20The%20role%20of%20clinical%20practice%20guidelines%20in%20professional%20power&journal=Perspect.%20Biol.%20Med.&doi=10.1353%2Fpbm.2005.0096&volume=48&issue=4&pages=490-501&publication_year=2005&author=Timmermans%2CS)
+
+10. Treacy, L., Bolkan, H.A., Sagbakken, M.: Distance, accessibility and costs. Decision-making during childbirth in rural Sierra leone: A qualitative study. PLoS One. **13**(2), 1–17 (2018). <https://doi.org/10.1371/journal.pone.0188280>
+
+    [Article](https://doi.org/10.1371%2Fjournal.pone.0188280) [CAS](https://link.springer.com/articles/cas-redirect/1:CAS:528:DC%2BC1cXit1Shur%2FF) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Distance%2C%20accessibility%20and%20costs.%20Decision-making%20during%20childbirth%20in%20rural%20Sierra%20leone%3A%20A%20qualitative%20study&journal=PLoS%20One&doi=10.1371%2Fjournal.pone.0188280&volume=13&issue=2&pages=1-17&publication_year=2018&author=Treacy%2CL&author=Bolkan%2CHA&author=Sagbakken%2CM)
+
+11. Okeke, E.N., Chari, A.V.: Health care at birth and infant mortality: Evidence from nighttime deliveries in Nigeria. Soc. Sci. Med. **196**(November 2017), 86–95 (2018). <https://doi.org/10.1016/j.socscimed.2017.11.017>
+
+    [Article](https://doi.org/10.1016%2Fj.socscimed.2017.11.017) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=29161641) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Health%20care%20at%20birth%20and%20infant%20mortality%3A%20Evidence%20from%20nighttime%20deliveries%20in%20Nigeria&journal=Soc.%20Sci.%20Med.&doi=10.1016%2Fj.socscimed.2017.11.017&volume=196&issue=November%202017&pages=86-95&publication_year=2018&author=Okeke%2CEN&author=Chari%2CAV)
+
+12. Slaughter-Acey, J.C., Sneed, D., Parker, L., Keith, V.M., Lee, N.L., Misra, D.P.: Skin tone matters: Racial microaggressions and delayed prenatal care. Am. J. Prev. Med. **57**(3), 321–329 (2019). <https://doi.org/10.1016/j.amepre.2019.04.014>
+
+    [Article](https://doi.org/10.1016%2Fj.amepre.2019.04.014) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=31353164) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC6702105) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Skin%20tone%20matters%3A%20Racial%20microaggressions%20and%20delayed%20prenatal%20care&journal=Am.%20J.%20Prev.%20Med.&doi=10.1016%2Fj.amepre.2019.04.014&volume=57&issue=3&pages=321-329&publication_year=2019&author=Slaughter-Acey%2CJC&author=Sneed%2CD&author=Parker%2CL&author=Keith%2CVM&author=Lee%2CNL&author=Misra%2CDP)
+
+13. Sosnaud, B.: Cross-State differences in the processes generating Black–White disparities in neonatal mortality. Demography. (2021). <https://doi.org/10.1215/00703370-9510578>
+
+    [Article](https://doi.org/10.1215%2F00703370-9510578) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=34568897) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Cross-State%20differences%20in%20the%20processes%20generating%20Black%E2%80%93White%20disparities%20in%20neonatal%20mortality&journal=Demography&doi=10.1215%2F00703370-9510578&publication_year=2021&author=Sosnaud%2CB)
+
+14. Altman, M.R., Oseguera, T., Mclemore, M.R., Kantrowitz-gordon, I., Franck, L.S., Lyndon, A.: Social science & medicine information and power: Women of color’s experiences interacting with health care providers in pregnancy and birth. Soc. Sci. Med. **238**, 112491 (2019). <https://doi.org/10.1016/j.socscimed.2019.112491>
+
+    [Article](https://doi.org/10.1016%2Fj.socscimed.2019.112491) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=31434029) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Social%20science%20%26%20medicine%20information%20and%20power%3A%20Women%20of%20color%E2%80%99s%20experiences%20interacting%20with%20health%20care%20providers%20in%20pregnancy%20and%20birth&journal=Soc.%20Sci.%20Med.&doi=10.1016%2Fj.socscimed.2019.112491&volume=238&publication_year=2019&author=Altman%2CMR&author=Oseguera%2CT&author=Mclemore%2CMR&author=Kantrowitz-gordon%2CI&author=Franck%2CLS&author=Lyndon%2CA)
+
+15. Attanasio, L.B., Kozhimannil, K.B., Kjerulff, K.H.: Factors influencing women’s perceptions of shared decision making during labor and delivery: Results from a large-scale cohort study of first childbirth. Patient Educ. Couns. **101**(6), 1130–1136 (2018). <https://doi.org/10.1016/j.pec.2018.01.002>
+
+    [Article](https://doi.org/10.1016%2Fj.pec.2018.01.002) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=29339041) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5977392) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Factors%20influencing%20women%E2%80%99s%20perceptions%20of%20shared%20decision%20making%20during%20labor%20and%20delivery%3A%20Results%20from%20a%20large-scale%20cohort%20study%20of%20first%20childbirth&journal=Patient%20Educ.%20Couns.&doi=10.1016%2Fj.pec.2018.01.002&volume=101&issue=6&pages=1130-1136&publication_year=2018&author=Attanasio%2CLB&author=Kozhimannil%2CKB&author=Kjerulff%2CKH)
+
+16. Leal, M.C., da Gama, S.G.N., Pereira, A.P.E., Pacheco, V.E., do Carmo, C.N., Santos, R.V.: The color of pain: racial iniquities in prenatal care and childbirth in Brazil. Cad Saude Publica **33**, e00078816 (2017). <https://doi.org/10.1590/0102-311X00078816>
+
+    [Article](https://doi.org/10.1590%2F0102-311X00078816) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20color%20of%20pain%3A%20racial%20iniquities%20in%20prenatal%20care%20and%20childbirth%20in%20Brazil&journal=Cad%20Saude%20Publica&doi=10.1590%2F0102-311X00078816&volume=33&publication_year=2017&author=Leal%2CMC&author=Gama%2CSGN&author=Pereira%2CAPE&author=Pacheco%2CVE&author=Carmo%2CCN&author=Santos%2CRV)
+
+17. McLemore, M.R., Altman, M.R., Cooper, N., Williams, S., Rand, L., Franck, L.: Health care experiences of pregnant, birthing and postnatal women of color at risk for preterm birth. Soc. Sci. Med. **201**(September 2017), 127–135 (2018). <https://doi.org/10.1016/j.socscimed.2018.02.013>
+
+    [Article](https://doi.org/10.1016%2Fj.socscimed.2018.02.013) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=29494846) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Health%20care%20experiences%20of%20pregnant%2C%20birthing%20and%20postnatal%20women%20of%20color%20at%20risk%20for%20preterm%20birth&journal=Soc.%20Sci.%20Med.&doi=10.1016%2Fj.socscimed.2018.02.013&volume=201&issue=September%202017&pages=127-135&publication_year=2018&author=McLemore%2CMR&author=Altman%2CMR&author=Cooper%2CN&author=Williams%2CS&author=Rand%2CL&author=Franck%2CL)
+
+18. Vedam, S., et al.: The giving voice to mothers study: Inequity and mistreatment during pregnancy and childbirth in the united States. Reprod. Health. **16**(1), 1–18 (2019). <https://doi.org/10.1186/s12978-019-0729-2>
+
+    [Article](https://link.springer.com/doi/10.1186/s12978-019-0729-2) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20giving%20voice%20to%20mothers%20study%3A%20Inequity%20and%20mistreatment%20during%20pregnancy%20and%20childbirth%20in%20the%20united%20States&journal=Reprod.%20Health&doi=10.1186%2Fs12978-019-0729-2&volume=16&issue=1&pages=1-18&publication_year=2019&author=Vedam%2CS)
+
+19. Greenwood, B.N., Hardeman, R.R., Huang, L., Sojourner, A.: Physician-patient racial concordance and disparities in birthing mortality for newborns. Proc. Natl. Acad. Sci. U. S. A. **117**(35), 21194–21200 (2020). <https://doi.org/10.1073/pnas.1913405117>
+
+    [Article](https://doi.org/10.1073%2Fpnas.1913405117) [CAS](https://link.springer.com/articles/cas-redirect/1:CAS:528:DC%2BB3cXhslWgur7M) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=32817561) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC7474610) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Physician-patient%20racial%20concordance%20and%20disparities%20in%20birthing%20mortality%20for%20newborns&journal=Proc.%20Natl.%20Acad.%20Sci.%20U.%20S.%20A.&doi=10.1073%2Fpnas.1913405117&volume=117&issue=35&pages=21194-21200&publication_year=2020&author=Greenwood%2CBN&author=Hardeman%2CRR&author=Huang%2CL&author=Sojourner%2CA)
+
+20. Levin, J.: A Influência das Políticas de Saúde nos Indicadores Gerados pelo Sistema de Informações Hospitalares do SUS, Universidade do Estado do Rio de Janeiro, [Online]. (2006). Available: <https://www.bdtd.uerj.br:8443/handle/1/4268>
+
+21. Scheffer, M., Guilloux, A.G.A., Miotto, B.A., de Almeida, C.: *Demografia Médica no Brasil 2023*. [Online]. (2023). Available: <https://amb.org.br/>
+
+22. Domingues, R.M.S.M., et al.: Process of decision-making regarding the mode of birth in brazil: From the initial preference of women to the final mode of birth. Cad Saude Publica. **30**(SUPPL1), 1–16 (2014). <https://doi.org/10.1590/0102-311X00105113>
+
+    [Article](https://doi.org/10.1590%2F0102-311X00105113) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Process%20of%20decision-making%20regarding%20the%20mode%20of%20birth%20in%20brazil%3A%20From%20the%20initial%20preference%20of%20women%20to%20the%20final%20mode%20of%20birth&journal=Cad%20Saude%20Publica&doi=10.1590%2F0102-311X00105113&volume=30&issue=SUPPL1&pages=1-16&publication_year=2014&author=Domingues%2CRMSM)
+
+23. Betrán, A.P., et al.: WHO statement on caesarean section rates. Bjog **123**(5), 667 (2015)
+
+    [Article](https://doi.org/10.1111%2F1471-0528.13526) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=26681211) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5034743) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=WHO%20statement%20on%20caesarean%20section%20rates&journal=Bjog&doi=10.1111%2F1471-0528.13526&volume=123&issue=5&publication_year=2015&author=Betr%C3%A1n%2CAP)
+
+24. Saltman, R.B.: Patient choice and patient empowerment in Northern European health systems: A conceptual framework. Int. J. Heal Serv **24**(2), 201–229 (1994). <https://doi.org/10.2190/8WMP-RR2K-ABM7-NVNH>
+
+    [Article](https://doi.org/10.2190%2F8WMP-RR2K-ABM7-NVNH) [CAS](https://link.springer.com/articles/cas-redirect/1:STN:280:DyaK2czgslyitQ%3D%3D) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Patient%20choice%20and%20patient%20empowerment%20in%20Northern%20European%20health%20systems%3A%20A%20conceptual%20framework&journal=Int.%20J.%20Heal%20Serv&doi=10.2190%2F8WMP-RR2K-ABM7-NVNH&volume=24&issue=2&pages=201-229&publication_year=1994&author=Saltman%2CRB)
+
+25. Dent, M.: Patient choice and medicine in health care: Responsibilization, governance and proto-professionalization. Public. Manag Rev **8**(3), 449–462 (2006). <https://doi.org/10.1080/14719030600853360>
+
+    [Article](https://doi.org/10.1080%2F14719030600853360) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Patient%20choice%20and%20medicine%20in%20health%20care%3A%20Responsibilization%2C%20governance%20and%20proto-professionalization&journal=Public.%20Manag%20Rev&doi=10.1080%2F14719030600853360&volume=8&issue=3&pages=449-462&publication_year=2006&author=Dent%2CM)
+
+26. Espinoza, M.A., Manca, A., Claxton, K., Sculpher, M.: Social value and individual choice: The value of a choice-based decision-making process in a collectively funded health system. Heal Econ **27**(2), e28–e40 (2018). <https://doi.org/10.1002/hec.3559>
+
+    [Article](https://doi.org/10.1002%2Fhec.3559) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Social%20value%20and%20individual%20choice%3A%20The%20value%20of%20a%20choice-based%20decision-making%20process%20in%20a%20collectively%20funded%20health%20system&journal=Heal%20Econ&doi=10.1002%2Fhec.3559&volume=27&issue=2&pages=e28-e40&publication_year=2018&author=Espinoza%2CMA&author=Manca%2CA&author=Claxton%2CK&author=Sculpher%2CM)
+
+27. Roberts, K.J.: Patient empowerment in the united states: A critical commentary. Health Expectations **2**(2), 82–92 (1999). <https://doi.org/10.1046/j.1369-6513.1999.00048.x>
+
+    [Article](https://doi.org/10.1046%2Fj.1369-6513.1999.00048.x) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=11281882) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5061436) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Patient%20empowerment%20in%20the%20united%20states%3A%20A%20critical%20commentary&journal=Health%20Expectations&doi=10.1046%2Fj.1369-6513.1999.00048.x&volume=2&issue=2&pages=82-92&publication_year=1999&author=Roberts%2CKJ)
+
+28. Fotaki, M.: Is patient choice the future of health care systems? International Journal of Health Policy and Management **1**(2), 121–123 (2013). <https://doi.org/10.15171/ijhpm.2013.22>
+
+    [Article](https://doi.org/10.15171%2Fijhpm.2013.22) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=24596850) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3937913) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Is%20patient%20choice%20the%20future%20of%20health%20care%20systems%3F&journal=International%20Journal%20of%20Health%20Policy%20and%20Management&doi=10.15171%2Fijhpm.2013.22&volume=1&issue=2&pages=121-123&publication_year=2013&author=Fotaki%2CM)
+
+29. Appleby, J., Harrison, A., Devlin, N.J.: *What is the real cost of more patient choice?* King’s Fund London, [Online]. (2003). Available: <https://assets.kingsfund.org.uk/f/256914/x/24adec9c71/real_cost_more_patient_choice_2003.pdf>
+
+30. Bevan, G., Helderman, J.-K., Wilsford, D.: Changing choices in health care: Implications for equity, efficiency and cost. Heal Econ. Policy Law **5**(3), 251–267 (2010). <https://doi.org/10.1017/S1744133110000022>
+
+    [Article](https://doi.org/10.1017%2FS1744133110000022) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Changing%20choices%20in%20health%20care%3A%20Implications%20for%20equity%2C%20efficiency%20and%20cost&journal=Heal%20Econ.%20Policy%20Law&doi=10.1017%2FS1744133110000022&volume=5&issue=3&pages=251-267&publication_year=2010&author=Bevan%2CG&author=Helderman%2CJ-K&author=Wilsford%2CD)
+
+31. Melo, C., Menezes-Filho, N.: The effect of birth timing manipulation around carnival on birth indicators in Brazil. Heal Econ **33**(9), 2013–2058 (2024). <https://doi.org/10.1002/hec.4858>
+
+    [Article](https://doi.org/10.1002%2Fhec.4858) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20effect%20of%20birth%20timing%20manipulation%20around%20carnival%20on%20birth%20indicators%20in%20Brazil&journal=Heal%20Econ&doi=10.1002%2Fhec.4858&volume=33&issue=9&pages=2013-2058&publication_year=2024&author=Melo%2CC&author=Menezes-Filho%2CN)
+
+32. Jacobson, M., Kogelnik, M., Royer, H.: Holiday, just one day out of life: Birth timing and postnatal outcomes. J. Labor Econ. **39**, S651–S702 (2021). <https://doi.org/10.1086/712493>
+
+    [Article](https://doi.org/10.1086%2F712493) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Holiday%2C%20just%20one%20day%20out%20of%20life%3A%20Birth%20timing%20and%20postnatal%20outcomes&journal=J.%20Labor%20Econ.&doi=10.1086%2F712493&volume=39&pages=S651-S702&publication_year=2021&author=Jacobson%2CM&author=Kogelnik%2CM&author=Royer%2CH)
+
+33. Almond, D., Chee, C.P., Sviatschi, M.M., Zhong, N.: Auspicious birth dates among Chinese in California. Econ. Hum. Biol. **18**, 153–159 (2015)
+
+    [Article](https://doi.org/10.1016%2Fj.ehb.2015.05.005) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=26160600) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Auspicious%20birth%20dates%20among%20Chinese%20in%20California&journal=Econ.%20Hum.%20Biol.&doi=10.1016%2Fj.ehb.2015.05.005&volume=18&pages=153-159&publication_year=2015&author=Almond%2CD&author=Chee%2CCP&author=Sviatschi%2CMM&author=Zhong%2CN)
+
+34. Lin, H.-C., Xirasagar, S., Tung, Y.-C.: Impact of a cultural belief about ghost month on delivery mode in Taiwan. J. Epidemiol. & Community Heal **60**(6), 522–526 (2006)
+
+    [Article](https://doi.org/10.1136%2Fjech.2005.041475) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Impact%20of%20a%20cultural%20belief%20about%20ghost%20month%20on%20delivery%20mode%20in%20Taiwan&journal=J.%20Epidemiol.%20%26%20Community%20Heal&doi=10.1136%2Fjech.2005.041475&volume=60&issue=6&pages=522-526&publication_year=2006&author=Lin%2CH-C&author=Xirasagar%2CS&author=Tung%2CY-C)
+
+35. Gans, J.S., Leigh, A.: Bargaining over labour : Do patients have any power?? Econ. Rec. **88**(281), 182–194 (2012). <https://doi.org/10.1111/j.1475-4932.2011.00776.x>
+
+    [Article](https://doi.org/10.1111%2Fj.1475-4932.2011.00776.x) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Bargaining%20over%20labour%E2%80%AF%3A%20Do%20patients%20have%20any%20power%3F%3F&journal=Econ.%20Rec.&doi=10.1111%2Fj.1475-4932.2011.00776.x&volume=88&issue=281&pages=182-194&publication_year=2012&author=Gans%2CJS&author=Leigh%2CA)
+
+36. Levy, B.R., Chung, P.H., Slade, M.D.: Influence of valentine’s day and halloween on birth timing. Social Science & Medicine **73**(8), 1246–1248 (2011)
+
+    [Article](https://doi.org/10.1016%2Fj.socscimed.2011.07.008) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Influence%20of%20valentine%E2%80%99s%20day%20and%20halloween%20on%20birth%20timing&journal=Social%20Science%20%26%20Medicine&doi=10.1016%2Fj.socscimed.2011.07.008&volume=73&issue=8&pages=1246-1248&publication_year=2011&author=Levy%2CBR&author=Chung%2CPH&author=Slade%2CMD)
+
+37. Chiavegatto Filho, A.D.P.: Partos Cesáreos e a Escolha Da Data de nascimento no Munic{\’\i}pio de São Paulo. Ciência \& Saúde Coletiva. **18**, 2413–2420 (2013)
+
+    [Article](https://doi.org/10.1590%2FS1413-81232013000800026) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Partos%20Ces%C3%A1reos%20e%20a%20Escolha%20Da%20Data%20de%20nascimento%20no%20Munic%7B%5C%E2%80%99%5Ci%7Dpio%20de%20S%C3%A3o%20Paulo&journal=Ci%C3%AAncia%20%5C%26%20Sa%C3%BAde%20Coletiva&doi=10.1590%2FS1413-81232013000800026&volume=18&pages=2413-2420&publication_year=2013&author=Chiavegatto%20Filho%2CADP)
+
+38. Gershman, B.: The economic origins of the evil eye belief. Journal of Economic Behavior & Organization **110**, 119–144 (2015)
+
+    [Article](https://doi.org/10.1016%2Fj.jebo.2014.12.002) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20economic%20origins%20of%20the%20evil%20eye%20belief&journal=Journal%20of%20Economic%20Behavior%20%26%20Organization&doi=10.1016%2Fj.jebo.2014.12.002&volume=110&pages=119-144&publication_year=2015&author=Gershman%2CB)
+
+39. Mello, F.C.M., da Silva, J.L., de Oliveira, W.A., do Prado, R.R., Malta, D.C., Silva, M.A.I.: The practice of bullying among Brazilian schoolchildren and associated factors, National school health survey 2015. Cien Saude Colet. **22**(9), 2939–2948 (2017). <https://doi.org/10.1590/1413-81232017229.12762017>
+
+    [Article](https://doi.org/10.1590%2F1413-81232017229.12762017) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=28954145) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20practice%20of%20bullying%20among%20Brazilian%20schoolchildren%20and%20associated%20factors%2C%20National%20school%20health%20survey%202015&journal=Cien%20Saude%20Colet&doi=10.1590%2F1413-81232017229.12762017&volume=22&issue=9&pages=2939-2948&publication_year=2017&author=Mello%2CFCM&author=Silva%2CJL&author=Oliveira%2CWA&author=do%20Prado%2CRR&author=Malta%2CDC&author=Silva%2CMAI)
+
+40. Miotto, B.A., Guilloux, A.G.A., Cassenote, A.J.F., Mainardi, G.M., Russo, G., Scheffer, M.C.: Physician’s sociodemographic profile And distribution across public And private health care: An insight into physicians’ dual practice in Brazil. BMC Health Serv. Res. **18**, 1–10 (2018)
+
+    [Article](https://link.springer.com/doi/10.1186/s12913-018-3076-z) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Physician%E2%80%99s%20sociodemographic%20profile%20And%20distribution%20across%20public%20And%20private%20health%20care%3A%20An%20insight%20into%20physicians%E2%80%99%20dual%20practice%20in%20Brazil&journal=BMC%20Health%20Serv.%20Res.&doi=10.1186%2Fs12913-018-3076-z&volume=18&pages=1-10&publication_year=2018&author=Miotto%2CBA&author=Guilloux%2CAGA&author=Cassenote%2CAJF&author=Mainardi%2CGM&author=Russo%2CG&author=Scheffer%2CMC)
+
+41. Gould, J.B., Qin, C., Marks, A.R., Chavez, G.: Neonatal mortality in weekend vs weekday births. J. Am. Med. Assoc. **289**(22), 2958–2962 (2003). <https://doi.org/10.1001/jama.289.22.2958>
+
+    [Article](https://doi.org/10.1001%2Fjama.289.22.2958) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Neonatal%20mortality%20in%20weekend%20vs%20weekday%20births&journal=J.%20Am.%20Med.%20Assoc.&doi=10.1001%2Fjama.289.22.2958&volume=289&issue=22&pages=2958-2962&publication_year=2003&author=Gould%2CJB&author=Qin%2CC&author=Marks%2CAR&author=Chavez%2CG)
+
+42. Hong, J., et al.: A comparison of perinatal mortality in Korea on holidays and working days. BJOG **113**(11), 1235–1238 (2006). <https://doi.org/10.1111/j.1471-0528.2006.01054.x>
+
+    [Article](https://doi.org/10.1111%2Fj.1471-0528.2006.01054.x) [CAS](https://link.springer.com/articles/cas-redirect/1:STN:280:DC%2BD28nis1WhsQ%3D%3D) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=16978232) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=A%20comparison%20of%20perinatal%20mortality%20in%20Korea%20on%20holidays%20and%20working%20days&journal=BJOG&doi=10.1111%2Fj.1471-0528.2006.01054.x&volume=113&issue=11&pages=1235-1238&publication_year=2006&author=Hong%2CJ)
+
+43. Palmer, W.L., Bottle, A., Aylin, P.: Association between day of delivery and obstetric outcomes. BMJ. **351** (2015). <https://doi.org/10.1136/bmj.h5774>
+
+44. Zapf, M.A.C., et al.: The weekend effect in urgent general operative procedures. Surgery **158**(2), 508–514 (2015). <https://doi.org/10.1016/j.surg.2015.02.024>
+
+    [Article](https://doi.org/10.1016%2Fj.surg.2015.02.024) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=26013983) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5226376) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20weekend%20effect%20in%20urgent%20general%20operative%20procedures&journal=Surgery&doi=10.1016%2Fj.surg.2015.02.024&volume=158&issue=2&pages=508-514&publication_year=2015&author=Zapf%2CMAC)
+
+45. Becker, D.J.: Do hospitals provide lower quality care on weekends?? Health Serv. Res. **42**(4), 1589–1612 (2007). <https://doi.org/10.1111/j.1475-6773.2006.00663.x>
+
+    [Article](https://doi.org/10.1111%2Fj.1475-6773.2006.00663.x) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=17610439) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1955270) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Do%20hospitals%20provide%20lower%20quality%20care%20on%20weekends%3F%3F&journal=Health%20Serv.%20Res.&doi=10.1111%2Fj.1475-6773.2006.00663.x&volume=42&issue=4&pages=1589-1612&publication_year=2007&author=Becker%2CDJ)
+
+46. Magid, D.J.: Relationship between time of day, day of week, timeliness of reperfusion, and in-hospital mortality for patients with acute ST-segment elevation myocardial infarction. J. Am. Med. Assoc. **294**(7), 803–812 (2005). <https://doi.org/10.1001/jama.294.7.803>
+
+    [Article](https://doi.org/10.1001%2Fjama.294.7.803) [CAS](https://link.springer.com/articles/cas-redirect/1:CAS:528:DC%2BD2MXos1Wns7c%3D) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Relationship%20between%20time%20of%20day%2C%20day%20of%20week%2C%20timeliness%20of%20reperfusion%2C%20and%20in-hospital%20mortality%20for%20patients%20with%20acute%20ST-segment%20elevation%20myocardial%20infarction&journal=J.%20Am.%20Med.%20Assoc.&doi=10.1001%2Fjama.294.7.803&volume=294&issue=7&pages=803-812&publication_year=2005&author=Magid%2CDJ)
+
+47. Hamilton, K.E.S., Redshaw, M.E., Tarnow-Mordi, W.: Nurse staffing in relation to risk-adjusted mortality in neonatal care. Archives of Disease in Childhood **92**(2), F99–F103 (2007). <https://doi.org/10.1136/adc.2006.102988>
+
+    [Article](https://doi.org/10.1136%2Fadc.2006.102988) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=17088341) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Nurse%20staffing%20in%20relation%20to%20risk-adjusted%20mortality%20in%20neonatal%20care&journal=Archives%20of%20Disease%20in%20Childhood&doi=10.1136%2Fadc.2006.102988&volume=92&issue=2&pages=F99-F103&publication_year=2007&author=Hamilton%2CKES&author=Redshaw%2CME&author=Tarnow-Mordi%2CW)
+
+48. Sellers, R.M., Shelton, J.N.: The role of Racial identity in perceived Racial discrimination. J. Pers. Soc. Psychol. **84**(5), 1079 (2003)
+
+    [Article](https://doi.org/10.1037%2F0022-3514.84.5.1079) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=12757150) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20role%20of%20Racial%20identity%20in%20perceived%20Racial%20discrimination&journal=J.%20Pers.%20Soc.%20Psychol.&doi=10.1037%2F0022-3514.84.5.1079&volume=84&issue=5&publication_year=2003&author=Sellers%2CRM&author=Shelton%2CJN)
+
+49. Zampieri, F.G., et al.: Role of organisational factors on the ’weekend effect’in critically ill patients in brazil: A retrospective cohort analysis. BMJ Open **8**(1), e018541 (2018). <https://doi.org/10.1136/bmjopen-2017-018541>
+
+    [Article](https://doi.org/10.1136%2Fbmjopen-2017-018541) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=29371274) [PubMed Central](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC5786146) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Role%20of%20organisational%20factors%20on%20the%20%E2%80%99weekend%20effect%E2%80%99in%20critically%20ill%20patients%20in%20brazil%3A%20A%20retrospective%20cohort%20analysis&journal=BMJ%20Open&doi=10.1136%2Fbmjopen-2017-018541&volume=8&issue=1&publication_year=2018&author=Zampieri%2CFG)
+
+50. Leivas, P.H.S.: Três ensaios em economia hospitalar. Weekend effect nos atendimentos de urgência no Brasil: O caso do Infarto Agudo do Miocárdio, Pontifícia Universidade Católica do Rio Grande do Sul, 2017. [Online]. Available: <https://tede2.pucrs.br/tede2/handle/tede/7695>
+
+51. Evangelista, P.A., Barreto, S.M., Guerra, H.L.: Hospital admission and hospital death associated to ischemic heart diseases at the National health system (SUS). Arq. Bras. Cardiol. **90**(2), 119–126 (2008). <https://doi.org/10.1590/s0066-782x2008000200009>
+
+    [Article](https://doi.org/10.1590%2Fs0066-782x2008000200009) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=18392384) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Hospital%20admission%20and%20hospital%20death%20associated%20to%20ischemic%20heart%20diseases%20at%20the%20National%20health%20system%20%28SUS%29&journal=Arq.%20Bras.%20Cardiol.&doi=10.1590%2Fs0066-782x2008000200009&volume=90&issue=2&pages=119-126&publication_year=2008&author=Evangelista%2CPA&author=Barreto%2CSM&author=Guerra%2CHL)
+
+52. Barros, J.B., Goulart, A.C., Alencar, A.P., Lotufo, P.A., Benseno, I.M.: The influence of the day of the week of hospital admission on the prognosis of stroke patients. Cad Saude Publica. **29**(4), 769–777 (2013). <https://doi.org/10.1590/0102-311X00146212>
+
+    [Article](https://doi.org/10.1590%2F0102-311X00146212) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=23568306) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=The%20influence%20of%20the%20day%20of%20the%20week%20of%20hospital%20admission%20on%20the%20prognosis%20of%20stroke%20patients&journal=Cad%20Saude%20Publica&doi=10.1590%2F0102-311X00146212&volume=29&issue=4&pages=769-777&publication_year=2013&author=Barros%2CJB&author=Goulart%2CAC&author=Alencar%2CAP&author=Lotufo%2CPA&author=Benseno%2CIM)
+
+53. Valdes, E.G.: Examining Cesarean delivery rates by race: A Population-Based analysis using the Robson Ten-Group classification system. Journal of Racial and Ethnic Health Disparities **8**(4), 844–851 (2021). <https://doi.org/10.1007/s40615-020-00842-3>
+
+    [Article](https://link.springer.com/doi/10.1007/s40615-020-00842-3) [PubMed](http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&dopt=Abstract&list_uids=32808193) [Google Scholar](http://scholar.google.com/scholar_lookup?&title=Examining%20Cesarean%20delivery%20rates%20by%20race%3A%20A%20Population-Based%20analysis%20using%20the%20Robson%20Ten-Group%20classification%20system&journal=Journal%20of%20Racial%20and%20Ethnic%20Health%20Disparities&doi=10.1007%2Fs40615-020-00842-3&volume=8&issue=4&pages=844-851&publication_year=2021&author=Valdes%2CEG)
+
+54. Robinson, S., Royer, H., Silver, D.: Geographic Variation in Cesarean Sections in the United States: Trends, Correlates, and Other Interesting Facts, *NBER Work. Pap.*, vol. WP 31871, 2023, [Online]. Available: <http://www.nber.org/papers/w31871>
+
+[Download references](https://citation-needed.springer.com/v2/references/10.1007/s10198-025-01835-x?format=refman&flavour=references)
+
+## Acknowledgements
+
+We are grateful to Marcos Vera-Hernandez, Marisa Miraldo, Manuel Gomes, Cecilia Machado, Dimitri Szerman, and Antonio León for comments and suggestions. We also thank Dácio de Lyra Rabello Neto for data clarifications.
+
+## Funding
+
+This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+
+## Author information
+
+### Authors and Affiliations
+
+1. Inter-American Development Bank, 1300 New York Avenue, N.W. Washington, D.C, 20577, USA
+
+    Paula Spinola
+
+2. São Paulo School of Business Administration, Fundação Getulio Vargas, São Paulo, Brazil
+
+    Rudi Rocha
+
+3. Instituto de Estudos para Políticas de Saúde, São Paulo, Brazil
+
+    Rudi Rocha
+
+Authors
+
+1. Paula Spinola
+  
+  [View author publications](https://link.springer.com/search?sortBy=newestFirst&contributor=Paula%20Spinola)
+      Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Paula%20Spinola) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Paula%20Spinola%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
+
+2. Rudi Rocha
+  
+  [View author publications](https://link.springer.com/search?sortBy=newestFirst&contributor=Rudi%20Rocha)
+      Search author on:[PubMed](https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=search&term=Rudi%20Rocha) [Google Scholar](https://scholar.google.co.uk/scholar?as_q=&num=10&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=%22Rudi%20Rocha%22&as_publication=&as_ylo=&as_yhi=&as_allsubj=all&hl=en)
+
+### Corresponding author
+
+Correspondence to [Paula Spinola](mailto:paula.spinola@gmail.com).
+
+## Ethics declarations
+
+### Conflict of interest
+
+None.
+
+## Additional information
+
+### Publisher’s note
+
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.
+
+The opinions expressed in this paper are those of the authors and do not necessarily reflect the views of the Inter-American Development Bank (IDB), its Board of Directors, or the countries they represent. Paula Spinola completed the work on this paper before joining the IDB.
+
+## Appendix A: Additional tables and figures
+
+### Appendix A: Additional tables and figures
+
+Tables [2](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab2), [3](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab3), [4](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab4), [5](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab5), [6](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab6), [7](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab7), [8](https://link.springer.com/article/10.1007/s10198-025-01835-x#Tab8).
+
+***Table 2 List of inconvenient dates between 2006–2019***
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/2)
+
+***Table 3 Regression coefficients of days around *inauspicious dates****
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/3)
+
+***Table 4 Regression coefficients of days around *Obstetricians-Gynaecologists****
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/4)
+
+***Table 5. Regression coefficients of days around *one-day bank holidays****
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/5)
+
+***Table 6 Regression coefficients of days around *two-day bank holidays****
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/6)
+
+***Table 7 Regression coefficients of days around inconvenient periods: excess births of back mothers***
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/7)
+
+***Table 8 Regression coefficients of inconvenient periods and SUS affiliation: Excess births of black mothers***
+
+[Full size table](https://link.springer.com/article/10.1007/s10198-025-01835-x/tables/8)
+
+Figs. [8](https://link.springer.com/article/10.1007/s10198-025-01835-x#Fig8), [9](https://link.springer.com/article/10.1007/s10198-025-01835-x#Fig9)
+
+***Fig. 8***
+![Fig. 8](https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig8_HTML.png)
+
+[Full size image](https://link.springer.com/article/10.1007/s10198-025-01835-x/figures/8)
+
+Regression coefficients of days around inconvenient periods: Share of births by black mothers. Notes: Outcome variable is the share of number of deliveries by black mothers. Unit level is hospital-day. Each plot shows point estimates and respective 95% confidence intervals for two separate regressions: one for births taking place in the public sector (in blue) and another for those which happened in the private sector (in green). Plot titles indicate the type of inconvenient day under consideration. Standard errors are clustered at the hospital level. For more details on regression specification, see Eq. ([1](https://link.springer.com/article/10.1007/s10198-025-01835-x#Equ1)). Estimates are conditional on educational levels. The coefficient term -\(\:{d}_{n}\) (+\(\:{d}_{n}\)) refers to the nth day before the beginning (after the end) of the inconvenient period (displayed in bold). This figure should be printed in colour
+
+***Fig. 9***
+![Fig. 9](https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs10198-025-01835-x/MediaObjects/10198_2025_1835_Fig9_HTML.png)
+
+[Full size image](https://link.springer.com/article/10.1007/s10198-025-01835-x/figures/9)
+
+Cumulative distribution of hospital’s monthly share of obstetric beds attached to SUS. Notes: Plots consider 1,654 hospitals who report at least two different monthly shares of hospital’s obstetric beds attached to SUS between January 2006 and December 2019. The top plot presents the cumulative distribution of hospitals’ difference between highest and lowest reported monthly shares. It ranges from just above 0 (i.e., sample comprises of hospitals presenting some variation) and 100 percentual points (i.e., hospitals who report months with no obstetric beds (0%) associated to SUS and other months with all available obstetric beds (100%) reserved to SUS). The bottom plot shows cumulative distribution of hospitals’ difference between last and first reported monthly shares. It ranges from − 100 to + 100 percentual points, where − 100 p.p. refers to facilities moving from solely serving the public sector to solely serving the private sector while + 100 p.p. refers to fully private facilities in the start of our time sample who turned into fully public ones in the end of our time sample. The dashed horizontal line marks 0.5 in cumulative probability (y-axis). The point at which the dashed line crosses the cdf refers to the median value among the sample of hospitals under consideration
+
+## Rights and permissions
+
+Springer Nature or its licensor (e.g. a society or other partner) holds exclusive rights to this article under a publishing agreement with the author(s) or other rightsholder(s); author self-archiving of the accepted manuscript version of this article is solely governed by the terms of such publishing agreement and applicable law.
+
+[Reprints and permissions](https://s100.copyright.com/AppDispatchServlet?title=Patient%20and%20medical%20choice%20across%20public%20and%20private%20health%20providers%3A%20the%20case%20of%20birth%20timing%20manipulation%20in%20Brazil&author=Paula%20Spinola%20et%20al&contentID=10.1007%2Fs10198-025-01835-x&copyright=The%20Author%28s%29%2C%20under%20exclusive%20licence%20to%20Springer-Verlag%20GmbH%20Germany%2C%20part%20of%20Springer%20Nature&publication=1618-7598&publicationDate=2025-12-29&publisherName=SpringerNature&orderBeanReset=true)
+
+## About this article
+
+[![Check for updates. Verify currency and authenticity via CrossMark]()](https://crossmark.crossref.org/dialog/?doi=10.1007/s10198-025-01835-x)
+
+### Cite this article
+
+Spinola, P., Rocha, R. Patient and medical choice across public and private health providers: the case of birth timing manipulation in Brazil. *Eur J Health Econ* **27**, 1117–1148 (2026). https://doi.org/10.1007/s10198-025-01835-x
+
+[Download citation](https://citation-needed.springer.com/v2/references/10.1007/s10198-025-01835-x?format=refman&flavour=citation)
+
+- Received: 13 June 2024
+
+- Accepted: 18 August 2025
+
+- Published: 29 December 2025
+
+- Version of record: 29 December 2025
+
+- Issue date: July 2026
+
+- DOI (Digital Object Identifier): https://doi.org/10.1007/s10198-025-01835-x
+
+Provided by the Springer Nature SharedIt content-sharing initiative
+
+### Keywords
+
+- [Treatment choice](https://link.springer.com/search?query=Treatment%20choice&facet-discipline="Medicine%20%26%20Public%20Health")
+- [Health systems incentives](https://link.springer.com/search?query=Health%20systems%20incentives&facet-discipline="Medicine%20%26%20Public%20Health")
+- [Birth timing manipulation](https://link.springer.com/search?query=Birth%20timing%20manipulation&facet-discipline="Medicine%20%26%20Public%20Health")
+- [Demographic and racial inequalities](https://link.springer.com/search?query=Demographic%20and%20racial%20inequalities&facet-discipline="Medicine%20%26%20Public%20Health")
+
+### JEL codes
+
+- [I10](https://link.springer.com/search?query=I10&facet-discipline="Medicine%20%26%20Public%20Health")
+- [I14](https://link.springer.com/search?query=I14&facet-discipline="Medicine%20%26%20Public%20Health")
+- [I18](https://link.springer.com/search?query=I18&facet-discipline="Medicine%20%26%20Public%20Health")
+
+## Access this article
+
+[Log in via an institution](https://wayf.springernature.com?redirect_uri=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1007%2Fs10198-025-01835-x%3Fcode%3Dbd60aca8-d0a6-4d4c-8652-fe10d24edc15%26error%3Dcookies_not_supported)
+
+## Subscribe and save
+
+Springer+
+
+from $39.99 /Month
+
+- Starting from 10 chapters or articles per month
+- Access and download chapters and articles from more than 300k books and 2,500 journals
+- Cancel anytime
+[View plans](https://link.springer.com/product/springer-plus)
+
+## Buy Now
+
+Buy article PDF USD 39.95
+
+Price excludes VAT (USA)  
+Tax calculation will be finalised during checkout.
+
+Instant access to the full article PDF.
+
+[Institutional subscriptions](https://www.springernature.com/gp/librarians/licensing/agc/journals)
+
+Advertisement
+
+## Search
+
+Search by keyword or author
+
+Search
+
+## Navigation
+
+- [Find a journal](https://link.springer.com/journals/)
+- [Publish with us](https://www.springernature.com/gp/authors)
+- [Track your research](https://link.springernature.com/home/)
+
+## Footer Navigation
+
+### Discover content
+
+- [Journals A-Z](https://link.springer.com/journals/a/1)
+- [Books A-Z](https://link.springer.com/books/a/1)
+- [Subjects A-Z](https://link.springer.com/subjects)
+
+### Publish with us
+
+- [Journal finder](https://link.springer.com/journals)
+- [Publish your research](https://www.springernature.com/gp/authors)
+- [Language editing](https://authorservices.springernature.com/go/sn/?utm_source=SNLinkfooter&utm_medium=Web&utm_campaign=SNReferral)
+- [Open access publishing](https://www.springernature.com/gp/open-science/about/the-fundamentals-of-open-access-and-open-research)
+
+### Products and services
+
+- [Our products](https://www.springernature.com/gp/products)
+- [Librarians](https://www.springernature.com/gp/librarians)
+- [Societies](https://www.springernature.com/gp/societies)
+- [Partners and advertisers](https://www.springernature.com/gp/partners)
+
+### Our brands
+
+- [Springer](https://link.springer.com/brands/springer)
+- [Nature Portfolio](https://www.nature.com/)
+- [BMC](https://link.springer.com/brands/bmc)
+- [Palgrave Macmillan](https://link.springer.com/brands/palgrave)
+- [Apress](https://link.springer.com/brands/apress)
+- [Discover](https://link.springer.com/brands/discover)
+
+### Corporate Navigation
+
+- Your privacy choices/Manage cookies
+
+- [Your US state privacy rights](https://www.springernature.com/gp/legal/ccpa)
+- [Accessibility statement](https://link.springer.com/accessibility)
+- [Terms and conditions](https://link.springer.com/termsandconditions)
+- [Privacy policy](https://link.springer.com/privacystatement)
+- [Help and support](https://support.springernature.com/en/support/home)
+- [Legal notice](https://link.springer.com/legal-notice)
+- [Cancel contracts here](https://support.springernature.com/en/support/solutions/articles/6000255911-subscription-cancellations)
+
+34.162.230.222
+
+Not affiliated
+
+[![Springer Nature](https://link.springer.com/oscar-static/images/logo-springernature-white-0689727e50.svg)](https://www.springernature.com/)
+
+© 2026 Springer Nature

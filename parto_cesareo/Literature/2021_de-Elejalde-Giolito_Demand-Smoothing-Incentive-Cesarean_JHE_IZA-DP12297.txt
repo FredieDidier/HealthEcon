@@ -1,0 +1,865 @@
+
+DISCUSSION PAPER SERIES
+IZA DP No. 12297
+Ramiro de Elejalde
+Eugenio Giolito
+More Hospital Choices, More C-Sections:
+Evidence from Chile
+APRIL 2019
+Any opinions expressed in this paper are those of the author(s) and not those of IZA. Research published in this series may 
+include views on policy, but IZA takes no institutional policy positions. The IZA research network is committed to the IZA 
+Guiding Principles of Research Integrity.
+The IZA Institute of Labor Economics is an independent economic research institute that conducts research in labor economics 
+and offers evidence-based policy advice on labor market issues. Supported by the Deutsche Post Foundation, IZA runs the 
+world’s largest network of economists, whose research aims to provide answers to the global labor market challenges of our 
+time. Our key objective is to build bridges between academic research, policymakers and society.
+IZA Discussion Papers often represent preliminary work and are circulated to encourage discussion. Citation of such a paper 
+should account for its provisional character. A revised version may be available directly from the author.
+Schaumburg-Lippe-Straße 5–9
+53113 Bonn, Germany
+Phone: +49-228-3894-0
+Email: publications@iza.org www.iza.org
+IZA – Institute of Labor Economics
+DISCUSSION PAPER SERIES
+ISSN: 2365-9793
+IZA DP No. 12297
+More Hospital Choices, More C-Sections:
+Evidence from Chile
+APRIL 2019
+Ramiro de Elejalde
+Universidad Alberto Hurtado
+Eugenio Giolito
+Universidad Alberto Hurtado and IZA
+ABSTRACT
+IZA DP No. 12297 APRIL 2019
+More Hospital Choices, More C-Sections:
+Evidence from Chile*
+In this paper, we study the effect on cesarean rates of a policy change in Chile that 
+decreased the cost of delivery at private hospitals for women with public health insurance. 
+Using a difference-in-differences (DID) approach based on the eligibility conditions for this 
+benefit, we find that in the first three years after the policy took effect, deliveries in private 
+hospitals increased by 8.7 percentage points, while the probability of a C-section being 
+performed increased by 4.6 percentage points, with negative impacts on average newborn 
+weight and size at birth. We show that the probability of an early term birth in hospitals 
+participating in the program is an increasing function of expected hospital demand at 
+the time of the full-term due date. This suggests that in the absence of price incentives, 
+hospitals use C-sections to smooth out demand over time to optimize the use of their 
+resources. 
+JEL Classification: I11, I13, I18
+Keywords: health care, provider incentives, labor and delivery
+Corresponding author:
+Eugenio P. Giolito
+ILADES, Universidad Alberto Hurtado
+Facultad de Economía y Negocios
+Erasmo Escala 1835
+Santiago
+Chile
+E-mail: egiolito@uahurtado.cl
+* We would like to thank Matías Busso, Olga Namen, Julio Cáceres-Delpiano and María Nieves Valdés for their 
+valuable comments. We also want to thank the seminar participants at Universidad de Chile, Universidad de Santiago 
+de Chile, LACEA-Health 2018, SECHI 2018 and Seventh Workshop in Economic Development. Errors are ours.
+1 Introduction
+The rate of C-sections has increased worldwide in recent years. According to Betrán
+et al. (2016), the largest increase in C-section rates has occurred in Latin America
+and the Caribbean (LAC), where it went from 27% in 2000 to 42% in 2014. Recent studies in several countries suggest a correlation between delivery at for-profit
+private hospitals and C-sections (for example, see Hoxha et al., 2017).1 Figure 1
+shows that C-section rates and the number of deliveries in private hospitals in Chile
+have increased in recent decades. This relationship was first documented qualitatively by Murray (2000), who found that women treated by private obstetricians
+are more likely to have C-sections than women treated by midwives or doctors in
+public hospitals. More recently, Borrescio-Higa and Valdés (2018) found an association between high C-section rates and women with health insurance giving birth
+at private hospitals.
+If the correlation between private hospitals and C-sections is causal, the increase in C-section rates may be due to incentives to physicians or hospitals rather
+than medical conditions of the pregnancy. This deserves attention given the extensive empirical evidence that non-medically indicated C-sections are detrimental to
+mothers and newborns. For example, using distance from the mothers’ homes to
+hospitals with high and low C-section rates as an instrument for cesarean delivery,
+Card et al. (2018) found that C-sections increase the frequency of taking newborns
+to emergency departments, mainly due to respiratory conditions.2 Using the hour
+of delivery as an instrument for a C-section, Costa-Ramón et al. (2018) found that
+non-medically indicated C-sections negatively affect newborn health as measured by
+Apgar scores.3
+1Hoxha et al. (2017) reviewed studies from 1995 to 2016 for six countries (Australia, Brazil,
+France, Greece, Mexico and the US), and found that the odds of delivery by C-section were 1.41
+higher in for-profit hospitals than in non-profit hospitals.
+2However, they also found that delivery in a hospital with a high C-section rate decreases infant
+mortality, because of lower death rates for children with predetermined risk factors.
+3
+In addition, several papers document that C-sections with cephalic presentation are associated
+with adverse maternal and newborn outcomes. These papers show a higher risk of morbidity and
+postpartum infections in the case of the mother (Villar et al., 2007), a higher risk of complications
+in future pregnancies (Ananth et al., 1997), a higher risk of injury for the newborn (Alexander
+et al., 2006), and a higher risk of a stay of 7 days or more in neonatal intensive care unit (Villar
+2
+Source: Departamento de Estadísticas e Información de Salud (DEIS), Ministerio de Salud, Chile.
+Figure 1: Evolution of the share of deliveries at private hospitals and C-section rates
+in Chile
+In this paper, we study whether a 2003 policy change in Chile that decreased
+the cost of delivery at private hospitals for women with public health insurance
+had an effect on cesarean rates, and the potential mechanisms behind this impact.
+This policy applied to women with public insurance expecting a single baby with a
+gestational age of 37 weeks or more, except for women with no income. This allowed
+us to use a difference-in-differences (DID) estimation strategy to measure the impact
+of the policy on the probability of delivery at a private hospital, the probability of
+a C-section and the impact of the policy on newborn outcomes of weight and size
+at birth. We find that during the first 3 years after the policy was introduced, it
+increased the probability of a delivery at private hospitals by 8.7 percentage points
+(51% increase in terms of the sample mean), and the probability of a C-section by
+4.6 percentage points (15% increase). We also find that the policy had a direct
+impact on newborn outcomes, causing an average decrease of around 20 grams in
+et al., 2007). For a review of the association between C-sections and health outcomes see Hyde
+et al. (2012).
+3
+birth weight and of approximately 0.09 centimeters in size at birth.
+To find the potential mechanisms behind our results, we have to consider that:
+(i) public insurance pays private hospitals the same fee for a delivery independent of
+the mode of delivery (vaginal or cesarean), and (ii) it is more expensive for a private
+hospital to perform a cesarean delivery than a vaginal delivery. While the above
+implies that hospitals earn less per delivery with C-sections, a higher percentage of
+C-sections may allow hospitals to schedule more deliveries and increase aggregate
+profits via a quantity effect. If this mechanism is at work, private hospitals may
+use C-sections to smooth out demand over time and thus optimize the use of their
+resources.
+Consistent with the previous explanation, we provide evidence that private hospitals participating in the program (and only those hospitals) are more likely to
+reschedule a delivery when its theoretical due date at week 40 is a high demand
+week. We find that the probability of an early term birth (on week 37 or 38) is an
+increasing function of the expected demand at term, calculated as the number of deliveries that would have reached week 40 at the same time. Moreover, we find that,
+among those hospitals, the effects hold only for those with high average C-section
+rates (over 65%).
+Our paper fits within the literature on physician-induced demand, i.e. physicians
+can influence patient demand to suit their own interests. Specifically, several papers
+have found that physicians receiving higher fees for C-sections than for vaginal
+delivery increase the probability of C-section deliveries (for example see Gruber
+et al., 1999, Allin et al., 2015 and Foo et al., 2017).4
+Our work is also related to research on the effects of the type of hospital on
+medical outcomes. For example, Johnson and Rehavi (2016) compared C-section
+rates for HMO-owned hospitals and non-HMO-owned hospitals for physician and
+non-physician patients, using data for California from 1996-2005. They found that
+C-section rates for non-physicians are lower in HMO-owned hospitals than in nonHMO-owned hospitals, while C-section rates for physician patients do not depend
+4Gruber and Owings (1996) took a different approach and used changes in fertility rates in
+the US from 1970 to 1982 to estimate the causal effect of decreased demand on the behavior of
+obstetricians/gynecologists (performing vaginal or C-section delivery).
+4
+on hospital ownership.5
+This paper makes two main contributions. First, it contributes to the evaluation
+of a policy that was successful in easing access to private hospitals for women with
+public insurance. However, this policy increased the C-section rate, and indirectly
+worsened the well-being of newborns. Second, in contrast to the results of previous
+literature, our results suggest that hospitals/physicians have incentives to perform
+a high rate of C-sections although individual procedures may not be the profitmaximizing choice. Therefore, the extent and the mechanisms behind physicianinduced demand may be different, related to the number of procedures rather than
+price.
+The paper is structured as follows. The next section discusses the institutional
+setting for health care and health insurance in Chile. Section 3 describes the datasets
+we use in the paper. Section 4 discusses our empirical strategy. Section 5 presents
+the results for the impact of the policy on the probability of delivery at a private
+hospital and the probability of a C-section delivery. Section 6 presents the impacts
+on newborn outcomes. Section 7 analyzes the impacts of expected hospital demand
+on the timing of births. Finally, Section 8 summarizes the main results.
+2 Institutional Setting
+Health insurance in Chile is mandatory for employees and retirees, but optional for
+the self-employed and economically inactive individuals. Health insurance buyers
+can choose between public or private insurance. In 2015, 74% of the population had
+public insurance, 19% had private insurance, and 7% were uninsured or had special
+insurance for the police and armed forces.
+Private insurance is supplied by private firms called ISAPRES (the Spanish
+acronym for Institución de Salud Previsional). ISAPRES offer multiple health plans
+with different combinations of premiums and health coverage. Premiums are riskadjusted by age and gender. Public insurance is administered by the Fondo Nacional
+de Salud (FONASA), and is financed by a 7% tax on enrollees’ taxable income and
+5Other examples are Shen (2002) and Lien et al. (2008).
+5
+government transfers.6
+Individuals with public insurance are assigned to one of four
+groups: A, B, C or D. Individuals with no income are in group A, those with incomes
+of less than 360 dollars are in group B, those with incomes between 360 and 530
+dollars are in group C, and those with incomes greater than 530 dollars are in group
+D.7 These groups are important because the coinsurance rate in public hospitals
+depends on group affiliation: it is zero for individuals in groups A and B, 10% for
+individuals in group C, and 20% for individuals in group D. In 2015, 18% of the
+population was in group A, 23% in B, 13% in C and 19% in D.
+Historically, public insurance has involved the private provision of medical services.8 Specifically, there is a program called Modalidad Libre Elección (MLE) that
+facilitates access to private hospitals for individuals in groups B, C and D. Under
+the MLE program, the government sets the hospital fees and copayments for all
+medical procedures. Private hospitals choose whether or not to participate in the
+program, and individuals with public insurance can choose from among the available hospitals. For some diagnoses, the MLE program includes the option to use a
+diagnosis-related group (DRG) payment system called PAD (the Spanish acronym
+for Pago Asociado a Diagnóstico). Using the PAD system, both the hospital price
+and the patient’s copayment are associated with a diagnosis, irrespective of the
+actual medical procedures performed.
+The most important diagnosis covered in the PAD system is delivery. PAD
+delivery covers both vaginal and cesarean delivery. Thus, with the PAD delivery,
+a private hospital receives the same payment independent of the mode of delivery.
+The PAD delivery covers doctor and midwife fees, hospital stay, medical exams,
+medication and immunization costs, and postnatal care for 15 days after the patient
+is discharged. Importantly, to be eligible for a PAD delivery, a woman with public
+insurance must: (i) be enrolled in group B, C, or D, (ii) expect a single baby, (iii)
+have a pregnancy with gestational age of 37 weeks or more (at the time of delivery),
+and (iv) have a non-high-risk pregnancy.
+6The 7% tax on the enrollee’s taxable income is up to a maximum of approximately 200 dollars.
+7
+If an individual has more than three dependents, he/she is included in the next group with
+lower income requirements.
+8Private health insurance, on the other hand, only provides access to private hospitals, except
+in special cases like an emergency.
+6
+Source: FONASA, Ministerio de Salud, Chile.
+Figure 2: Evolution of hospital prices and copayments for PAD delivery
+To satisfy these eligibility requirements, on week 37, a woman must present a
+medical certificate about her pregnancy risk status to her chosen hospital. Since the
+high-risk status is loosely defined in the PAD requirements, the hospital can request
+additional tests for the patient and eventually reject the case. If the hospital accepts
+the case, the woman pays the copayment and gets PAD coverage.
+We study the effect of a significant decrease in the copayment for PAD delivery
+in 2003. As shown in Figure 2, the copayment for delivery fell from around 630
+dollars in 2002 to 270 dollars in 2003.9
+In relative terms, PAD delivery users had to
+pay 60% of the hospital price in 2002, but only 25% in 2003. After this decrease, use
+of PAD delivery in private hospitals increased from 10% of deliveries with women
+in group B, C or D in the first quarter of 2003 to 45% in the first quarter of 2008
+(see Figure 3). In absolute terms, there have been 45,000 PAD deliveries per year
+since 2008, meaning that one in four deliveries in Chile has been covered by PAD
+delivery.
+An important reason behind the increasing share of deliveries in the private
+9Author’s calculation using the exchange rate for February 1, 2019: 657.81 pesos per US dollar.
+7
+Note: The number of PAD deliveries includes deliveries in private hospitals financed by PAD.
+Source: FONASA, Ministerio de Salud, Chile.
+Figure 3: Share of deliveries by women in public insurance groups B, C or D financed
+with PAD delivery
+sector after the policy change is the perception that medical attention in private
+hospitals is more personalized than in public hospitals. As Murray and Elston
+(2005) described, private sector patients can obtain continuity of attention from
+their personal obstetrician and his/her team for antenatal and postnatal care. In
+contrast, delivery in the public health system is performed by midwives or doctors
+on duty, regardless of who provided antenatal care.
+3 Data and Descriptive Statistics
+Two public use databases are used in our analysis. First, to estimate the effects of
+the policy on the probability of delivering at a private hospital and the probability of a C-section, we use Hospital Discharge Data from the Health Statistics and
+Information Department (DEIS) of the Ministry of Health. All hospitals in Chile
+must complete a hospital discharge statistical form for every patient discharge, and
+DEIS collects these data. The hospital discharge dataset is publicly available for the
+8
+period 2001–2016. This dataset includes information on the discharging hospital,
+the discharge date, length of stay, the main diagnosis code (ICD-10 codes), whether
+the patient had surgery, and the patients’ county of residence, age, gender and type
+of insurance. We restrict the sample to women between 15 and 47 years of age,
+giving birth in a hospital, with a hospital stay of fewer than 21 days, during the
+period 2001–2005.10
+We use the ICD-10 codes and whether the patient had surgery to construct the
+variables vaginal delivery and C-section (see Table 1 for details). We also construct
+variables to identify the type of hospital. We classify hospitals as public hospitals,
+private hospitals working with PAD delivery (PAD private hospitals), and private
+hospitals not working with PAD delivery (non-PAD private hospitals). Public hospitals belong to the public healthcare system while private hospitals do not.11 We
+consider that a private hospital is a PAD private hospital if it had at least one delivery financed by PAD delivery in 2001–2005. In 2005, there were 233 hospitals with
+positive deliveries: 61 PAD private hospitals, 9 non-PAD private hospitals, and 163
+public hospitals.
+Figure 4 characterizes hospitals in terms of their C-section rates and maternity
+specialization (measured by the ratio of deliveries over total hospitalizations) in
+2002, prior to the policy change analyzed here. PAD private hospitals (diamonds)
+have high C-section rates to such extent that there is almost no overlap in terms of
+C-section rates between these hospitals and public hospitals (circles) and non-PADprivate hospitals (triangles). Moreover, the PAD private hospitals with the higher
+C-section rates are highly specialized in maternity hospitalization. This evidence
+suggests that PAD private hospitals pursue a business model with specialization in
+deliveries financed by public insurance.
+Table 2 shows summary statistics of hospital discharge data. The summary
+statistics show that 31% of all deliveries are C-sections, but the C-section rate is
+58% in PAD private hospitals, 37% in non-PAD private hospitals and 25% in public
+hospitals. Of all deliveries, 17% occur at PAD private hospitals, 3% at non-PAD
+10As we explain below, we restrict our sample to the period 2001–2005 to avoid contamination
+from confounding policies established subsequent to the policy of interest.
+11It follows from the above definition that teaching hospitals and military hospitals are classified
+as private hospitals.
+9
+Sample: Hospitals with 100 or more deliveries in 2002.
+Note: The size of the circle is proportional to the number of deliveries in the hospital in 2002.
+Figure 4: Distribution of hospitals by C-section rates and maternity specialization,
+2002
+private hospitals and 80% at public hospitals. The distribution of deliveries by
+the mother’s insurance affiliation is: 44% for public insurance A, 36% for public
+insurance B, C or D and 14% for private insurance. The average mother’s age is
+26.9 years.
+Figures 5a and 5b show the trends in deliveries at PAD private hospitals and in
+C-section rates for women with different types of insurance for 2001–2005. Figure 5b
+shows that for women in groups B, C or D, the share of deliveries at PAD hospitals
+went from 8% in 2002 to 27% in 2005, while remaining stable for the other groups.
+Figure 5b shows that C-section rates correlated closely with the type of insurance:
+20–25% for women in group A, 35% for women in groups B, C and D, and 50% for
+women with private insurance. More relevant for our work, C-section rates increased
+after the policy change for eligible groups (groups B, C or D) but remained fairly
+10
+(a) Delivery at a PAD private hospital
+(b) C-section rates
+Figure 5: Trends in delivery at PAD private hospitals and in C-section rates by the
+type of insurance
+11
+constant for non-eligible groups (group A and private insurance). This gives a sense
+of the impact of the policy on C-section rates.
+Our second source of data, which we use for the policy impact on newborn
+outcomes in Section 6 and to study the underlying mechanism of our results in
+Section 7 is DEIS birth data. After a birth, hospital staff completes a birth form
+that parents use to register and obtain a birth certificate for the newborn. DEIS
+collects these data for all births in Chile and the dataset is publicly available for the
+period 1996–2016. The data include information on the date of date, the mother’s
+age, the baby’s gestational age, weight and size at birth, whether it is a single or
+multiple birth, the person that delivers the baby (doctor, midwife or other), and
+the mother’s data (county of residence, marital status, parity, educational level and
+labor force participation). We restrict our birth sample to mothers between 15 and
+47 years of age that gave birth in a hospital at a gestational age between 30 and 42
+weeks. For the analysis in Section 6, we restrict the sample to 1996–2005, and for
+Section 7, we restrict the sample to 2003–2016.12
+Table 3 reports summary statistics for birth data. The main characteristics
+of births are: average birth weight is 3.4 kilograms, average size at birth is 49.5
+centimeters and average gestational age at birth is 38.8 weeks. Moreover, 94 percent
+are single, term births, 6 percent are preterm births, and 2 percent are multiple
+births. The average age of mothers is 26.9 years, 51% are married, 27% are active
+in the labor market, and they have an average of 2 children at the time of delivery.
+4 Empirical Strategy
+In this section, we use hospital discharge data to measure the impact of the policy on
+the probability of a delivery occurring at a PAD private hospital and the probability
+of a C-section. To estimate this impact, we follow a DID strategy that exploits both
+the 2003 decrease in the copayment for PAD delivery and eligibility conditions to
+use PAD delivery. As noted in a previous section, the requirements for a PAD
+delivery were belonging to public insurance groups B, C, or D, expecting a single
+12We restrict our sample to the period 2003–2016 because the names of hospitals have only been
+reported in birth data since 2003.
+12
+baby and having a pregnancy with a gestational age of 37 weeks or more. Given
+that hospital discharge data includes the type of insurance at the time of delivery
+and the single/multiple delivery condition, a “naive” approach would be to use the
+affiliation to groups B, C, or D and the single baby indicator as the treatment
+variables.13 However, one problem with this strategy is the possibility of women
+switching from private to public insurance because of the policy. Therefore, to
+approximate the mother’s insurance affiliation before the policy change, we used
+the share of deliveries by women in groups B, C and D by county and age in 2002
+as our treatment intensity variable.
+Our estimating equation is
+Yit = β0+β1 Share Group B, C or Dac×Singleit×P ostt+β3Xit+µt+δac+λay+it (1)
+where Yit is the outcome variable (a dummy for delivery at a PAD private
+hospital or a dummy for cesarean section delivery) for delivery i in month-year
+t, Share Group B, C or Dac is the share of deliveries in 2002 by women in public
+insurance B, C or D of age a and living in county c, Singleit is a dummy variable
+for single birth, P osttis a dummy that equals one after January 2003, and Xit includes Singleit and its interaction with Share Group B, C or Dac. Finally, µt
+is a
+month-year fixed effect, δac is a mother’s age-county of residence fixed effect, λay is a
+mother’s age-year fixed effect, and it includes unobservables that affect the outcome
+variable. In our estimating equation, β1 captures the causal effect of interest.
+Our identification strategy relies on the following main assumptions: no compositional changes for groups subject to different program intensities, common trends
+without the policy for the different groups, and no contemporaneous confounding
+policy changes. We justify each assumption below.
+First, treatment intensity depends on the mother’s county of residence and age
+(used as predictors of insurance affiliation before the policy) and single/multiple
+birth status. The mother’s county of residence and age are unlikely to change as
+a consequence of the policy because: (i) policy eligibility has no relationship to
+13The results of the “naive” approach, which include the individual insurance type, are presented
+in the Appendix.
+13
+Figure 6: Average household income per capita and share of public insurance groups
+B, C or D by county, 2002
+these variables, and (ii) neither fertility nor birth timing is likely to be affected by a
+policy that increases options for delivery. Fortunately, these two variables are good
+predictors of being in groups B, C or D. In particular, county of residence is a good
+predictor of household income, which in turn is a good predictor of affiliation in
+groups B, C or D. Figure 6 shows the relationship between household income and
+the share of deliveries by women in B, C and D at the county level. There is an
+inverse U-shaped relationship: in that the share of deliveries by women in groups B,
+C or D is higher in middle-income counties than in low- and high-income counties.
+In the case of single/multiple birth status, whether or not a woman is expecting
+a single baby is unlikely to manipulate by women or doctors. That said, a concern is
+a trend among women to delay fertility decisions (through fertility methods), which
+could result in more multiple and premature births. To overcome this concern, we
+control for the mother’s age-year fixed effect that explicitly captures this trend.
+Second, we tested the presence of parallel trends in the pre-treatment period to
+14
+justify the assumption of common trends for groups subject to different program
+intensities. With that purpose, we estimated the following econometric model:
+Yit = β0 +
+PT
+τ=1 βτ Share Group B, C or Dac × Singleit × 1(t = τ )
+β3 Xit + µt + δac + λay + it
+(2)
+where each βτ is the coefficient of the interaction between a month-year dummy
+and the intensity of the program, taking December 2002 as the baseline. Figures
+7a and 7b show the results for the probability of delivery at a PAD private hospital
+and the probability of a C-section, respectively. Consistent with the common trend
+assumption, the coefficients fluctuate around zero before the policy change and
+become significantly positive afterward.
+The final assumption behind our specification is that there are no contemporaneous confounding policy changes. We are particularly concerned with two policies:
+i) a change in the regulatory framework for private insurance companies that restricts their discretion to change premiums, and ii) a new policy called AUGE/GES
+that grants better coverage for individuals with certain health conditions, including
+preterm birth. Regarding the first policy, the change in the regulatory framework
+for private insurance companies was approved in May of 2005, but put into effect
+the following year. We restrict our sample to 2005 so it would not affect our results.
+Regarding the second policy, AUGE/GES was approved in 2004 but put into effect
+from July 2005 onwards. When we restrict our sample to June of 2005, the results
+do not change.
+5 Results and discussion
+Table 4 presents the estimates of equation (1) for the probability of delivery at
+a PAD private hospital (column (1)) and the probability of a C-section (column
+(2)). As we can observe, the policy change increased the probability of delivery at
+a PAD private hospital by 8.7 percentage points, and increased the probability of a
+C-section by 4.6 percentage points. In terms of the sample means of these variables,
+this implies that in the first three years after the policy was introduced, it increased
+15
+(a) Probability of a delivery at a PAD private hospital
+(b) Probability of a C-section delivery
+Figure 7: Time-varying effects of the program
+16
+private hospital deliveries by around 51% and the probability of a C-section by
+around 15%.14
+The previous results can be interpreted either as a consequence of incentives
+to hospitals/physicians to perform C-sections or as an interaction of these incentives with patients’ preferences. The latter implies that women with public health
+insurance have a marked preference for a C-section that is “satisfied” by private hospitals, but not by public hospitals. However, the available evidence does not seem
+to support this claim (for example, see McCourt et al., 2007).15 Using a survey
+of pregnant women in Santiago, Chile, Angeja et al. (2006) found that 77.8% of
+respondents preferred vaginal delivery and only 9.4% preferred C-section delivery.
+The results are similar for women interviewed in public hospitals (C-section rate of
+22%) and in private hospitals (C-section rate of 60%).16
+In Section 7 we provide evidence in support of hospital/physician incentives to
+use C-sections to smooth out demand over time to optimize the use of hospital
+resources.
+An IV interpretation
+We can use our empirical strategy to estimate the impact of being attended in a
+PAD private hospital on the probability of a C-section in the context of the policy.
+To do this, we instrument the decision to give birth in a PAD private hospital with
+the policy change to estimate the impact on the probability of a C-section. However,
+we should interpret this impact with caution because we are analyzing the effect of
+being attended in a PAD private hospital when the hospital demand has increased
+considerably (as a consequence of the policy). Therefore, our IV results may indicate
+14These results are around half of those obtained with the “naive” strategy of directly using
+current insurance affiliation in the treatment variables (see the Appendix for details). This suggests
+some degree of strategic switching from private to public insurance by women who had C-section
+delivery at a PAD private hospital.
+15McCourt et al. (2007) reviewed the research literature on consumer preferences for elective
+cesarean section since 2000, and found that very small numbers of women request a C-section,
+ranging from 0.3 to 14%.
+16Another factor that might affect the increasing number of C-sections is procedural skill (see
+Currie and MacLeod, 2016). It may be that physicians at private hospitals are more likely to be
+surgically skilled than those at public hospitals. However, we still need an explanation for private
+hospitals being more prone to hiring more surgically skilled doctors.
+17
+both the effect of giving birth in a PAD private hospital and the reaction of hospitals
+to the rapid increase in demand (a congestion effect) on C-section probability.
+Table 5 presents the OLS (column (1)) and IV (column (2)) estimates for the
+impact of delivery at a PAD private hospital on C-sections. We find that the IV estimates (of around 54 percentage points) are higher than the OLS estimates (around
+31 percentage points). A plausible explanation for the downward bias in the OLS
+estimates derives from interpreting the IV estimates as LATE on compliers. In order
+to interpret the magnitude of our estimates, it is important to characterize who the
+compliers to this policy are: middle-income women that have public insurance and
+enough income to pay the copayment. Assuming that the OLS estimates an average
+treatment effect on the treated (ATT), it would measure the effect of a delivery
+at a private hospital for middle and high-income women. If middle-income women
+are less informed than high-income women, we could expect a larger effect on this
+subpopulation, which is exactly the complier population in the IV framework.17
+We show evidence consistent with this interpretation in Figure 8. Note that the
+rate of C-sections has an inverted-U shape with the share of deliveries with private
+insurance (which can be seen as a proxy for the average income of patients). That
+is, C-section rates are higher in hospitals focused on middle-income women than in
+hospitals focused on high- or low-income women (public hospitals).
+A different interpretation is that the group of compliers includes a selection of
+riskier patients, i.e. women with an ex-ante greater likelihood to have C-section
+delivery. However, as noted in Section 2, one of the conditions to receive PAD
+is that the pregnancy is not high-risk, and the chosen private hospital has the
+right to determine this condition. Hence, hospitals are unlikely to accept high-risk
+pregnancies under the PAD system.
+17This argument is consistent with the results in Johnson and Rehavi (2016), who found that,
+while C-section rates for non-physician patients (uninformed patients) are lower in HMO-owned
+hospitals than in non-HMO-owned hospitals, C-section rates for physician patients (informed patients) do not depend on hospital ownership.
+18
+Figure 8: Fraction of patients with private insurance and C-section rate by hospital,
+2001-2002
+6 Impact of the policy on newborn outcomes
+In this section, we use birth data to evaluate the impact of the policy on two newborn outcomes: weight and size at birth. To estimate this impact, we follow a
+similar procedure to that in Section 4. Because birth data contains information
+on gestational age, we consider an additional eligibility condition: a birth with a
+gestational age of 37 weeks or more. The use of birth data allows us to test the
+assumption of parallel trends for a longer period of time since we use data back to
+1996.
+Our estimating equation is
+Yit = β0 + β1 Share Group B, C or Dac × Singleit × T ermit × P ostt
++β2Xit + µt + δac + λay + it,
+(3)
+where Yit is the outcome variable (weight or size at birth) of newborn i, born in
+month-year t, Share Group B, C or Dac is the share of deliveries in 2002 by women in
+19
+public insurance group B, C or D, of age a and living in county c, Singleit is a dummy
+variable for single birth, T ermit is a dummy for term birth, P osttis a dummy that
+equals one after January 2003. In this case, X includes Xit includes Singleit, T ermit,
+Singleit × T ermit and their interactions with Share Group B, C or Dac, as well as
+the mother’s characteristics (parity, educational level and labor force participation),
+and it includes unobservables that affect the outcome variable.
+Table 6 reports the effects of the policy on birth weight (columns (1) and (2))
+and size at birth (columns (3) and (4)). We find that the policy change causes a
+decrease of 19-21 grams in weight and of 0.09 centimeters in size at birth.
+We use the pre-treatment period to evaluate the main identifying assumption
+about common trends for groups subject to different program intensity. To do that,
+we estimate the following econometric model:
+Yit = β0 +
+P2005
+τ=1996 βτ Share Group B, C or Dac × Singleit × T ermit × 1(y = τ )
+β3Xit + µt + δac + λay + it,
+(4)
+As above, every βτ here is the coefficient of the interaction between a year dummy
+and the intensity of the program, taking 2002 as the baseline year.
+Figures 9a and 9b show the results for birth weight and size at birth, respectively.
+Only the coefficient in 1996 is statistically significant at 5%, and there is a clear
+negative effect after the policy change.
+7 Expected demand for deliveries and hospital scheduling decisions
+We have shown that a policy that decreased the cost of delivery at private hospitals
+had a notable impact on C-section rates in Chile. In this section, we propose and
+find evidence of a mechanism that explains this result. As stated in Section 1, the
+PAD program pays private hospitals the same price for a vaginal or cesarean delivery,
+20
+(a) Average birth weight
+(b) Average size at birth
+Figure 9: Impact of the policy on newborn outcomes
+21
+the latter being costlier.18 In the absence of price incentives, hospitals may profit
+from increased demand due to the policy by accommodating the maximum number
+possible of deliveries in a period of time. Because C-sections can be scheduled,
+they provide the hospital more flexibility to accommodate deliveries in a way that
+optimizes the use of their resources. Therefore, our hypothesis is that a high Csection rate allows hospitals to smooth out demand over time by moving deliveries
+between high and low demand weeks.19
+To test if hospitals manipulate the date of birth as a function of their demand,
+we need a measure of expected hospital demand that is not subject to that kind
+of manipulation. Since birth data contains gestational age, we measure expected
+hospital demand in a week by adding all births in a week for all hospitals, assuming
+full-term delivery (at a gestational age of 40 weeks), regardless of the actual date
+of birth. Then, to identify high and low expected demand weeks, we use the 25th,
+50th and 75th percentiles of the distribution of expected demand for a hospital in a
+given year.
+Given our definition of high and low expected demand weeks, we want to know
+whether the actual date of birth of a baby born in a given hospital is a function
+of that demand. Specifically, we want to know if the probability of an early term
+birth (on week 37 or 38) depends on the expected demand that the hospital may
+face during week 40 of that pregnancy. To do that, we use birth data for the period
+2003–2016 to estimate the following equation:20
+18We can approximate the differences in costs for a C-section and a vaginal delivery using claims
+data from private insurance that use fee-for-service payment schemes. Based on the data, private
+hospitals receive between 11 and 28% more from private insurance companies for a C-section than
+a vaginal delivery.
+19Our question is related to recent papers on the effect of hospital congestion on C-sections.
+For example, using data from a large public hospital in Italy and (unlike our case) leaving out all
+scheduled deliveries, Facchini (2016) found that C-sections are more likely when there is a high
+patient/midwife ratio. Using data on maternity admissions for 30 hospitals in Washington state,
+Balakrishnan and Soderstrom (2000) only found a correlation between C-sections and “congested”
+days for pregnancies that were classified as at risk for C-section, but not for the full sample of
+patients. These works differ crucially from ours in that they investigate whether hospitals are
+more likely to perform C-sections when faced with unexpected demand, while we are concerned
+with hospitals systematically using C-sections to program their deliveries to accommodate demand.
+20Our sample starts in 2003 because the name of the hospital where a woman gives birth has
+only been reported in birth data since that year.
+22
+Yiwy = β0 + β1 demand−25−50−pctlhwy + β2 demand−50−75−pctlhwy
++β3 demand−75−morehwy + β4Xiwy + µw + δhy + λay + iwy
+(5)
+where Yiwy is a dummy for early term birth (on week 37 or 38) for birth i, the fullterm delivery date which (week 40 of pregnancy) occurs in week w of year y. Here,
+demand−25−50−pctl, demand−50−75−pctl and demand−75−more are dummies indicating the percentile of expected demand (between the 25th and 50th percentile,
+between the 50th and 75th percentile, or above the 75th percentile, respectively) in
+week w for hospital h in yeary, and Xiwy includes a single birth dummy, a term birth
+dummy, and the mother’s characteristics (parity, educational level and labor force
+participation), while µw is a week fixed effect, δhy is a hospital-year interaction, and
+λay is a mother’s age-year interaction.21
+The β’s in equation (5) measure the effect on the probability of an early term
+birth of expected demand a hospital faces in the week the pregnancy reaches week
+40. By using the week of full-term delivery, our source of variation here is the
+week of conception. Identification also relies on hospital-year interactions that capture unobserved differences between hospitals potentially correlated with C-section
+probability, like management quality, composition of the medical staff, hospital infrastructure and hospital demand composition. These unobservables are allowed to
+vary over time.
+Table 7 shows the effects of expected demand on the probability of an early term
+birth for public and non-PAD private hospitals (column (1)), and for PAD private
+hospitals (column (2)). The impact of high expected demand on early term birth
+for public and non-PAD private hospitals is close to zero, but this is not the case
+for PAD private hospitals. Specifically, we find that if a pregnancy reaches week 40
+on an expected higher than normal demand week, the probability of an early term
+birth increases by 0.4/0.6 percentage points. In terms of the sample mean, this is
+21The results in this Section are robust to an alternative specification that uses the ratio between
+expected demand and the maximum number of (actual) weekly deliveries in the year (as a measure
+of hospital capacity) instead of the distribution of expected demand. The results for this alternative
+specification are shown in the Appendix.
+23
+around a 1.1/1.6% increase given that 36% of births in our sample occur on week
+37 or 38. Therefore, our results point to private hospitals scheduling deliveries as a
+function of their expected demand.
+In Table 8, we allow for heterogeneity in the impact of expected demand on
+PAD private hospitals, by classifying them in terciles by their average fraction of
+C-sections for 2003-2016.22 Note that, as in the case of public and non-PAD private
+hospitals, we did not find an effect of high expected demand on PAD private hospitals
+with low C-section rates (25-65%) (column (1)). Therefore, the impact of expected
+demand appears to be concentrated in hospitals where C-sections represent more
+than 65% of deliveries, being higher for those hospitals with high C-section rates
+(over 77%) (column (3)). As well, note that the effect increases with expected
+demand, as shown in columns (2) and (3).
+Two interpretations of these results are possible: (i) hospitals/physicians indicate
+more C-sections when faced with high expected demand, or (ii) high C-section rates
+allow hospitals/physicians to move deliveries from weeks with high expected demand
+to weeks with low expected demand. We believe the second interpretation makes
+more sense, and the fact that this effect is only present in PAD hospitals with high
+C-section rates is consistent with this interpretation.
+8 Conclusion
+We study the effect on cesarean rates of a policy in Chile that decreased the cost of
+delivery at private hospitals for women with public health insurance. Our identification strategy relies on the eligibility conditions to access this benefit: women with
+public insurance expecting a single baby with a gestational age of 37 weeks or more,
+with the exception of women with no income. Using hospital discharge data, we
+use a difference-in-differences (DID) estimation strategy to measure the impact of
+the policy on the probability of delivery at a private hospital and on the probability
+of having a C-section. In the first three years since the introduction of the policy,
+private hospital deliveries increased by 8.7 percentage points (51% increase in terms
+22The C-section rate is between 25 and 65% in low C-section rate PAD hospitals, between 65
+and 77% in intermediate C-section rate hospitals, and over 77% in high C-section rate hospitals.
+24
+of the sample mean) and the probability of a C-section increased by 4.6 percentage
+points (15% increase). Applying a similar strategy to birth data, we find the policy
+had a negative effect on newborn weight and size.
+Given that the policy studied here implies a flat price for delivery, independent
+of the procedure, it is unlikely that price incentives are the main channel behind the
+aforementioned results. Therefore, using birth data, we studied the possibility that
+private hospitals indicate C-sections to smooth out demand over time to optimize
+the use of their resources. We find a higher probability of early term birth when
+a private hospital participating in the program has higher than normally expected
+demand for deliveries, and no effect for non-participating hospitals.
+25
+References
+Alexander, J. M., K. J. Leveno, J. Hauth, M. B. Landon, E. Thom, C. Y. Spong,
+M. W. Varner, A. H. Moawad, S. N. Caritis, M. Harper, R. J. Wapner, Y. Sorokin,
+M. Miodovnik, M. J. O’Sullivan, B. M. Sibai, O. Langer, and S. G. Gabbe (2006).
+Fetal injury associated with cesarean delivery. Obstetrics & Gynecology 108 (4),
+885–890.
+Allin, S., M. Baker, M. Isabelle, and M. Stabile (2015). Physician incentives and
+the rise in C-sections: Evidence from Canada. Working Paper 21022, National
+Bureau of Economic Research.
+Ananth, C. V., J. C. Smulian, and A. M. Vintzileos (1997). The association of
+placenta previa with history of cesarean delivery and abortion: A metaanalysis.
+American Journal of Obstetrics and Gynecology 177 (5), 1071–1078.
+Angeja, A., A. Washington, J. Vargas, R. Gomez, I. Rojas, and A. Caughey (2006,
+2018/12/17). Chilean women’s preferences regarding mode of delivery: which do
+they prefer and why? BJOG: An International Journal of Obstetrics & Gynaecology 113 (11), 1253–1258.
+Balakrishnan, R. and N. S. Soderstrom (2000, 09). The cost of system congestion: Evidence from the healthcare sector. Journal of Management Accounting
+Research 12, 97–114.
+Betrán, A. P., J. Ye, A.-B. Moller, J. Zhang, A. M. Gülmezoglu, and M. R. Torloni
+(2016, 02). The increasing trend in caesarean section rates: Global, regional and
+national estimates: 1990-2014. PLOS ONE 11 (2), 1–12.
+Borrescio-Higa, F. and N. Valdés (2018). Publicly insured caesarean sections in
+private hospitals: a repeated cross-section analysis in chile. Working paper, Universidad Adolfo Ibañez.
+Card, D., A. Fenizia, and D. Silver (2018). The health effects of cesarean delivery
+for low-risk first births. Working paper.
+26
+Costa-Ramón, A. M., A. Rodríguez-González, M. Serra-Burriel, and C. CampilloArtero (2018). It’s about time: Cesarean sections and neonatal health. Journal
+of Health Economics 59, 46 – 59.
+Currie, J. and W. B. MacLeod (2016). Diagnosing expertise: Human capital,
+decision making, and performance among physicians. Journal of Labor Economics 35 (1), 1–43.
+Facchini, G. (2016). Low staffing levels in maternity wards: Keep calm and call the
+surgeon. Working paper, European University Institute.
+Foo, P. K., R. S. Lee, and K. Fong (2017). Physician prices, hospital prices,
+and treatment choice in labor and delivery. American Journal of Health Economics 3 (3), 422–453.
+Gruber, J., J. Kim, and D. Mayzlin (1999). Physician fees and procedure intensity:
+the case of cesarean delivery. Journal of Health Economics 18 (4), 473–490.
+Gruber, J. and M. Owings (1996). Physician financial incentives and cesarean section
+delivery. The RAND Journal of Economics 27 (1), 99–123.
+Hoxha, I., L. Syrogiannouli, X. Luta, K. Tal, D. C. Goodman, B. R. da Costa, and
+P. Jüni (2017). Caesarean sections and for-profit status of hospitals: systematic
+review and meta-analysis. BMJ Open 7 (2).
+Hyde, M. J., A. Mostyn, N. Modi, and P. R. Kemp (2012). The health implications
+of birth by caesarean section. Biological Reviews 87 (1), 229–243.
+Johnson, E. M. and M. M. Rehavi (2016). Physicians treating physicians: Information and incentives in childbirth. American Economic Journal: Economic
+Policy 8 (1), 115–41.
+Lien, H.-M., S.-Y. Chou, and J.-T. Liu (2008). Hospital ownership and performance: Evidence from stroke and cardiac treatment in taiwan. Journal of Health
+Economics 27 (5), 1208 – 1223.
+27
+McCourt, C., J. Weaver, H. Statham, S. Beake, J. Gamble, and D. K. Creedy (2007).
+Elective cesarean section and decision making: A critical review of the literature.
+Birth 34 (1), 65–79.
+Murray, S. F. (2000). Relation between private health insurance and high rates of
+caesarean section in chile: qualitative and quantitative study. BMJ 321 (7275),
+1501–1505.
+Murray, S. F. and M. A. Elston (2005). The promotion of private health insurance
+and its implications for the social organisation of healthcare: a case study of
+private sector obstetric practice in chile. Sociology of Health and Illness 27 (6),
+701–721.
+Shen, Y.-C. (2002). The effect of hospital ownership choice on patient outcomes after
+treatment for acute myocardial infarction. Journal of Health Economics 21 (5),
+901 – 922.
+Villar, J., G. Carroli, N. Zavaleta, A. Donner, D. Wojdyla, A. Faundes, A. Velazco, V. Bataglia, A. Langer, A. Narváez, E. Valladares, A. Shah, L. Campodónico, M. Romero, S. Reynoso, K. S. de Pádua, D. Giordano, M. Kublickas,
+and A. Acosta (2007). Maternal and neonatal individual risks and benefits associated with caesarean delivery: Multicentre prospective study. BMJ 335 (7628),
+1025.
+28
+Table 1: Construction of vaginal and cesarean delivery variables
+ICD-10 Has surgery? Vaginal delivery Cesarean delivery
+O42, O601, O602, O603, O61–
+069, O71, O72, O74, O750,
+O751, O752, O753, O754, O755,
+O756, O758, O759, O848, O849
+No X
+O42, O601, O602, O603, O61–
+069, O71, O72, O74, O750,
+O751, O752, O753, O754, O755,
+O756, O758, O759, O848, O849
+Yes X
+O70, O73, O757, O80, O81, O83,
+O840, O841
+X
+O82, O842 X
+29
+Table 2: Descriptive statistics for hospital discharge
+data, 2001–2005
+Variables Mean s.d.
+Cesarean section rate 0.31 0.46
+in PAD private hospitals 0.58 0.49
+in non-PAD private hospitals 0.37 0.48
+in public hospitals 0.25 0.43
+Delivery at a PAD private hospital 0.17 0.38
+Delivery at a non-PAD private hospital 0.03 0.18
+Delivery at a public hospital 0.79 0.40
+Public insurance: Group A 0.44 0.50
+Public insurance: Group B, C or D 0.36 0.48
+Private insurance 0.14 0.35
+Other insurance 0.03 0.17
+Uninsured 0.02 0.13
+Age 26.9 6.7
+Patient’s length of stay 3.4 2.0
+Source: Departamento de Estadísticas e Información de
+Salud (DEIS), Ministerio de Salud, Chile.
+30
+Table 3: Descriptive statistics for birth data, 1996–
+2005
+Variables Mean s.d.
+Birth weight 3, 356 514
+Size at birth 49.5 2.4
+Single, term birth 0.94 0.24
+Preterm 0.06 0.23
+Multiple births 0.02 0.13
+Gestational age at birth (in weeks) 38.8 1.5
+Mother’s age 26.9 6.6
+Mother is married 0.51 0.50
+Mother’s labor force participation 0.27 0.45
+Parity 2.0 1.1
+Source: Departamento de Estadísticas e Información de
+Salud (DEIS), Ministerio de Salud, Chile.
+31
+Table 4: Effect of easing access to private hospitals on the probability of delivery at
+a private hospital and the probability of a C-section delivery
+Delivery at a PAD private hospital Cesarean section
+(1) (2)
+Share Public Insurance’s B, C or D
+× Single × Post
+0.087∗∗∗ 0.046∗∗∗
+[0.024] [0.017]
+R-squared 0.165 0.087
+Observations 946,242 946,242
+Note: This table reports DID estimates of the effect of easing access to private hospitals on the
+probability of delivery at a private hospital and the probability of a C-section delivery. PAD
+private hospitals are hospitals that participate in the PAD program but are not in the public
+healthcare system. Share Public Insurance’s B, C or D share of deliveries in 2002 by women in
+public insurance B, C or D of age a and living in county c, Single is a dummy for single birth,
+and P ost is a dummy that equals one after January 2003.
+All regressions include Single, Single×Share Public Insurance’s B, C or D, month-year fixed
+effects, mother’s age-year of admission fixed effects, and mother’s age-county of residence fixed
+effects.
+Standard errors, clustered by mother’s county of residence, reported in brackets.
+∗∗∗ Significant at the 1 percent level.
+∗∗ Significant at the 5 percent level.
+∗ Significant at the 10 percent level.
+32
+Table 5: IV/2SLS estimates of the effect of delivery
+at a PAD private hospital on the probability of a
+C-section delivery
+OLS IV/2SLS
+(1) (2)
+Delivery at a PAD private hospital 0.312∗∗∗ 0.537∗∗∗
+[0.015] [0.200]
+Observations 946,242 946,242
+Note: This table reports IV estimates of the effect of
+delivery at a PAD private hospital on the probability of
+a C-section delivery. PAD private hospitals are
+hospitals that participate in the PAD program but are
+not in the public healthcare system. The instrument is
+Share Public Insurance’s B, C or D × Single × Post
+where Share Public Insurance’s B, C or D is the share
+of deliveries in 2002 by women in public insurance B, C
+or D of age a and living in county c, Single is a dummy
+for single birth, and P ost is a dummy that equals one
+after January 2003.
+All regressions include Single, Single×Share Public
+Insurance’s B, C or D, month-year fixed effects,
+mother’s age-year of admission fixed effects, and
+mother’s age-county of residence fixed effects.
+Standard errors, clustered by mother’s county of
+residence, reported in brackets.
+∗∗∗ Significant at the 1 percent level.
+∗∗ Significant at the 5 percent level.
+∗ Significant at the 10 percent level.
+33
+Table 6: Effect of easing access to private hospitals on newborn outcomes
+Birth weight Size at birth
+(1) (2) (3) (4)
+Share Public Insurance’s B, C or D
+× Single, term birth × Post
+−18.7
+∗∗∗ −21.0∗∗∗ −0.09∗∗ −0.09∗∗
+[6.7] [6.3] [0.04] [0.04]
+Additional Controls No Yes No Yes
+R-squared 0.234 0.241 0.235 0.237
+Observations 2,379,060 2,379,060 2,379,060 2,379,060
+Note: This table reports DID estimates of easing access to private hospitals on
+newborn outcomes. Share Public Insurance’s B, C or D is the share of deliveries in
+2002 by women in public insurance B, C or D of age a and living in county c, Single,
+term birth is a dummy for a single, term birth, and P ost is a dummy that equals one
+after January 2003. The controls include parity, mother’s educational level and labor
+force participation.
+All regressions include Single, T erm, Single, term birth, Single×Share Public
+Insurance’s B, C or D, , T erm×Share Public Insurance’s B, C or D, Single, term
+birth×Share Public Insurance’s B, C or D, month-year fixed effects, mother’s age-year
+of admission fixed effects, and mother’s age-county of residence fixed effects.
+Standard errors, clustered by mother’s county of residence, reported in brackets.
+∗∗∗ Significant at the 1 percent level.
+∗∗ Significant at the 5 percent level.
+∗ Significant at the 10 percent level.
+34
+Table 7: Effect of expected hospital demand on the probability of early term birth
+Public and Non-PAD Private Hospitals PAD Private Hospitals
+(1) (2)
+25th pctl < Demand ≤ 50th pctl −0.000 0.002
+[0.001] [0.002]
+50th pctl < Demand ≤ 75th pctl 0.000 0.004∗∗
+[0.001] [0.002]
+Demand greater than 75% week 0.001 0.006∗∗∗
+[0.001] [0.001]
+R-squared 0.088 0.113
+Observations 2,353,442 841,885
+Note: This table reports OLS estimates of expected hospital demand on early term birth
+(gestational age 37 or 38 weeks) for the period 2003–2016. Demand is the expected hospital
+demand in week w of year y for hospital h. 25th pctl < Demand ≤ 50th pctl is a dummy that
+indicates if that expected demand is in the 25 to 50 percentile of the distribution of expected
+demand for the hospital h in year y. Similar definitions apply for other dummies.
+All regressions control for Single, T erm, Single × T erm, parity, mother’s educational level and
+labor force participation, week of year fixed effects, mother’s age-year fixed effects, mother’s county
+of residence fixed effects and hospital-year fixed effects.
+Standard errors, clustered by hospital, reported in brackets.
+∗∗∗ Significant at the 1 percent level.
+∗∗ Significant at the 5 percent level.
+∗ Significant at the 10 percent level.
+35
+Table 8: Effect of expected hospital demand on the probability of early term birth for PAD
+private hospitals classified by C-section rate intensity
+PAD Private Hospitals
+Low C-section rate Intermediate C-section rate High C-section rate
+(1) (2) (3)
+25th pctl < Demand ≤ 50th pctl −0.002 0.003 0.007∗∗
+[0.003] [0.002] [0.003]
+50th pctl < Demand ≤ 75th pctl −0.001 0.005∗∗ 0.007∗∗
+[0.003] [0.002] [0.003]
+Demand > 75th pctl 0.004 0.005∗∗ 0.008∗∗∗
+[0.003] [0.002] [0.002]
+R-squared 0.112 0.101 0.098
+Observations 289,817 283,207 268,799
+Note: This table reports OLS estimates of expected hospital demand on early term birth (gestational age
+37 or 38 weeks) for PAD private hospitals in the period 2003–2016. Demand is the expected hospital
+demand in week w of year y for hospital h. 25th pctl < Demand ≤ 50th pctl is a dummy that indicates if
+that expected demand is in the 25 to 50 percentile of the distribution of expected demand for the hospital
+h in year y. Similar definitions apply for other dummies.
+The C-section rate is between 25 and 65% in low C-section rate PAD hospitals, between 65 and 77% in
+intermediate rate C-section rate hospitals, and over 77% in high C-section rate hospitals.
+All regressions control for Single, T erm, Single × T erm, parity, mother’s educational level and labor
+force participation, week of year fixed effects, mother’s age-year fixed effects, mother’s county of residence
+fixed effects and hospital-year fixed effects.
+Standard errors, clustered by hospital, reported in brackets.
+∗∗∗ Significant at the 1 percent level.
+∗∗ Significant at the 5 percent level.
+∗ Significant at the 10 percent level.
+36

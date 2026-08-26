@@ -1,0 +1,14 @@
+Skills do projeto "Born on Schedule" (cesareas no Brasil, JHE)
+
+Duas pastas:
+  paper-born-on-schedule/   conhecimento deste projeto (1 arquivo)
+  birth-health-econ/        conhecimento do campo (SKILL.md + references/)
+
+Instalacao: no Claude Cowork, arraste este .zip e peca "instale estas skills",
+ou copie as duas pastas para o diretorio de skills do Claude Desktop.
+
+Teste de disparo, em conversa nova:
+  "qual o status do paper?"                     -> paper-born-on-schedule
+  "que desenho identifica efeito de honorario?" -> birth-health-econ
+
+Documentacao completa em HANDOFF_COAUTORES.md.

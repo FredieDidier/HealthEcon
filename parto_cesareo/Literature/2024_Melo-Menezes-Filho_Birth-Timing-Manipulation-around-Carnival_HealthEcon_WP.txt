@@ -1,0 +1,1206 @@
+
+The Effect of Birth Timing Manipulation around Carnival on
+Birth Indicators in Brazil
+Carolina Melo∗ Naercio Menezes-Filho†
+June 29, 2023
+Abstract
+This paper studies the patterns and consequences of birth timing manipulation around the carnival holiday in Brazil. We document how births are displaced
+around carnival and estimate the effect of displacement on birth indicators. We
+show that there is extensive birth timing manipulation in the form of both anticipation and postponement and find an increase in gestational length and a reduction
+in neonatal and early neonatal mortality. We show that these results are consequences of the postponed births that would otherwise happen through scheduled
+c-sections, but end up happening through vaginal deliveries. Therefore, restrictions on usual delivery procedures due to the carnival holiday increase the children
+survival rates.
+Keywords: birth timing manipulation, carnival holiday, gestational
+length, neonatal mortality
+JEL Codes: I14, I15, I18
+∗C. Melo: Insper Institute of Education and Research (INSPER); address: Rua Quat´a, 300, S˜ao
+Paulo-SP, Brazil, 04546-042; phone: +55(11)98937-7007; e-mail: carolinapgm1@insper.edu.br.
+†N. Menezes Filho: Insper Institute of Education and Research (INSPER) and University of S˜ao Paulo
+(USP); address: Rua Quat´a, 300, S˜ao Paulo-SP, Brazil, 04546-042; phone: +55(11)99990-6866; e-mail:
+naercioamf@insper.edu.br. We thank Paulo Furquim, Rudi Rocha, Rodrigo Soares, Bladimir Carrillo,
+seminar participants at Insper and Ridge/Lacea for their helpful comments and suggestions. This work
+was supported by Grants number 2021/05978-5 and 2019/12553-0, Sao Paulo Research Foundation
+(FAPESP).
+1
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+1 Introduction
+Birth timing manipulation exists for reasons beyond health. Under certain circumstances, it can characterize obstetric violence and generate negative consequences for the
+health of mothers and infants. The World Health Organization has pointed to the necessity of advancing in research to document problems of health institutions related to
+obstetric violence, so to help improve the quality of birth care around the world (Zanardo
+et al., 2017). In this paper, we document the existence of extensive birth timing manipulation around carnival festivity days in Brazil, and study its dynamics and consequences
+for gestational length and health outcomes at birth.
+We define an optimal holiday manipulation window (Jacobson et al., 2021) and, by
+comparing outcomes on days that surround carnival Tuesday with outcomes on other days
+of the year, not affected by this holiday, we perform descriptive exercises. We quantify
+the missing mass of births during the festivity days and the excess mass of births on days
+before and after carnival festivities, and we also describe birth displacement patterns,
+in terms of delivery method, maternal characteristics, and gestational length. Our main
+analysis, however, focuses on estimating the carnival effects on delivery methods and
+health outcomes by comparing births that happened within the carnival manipulation
+window with those that happened outside of it, on counterfactual days. Because the
+optimal carnival window comprises all births that would happen in the carnival period
+regardless of maternal profile, we argue that these effects are consistent, net of selection
+in maternal characteristics.
+Our results show that there is extensive birth timing manipulation around carnival
+festivity days, manifested by both anticipation and postponement of births. The missing
+mass of births during carnival festivity days are composed mainly by missing c-sections,
+which configure the most convenient delivery type when it comes to timing manipulation.
+The excess mass of births on days that precede carnival festivities is made of c-sections
+only, but the excess mass on the days after the holiday is composed also by spontaneous
+and induced vaginal deliveries. Descriptive evidence also shows that the more educated,
+less vulnerable mothers, are the ones most likely to engage in birth timing manipulation,
+and that gestational length is lower (higher) on the days that precede (succeed) festivities.
+Our main results reveal that carnival increases gestational length by 0.06 day, and
+decreases neonatal mortality and early neonatal mortality rates by 0.30 and 0.26 per 1,000
+live births, respectively. Implied instrumental variable estimates, obtained by dividing
+estimated coefficients by an estimated fraction of the displaced births within the optimal
+window, give an increase in gestational age of 3.41 days, a decrease in neonatal mortality
+of 17.51 deaths per 1,000 live births, and a decrease in early neonatal mortality of 15.23
+deaths per 1,000 live births. With regards to mechanisms, we show that carnival increases
+the daily number of vaginal deliveries, especially the spontaneous ones. We argue that
+2
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+this evidence indicates that some births that would otherwise be c-sections or induced
+vaginal deliveries during carnival end up being postponed and becoming spontaneous
+deliveries.
+To verify whether our main results are driven by selection in maternal profile, we
+estimate the effects of the carnival window on the number of births to mothers of different
+characteristics, but find no meaningful effect. We thus conclude that our results on
+gestational age and (early) neonatal mortality can be in fact attributed to the carnival
+holiday. In terms of policy recommendations, our results show that richer mothers, more
+likely to engage in birth anticipation and have their babies suffer from lower gestational
+length and birthweight, could have their babies’ health improved through the waiting a
+little longer to schedule birth or try going into spontaneous labor.
+In terms of heterogeneity, we find that the increase in the number of spontaneous
+vaginal deliveries and the resulting net increases in gestational length and birthweight are
+observed only in the cases of white mothers. Moreover, the pattern of birth displacement
+differs for the different hospital types. In private and mixed units, we observe both
+anticipation and postponement of births, while in public units no anticipation is observed.
+Taken together, the evidence suggests that carnival effects are concentrated in births to
+white mothers that deliver in mixed units. Therefore, policy efforts should be focused on
+this profile.
+Previous studies have documented the existence of birth timing manipulation with
+regards to both the day of birth and the time of birth throughout the day (Cohen, 1983;
+Brown-III, 1996; Spetz et al., 2001; Gans et al., 2007; Gans and Leigh, 2009; Neugart and
+Ohlsson, 2012; Fabbri et al., 2016; Rocha and Spinola, 2016). These studies suggest that
+doctors may be willing to manipulate the timing of birth due to their demand for leisure
+or convenience (Cohen, 1983; Brown-III, 1996; Spetz et al., 2001; Gans et al., 2007; Rocha
+and Spinola, 2016), and/or due to their risk aversion (Fabbri et al., 2016). And pregnant
+women may be willing to manipulate the timing of birth to avoid inauspicious dates,
+such as April 1st and the Day of the Dead (Gans and Leigh, 2012; Lo, 2003), and/or to
+receive some financial benefit, such as a “baby bonus” or a tax credit (Dickert-Conlin
+and Chandra, 1999; Gans and Leigh, 2009; Schulkind and Shapiro, 2014; Borra et al.,
+2019).
+A strand of the literature specifically concerns the effects of holidays on the displacement of births (Cohen, 1983; Lefevre, 2013; Martin et al., 2018). Jacobson et al. (2021)
+use California data to look at how holiday births are displaced over time and examine
+the consequences of this displacement for delivery or birth outcomes. We contribute to
+this literature by focusing on a long holiday, which could bring more pronounced effects,
+and by using data from a large developing country, where the health effects could potentially be larger.1 Moreover, since the carnival holiday takes place at different dates across
+1Rocha and Spinola (2016) present evidence of birth timing manipulation in the Brazilian health
+3
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+years, we use an empirical strategy that also controls for day-of-year effects, on top of
+day-of-week and year effects, which lends an additional layer of credibility to our results.
+The rest of the paper is organized as follows. In section 2, we provide brief background information on carnival in Brazil and present a conceptual framework to guide
+our empirical analyses. In section 3, we present our data along with summary statistics.
+In section 4, we present our empirical strategy. In sections 5 and 6, we present our main
+results and heterogeneity analysis, respectively. In section 7, we present robustness tests.
+And section 8 concludes.
+2 Background and Conceptual Framework
+In Brazil, carnival is the most popular festivity. It occurs in February or March, but
+there is no fixed date for it. Carnival day is set to be 40 days before the Palm Sunday2
+and, although it always falls on a Tuesday, festivities in Brazil start on the preceding
+Saturday and are extended to the following Wednesday – known as Ash Wednesday – at
+noon. Carnival is an official holiday in some, but not in all, Brazilian states and cities
+(Minist´erio da Economia, 2019); however, it is celebrated throughout the whole country
+and taken as a holiday by most. For this reason, in this paper, we refer to carnival as a
+holiday.
+We are interested in learning how carnival affects the dynamics of birth timing and
+delivery method choice and, consequently, gestational length and health outcomes at
+birth. There is a strand of the literature that documents the existence of birth timing
+manipulation around holidays. Timing manipulation can be manifested by either anticipation or postponement of deliveries, consequently affecting the gestational length
+of births involved (Cohen, 1983; Lefevre, 2013; Rocha and Spinola, 2016; Martin et al.,
+2018; Jacobson et al., 2021). Previous research has shown that gestational length can
+affect birthweight and other health indicators, including neonatal mortality. In special,
+the relationship between gestational length/birthweight and other health outcomes has
+been vastly documented in the literature.3 Particularly relevant for this paper are the
+results of Butler and Alberman (1969), Susser et al. (1972), and Hoffman et al. (1974),
+mentioned by Goldstein and Peckham (1976), showing that neonatal mortality and gestational length (birthweight) have a non-linear, U-shaped, relationship, with mortality
+falling up to a 40 week gestational length (3500-4000 grams of birthweight) and increasing
+afterwards.
+system, showing that there is a lower number of births on weekdays in between holidays as compared to
+regular weekdays, for both private and public hospitals.
+2Palm Sunday is a date originally celebrated by the Catholics.
+3See, for instance, Westphal and Joshi (1964); Susser et al. (1972); Hoffman et al. (1974); Goldstein
+and Peckham (1976); Almond et al. (2005); Black et al. (2007); Oreopoulos et al. (2008); Spong (2013);
+American College of Obstetricians and Gynecologists (2013); Carrillo and Feres (2017).
+4
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+To provide a more complete conceptual framework for our work, however, besides
+considering the literature on birth timing manipulation in face of holidays and the effects
+of birth displacement on health outcomes at birth, we need to contextualize the institutional birth setting in Brazil. We, therefore, provide an overview of the Brazilian health
+system in what it involves birth care in the following paragraphs, and then discuss the
+potential effects of carnival in this specific context.
+The Brazilian health system comprises both a privately funded system and a publicly
+funded unified system (SUS), with universal coverage. Health units in the country can
+be of three types: [i] 100% privately funded (private units), [ii] 100% publicly funded
+(public units), and [iii] privately and publicly funded at the same time (mixed units).
+While private (public) units serve only the private (public) system, mixed units although
+privately managed have a share of their (physical and human) capacity dedicated to SUS
+(Rocha and Spinola, 2016). Over 98% of births in Brazil happen in hospitals (Magalhaes
+et al., 2019), 54% in public, 29% in mixed, and 17% in private ones.4
+Under the service of SUS, obstetricians and other health professionals are hired on a
+fixed-hour, fixed-pay contract to serve in shifts on duty, and all people have care access
+free of charge (Rocha and Spinola, 2016). The first contact a pregnant woman has with
+the system is through the basic health unit (BHU), where prenatal care is provided in
+cases of a regular risk pregnancy. The catchment area of a BHU is served by one or more
+hospitals, to where pregnant women are referred to deliver. Therefore, under regular risk
+conditions, the doctor that follows a pregnant woman during pregnancy is usually not the
+one who assists her delivery. Women are advised to go to referred hospitals when reaching
+a certain frequency of contractions in the labor process. Only when medical reasons are
+present, according to the Ministry of Health’s guidelines, a c-section or labor induction
+should be scheduled (Minist´erio da Sa´ude (Brasil), 2015). In fact, more than 80% of all
+deliveries that happen in public hospitals involve women going into labor. Of those, only
+less than 20% are induced.5 Hence, birth timing manipulation under the public service
+is likely to happen within doctor shifts, after the pregnant woman’s admission into the
+hospital.
+Under the private service, obstetricians can be hired to perform shifts on duty (in
+private or mixed hospitals) or are paid per procedure by the private health insurer, the
+patient, or both. When under the private system care, pregnant women can choose their
+doctor and develop a relationship of confidence with her/him. In these cases, the doctor
+that provides prenatal care is usually the same one that assists the delivery. Frequently,
+the delivery type is defined and planned early by the doctor and the patient together,
+before women reach the last weeks of the gestational period. When obstetricians are
+4Statistics obtained from 2012-2019 DATASUS/SINASC. Available at:
+http://datasus.saude.gov.br/transferencia-de-arquivos/.
+5Statistics obtained from 2019 DATASUS/SINASC. Available at:
+http://datasus.saude.gov.br/transferencia-de-arquivos/.
+5
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+paid per procedure, there exists a high incentive for them to (convince their patients to)
+schedule c-sections, for the pay is higher, time demanded is shorter, and they can more
+conveniently plan a work schedule (Minist´erio da Sa´ude (Brasil), 2001; Pasche et al.,
+2010). In addition, on the demand side, besides convenience, there is a national culture
+of birth that associates surgical deliveries with higher quality of care (Dias et al., 2008;
+Minist´erio da Sa´ude (Brasil), 2014; Leal et al.). In private hospitals, over 80% of deliveries
+are c-sections and, of those, nearly 70% are scheduled procedures.6
+Given the setting of birth care in Brazil, we rationalize how the long carnival holiday
+can affect birth timing manipulation. Under the SUS service, in face of the holiday, doctors may avoid scheduling c-sections and/or labor inductions that are medically justified
+on festivity days, because hospitals (which can be public or mixed) might be understaffed,
+operating at lower capacity. The low fraction of deliveries that would be scheduled to
+be performed during the holiday7can be, therefore, either anticipated or postponed. In
+the case of postponement, there is a risk that women go into spontaneous labor anytime
+before the expected new date of delivery.
+Under the private service, however, pregnant women and their doctors of choice can
+freely agree in advance not to schedule deliveries on festivity days. The alternative for
+them is, then, to anticipate birth to days that precede carnival or to postpone it to days
+that succeed it. Given that, most of those births were anyhow meant to be c-sections,8
+we expect that many surgical procedures are anticipated to the weekdays before carnival.
+Due to the limited capacity of doctors (or even hospitals) to accommodate so many birth
+anticipations, and because it would not be medically advisable to anticipate deliveries by
+so many days, only a limited number of c-sections can be scheduled to days that precede
+carnival. Births that are not (or cannot) be anticipated are subject to postponement,
+again, under the risk of pregnant women going into spontaneous labor before the new
+date on which their c-sections were scheduled to be performed. When that happens, it
+is possible that women are assisted by a different doctor than that with who they went
+through prenatal care, either under the emergency service of SUS or the private system,
+and end up having a vaginal delivery instead (even though their initial preference was to
+have a c-section). We, nonetheless, cannot rule out the possibility that some births that
+would happen vaginally during carnival are also anticipated by women that do not want
+to risk delivering with another doctor. We, therefore, anticipate that the holiday may
+not not only result in birth timing manipulation, but also in a disproportionate change
+in the number of births that happen in different health unit types and in the number of
+different delivery types performed.
+We also conjecture that a lower (higher) gestational age due to birth anticipation
+6Statistics obtained from 2019 DATASUS/SINASC. Available at:
+http://datasus.saude.gov.br/transferencia-de-arquivos/.
+7Recall that, under the public service, over 80% of deliveries involve women going into labor.
+8Recall that, under the private service, the share of c-section births in Brazil is greater than 80%.
+6
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(postponement) can directly result in a lower (higher) birthweight, which, in turn, can
+have further consequences for the health of the infant. Because the average gestational
+length of Brazilian women is below 39 weeks,9 putting them in the declining part of
+the U-shaped curve – originated by results of Butler and Alberman (1969), Susser et al.
+(1972), and Hoffman et al. (1974), mentioned by Goldstein and Peckham (1976) –, we
+expect neonatal mortality to increase (decrease) with birth anticipation (postponement).
+We note, however, that studies have documented that health consequences of timing
+manipulation are usually a result of the combination of a change in gestational age with
+a change in delivery method, with the exact mechanism being very hard to disentangle
+(Borra et al., 2016). Thus, any effect we may observe cannot only be attributed to
+changes in gestational length, as changes in delivery method may also be into play.
+3 Data
+To perform our empirical analysis, we use three datasets that are made publicly
+available by the Brazilian Ministry of Health:10 [i] a dataset that contains information
+on all live births that occurred in Brazil, DATASUS/SINASC; [ii] a dataset that contains
+information on all active health units in the country, DATASUS/CNES; and [iii] a dataset
+that contains information on all deaths that occurred in the country, DATASUS/SIM.
+The DATASUS/SINASC dataset contains unidentified data at the individual birth
+level, with the health unit code (CNES code), the birth date, and several maternal
+and birth characteristics, including: age, race, marital status and years of education of
+the mother, gestational length in weeks, delivery method (cesarean section or vaginal
+delivery), and birthweight in grams.
+The DATASUS/CNES dataset contains monthly information on active health units
+in the country, identified by a health unit code (CNES code). From this dataset, we
+obtained information on the total number of beds and the percentage of obstetric beds
+of each hospital dedicated to serving the public and the private health systems. We then
+defined three types of health units: [i] private, those that have 100% of their obstetric beds
+dedicated to the private health system; [ii] public, those that have 100% of their obstetric
+beds dedicated to the public unified health system; and [iii] mixed, those that have
+some obstetric beds dedicated to the private system and others dedicated to the public
+system.11 Using the health unit code (CNES code), we merged the DATASUS/CNES
+dataset with the DATASUS/SINASC dataset. With the resulting merged dataset, we
+collapsed our data to obtain a panel at the day-by-year level. To perform heterogeneity
+analysis, in which we estimate carnival effects for each unit type separately, we restricted
+9Statistics obtained from 2012-2019 DATASUS/SINASC. Available at:
+http://datasus.saude.gov.br/transferencia-de-arquivos/.
+10Available at: http://datasus.saude.gov.br/transferencia-de-arquivos/.
+11We follow Rocha and Spinola (2016) in defining private, public, and mixed health units.
+7
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+the data to births that happened in private, public, or mixed units before collapsing.
+The DATASUS/SIM dataset contains unidentified data at the individual death level,
+with both the death date and the birth date that corresponds to each entry. We identified
+all neonatal and early neonatal deaths,12 collapsed this dataset at the birthday level and
+merged it with our main dataset. With the resulting dataset, we were able to create
+neonatal death and early neonatal death rate variables.13
+A summary of our final dataset, which includes 8 years of data (2012-2019),14 is
+presented in table 1. The table shows summary statistics for all variables used in our
+empirical analyses, for the following periods: [i] all days of the year, [ii] days contained
+within a window of 20 days before up to 14 days after carnival Tuesday (our optimal holiday manipulation window), and [iii] carnival festivity days (going from carnival Saturday
+up to Ash Wednesday).
+The statistics presented in table 1 yield an interesting descriptive analysis. We note
+that the average number of births on carnival festivity days is considerably lower than the
+average on other days of the year. The overall percentage of births that happen in private
+and mixed hospitals is lower than that of births that happen in public hospitals. In fact,
+more than half (55%) of the country’s births happen in public units. Furthermore, the
+percentage of of births to mothers with a more vulnerable profile (less educated, nonwhite, with no partner, and/or aged less than 18) is higher during carnival, and health
+outcomes at birth are, on average, worse during these days.
+12Neonatal deaths are defined to be those that happen before the baby reaches his/her 28th day of
+life; and early neonatal deaths are defined to be those that happen before the baby reaches his/her 7th
+day of life (Ministry of Health).
+13It is worth noting that the DATASUS/SIM dataset does not contain information on the health unit
+in which the individual was born nor a reliable identifier that allows one to perfectly match its entries
+with DATASUS/SINASC entries.
+14We do not use years before 2012 because critical variables are only available starting from this year.
+8
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil Whole Year Carnival Window Carnival Festivity Days Mean SD N Mean SD N Mean SD N # of births 8,037.13 1,188.89 2,688 8,304.93 1,154.02 280 6,901.69 563.9 32 % of births in private units 16.79 2.52 2,688 16.95 2.66 280 13.13 1.87 32 % of births in public units 54.56 3.73 2,688 53.68 3.80 280 58.51 2.66 32 % of births in mixed units 28.65 1.66 2,688 29.36 1.60 280 28.37 1.62 32 # of c-sections 4,503.23 1,070.46 2,688 4,639.88 1,090.09 280 3,302.13 514.86 32 # of spontaneous vaginal deliveries 2,381.59 230.94 2,688 2,430.92 225.34 280 2,411.44 220.95 32 # of induced vaginal deliveries 963.29 142.12 2,688 1,022.27 126.87 280 984.63 133.09 32 % of c-sections 55.27 6.22 2,688 55.10 6.25 280 47.62 3.78 32 % of spontaneous vaginal deliveries 30.96 5.05 2,688 30.62 5.02 280 36.14 3.41 32 % of induced vaginal deliveries 12.49 2.37 2,688 12.89 2.44 280 14.84 2.58 32 % of mothers aged less than 18 8.64 1.35 2,688 8.60 1.27 280 9.53 1.30 32 % of mothers aged more than 35 10.38 1.58 2,688 10.22 1.50 280 9.30 1.28 32 % of mothers w/
+≤8 years of educ. 22.06 4.45 2,688 22.35 4.60 280 24.20 5.11 32
+% of non-white mothers 63.49 2.36 2,688 62.78 2.40 280 65.32 1.86 32% of mothers with no partner 44.09 2.43 2,688 43.88 2.31 280 45.85 1.97 32Gestational length (in days) 269.35 0.97 2,688 267.94 0.68 280 267.83 0.72 32Birthweight (in grams) 3,183.07 14.73 2,688 3,179.44 13.62 280 3,166.31 11.87 32Neonatal death rate 8.83 1.34 2,688 8.95 1.27 280 9.83 1.40 32Early neonatal death rate 6.68 1.13 2,688 6.77 1.16 280 7.57 1.35 32
+Table 1: Summary Statistics
+Notes. The sample includes 8 years of data (2012-2019). The carnival window period comprises 35 days, going from 20 days before up to 14
+days after carnival Tuesday. The carnival festivity days period comprises 5 days, going from carnival Saturday up to Ash Wednesday.
+9
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+4 Empirical Strategy
+To assess the carnival effects on birth outcomes, we need to first determine the days
+around carnival Tuesday that were impacted by the holiday. To do so, we follow the
+literature and use the idea that, in a manipulation region, the missing mass (defined
+in our context as births minus expected births < 0) should be equal to the excess mass
+(defined in our context as births minus expected births > 0).15 Applying this idea to the
+context of this paper, we have that the drop in births during the days in which carnival
+festivities occur should be equal to the increase in births in the days that precede and
+succeed the festivities. The carnival manipulation window, therefore, is defined as the
+set of days (around carnival Tuesday) for which the sum of missing and excess masses is
+closest to zero.
+In order to estimate the missing/excess mass for each day within a holiday window,
+we need to find counterfactual days, so that we can compare the actual number of births
+on a given window day with the expected number of births for that day had carnival not
+existed. We use days of the year that fall outside the carnival window as counterfactuals
+for carnival window days, controlling for holiday, day-of-week, day-of-year, and year
+effects. The empirical strategy we use to estimate the missing/excess mass on each
+holiday window day is summarized by the regression equation below:
+Ydt = α +
+X
+k
+j=−i
+βjDistjdt + νHolidaydt + λdt + ρdt + µt + udt (1)
+where d indexes the day and t indexes the year; i and k are positive integers; Ydt is the
+outcome of interest (the number of births) on day d and in year t; Distjdt is a binary
+variable that indicates whether day d of year t is j days away from carnival Tuesday;
+Holidaydt is a binary variable that indicates whether day d of year t is a national holiday
+other than carnival; λdt, ρdt, and µt represent day-of-week, day-of-year, and year fixed
+effects respectively; and udt is the robust error for day d and year t. Our parameters of
+interest are the βj’s, which give the difference between the number of births on day j
+before/after carnival Tuesday and the number of births on days of the year not impacted
+by carnival festivities – i.e. the βj’s give the missing/excess mass of births on each holiday
+window day.
+After estimating regression equation 1 for each combination of window before and
+after the carnival Tuesday, we sum the βj’s found in each estimation and identify the one
+for which this sum has the smallest magnitude. Results, presented in table A.1, reveal
+that the optimal carnival manipulation window is the one that goes from 20 days before
+up to 14 days after carnival Tuesday. We use this optimal window to study the dynamics
+15This methodology is used by Jacobson et al. (2021), Kleven (2016); Diamond and Persson (2017);
+Dee et al. (2019). Although we use this same methodology, we estimate the missing and excess masses
+of births around the holiday through the application of a different empirical strategy.
+10
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+and describe the patterns of birth displacement around the holiday, as well as to estimate
+the carnival effects on birth indicators.16
+Because the optimal carnival window, by construction, contains all the births that
+would happen during carnival festivities irrespective of selection into birth timing manipulation, including those displaced to a neighborhood around carnival Tuesday, the
+difference between the outcome of interest on the average window day and the outcome
+of interest on a day outside the window should capture the carnival effect net of selection
+bias. Therefore, to assess the effects of the carnival holiday on gestational length and
+health outcomes, including birthweight and neonatal mortality, we stick to the optimal
+window and estimate the following equation:17
+Ydt = α + βW indowdt + νHolidaydt + λdt + ρdt + µt + udt (2)
+where W indowdt is a binary variable that indicates whether day d of year t is within
+the carnival window. Our parameter of interest is β, which gives the average difference
+in the outcome of interest between a day within the carnival window and a day not
+impacted by carnival festivities. Our identification hypothesis, in this case, relies on the
+nonexistence of selection into the manipulation window. We are primarily interested
+in assessing carnival effects on delivery methods and health outcomes at birth, but we
+also look at carnival effects on maternal characteristics, so to check the balance between
+observations within the holiday manipulation window and those outside of it, used as
+counterfactuals.
+Not all births that occur within the manipulation window are affected by carnival
+festivities. Thus, following Jacobson et al. (2021), we scale our estimates of equation 2’s
+β by the (estimated) fraction of births that were in fact subject to timing manipulation –
+the ratio of the estimated number of missing births during carnival festivity days to the
+total number of births within the optimal manipulation window – so to obtain implied
+instrumental variable (IV) estimates. These implied IV estimates can give us a sense
+of the size of the effects of birth timing manipulation (anticipation and postponement),
+rather than a “reduced form” effect.
+Jacobson et al. (2021) discuss how timing manipulation due to the holiday could have
+a domino effect, in which not only births that would otherwise happen during the holiday
+are rescheduled but also births that would happen on days around it. In our case, for
+16In practice, we find the optimal manipulation window in three steps. First, we estimate the missing
+and excess masses for a combination of different windows before and after carnival Tuesday. We run
+estimations for a window of 4 days before combined with 4, 5, ..., and 20 days after; then, for a window
+of 5 days before combined with 4, 5, ..., and 20 days after; then, we repeat the same procedure for up to
+20 days before combined with 4, 5, ..., and 20 days after. Second, for each of these estimations, we sum
+the missing mass with the excess masses (before and after festivity days). And, third, we search for the
+sum that is closest to zero to determine the optimal window.
+17See Jacobson et al. (2021) and Diamond and Persson (2017) for previous applications of this idea of
+assessing effects of the window as a whole.
+11
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+instance, there could be a birth that would be originally scheduled to happen on Thursday
+before (after) carnival which, due to the holiday, was scheduled to another date. If this
+were the case, the estimated fraction of affected births would be underestimated and,
+consequently, the implied IV estimates would be overestimated.18
+5 Results
+In this section, we present the results of our empirical analysis. We start by describing
+the dynamics of birth around the carnival Tuesday and quantifying birth displacement.
+Then, we engage in learning the profile of births involved in timing manipulation; that is,
+the profile of mothers engaged in such practice and the delivery methods adopted. Still
+in the descriptive world, we document gestational length on days that surround Carnival
+Tuesday, so to learn whether they are associated with patterns of birth displacement and
+profile.
+We then move to the main results, by estimating carnival effects on gestational length,
+birthweight, neonatal mortality, and early neonatal mortality rates. With regards to
+mechanisms, we examine the effect of carnival on the number of c-sections, spontaneous
+vaginal deliveries, and induced vaginal deliveries. Finally, we close the section with the
+presentation of balance tests on maternal characteristics to test for selection.
+5.1 Description of the Birth Displacement Dynamics
+We start the empirical analysis by describing the dynamics of birth displacement and
+the profile of births involved in timing manipulation around carnival Tuesday. In doing
+so, we assume the optimal holiday window and re-estimate regression equation 1 using
+other outcome variables of interest, with the following regression equation:
+Ydt = α +
+X
+14
+j=−20
+βjDistjdt + νHolidaydt + λdt + ρdt + µt + udt (3)
+where we specify that i = 20 and k = 14, and Ydt can represent the number or percentage
+of births to mothers with certain characteristics, or gestational length (in days). For
+instance, Ydt can be the total number of births in the country or the percentage of births
+to teenage mothers (aged less than 18) on day d of year t. Our parameters of interest
+are the βj’s, which (again) give the difference between the outcome of interest on the
+day j before/after carnival Tuesday and the outcome of interest on days of the year not
+impacted by carnival festivities.
+18Jacobson et al. (2021) also discuss how the timing manipulation of some births can impose externalities on other non-retimed births, due to congestion effects. Nonetheless, our “reduced form” estimates
+can capture these overall carnival effects.
+12
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+In figure 1 and table B.1, we describe the pattern of births for each day within
+the holiday manipulation window, that is, we present estimates of the βj’s of equation
+3, where the outcome variable is the total number of births. We note that there is
+an expressive missing mass of births on carnival festivity days,19 especially on carnival
+Tuesday, which sums up to 5,084 less births, and an excess mass of births both before and
+after festivity days. Overall, displaced births represent 1.7% of all births that happen
+within the carnival window.
+These results suggest that births that would happen during carnival days in the
+absence of the holiday are about half anticipated and half postponed. We observe a
+significant excess mass of births on Tuesday (day −7), Wednesday (day −6), Thursday
+(day −5), and Friday (day −4) that precede festivities and also on the Friday of the week
+before (day −11). We also observe a significant excess mass of births on the Thursday
+(day 2), Friday (day 3), and Saturday (day 4) that come right after Ash Wednesday and
+on those same days of the week after (days 9, 10, and 11).
+Although it is tempting to think that mothers and doctors engage in an anticipation or
+postponement of up to 11 days, it is important to note that it may not be the case, since
+there is likely a “domino effect” on the line of displaced births. For instance, births that
+would otherwise happen on Tuesday that precedes carnival festivities (day −7) might be
+anticipated to the previous Friday (day −11), so to free up space for other anticipations
+on the week that precedes carnival. Hence, the significant excess mass of births that show
+up on day −11 can be mostly made of births that would otherwise happen on day −7,
+configuring an anticipation of 4 days only, not 11. When we later look at dynamic effects
+on gestational length and divide these effects by the fraction of displaced births on each
+window day (presented on column 4 of table B.1), we can get a sense of the length of
+anticipation (postponement) on the days that precede and succeed carnival festivities.
+19Recall that carnival festivity days comprise the Saturday, Sunday, and Monday that precede carnival
+Tuesday, carnival Tuesday itself, and the Wednesday that comes right after it.
+13
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+Figure 1: Patterns of birth displacement
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent
+confidence intervals, using the total number of births as the outcome variable. Vertical dashed lines
+indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day
+0) and ends on the Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 301 days after it, in
+years 2012-2019.
+We now turn to the evaluation of delivery method patterns. Figure 2 depicts the
+number of c-sections, spontaneous vaginal deliveries, and induced vaginal deliveries for
+each day within the holiday manipulation window. By looking at figure 2a, we note
+that the missing and excess masses of c-sections follow a pattern very similar to that of
+all birth types combined. There is an expressive missing mass of c-sections on carnival
+festivity days, which is compensated for by a significant excess mass of surgeries before
+and after carnival. There are 4,895 births whose timing is manipulated via c-sections,
+corresponding to 96% of the total number of displaced deliveries. This result is expected,
+because c-sections configure the most convenient way to manipulate the timing of birth.
+As for spontaneous vaginal deliveries, the pattern is different, since there is technically
+no way to anticipate the natural labor process. Results presented in figure 2b show
+that there is no missing mass of spontaneous vaginal births during carnival festivity
+days, nor there is an excess mass of spontaneous vaginal births on days that precede
+14
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+carnival festivities. However, we note a significant excess mass of this delivery type on the
+Thursday (day 2), Friday (day 3), and Saturday (day 4) right after Ash Wednesday. These
+findings suggest that some of the mothers whose births would otherwise be scheduled to
+earlier days within the carnival window, as either c-sections or induced vaginal deliveries,
+end up waiting longer, going into natural labor, and having a vaginal delivery.
+While spontaneous vaginal deliveries do not allow for timing manipulation, induced
+vaginal deliveries do. Unlike c-sections, however, induced labor processes do not allow one
+to choose the exact time of birth, which explains why this delivery type is not preferred by
+those willing to have a fine control of birth timing. In line with these arguments, results
+presented in figure 2c show that there is only a small missing mass of induced vaginal
+deliveries on carnival festivity days, yet only significant on carnival Tuesday. During the
+whole period of festivities, only 106 births have their timing manipulated via induced
+labor, which make only 2% of the total number of displaced deliveries.
+We note also a small excess mass of induced vaginal deliveries on the days that
+succeed carnival festivities, especially on the Saturday after Ash Wednesday (day 4). It
+is not clear, however, that this excess mass of induced births is made of induced vaginal
+deliveries that would otherwise happen during the carnival days. It could be, for instance,
+that induced births that would be scheduled to carnival festivity days are anticipated via
+c-sections and the excess mass of induced deliveries compensate for some of the c-sections
+that would otherwise happen during festivity days.
+15
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil (a) Number of c-sections (b) Number of spontaneous vaginal deliveries (c) Number of induced vaginal deliveries Figure 2: Patterns of delivery types
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent confidence intervals. Outcome variables are specified below each
+subfigure. Vertical dashed lines indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day 0) and ends on the
+Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to
+301 days after it, in years 2012-2019.
+16
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+In continuing to describe the dynamics of birth displacement around carnival festivities, we now describe the profile of displaced births around the carnival Tuesday. We focus
+on the share of births to mothers of the following characteristics: young (aged less than
+18), poorly educated (with up to 8 years of education), non-white (black, brown, indigenous, or Asian), and with no partner (single, divorced, or widowed). Results, presented
+in figure 3, show that on days that precede (succeed) carnival festivities, the percentage
+of births to young, poorly educated, non-white and without-a-partner mothers is lower
+than on counterfactual days, controlling for day-of-week, day-of-year, and year effects.
+In contrast, on festivity days, the percentage of births to young, poorly educated, nonwhite and without-a-partner mothers is higher. Clearly, these results suggest that the
+more educated, less vulnerable, mothers are those (disproportionately) engaged in birth
+anticipation and postponement.
+17
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil (a) % of births to mothers aged less than 18 (b) % of births to mothers with up to 8 years of education (c) % of births to non-white mothers (d) % of births to mothers with no partner Figure 3: Patterns of maternal characteristics
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent confidence intervals. Outcome variables are specified below each
+subfigure. Vertical dashed lines indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day 0) and ends on the
+Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to
+301 days after it, in years 2012-2019.
+18
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+Given the patterns of birth timing and delivery methods during carnival festivities
+observed, it is natural for one to expect that a given pattern of gestational length should
+follow. Figure 4 presents the patterns of gestational length around carnival.
+Results show that gestational length is lower (higher) on days that precede (succeed)
+carnival festivities. In particular, on the Tuesday, Wednesday, and Thursday before
+carnival (days −3, −4, and −5), gestational length is 0.15, 0.13, and 0.26 day lower,
+giving implied IV estimates of 2.6, 4.2, and 3.9 days less of a gestational period, respectively.20 Therefore, results suggest that marginal births that happened on Tuesday (day
+−7) were supposed to happen on Thursday or Friday (day −5 or −4); marginal births
+that happened on Wednesday (day −6) were supposed to happen on Sunday (day −3);
+and marginal births that happened on Thursday (day −5) were supposed to happen on
+Monday (day −1). Hence, a domino pattern seems reasonable to consider.
+On days after carnival Tuesday, a higher gestational length is observed, starting from
+Ash Wednesday. On Ash Wednesday (day 1) and the Thursday, Friday, and Saturday
+that succeed it (days 2, 3, and 4), daily average gestational length is higher by 0.21, 0.23,
+0.48, and 0.40 day. These coefficients translate into implied IV estimates of 2.9, 4.5, 7.5,
+and 8.5 days, suggesting that it was actually some of the births that would have happened
+during festivity days that were postponed. We emphasize that, while (roughly) one half
+of the displaced births was anticipated by 3-4 days, the other half was postponed by 3-8
+days. That is, while birth anticipation decreased gestational age by about half a week,
+birth postponement could have, in some cases, increased gestational age by a whole week.
+5.2 Main Results
+We now look at carnival effects estimated through regression equation 2. Estimated
+effects on gestational length and health outcomes at birth, presented in table 2, reveal
+that the increase in gestational length associated with birth postponement prevails over
+the decrease associated with birth anticipation. In net terms, carnival increases gestational age by 0.06 day, on average, which yields an implied IV estimate of 3.41 more
+days of gestation for the displaced births. Although the estimated net carnival effect
+on birthweight is non-significant, it is positive and it gives an implied IV estimate of 60
+more grams for the marginal births. Importantly, carnival has a negative and significant
+effect on neonatal death rate and early neonatal death rate of a 0.30 and 0.26 magnitude,
+resulting in strikingly high implied IV estimates of 17.51 and 15.23 less deaths per 1,000
+live births, respectively.
+20To obtain the implied IV estimate for each day, we divide the estimated coefficient by the fraction
+of displaced births on each specific day, presented in table B.1.
+19
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+Figure 4: Patterns of gestational length
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent
+confidence intervals, using gestational length (in days) as the outcome variable. Vertical dashed lines
+indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day
+0) and ends on the Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 301 days after it, in
+years 2012-2019.
+20
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3) (4)
+Gestational length Birthweight Neonatal Early neonatal
+(days) (grams) death rate death rate
+Carnival window 0.06* 1.02 -0.30** -0.26**
+(0.06) (0.25) (0.02) (0.02)
+Daily mean 269.35 3,183.07 8.83 6.68
+Fraction displaced 0.017 0.017 0.017 0.017
+Implied IV estimate 3.41 60.09 -17.51 -15.23
+Obs. 2,684 2,684 2,684 2,684
+Table 2: Carnival effects on gestational length, birthweight, and neonatal mortality
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented
+in parentheses, underneath β estimates. The sample comprises all live births that happened within
+the period of 34 days before carnival Tuesday up to 301 days after it, in years 2012-2019. *Significant
+at the 10% level. **Significant at the 5% level. ***Significant at the 1% level.
+To improve the credibility of our analysis, we check whether estimated effects are
+contaminated by selection bias, by estimating the carnival effects on the number of births
+to mothers of certain characteristics. Results, presented in table 3, point to no significant
+net change in the number of births to mothers aged less than 18, aged more than 35,
+with up to 8 years of education, nor to those with no partner. Overall, our evidence is
+convincing that the estimated carnival effects are not driven by selection bias.
+(1) (2) (3) (4) (5)
+Mothers Mothers Non-white Mothers Mothers
+aged <18 aged >35 mothers w/ ≤8 yrs w/ no
+of educ. partner
+Carnival window -1.22 2.67 -0.57 0.51 12.04
+(0.73) (0.69) (0.98) (0.95) (0.38)
+Daily mean 686.31 840.57 4,841.95 1,731.22 3,485.5
+Obs. 2,684 2,684 2,684 2,684 2,684
+Table 3: Selection tests: Carnival effects and mothers’ characteristics
+Notes. This table presents results of least squares estimation of equation 2. P-values
+are presented in parentheses, underneath β estimates. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 301
+days after it, in years 2012-2019. *Significant at the 10% level. **Significant at the 5%
+level. ***Significant at the 1% level.
+Finally, we try to disentangle mechanisms by estimating carnival effects on the number
+of births by the different delivery methods. Results, presented in table 4, show that
+carnival has a significant net positive effect on the number of spontaneous and induced
+vaginal deliveries, by 15.89 and 9.47 births per day respectively. These effects suggest
+that at least some of the surgical births that would happen in the absence of carnival end
+up being vaginal deliveries. Furthermore, most of them end up being of the spontaneous
+21
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+kind, corroborating with the story that some mothers end up waiting longer, going into
+natural labor, and switching away from c-sections.
+(1) (2) (3) (4)
+Total births C-sections Spontaneous Induced
+Vag. Deliveries Vag. Deliveries
+Carnival window 17.26 -6.36 15.89* 9.47**
+(0.65) (0.85) (0.07) (0.04)
+Daily mean 8,037.13 4,503.23 2,381.59 963.29
+Obs. 2,684 2,684 2,684 2,684
+Table 4: Mechanisms: Carnival effects on the number of births by delivery type
+Notes. This table presents results of least squares estimation of equation 2. P-values are
+presented in parentheses, underneath β estimates. The sample comprises all live births that
+happened within the period of 34 days before carnival Tuesday up to 301 days after it, in
+years 2012-2019. *Significant at the 10% level. **Significant at the 5% level. ***Significant
+at the 1% level.
+6 Heterogeneity Analysis
+We now focus on the understanding of where these carnival effects are concentrated.
+Do these findings apply to all three – private, public, and mixed – types of health units?
+Do they apply to all types of mothers or are they concentrated in an specific profile? By
+answering these questions we can provide a hint on how to more assertively design birth
+care policies.
+6.1 Maternal Race
+We start by looking at heterogeneity in carnival effects by maternal race. In table 5,
+we present carnival effects on gestational length and birthweight for white and non-white
+mothers separately. We find that carnival festivities increase gestational length by 0.09
+day and increases birthweight by 2.55 grams for babies of white mothers, which give us
+implied IV estimates of 3.99 days and 116.06 grams, respectively. No significant effects
+are observed for births to non-white mothers.21
+As for the number of births by delivery method, significant effects are also observed
+only for births to white mothers. Results, presented in table 6, show that, for births to
+white mothers, carnival increases the number of both spontaneous and induced vaginal
+deliveries, with the increase in spontaneous vaginal deliveries being doubled the size of
+the increase in the induced ones.
+21Please, recall that our data does not allow us to perfectly match DATASUS/SIM entries with DATASUS/SINASC entries, limiting our ability to accurately estimate heterogeneous effects on (early) neonatal
+death rates.
+22
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2)
+Gestational length Birthweight
+(days) (grams)
+White: Carnival window 0.09** 2.55*
+(0.04) (0.07)
+Daily mean 268.27 3,169.33
+Fraction displaced 0.022 0.022
+Implied IV estimate 3.99 116.06
+Non-white: Carnival window 0.05 0.08
+(0.18) 0.94)
+Daily mean 269.89 3,190.81
+Fraction displaced 0.014 0.014
+Implied IV estimate 3.39 5.96
+Obs. 2,684 2,684
+Table 5: Carnival effects on gestational length and birthweight for each
+maternal race type
+Notes. This table presents results of least squares estimation of equation 2.
+P-values are presented in parentheses, underneath β estimates. The sample
+comprises all live births that happened within the period of 34 days before
+carnival Tuesday up to 301 days after it, in years 2012-2019. *Significant at
+the 10% level. **Significant at the 5% level. ***Significant at the 1% level.
+(1) (2) (3) (4)
+Total births C-sections Spontaneous Induced
+Vag. Deliveries Vag. Deliveries
+White: Carnival window 30.03 11.36 11.67*** 6.41***
+(0.12) (0.53) (0.00) (0.01)
+Daily mean 2,818.04 1,885.91 568.92 334.83
+Non-white: Carnival window -0.57 -9.73 7.73 2.56
+(0.98) (0.54) (0.27) (0.46)
+Daily mean 4,841.95 2,405.45 1,728.44 602.39
+Obs. 2,684 2,684 2,684 2,684
+Table 6: Mechanisms: Carnival effects on the number of births by delivery type for each maternal
+race type
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented in
+parentheses, underneath β estimates. The sample comprises all live births that happened within the period
+of 34 days before carnival Tuesday up to 301 days after it, in years 2012-2019. *Significant at the 10% level.
+**Significant at the 5% level. ***Significant at the 1% level.
+23
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+6.2 Health Unit Type
+We now look at heterogeneity with regards to health unit type. In figure C.1, we
+present the dynamics of birth displacement by health unit type. By looking at figures
+C.1a and C.1c, we note that the pattern of birth displacement in private and mixed units
+is very similar to that observed for all health unit types combined, with an expressive
+missing mass of births during carnival festivities and excess masses on days that precede
+and succeed the holiday. Figure C.1b reveals, however, that, in public units, no significant
+excess mass of births before carnival festivities is observed, suggesting that only birth
+postponement is present in these units.
+We recognize, nonetheless, that births that would otherwise happen in public units
+during carnival festivities may have been anticipated in other health unit types. Or,
+really, that any birth that would originally happen in a given unit type, because of the
+holiday, may have moved to units of other types. To test whether this is the case, we
+estimate net carnival effects on the number of births that happened in each health unit
+type. Results, presented in table C.1, show no significant effects, suggesting that no
+meaningful change in the participation of the different health unit types is observed due
+to carnival.
+Since no evidence of births happening in different unit types due to carnival is observed, we look at net effects on gestational length, birthweight, and the different delivery
+methods separately for each type of unit. In table C.2, we show carnival effects on gestational age and birthweight by each health unit type. We note a significant increase
+in gestational length only in mixed units. Implied IV estimates suggest that displaced
+births experience a net increase in gestational length of 4.95 days in these units.
+When we look at the estimated effects on the number of births by each delivery
+method, so to learn about mechanisms, presented in table C.3, we note that there is a
+significant increase in the number of spontaneous vaginal deliveries in mixed health units
+and no significant effects are observed for births that happen in private or public units.
+Overall, we note that carnival effects are mainly concentrated in births to white
+mothers and those that happen in mixed health units. Since mixed units serve both the
+private and the public sectors, we cannot affirm precisely in which sector carnival effects
+are being experienced.
+6.3 Births to White Mothers in Mixed Hospitals
+Finally, to provide extra confidence in our findings that effects are concentrated in
+births to white mothers that happen in mixed units, we restrict our sample to them
+and re-estimate the net effects of interest. Results are presented in tables C.4 and C.5.
+We confirm that, for this group of births, the holiday increases gestational length and
+birthweight by about 4 days and 112 grams (according to our implied IV estimates) for
+24
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+the marginal displaced births. Additionally, carnival results in an increase in vaginal
+deliveries, especially in the spontaneous ones.
+7 Robustness Checks
+To assess the robustness of our main results, we perform a test which consists in
+using an alternative set of counterfactual days, one made up of days closer to the carnival
+window, inspired by the empirical strategy used by Jacobson et al. (2021), who argue
+that good counterfactual days are those not affected by the holiday, but close to the
+manipulation window.22 Instead of including in the sample all live births that happened
+within the period of 34 days before up to 301 days after carnival Tuesday (a total of 48
+full weeks), we now include only the births that happened within the period of 34 days
+before up to 35 days after (a total of 10 full weeks). Results are presented in appendix
+section D.
+After careful examination of results, one should note that our main conclusions are
+robust to these tests, as they reveal that using an alternative holiday manipulation window and an alternative set of counterfactual days still give that: [i] there exists birth
+timing manipulation, in the form of both anticipation and postponement, around carnival festivity days; [ii] timing manipulation is mainly driven by c-sections; [iii] birth
+postponement leads some mothers (that would otherwise schedule a c-section) to wait
+longer, go into spontaneous labor, and end up having a vaginal delivery; [iv] gestational
+length and birthweight are lower (higher) before (after) carnival festivities, and (early)
+neonatal mortality rates are lower on days that succeed festivities; [v] carnival has a positive net effect on gestational age and birthweight, and a negative net effect on (early)
+neonatal mortality; and [vi] the more educated, less vulnerable, mothers are disproportionately engaged in birth timing manipulation, yet evidence goes against selection bias
+confounding our main carnival effect results.
+8 Concluding Remarks
+Birth timing manipulation for non-medical reasons can be problematic as it may
+configure obstetric violence and have negative consequences to maternal and infant health.
+The identification and documentation of the dynamics and consequences of birth timing
+manipulation, therefore, is critical for the improvement of birth care quality around the
+world.
+22It is worth noting that, although we take this argument seriously and check whether our results are
+robust to this idea, because our empirical strategy allows us to control for day-of-year effects, choosing
+days closer to the optimal holiday window to serve as counterfactuals should not improve our estimates
+in terms of selection bias. Furthermore, we argue that including all other days of the year in our sample
+is superior, for it yields superior power.
+25
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+In this paper, we study the dynamics and consequences of birth timing manipulation
+around carnival festivities in Brazil. In the first part of our empirical analysis, we run
+descriptive exercises to evaluate the dynamics of birth displacement in the neighborhood
+of carnival festivity days; that is, we look at average holiday effects on each day within a
+neighborhood around carnival Tuesday. This strategy allows us to examine how births are
+displaced around the holiday, patterns of delivery methods adopted, the profile of mothers
+engaged in birth timing manipulation, and the behavior of gestational length on the days
+that surround carnival Tuesday. We document the existence of birth timing manipulation
+in the form of both anticipation and postponement, mostly performed through c-sections.
+In what concerns selection with regards to maternal profile, we find that less vulnerable mothers (more educated, white, with a partner, and/or aged over 18) are more likely
+to be involved in birth timing manipulation, concentrating their deliveries on days that
+either precede or succeed the holiday. Results also show that daily average gestational
+length significantly drops on weekdays before the holiday and significantly increases on
+the week after the holiday.
+In a second moment, we focus our empirical analysis on carnival effects net of selection
+in the profile of mothers. We compare daily average outcomes within a window around
+carnival Tuesday with daily average outcomes within a counterfactual window. Our main
+results show that carnival increases gestational length and decreases neonatal mortality
+significantly. With regards to mechanisms, carnival increases the daily number of vaginal
+deliveries, indicating that some births that would otherwise happen via c-sections during
+carnival end up being postponed and becoming spontaneous deliveries.
+We argue that, although there is a higher volume of anticipated births compared to
+postponed births within the holiday window, the effects of birth postponement and the
+consequent increased gestational length are powerful enough to reduce neonatal mortality.
+In fact, we interpret our main results as confirmatory evidence of birth postponement
+being the driver of a lower neonatal mortality. Given that the literature shows that
+neonatal mortality and gestational length have a non-linear, U-shaped, relationship, in
+which mortality falls up to a 40 week gestational length point and increases after then
+(Butler and Alberman, 1969; Susser et al., 1972; Hoffman et al., 1974; Goldstein and
+Peckham, 1976), these results indicate that the usual practice in Brazil is to perform
+birth deliveries at a sub-optimal gestational length point. That is, neonatal mortality
+rates could be improved if gestational length were increased – even by a small amount –
+in both the private and the public health systems.
+Besides shedding light on the country’s potential to reduce neonatal mortality – perhaps by the waiting a little longer to schedule birth or go into spontaneous labor –, our
+work has yet another contribution to policy making. We show that there is a doublesided aspect of selection in maternal profile that should be addressed. While the more
+educated mothers are more likely to engage in birth anticipation and have their babies
+26
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+suffer from lower gestational length and birthweight, they are also more likely to engage
+in postponement and have their babies enjoy higher gestational length and birthweight,
+as well as lower chance of neonatal death. More vulnerable mothers, however, have a
+higher likelihood of delivering in less prepared hospitals during the holiday – which may
+increase risks of yet other complications.
+Overall, we note that the displacement of births around carnival can have both negative and positive consequences, depending on the nature of timing manipulation, the type
+of hospital, and the profile of mothers involved. We emphasize the need for policymakers
+to address the different aspects of the displacement dynamics so to improve birth care.
+In conclusion, our work contributes to the economics literature on the study of birth
+timing manipulation, especially in what concerns the effects of holidays, by providing
+new evidence on the dynamics of birth displacement and its consequences for the health
+of babies in a new context. In addition, our work has a more practical contribution, by
+informing policy making in health.
+References
+D. Almond, K. Chay, and D. Lee. The costs of low birth weight. The Quarterly Journal
+of Economics, 120:1031–1083, Aug 2005.
+American College of Obstetricians and Gynecologists. Definition of term pregnancy.
+Obstet Gynecol, 122:1139–1140, 2013. Committee Opinion No. 579.
+S. E. Black, P. J. Devereux, and K. G. Salvanes. From the cradle to the labor market?
+the effect of birth weight on adult outcomes. The Quarterly Journal of Economics, 122
+(1):409–439, 2007. doi: 10.1162/qjec.122.1.409.
+C. Borra, L. Gonzalez, and A. Sevilla. Birth Timing and Neonatal Health. American
+Economic Review: Papers & Proceedings, (106):329–332, 2016.
+C. Borra, L. Gonzalez, and A. Sevilla. The Impact of Scheduling Birth Early on Infant
+Health. Journal of the European Economic Association, (17):30–78, 2019. doi: 0.1093/
+jeea/jvx060.
+H. S. Brown-III. Physician Demand for Leisure: Implications for Cesarean Section Rates.
+Journal of Health Economics, (145):223–242, 1996.
+N. R. Butler and E. D. Alberman. In Perinatal Problems. E. & S. Livingston, Edinburgh
+and London, 1969.
+B. Carrillo and J. G. Feres. Low Birth Weight and Infant Mortality: Lessons from Brazil.
+Working paper, 2017.
+27
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+A. Cohen. Seasonal Daily Effect on the Number of Births in Israel. Journal of the Royal
+Statistical Society - Series C (Applied Statistics), (32):228–235, 1983.
+T. S. Dee, W. Dobbie, B. A. Jacob, and J. Rockoff. The Causes and Consequences of Test
+Score Manipulation: Evidence from the New York Regents Examinations. American
+Economic Journal: Applied Economics, 11(3), 2019. doi: 10.1257/app.20170520.
+R. Diamond and P. Persson. The long-term consequences of teacher discretion in grading
+of high-stakes tests. NBER Working Paper, (22207), 2017.
+M. Dias, R. M. Domingues, A. P. Pereira, S. Fonseca, S. Gama, M. Theme-Filha, S. Bittencourt, P. M. Rocha, A. Schilithz, and M. d. C. Leat. Trajet´oria das mulheres na
+defini¸c˜ao pelo parto ces´areo: estudo de caso em duas unidades do sistema de sa´ude
+suplementar do estado do rio de janeiro. Ciˆencia e Sa´ude Coletiva, 15:1521–1534, 2008.
+doi: 10.1590/S1413-81232008000500017.
+S. Dickert-Conlin and A. Chandra. Taxes and the timing of births. Journal of Political
+Economy, 107(1):161–177, 1999.
+D. Fabbri, I. Chiara & Castaldini, C. Monfardini, and A. Protonotari. Caesarean section
+and the manipulation of exact delivery time. Health Policy, 120:780–789, 2016. doi:
+10.1016/j.healthpol.2016.05.001.
+J. S. Gans and A. Leigh. Born on the first of July: An (un)natural experiment in birth
+timing. Journal of Public Economics, (93):246–263, 2009.
+J. S. Gans and A. Leigh. Bargaining over labor: Do patients have any power? Economic
+Record, 88(281):182–194, 2012.
+J. S. Gans, A. Leigh, and E. Varganova. Minding the shop: the case of obstetrics
+conferences. Social Science and Medicine, 6(7):1458–1465, 2007.
+H. Goldstein and C. Peckham. Birthweight, gestation, neonatal mortality and child
+development. In D. F. Roberts and A. M. Thomson, editors, The biology of human
+fetal growth, pages 81–102. Taylor and Francis, London, 1976.
+H. J. Hoffman, C. R. Stark, and F. E. Lundin. Analysis of birth weight, gestational age,
+and fetal viability, u. s. births, 1968. Obstetrical amp; Gynecological Survey, 29(9):651,
+1974. doi: 10.1097/00006254-197409000-00029.
+M. Jacobson, M. Kogelnik, and H. Royer. Holiday, Just One Day out of Life: Birth
+Timing and Postnatal Outcomes. Journal of Labor Economics, 39(S2), April 2021.
+doi: 10.1086/712493.
+H. J. Kleven. Bunching. Annual Review of Economics, (8), 2016.
+28
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+M. d. Leal, A. P. Pereira, R. M. Domingues, M. M. Filha, M. A. Dias, M. NakamuraPereira, M. H. Bastos, and S. G. Gama. Interven¸c˜oes obst´etricas durante o trabalho
+de parto e parto em mulheres brasileiras de risco habitual. Cadernos de Sa´ude P´ublica,
+30(suppl 1). doi: 10.1590/0102-311x00151513.
+M. Lefevre. Physician Induced Demand for C-Sections: Does the Convenience Incentive
+Matter? August 2013. doi: 10.2139/ssrn.2310646.
+J. C. Lo. Patients’ attitudes vs. Physicians’ determination: implications for cesarean
+sections. Social Science and Medicine, 57:91–96, 2003.
+M. Magalhaes, C. Melo, N. Menezes Filho, and B. Komatsu. Os Determinantes da
+Realiza¸c˜ao de Ces´areas no Brasil. Insper Centro de Pol´ıticas P´ublicas - Policy Paper, (41), 2019. URL https://www.insper.edu.br/wp-content/uploads/2019/08/
+Policy-Paper-41-Ces%C3%A1reas.pdf.
+P. Martin, M. Cortina-Borja, M. Newburn, G. Harper, R. Gibson, M. Dodwell, N. Dattani, and A. Macfarlane. Timing of singleton births by onset of labour and mode of
+birth in nhs maternity units in england, 2005–2014: A study of linked birth registration, birth notification, and hospital episode data. PLOS ONE, 13(6), 2018. doi:
+10.1371/journal.pone.0198183.
+Ministry of Health. Indicadores de mortalidade. URL http://tabnet.datasus.gov.
+br/cgi/idb2000/mort.htm.
+Minist´erio da Economia. Carnaval n˜ao ´e feriado nacional, Mar 2019.
+URL https://www.gov.br/economia/pt-br/assuntos/noticias/2019/03/
+carnaval-nao-e-feriado-nacional.
+Minist´erio da Sa´ude (Brasil). Parto, Aborto e Puerp´erio: Assitˆencia Humanizada
+`a Mulher. Minist´erio da Sa´ude, 2001. URL http://bvsms.saude.gov.br/bvs/
+publicacoes/cd04_13.pdf.
+Minist´erio da Sa´ude (Brasil). Cadernos HumanizaSUS, Volume 4: Humaniza¸c˜ao do parto
+e do nascimento. 2014. URL https://www.redehumanizasus.net/sites/default/
+files/caderno_humanizasus_v4_humanizacao_parto.pdf.
+Minist´erio da Sa´ude (Brasil). Diretrizes de Aten¸c˜ao `a Gestante: a opera¸c˜ao cesariana. 2015. URL http://conitec.gov.br/images/Relatorios/2016/Relatorio_
+Diretrizes-Cesariana_final.pdf.
+M. Neugart and H. Ohlsson. Economic incentives and the timing of births: evidence
+from the German parental benefit reform of 2007. Journal of Population Economics,
+26(1):87–108, 2012. doi: 10.1007/s00148-012-0420-1.
+29
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+P. Oreopoulos, M. Stabile, R. Walld, and L. L. Roos. Short-, medium-, and long-term
+consequences of poor infant health: An analysis using siblings and twins. Journal of
+Human Resources, 43(1):88–138, 2008. doi: 10.1353/jhr.2008.0003.
+D. Pasche, M. Vilela, and C. Martins. Humaniza¸c˜ao da aten¸c˜ao ao parto e nascimento
+no brasil: pressuposto para uma nova ´etica na gest˜ao e no cuidado. Revista Tempus
+Actas Sa´ude Coletiva, 4:105–117, 2010. doi: 10.18569/tempus.v4i4.838.
+R. Rocha and P. Spinola. Convenience Effect on Birth Timing Manipulation: Evidence
+from Brazil. Master’s Thesis at UFRJ, 2016.
+L. Schulkind and T. M. Shapiro. What a difference a day makes: quantifying the effects of
+birth timing manipulation on infant health. Journal of Health Economics, 33:139–158,
+2014.
+J. Spetz, M. W. Smith, and S. F. Ennis. Physician Incentives and the Timing of Cesarean
+Sections: Evidence from California. Medical Care, (39):536–550, 2001.
+C. Spong. Defining ”term” pregnancy: recommendations from the Defining ”Term”
+Pregnancy Workgroup. JAMA, 309(23), June 2013. doi: 10.1001/jama.2013.6235.
+M. Susser, F. A. Marolla, and J. Fleiss. Birth weight, fetal age and perinatal mortality1.
+American Journal of Epidemiology, 96(3):197–204, 1972. doi: 10.1093/oxfordjournals.
+aje.a121448.
+M. C. Westphal and C. B. Joshi. The interrelationship of birth weight, length of gestation,
+and neonatal mortality. Clinical Obstetrics and Gynecology, 7(1-3):670–656, 1964. doi:
+10.1097/00003081-196409000-00005.
+G. L. Zanardo, M. C. Uribe, A. H. Nadal, and L. F. Habigzang. Violˆencia Obst´etrica
+no Brasil: Uma Revis˜ao Narrativa. Psicologia e Sociedade, 29, 2017. doi: 10.1590/
+1807-0310/2017v29155043.
+30
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+A Empirical Strategy: Optimal Carnival Manipulation Window
+1
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil Days after Carnival Tuesday Days before Carnival Tuesday 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 4 -4075 -4138 -4142 -4175 -4419 -4218 -3819 -3621 -3686 -3717 -3768 -3984 -3660 -3235 -3180 -3283 -3691 5 -3377 -3438 -3413 -3413 -3654 -3429 -2972 -2720 -2780 -2805 -2811 -2986 -2589 -2147 -2047 -2107 -2501 6 -2873 -2916 -2865 -2862 -3095 -2831 -2320 -2063 -2118 -2110 -2077 -2222 -1811 -1321 -1183 -1229 -1616 7 -2574 -2605 -2551 -2540 -2769 -2475 -1959 -1697 -1736 -1706 -1650 -1791 -1348 -818 -668 -708 -1092 8 -2418 -2448 -2389 -2370 -2602 -2305 -1784 -1499 -1529 -1487 -1427 -1565 -1094 -550 -394 -429 -818 9 -2406 -2436 -2374 -2353 -2586 -2287 -1738 -1435 -1463 -1419 -1354 -1494 -1014 -461 -300 -332 -726 10 -2364 -2394 -2326 -2305 -2539 -2222 -1638 -1313 -1340 -1290 -1216 -1357 -867 -300 -124 -153 -550 11 -2022 -2036 -1966 -1942 -2169 -1813 -1175 -841 -851 -778 -694 -829 -318 303 491 470 78 12 -1893 -1907 -1836 -1803 -2036 -1653 -1006 -652 -654 -577 -488 -622 -77 558 752 736 341 13 -1909 -1922 -1848 -1814 -2060 -1674 -1001 -632 -634 -556 -465 -604 -50 594 793 778 378 14 -1892 -1906 -1826 -1790 -2038 -1636 -933 -557 -558 -475 -377 -517 47 706 912 898 494 15 -2039 -2061 -1985 -1951 -2215 -1803 -1091 -710 -715 -636 -538 -682 -110 561 768 752 322 16 -2163 -2194 -2118 -2087 -2370 -1952 -1230 -845 -855 -777 -680 -830 -248 431 639 616 173 17 -1985 -2014 -1928 -1888 -2172 -1744 -1002 -586 -593 -510 -405 -553 42 733 966 950 505 18 -1636 -1652 -1547 -1499 -1782 -1336 -538 -106 -105 -10 108 -35 574 1323 1575 1566 1123 19 -1629 -1645 -1539 -1490 -1779 -1310 -495 -56 -54 44 166 21 664 1434 1690 1683 1231 20 -1787 -1806 -1700 -1654 -1967 -1491 -665 -218 -220 -122 -1 -160 495 1275 1533 1522 1057 Table A.1: Sum of missing/excess mas (sum of βj ’s) for different windows around carnival Tuesday Notes. This table presents results regarding the analysis of the optimal carnival holiday window. Each row of the table corresponds to a number of days before carnival Tuesday and each column corresponds to a number of days after carnival Tuesday. Each cell presents the sum of the βj ’s, obtained from estimations of regression equation 1. The result in bold corresponds to the sum that presents the lowest value (in absolute terms), which reveals the optimal window – the one that goes from d = −20 up to d = 14. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to 301 days after it, in years 2012-2019. 2
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+3
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+B Results
+B.1 Quantification of Birth Displacement
+(1) (2) (3) (4)
+Number of
+displaced births p-value Total births Fraction displaced
+Day -20 (Wed) -58 (0.60) 8,739 0.007
+Day -19 (Thu) 27 (0.81) 8,651 0.003
+Day -18 (Fri) 178 (0.11) 8,552 0.021
+Day -17 (Sat) 130 (0.24) 7,008 0.019
+Day -16 (Sun) -72 (0.52) 6,108 0.012
+Day -15 (Mon) -49 (0.66) 9,045 0.005
+Day -14 (Tue) 75 (0.50) 8,876 0.008
+Day -13 (Wed) 34 (0.76) 8,822 0.004
+Day -12 (Thu) 106 (0.34) 8,792 0.012
+Day -11 (Fri) 236** (0.03) 8,687 0.027
+Day -10 (Sat) 110 (0.32) 7,116 0.015
+Day -9 (Sun) 43 (0.70) 6,238 0.007
+Day -8 (Mon) 152 (0.17) 9,355 0.016
+Day -7 (Tue) 292** (0.01) 9,332 0.031
+Day -6 (Wed) 472*** (0.00) 9,416 0.050
+Day -5 (Thu) 626*** (0.00) 9,468 0.066
+Day -4 (Fri) 358*** (0.00) 8,899 0.040
+Day -3 (Sat) -141 (0.20) 7,038 0.020
+Day -2 (Sun) -277** (0.01) 6,135 0.045
+Day -1 (Mon) -1,760*** (0.00) 7,611 0.231
+Day 0 (Carnival Tue) -2,295*** (0.00) 6823 0.336
+Day 1 (Wed) -610*** (0.00) 8,450 0.072
+Day 2 (Thu) 478*** (0.00) 9,397 0.051
+Day 3 (Fri) 598*** (0.00) 9,285 0.064
+Day 4 (Sat) 359*** (0.00) 7,598 0.047
+Day 5 (Sun) 22 (0.84) 6,498 0.003
+Day 6 (Mon) 123 (0.26) 9,501 0.013
+Day 7 (Tue) 67 (0.54) 9,203 0.007
+Day 8 (Wed) -104 (0.34) 9,014 0.012
+Day 9 (Thu) 245** (0.03) 9,227 0.027
+Day 10 (Fri) 343*** (0.00) 9,040 0.038
+Day 11 (Sat) 195* (0.07) 7,479 0.026
+Day 12 (Sun) -15 (0.89) 6,482 0.002
+Day 13 (Mon) 57 (0.60) 9,544 0.006
+Day 14 (Tue) 61 (0.57) 9,247 0.007
+R-squared 0.95
+N 2,684
+Missing mass during holiday -5,084 290,673 0.017
+Excess mass before holiday 2,661 290,673 0.009
+Excess mass after holiday 2,429 290,673 0.008
+Table B.1: Quantification of birth displacement
+Notes. This table presents results of least squares estimation of equation 3. Columns (1)
+and (2) present the coefficients of interest and corresponding p-values, respectively. Column
+(3) presents the average total daily number of births for the corresponding day within the
+carnival window. And column (4) presents the fraction of displaced births, calculated as
+the ratio of the estimated number of displaced births to the average total daily number of
+births. The sample comprises all live births that happened within the period of 34 days
+before carnival Tuesday up to 301 days after it, in years 2012-2019. *Significant at the 10%
+level. **Significant at the 5% level. ***Significant at the 1% level. 4
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+C Heterogeneity Analysis
+C.1 Health Unit Type
+5
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil (a) Number of births in private health units (b) Number of births in public health units (c) Number of births in mixed health units Figure C.1: Patterns of birth displacement by health unit type
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent confidence intervals. Outcome variables are specified below each
+subfigure. Vertical dashed lines indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day 0) and ends on the
+Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to
+301 days after it, in years 2012-2019.
+6
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3)
+Private Public Mixed
+health units health units health units
+Carnival window 8.74 -5.08 14.08
+(0.52) (0.70) (0.27)
+Daily mean 1,307.25 4,133.18 2,202.57
+Obs. 2,684 2,684 2,684
+Table C.1: Carnival effects on the number of births for each
+health unit type
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented in parentheses, underneath β estimates.
+The sample comprises all live births that happened within the period
+of 34 days before carnival Tuesday up to 301 days after it, in years
+2012-2019. *Significant at the 10% level. **Significant at the 5%
+level. ***Significant at the 1% level.
+(1) (2)
+Gestational length Birthweight
+(days) (grams)
+Private: Carnival window 0.02 -0.78
+(0.77) (0.72)
+Daily mean 266.82 3,156.74
+Fraction displaced 0.038 0.038
+Implied IV estimate 0.45 -20.44
+Public: Carnival window 0.06 1.45
+(0.10) (0.20)
+Daily mean 270.19 3,191.71
+Fraction displaced 0.009 0.009
+Implied IV estimate 6.98 161.56
+Mixed: Carnival window 0.09* 1.20
+(0.05) (0.43)
+Daily mean 269.49 3,186.55
+Fraction displaced 0.018 0.018
+Implied IV estimate 4.95 66.4
+Obs. 2,684 2,684
+Table C.2: Carnival effects on gestational length and birthweight
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented in parentheses, underneath β estimates.
+The sample comprises all live births that happened within the period
+of 34 days before carnival Tuesday up to 301 days after it, in years
+2012-2019. *Significant at the 10% level. **Significant at the 5% level.
+***Significant at the 1% level.
+7
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3) (4)
+Total births C-sections Spontaneous Induced
+Vag. Deliveries Vag. Deliveries
+Private: Carnival window 8.74 6.98 0.28 1.26
+(0.52) (0.60) (0.83) (0.23)
+Daily mean 1,307.25 1,132.45 102.07 65.96
+Public: Carnival window -5.08 -11.05 3.27 4.63
+(0.70) (0.24) (0.62) (0.18)
+Daily mean 4,133.18 1,774.52 1,648.21 588.61
+Mixed: Carnival window 14.08 0.36 10.68*** 3.54
+(0.27) (0.97) (0.00) (0.13)
+Daily mean 2,202.57 1,350.68 517.18 287.6
+Obs. 2,684 2,684 2,684 2,684
+Table C.3: Mechanisms: Carnival effects on the number of births by delivery type for each health
+unit type
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented in
+parentheses, underneath β estimates. The sample comprises all live births that happened within the
+period of 34 days before carnival Tuesday up to 301 days after it, in years 2012-2019. *Significant at
+the 10% level. **Significant at the 5% level. ***Significant at the 1% level.
+C.2 Births to White Mothers in Mixed Hospitals
+(1) (2)
+Gestational length Birthweight
+(days) (grams)
+Carnival window 0.08 2.24
+(0.21) (0.32)
+Daily mean 268.56 3,172.05
+Fraction displaced 0.020 0.020
+Implied IV estimate 4.08 112.13
+Obs. 2,684 2,684
+Table C.4: Carnival effects on gestational length and
+birthweight for births to white mothers in mixed health units
+Notes. This table presents results of least squares estimation of
+equation 2. P-values are presented in parentheses, underneath
+β estimates. The sample comprises all live births that happened
+within the period of 34 days before carnival Tuesday up to 301
+days after it, in years 2012-2019. *Significant at the 10% level.
+**Significant at the 5% level. ***Significant at the 1% level.
+8
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3) (4)
+Total births C-sections Spontaneous Induced
+Vag. Deliveries Vag. Deliveries
+Carnival window 14.64* 6.45 5.79*** 2.45*
+(0.06) (0.35) (0.00) (0.08)
+Daily mean 986.91 665.96 188.18 124.65
+Obs. 2,684 2,684 2,684 2,684
+Table C.5: Mechanisms: Carnival effects on the number of births by delivery type for
+births to white mothers in mixed health units
+Notes. This table presents results of least squares estimation of equation 2. P-values are
+presented in parentheses, underneath β estimates. The sample comprises all live births that
+happened within the period of 34 days before carnival Tuesday up to 301 days after it, in
+years 2012-2019. *Significant at the 10% level. **Significant at the 5% level. ***Significant
+at the 1% level.
+9
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+D Robustness Checks
+D.1 Alternative Set of Counterfactual Days
+D.1.1 Optimal Window
+10
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil Days after Carnival Tuesday Days before Carnival Tuesday 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 4 -4249 -4199 -4116 -4124 -4307 -4219 -3994 -3800 -3726 -3644 -3666 -3840 -3683 -3457 -3363 -3226 -3456 5 -3645 -3606 -3493 -3482 -3675 -3487 -3218 -3006 -2950 -2859 -2848 -3008 -2658 -2411 -2304 -2165 -2379 6 -3058 -2992 -2857 -2861 -2993 -2765 -2478 -2285 -2220 -2093 -2067 -2104 -1732 -1472 -1361 -1201 -1406 7 -2723 -2644 -2519 -2476 -2597 -2357 -2082 -1885 -1803 -1664 -1551 -1586 -1211 -947 -827 -669 -882 8 -2515 -2442 -2271 -2215 -2334 -2103 -1825 -1610 -1520 -1301 -1184 -1217 -838 -565 -447 -298 -469 9 -2426 -2331 -2147 -2088 -2206 -1973 -1680 -1457 -1320 -1099 -979 -1011 -624 -352 -239 -13 -182 10 -2404 -2303 -2116 -2058 -2177 -1934 -1633 -1358 -1219 -996 -876 -907 -519 -254 -95 138 -31 11 -2295 -2191 -2010 -1950 -2070 -1819 -1439 -1159 -1019 -794 -667 -698 -321 45 212 433 260 12 -2293 -2191 -2008 -1946 -2068 -1769 -1384 -1104 -963 -733 -605 -636 -165 210 370 582 409 13 -2177 -2073 -1877 -1811 -1931 -1628 -1242 -958 -812 -580 -457 -463 20 383 535 758 585 14 -2095 -1983 -1781 -1683 -1804 -1498 -1107 -819 -672 -446 -266 -272 190 543 702 921 747 15 -2175 -2063 -1836 -1737 -1858 -1551 -1155 -867 -722 -456 -274 -279 174 533 690 901 679 16 -2189 -2056 -1825 -1725 -1847 -1536 -1141 -858 -679 -409 -231 -236 225 580 729 1007 781 17 -2003 -1865 -1629 -1527 -1648 -1339 -954 -566 -380 -121 48 47 503 832 1090 1388 1157 18 -1945 -1805 -1568 -1464 -1585 -1282 -797 -400 -221 29 205 203 633 1088 1363 1643 1410 19 -2134 -1994 -1756 -1653 -1768 -1432 -942 -551 -373 -120 57 61 577 1044 1311 1579 1339 20 -2062 -1918 -1677 -1576 -1703 -1361 -884 -503 -319 -64 105 122 656 1104 1354 1632 1387 Table D.1: Sum of missing/excess mas (sum of βj ’s) for different windows around carnival Tuesday Notes. This table presents results regarding the analysis of the optimal carnival holiday window. Each row of the table corresponds to a number of days before carnival Tuesday and each column corresponds to a number of days after carnival Tuesday. Each cell presents the sum of the βj ’s, obtained from estimations of regression equation 1. The result in bold corresponds to the sum that presents the lowest value (in absolute terms), which reveals the optimal window – the one that goes from d = −9 up to d = 19. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to 35 days after it, in years 2012-2019.
+11
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+D.1.2 Description of Birth Displacement Dynamics
+Figure D.1: Patterns of birth displacement
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent
+confidence intervals, using the total number of births as the outcome variable. Vertical dashed lines
+indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day
+0) and ends on the Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 35 days after it, in
+years 2012-2019.
+12
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3) (4)
+Number of
+displaced births p-value Total births Fraction displaced
+Day -9 (Sun) 127 (0.11) 8,739 0.015
+Day -8 (Mon) 201 (0.01) 8,651 0.023
+Day -7 (Tue) 285 (0.00) 8,552 0.033
+Day -6 (Wed) 498 (0.00) 7,008 0.071
+Day -5 (Thu) 578 (0.00) 6,108 0.095
+Day -4 (Fri) 249 (0.00) 9,045 0.028
+Day -3 (Sat) -175 (0.03) 8,876 0.02
+Day -2 (Sun) -185 (0.02) 8,822 0.021
+Day -1 (Mon) -1,712 (0.00) 8,792 0.195
+Day 0 (Carnival Tue) -2,289 (0.00) 8,687 0.263
+Day 1 (Wed) -564 (0.00) 7,116 0.079
+Day 2 (Thu) 430 (0.00) 6,238 0.069
+Day 3 (Fri) 475 (0.00) 9,355 0.051
+Day 4 (Sat) 325 (0.00) 9,332 0.035
+Day 5 (Sun) 130 (0.11) 9,416 0.014
+Day 6 (Mon) 176 (0.03) 9,468 0.019
+Day 7 (Tue) 66 (0.41) 8,899 0.007
+Day 8 (Wed) -54 (0.50) 7,038 0.008
+Day 9 (Thu) 211 (0.01) 6,135 0.034
+Day 10 (Fri) 223 (0.01) 7,611 0.029
+Day 11 (Sat) 159 (0.05) 6,823 0.023
+Day 12 (Sun) 115 (0.15) 8,450 0.014
+Day 13 (Mon) 137 (0.08) 9,397 0.015
+Day 14 (Tue) 70 (0.38) 9,285 0.008
+Day 15 (Wed) 2 (0.98) 7,598 0.000
+Day 16 (Thu) 207 (0.01) 6,498 0.032
+Day 17 (Fri) 140 (0.08) 9,501 0.015
+Day 18 (Sat) 63 (0.43) 9,203 0.007
+Day 19 (Sun) 99 (0.22) 9,014 0.011
+R-squared 0.98
+N 556
+Missing mass during holiday -4,925 241,727 0.020
+Excess mass before holiday 1,938 241,727 0.008
+Excess mass after holiday 2,974 241,727 0.012
+Table D.2: Quantification of birth displacement
+Notes. This table presents results of least squares estimation of equation 3. Columns (1)
+and (2) present the coefficients of interest and corresponding p-values, respectively. Column
+(3) presents the average total daily number of births for the corresponding day within the
+carnival window. And column (4) presents the fraction of displaced births, calculated as
+the ratio of the estimated number of displaced births to the average total daily number of
+births. The sample comprises all live births that happened within the period of 34 days
+before carnival Tuesday up to 35 days after it, in years 2012-2019. *Significant at the 10%
+level. **Significant at the 5% level. ***Significant at the 1% level.
+13
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil (a) Number of c-sections (b) Number of spontaneous vaginal deliveries (c) Number of induced vaginal deliveries Figure D.2: Patterns of delivery types
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent confidence intervals. Outcome variables are specified below each
+subfigure. Vertical dashed lines indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day 0) and ends on the
+Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to
+35 days after it, in years 2012-2019.
+14
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil (a) % of mothers aged less than 18 (b) % of mothers with up to 8 years of education (c) % of non-white mothers (d) % of mothers with no partner Figure D.3: Patterns of maternal characteristics
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent confidence intervals. Outcome variables are specified below each
+subfigure. Vertical dashed lines indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day 0) and ends on the
+Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live births that happened within the period of 34 days before carnival Tuesday up to
+35 days after it, in years 2012-2019.
+15
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+D.1.3 Main Results
+(1) (2) (3) (4)
+Gestational length Birthweight Neonatal Early neonatal
+(days) (grams) death rate death rate
+Carnival window 0.08*** 1.71* -0.09 -0.13
+(0.00) (0.06) (0.46) (0.25)
+Daily mean 268.22 3,179.39 9.03 6.84
+Fraction displaced 0.020 0.020 0.020 0.020
+Implied IV estimate 3.97 85.74 -4.57 -6.27
+Obs. 556 556 556 556
+Table D.3: Carnival effects on gestational length, birthweight, and neonatal mortality
+Notes. This table presents results of least squares estimation of equation 2. P-values are presented
+in parentheses, underneath β estimates. The sample comprises all live births that happened within
+the period of 34 days before carnival Tuesday up to 35 days after it, in years 2012-2019. *Significant
+at the 10% level. **Significant at the 5% level. ***Significant at the 1% level.
+(1) (2) (3) (4) (5)
+Mothers Mothers Non-white Mothers Mothers
+aged <18 aged >35 mothers w/ ≤8 yrs w/ no
+of educ. partner
+Carnival window -3.57 1.19 -10.5 -0.19 6.93
+(0.31) (0.88) (0.66) (0.98) (0.68)
+Daily mean 708.91 858.57 4,951.36 1,816.8 3,596.4
+Obs. 556 556 556 556 556
+Table D.4: Selection tests: Carnival effects and mothers’ characteristics
+Notes. This table presents results of least squares estimation of equation 2. P-values
+are presented in parentheses, underneath β estimates. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 35 days
+after it, in years 2012-2019. *Significant at the 10% level. **Significant at the 5% level.
+***Significant at the 1% level.
+16
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+Figure D.4: Patterns of gestational length
+Notes. This figure shows plots of estimates for βj ’s of equation 3 and corresponding 95-percent
+confidence intervals, using gestational length (in days) as the outcome variable. Vertical dashed lines
+indicate the carnival festivity period, which starts on the Saturday that precedes carnival Tuesday (day
+0) and ends on the Wednesday that succeeds it, the Ash Wednesday. The sample comprises all live
+births that happened within the period of 34 days before carnival Tuesday up to 35 days after it, in
+years 2012-2019.
+17
+The Effects of Birth Timing Manipulation around Carnival on Birth Indicators in Brazil
+(1) (2) (3) (4)
+Total births C-sections Spontaneous Induced
+Vag. Deliveries Vag. Deliveries
+Carnival window 7.17 -19.2 20.68*** 4.75
+(0.88) (0.67) (0.00) (0.31)
+Daily mean births 8,325.23 4,656.57 2,437.81 1,018.87
+Obs. 556 556 556 556
+Table D.5: Mechanisms: Carnival effects on the number of births by delivery type
+Notes. This table presents results of least squares estimation of equation 2. P-values are
+presented in parentheses, underneath β estimates. The sample comprises all live births that
+happened within the period of 34 days before carnival Tuesday up to 35 days after it, in years
+2012-2019. *Significant at the 10% level. **Significant at the 5% level. ***Significant at the
+1% level.
+18

@@ -1,0 +1,1476 @@
+
+DISCUSSION PAPER SERIES
+IZA DP No. 16981
+Florian Bachner
+Martin Halla
+Gerald J. Pruckner
+Do Empty Beds Cause Cesarean 
+Deliveries?
+MAY 2024
+Any opinions expressed in this paper are those of the author(s) and not those of IZA. Research published in this series may 
+include views on policy, but IZA takes no institutional policy positions. The IZA research network is committed to the IZA 
+Guiding Principles of Research Integrity.
+The IZA Institute of Labor Economics is an independent economic research institute that conducts research in labor economics 
+and offers evidence-based policy advice on labor market issues. Supported by the Deutsche Post Foundation, IZA runs the 
+world’s largest network of economists, whose research aims to provide answers to the global labor market challenges of our 
+time. Our key objective is to build bridges between academic research, policymakers and society.
+IZA Discussion Papers often represent preliminary work and are circulated to encourage discussion. Citation of such a paper 
+should account for its provisional character. A revised version may be available directly from the author.
+Schaumburg-Lippe-Straße 5–9
+53113 Bonn, Germany
+Phone: +49-228-3894-0
+Email: publications@iza.org www.iza.org
+IZA – Institute of Labor Economics
+DISCUSSION PAPER SERIES
+ISSN: 2365-9793
+IZA DP No. 16981
+Do Empty Beds Cause Cesarean 
+Deliveries?
+MAY 2024
+Florian Bachner
+GÖG
+Martin Halla
+GÖG, WU, IZA and WIFO
+Gerald J. Pruckner
+Johannes Kepler University Linz
+ABSTRACT
+IZA DP No. 16981 MAY 2024
+Do Empty Beds Cause Cesarean 
+Deliveries?*
+We examine how the number of beds available in a maternity ward affects the likelihood 
+of cesarean delivery and maternal health. Our analysis is based on administrative data from 
+Austria. We exploit idiosyncratic daily variation in the occupancy of maternity hospital beds. 
+We find that empty beds increase the probability of cesarean delivery, hospitalization, and 
+readmission. A one standard deviation decrease in maternity bed occupancy increases 
+the probability of cesarean delivery by 4.0% and subsequent hospitalization by 5.8%. 
+Expectant mothers may benefit from a crowded hospital, even at unfavorable patient-staff 
+ratios, because it may lead to less harmful overtreatment.
+JEL Classification: I12, J13, J11, J22, J21
+Keywords: capacity, hospital crowding, supplier-induced demand, 
+cesarean delivery, cesarean section, overtreatment, maternal 
+health
+Corresponding author:
+Martin Halla
+Vienna University of Economics and Business
+Department of Economics
+Welthandelsplatz 1
+1020 Vienna
+Austria
+E-mail: martin.halla@wu.ac.at
+* For helpful discussions and comments we would like to thank Ana Costa-Ramón, Tobin Hanspal, Simon Reif 
+and participants at the 2023 Annual Meeting of the Standing Committee for Health Economics of the Verein für 
+Socialpolitik at at the University of Wuppertal. The usual disclaimer applies.
+1 Introduction
+Modern health care systems must be able to provide a full range of services at all times
+while maintaining quality standards. Therefore, responsible capacity planning must take
+into account certain peaks in patient load. Systems must be able to handle predictable
+peaks, such as flu season, as well as unpredictable events, such as pandemics. As a result,
+a certain amount of medical resources are free in normal times. This raises the important
+question of whether (and to what extent) the supply of these “additional” resources
+a↵ects health care utilization in normal times. Depending on the health care setting, the
+“additional” resources can lead to overtreatment of patients (Dulleck and Kerschbamer,
+2006).
+In this paper, we address this issue in the context of hospital capacity. Specifically,
+we test whether the number of beds available in a maternity ward has an e↵ect on the
+type of delivery. The case of childbirth is interesting and useful for three reasons. First,
+childbirth is one of the most common reasons for hospitalization. Second, there are two
+main types of deliveries that have di↵erent e↵ects on the length of hospital stay. The most
+common type of delivery is vaginal, which requires a short hospital stay. In contrast, a
+cesarean delivery (CD) requires surgical incisions in the mother’s abdomen and uterus
+and results in a comparatively longer hospital stay. A CD delivery can be planned in
+advance if there is a medical reason for it, or it can be unplanned and occur during
+labor if certain problems arise.1 In the latter case, physicians have some discretion and
+can change the mode of delivery on short notice. Economic considerations may play a
+role, and physicians may overtreat and choose a CD to increase the number of occupied
+hospital beds. This is usually financially advantageous for the hospital, but in many cases
+also for the physician. CDs are a particularly important context for studying the e↵ect
+of capacity on utilization. In most high-income countries, CD rates have increased over
+time and are now well above the recommended rate.2
+Third, it is usually dicult to obtain exogenous variation in capacity.3 The case of
+maternity wards is di↵erent. The vast majority of admissions are pre-registered, leaving
+little room for selection. However, there is some uncertainty about the exact date of
+1There is a clear consensus that CD improves maternal and infant health outcomes when medically
+indicated. Guidelines (see, for instance NICE, 2023) recommend CD for breech births (Jensen and W¨ust,
+2015; M¨uhlrad, 2022), complications of labor such as fetal distress, cord prolapse, placenta praevia, and
+other complications, and pre-existing conditions (e.g., certain cases of HIV infection).
+2Across OECD countries, 28 percent of all live births in 2017 were delivered by CD (OECD, 2019).
+In contrast, the recommended CD rate is only between 10 and 15 percent (World Health Organization,
+2015). The upward trend in CD rates is unlikely to be explained by changes in the incidence of medical
+indications. Possible complementary explanations include older women experiencing first-time motherhood, increased in-vitro fertilization (OECD, 2013), malpractice liability concerns (Currie and MacLeod,
+2008), reductions in CD risk, physician and patient convenience in scheduling (OECD, 2013; Brown III,
+1996), and changes in patient preferences (Sachs et al., 1999).
+3For example, regional di↵erences in the availability of medical resources should generally not be
+considered exogenous, as this is an equilibrium outcome determined jointly by supply and demand.
+2
+admission. This leads to idiosyncratic daily variations in bed occupancy in a given maternity unit. Unlike regional variation in capacity, this variation within maternity units
+is unlikely to be correlated with patient characteristics. This allows us to identify the
+causal e↵ect of bed occupancy on medical procedure use and subsequent maternal health
+within a simple fixed e↵ects approach.
+Our empirical approach is made possible by access to high quality administrative
+data. Most importantly, we have access to Austrian hospital records, which contain
+detailed information on the universe of inpatient births between 2002 and 2018. To obtain
+idiosyncratic variation in capacity, we rely on hospital-specific month fixed e↵ects. Thus,
+we isolate within-hospital-month variation in bed availability on the day of an expectant
+mother’s admission. This within-hospital-month variation is unlikely to be correlated
+with unobserved characteristics of the mother.
+We find that a one standard deviation increase in the maternity bed occupancy rate
+reduces the likelihood of a CD by 1.07 percentage points or 3.95 percent. The estimated
+treatment e↵ect varies little with the inclusion of control variables, such as the share of
+beds with non-birth admissions. Semi-parametric specifications show that the e↵ect is
+also fairly constant across the distribution of maternity bed occupancy rates. Thus, our
+baseline result suggests that physicians are more likely to perform a CD when there are
+more empty beds in the ward.
+This result is robust to several alternative specifications. First, we exclude scheduled
+CDs because their timing is not idiosyncratic. To exclude them, we rerun our estimates
+in a sample of weekend and holiday births. Hospitals do not schedule CDs on these days.
+In this reduced sample, we obtain virtually the same estimated treatment e↵ect. Second,
+we rerun our estimates in a sample of maternity wards with a very low proportion of
+non-birth admissions. In this sample, our treatment variable (i.e., the maternity bed
+occupancy rate) is very close to the overall bed occupancy rate. The latter includes, for
+example, operations for breast cancer, which are mostly scheduled. Again, we observe
+very similar treatment e↵ects.
+To better understand the mechanism behind our treatment e↵ect, it would be useful
+to know the extent to which hospital management adjusts stang in response to low or
+high maternity bed occupancy rates. While we only observe fixed positions and not actual
+stang in our main data, we have access to the actual rosters of the largest maternity unit
+in Austria. These data provide us with daily information on the actual number of doctors
+(by type) and nurses on duty for the years 2013 to 2019. Based on a simple regression
+model, we see that hospital management does not adjust the number of doctors on duty
+to the actual occupancy rate of maternity beds. For nurses, there is a small pro-cyclical
+adjustment. Assuming that this practice of sta↵ planning also applies to other maternity
+units in Austria, we derive a more informative interpretation of our main result. The
+e↵ect that a lower maternity bed occupancy rate leads to more CDs can be interpreted
+3
+by holding hospital sta↵ (almost) constant.
+Not only is a CD more costly than a vaginal birth, but it can also have negative health
+consequences.4 Our data allow us to observe hospital readmissions. We use this outcome
+to test whether adjusting the mode of delivery to the current bed occupancy rate has
+a detrimental e↵ect on subsequent maternal health. As a sanity check, we first show
+that a lower maternity bed occupancy rate increases the length of hospital stay (due to
+an increased likelihood of CD). We find that a one standard deviation decrease in the
+maternity bed occupancy rate increases the length of hospital stay by 0.2 days, or 7.98
+percent. To assess the impact on maternal health, we use the probability of readmission.
+We find that a one standard deviation decrease in the maternity bed occupancy rate
+increases the probability of readmission by 0.24 percentage points or 5.84 percent, which
+is economically significant.
+This result seems somewhat counterintuitive at first glance, as we see a negative effect of less hospital crowding on maternal health. As such, this finding is also at odds
+with most of the literature on hospital crowding, which examines a broad range of admissions. However, it is explained by the specific e↵ect of hospital crowding in maternity
+units on procedure choice. In maternity units, less hospital crowding leads to more CDs.
+Since these CDs have more postpartum complications, we find lower readmission rates for
+women admitted to a more crowded maternity unit.
+Considering that hospital management rarely adjusts medical sta↵ to short-term fluctuations in (maternity) bed occupancy, we can even conclude that maternal health outcomes are better when women are admitted to overcrowded hospitals, despite the unfavorable patient-sta↵ ratio. Notably, there are other potential (long-term) costs of nonmedically indicated CDs that we cannot study in our setting.5 Thus, we should interpret
+the negative e↵ect of overcapacity (or less hospital crowding) on short-term maternal
+health as a lower bound of the true total cost.
+Our results contribute to the literature examining the relationship between capacity,
+procedure choice, and subsequent health outcomes. While there is an established medical
+literature on the topic of “hospital crowding,” to date there are only a handful of papers
+that use a design-based approach to establish causality.6 Almost all of these papers focus
+4In OECD countries, the average cost of a CD is twice or more the cost of a vaginal birth (Koechlin
+et al., 2010).
+5Recent design-based work has shown negative e↵ects of non-medically indicated CD on child health
+(Costa-Ram´on et al., 2022), maternal mental health (Tonei, 2019), and subsequent maternal fertility
+(Halla et al., 2020).
+6Broadly speaking, studies in the medical literature compare the outcomes of patients treated during
+periods of high demand relative to supply. Notably, there is no established definition or measurement
+of this “crowding”. Studies use both demand-side and supply-side variables (such as the number of
+admissions, sta↵-patient ratios, or bed occupancy). One strand of this literature examines permanent
+changes in health care systems due to legislative changes, while another strand focuses on more sudden
+shocks. In terms of results, neither strand finds consensus on the health e↵ects of overcrowding. A likely
+explanation for the variation in findings is the lack of causal identification. The medical literature consists
+almost entirely of observational studies, which typically rely on di↵erences between regions or hospitals.
+4
+on births or neonatal health. This may be explained by the advantageous setting of maternity units, where most admissions are pre-registered, leaving little room for selection, but
+have some uncertainty in the admission date.7 Freedman (2016) exploits within-hospitalmonth variation in US neonatal intensive care units (NICU) capacity to identify the e↵ect
+of NICU beds on utilization. He finds increased NICU utilization among newborns with
+higher birth weights, for whom the decision to admit is more likely to be discretionary.
+Marks and Choi (2019) examine whether hospital spending a↵ects infant health in California. They use crowding (proxied by the number of births) as an instrumental variable
+(henceforth IV) for spending. They find that when hospitals are forced to reduce neonatal
+spending (due to crowding), there is no negative e↵ect on neonatal health.
+Most closely related to our paper, are two recent studies using Scandinavian data.
+Maibom et al. (2021) use within-maternity ward-year variation in Danish data to examine
+the capacity on delivery type, and mother’s and infant’s health. They find no impact of
+crowding on the likelihood of a CD, but small negative e↵ects on child and maternal
+health. A common finding of all these design-based paper is that less “crowding” has no
+or positive e↵ects on patients’ health. The only exception, besides our paper, is Benses
+(2022) who uses an IV approach in Norwegian maternity unit data. He finds that children
+born to mothers admitted on more “crowded” days have fewer medical interventions
+(with no e↵ect on CDs) but better APGAR scores. This is consistent with our study,
+which is among the first to show that patients may benefit from more “crowding” (i.e.,
+less capacity) because there is less harmful overtreatment in this scenario. In contrast
+to previous studies, we can even provide evidence that this holds true for unfavorable
+patient-to-sta↵ ratios.8
+Our results also speak to the literature on supplier-induced demand, when physicians
+shift the demand of patients according to their own self-interest (McGuire, 2000). In the
+context of CDs, there is evidence for the e↵ect of financial and non-financial incentives. For
+instance, Gruber and Owings (1996) show that gynaecologists compensated their income
+shock due to declining fertility by substituting vaginal delivery with the highly reimbursed
+CDs. Other studies provide evidence for the impact of reimbursement di↵erentials (Gruber
+For a review, see Hoot and Aronsky (2008).
+7Exceptions are, for example, Hoe (2022) and Evans and Kim (2006). The former use idiosyncratic
+variation in British emergency admissions. The authors show that a one standard deviation increase
+in admissions increases the readmission rate by about 4 percent. Using a census of hospital discharges
+in California, Evans and Kim (2006) estimate the impact of Friday and Saturday admission shocks
+on hospitalized patients admitted on Thursdays. The authors find some evidence that large admission
+shocks on Friday and Saturday tend to reduce the length of stay and increase the likelihood of subsequent
+readmission for Thursday patients. The reported coecients are very small, and the e↵ects on mortality
+rates remain insignificant.
+8Facchini (2022) identified a case where a more crowded maternity ward leads to more CDs. He
+has access to data from one large Italian hospital, which allows him to examine the impact of day-today variations in the ratio of midwifes to patients. He finds that the likelihood of CDs increases (at a
+decreasing rate) with their workload. He concludes that CDs are used to alleviate midwives’ workload,
+as they are faster than vaginal births and performed by physicians.
+5
+et al., 1999; Grant, 2009; Foo et al., 2017; Pilvara and Yousefi, 2021). There is also evidence
+on the impact of and non-financial incentives. Brown III (1996) showed first that the
+likelihood of unplanned CD is not distributed uniformly over weekdays or daytime. He
+analysed data from US military hospitals, where obstetricians did not earn extra income
+for performing a CD. He finds a sharp increase in unplanned CDs on Fridays (between
+3 pm and 9 pm), and explains this by obstetricians’ demand for leisure on weekends.9
+Finally, there is evidence that information asymmetry between patients and physicians is
+important. Johnson and Rehavi (2016) show that physician-mothers are 7.5 percent less
+likely to have a CD. The authors conclude that physician-mothers are able to achieve at
+least as good (or even better) health outcomes with less intensive treatment.
+The remainder of this paper is organized as follows. Section 2 discusses our research
+design. Section 3 presents the main estimation results and several sensitivity checks. Section 4 presents supplementary evidence from duty rosters. Section 5 presents the results
+of occupancy rates on subsequent readmissions. Section 6 tests for several dimensions of
+treatment e↵ect heterogeneity. Section 7 concludes this paper.
+2 Research design
+In this section, we first discuss the institutional background. Then, we introduce our data
+sources, define our estimation sample, and provide descriptive statistics. Next, we present
+our econometric estimation strategy, and discuss our identifying assumptions.
+2.1 Institutional background
+The Austrian health care system is based on a social health insurance system, originally
+designed as a Bismarckian system. Public health care services are financed by a mix of
+compulsory health insurance contributions and general tax revenues. The vast majority
+of the population (99.9 percent) has compulsory health insurance, which is administered
+by three health insurance funds. Insured persons have free access to all levels of health
+care without gatekeeping. Health insurance covers both inpatient and outpatient expenses
+related to illness and childbirth (Bachner et al., 2018). In particular, medical expenses
+during pregnancy and childbirth are fully covered, regardless of the method of delivery.
+Expectant mothers are free to choose the hospital where they give birth, although most
+mothers choose hospitals close to home, especially if they expect a spontaneous delivery.
+CDs are available in all Austrian hospitals, and planned CDs can be scheduled in any
+preferred obstetric department. Approximately 98 percent of births take place in hospitals.
+Expectant mothers can choose to give birth in private hospitals, and health insurance
+9A similar pattern is also found in data for California (Spetz et al., 2001), Spain (Costa-Ram´on et al.,
+2018), Austria (Halla et al., 2020), and Finland (Costa-Ram´on et al., 2022).
+6
+funds cover the costs of childbirth in private hospitals on the same basis as in public
+hospitals. The di↵erence between the public hospital rate and the private hospital rate is
+covered either by private supplementary insurance or by out-of-pocket payments. Mothers
+who have voluntary and private supplementary health insurance or are willing to pay
+out of pocket can also choose their attending obstetrician and midwife in some hospitals.
+Unlike some (Anglo-Saxon) health care systems, the vast majority of attending physicians,
+midwives, and nurses are employed by the hospital of choice.
+Due to the working hours of health professionals, the greatest capacity of hospital sta↵
+is available during weekdays. Expectant mothers usually register with their preferred hospital in advance, and stang schedules can be largely coordinated accordingly. Typically,
+expectant mothers do not have a pre-assigned obstetrician or midwife for delivery. Even
+if there is a shortage of sta↵ on weekends and holidays, each maternity unit must have
+a full surgical team available 24 hours a day, seven days a week. This infrastructure
+ensures that unplanned CD can always be performed. Typically, a team of physicians,
+midwives, and nurses work closely together in the maternity ward. Uncomplicated births
+are managed by midwives, and the attending obstetrician is regularly informed of the
+progress of the birth. If there are complications, the doctors (obstetrician, surgeon, and
+anesthesiologist) decide if and when a CD will be performed. The operation itself is then
+performed by the obstetrician or surgeon and the anesthesiologist. Sta↵ usually work in
+shifts. Therefore, the midwives and obstetricians who take a case on admission to the
+hospital may not see it through to delivery. Understandably, the surgical team does not
+have strict shift changes.
+2.1.1 Financial incentives for hospitals and physicians
+In Austria, hospitals are predominantly reimbursed according to a Diagnosis-Related
+Group (DRG) payment system (the so-called LKF system). The DRG system is a regulatory framework for the standardized grouping of inpatient hospital stays. Each diagnosis
+group or procedure is assigned a specific point value (DRG points), which represents the
+average cost of treatment in a group, with one DRG point representing approximately
+one euro (Geissler et al., 2012). This means that hospitals are paid a fixed amount for
+each patient based on the DRG points assigned to that patient. The average DRG points
+for a CD are higher than for a vaginal delivery (4,739 versus 3,037).
+Another financial incentive, for both physicians and hospitals, comes from private
+payments for patients with supplementary health insurance. More than one-third of the
+population in Austria has such supplementary health insurance.10 The longer patients
+stay in hospitals and the more services they receive, the higher these private payments
+become. Most of these fees go directly to physicians, while hospitals keep between 10 and
+10We do not observe this insurance status in our data.
+7
+30 percent. A CD increases the average length of hospital stay by 2.7 days or 68 percent
+(4.0 for vaginal delivery versus 6.7 bed days for CD).
+In addition, due to the high density of hospitals and hospital beds in Austria, small
+maternity units are at risk of closure or downgrading if they have persistently low occupancy rates. Chief physicians can only be appointed if they supervise at least one other
+physician and 15 beds. This creates pressure to justify underutilized hospitals, as well as
+prestige and income pressures for attending physicians.
+2.2 Data sources
+Our empirical analysis is based on two administrative datasets from Austria. First, we
+have access to hospital records from the Austrian DRG System. Second, we received
+detailed work schedules from the largest maternity ward in Austria.
+2.2.1 Hospital records
+We have access to hospital records for the period between 2002 and 2018. These individuallevel data include information on the universe of hospitalizations in public and private
+hospitals in Austria. These data are extracted from the Austrian DRG system. The
+advantage of these data is that they provide accurate and high quality information on the
+medical services used, and we can identify the treating hospital units. The disadvantage
+of these data is that they contain very little information on the socioeconomic background
+of the patients.
+Our focus is on maternity units. These units are responsible for childbirth and other
+gynecological services (such as gynecological oncology). We analyze the universe of inpatient births (n = 1,323,838) during this period. We have information on basic patient
+characteristics, diagnoses, and medical procedures. Because our data represent a complete sample of all hospitalizations, we can also calculate variables at the hospital unit
+level, such as bed occupancy rates. We then consider the e↵ect of these rates on mode
+of delivery (vaginal versus cesarean). From 2015, we can follow patients over time and
+observe readmissions as an additional outcome variable.
+2.2.2 Duty rosters
+We have received data from the biggest maternity ward in Austria located at the Kepler
+University Hospital (KUH) in Linz, Upper Austria.11 The hospital is equipped with
+approximately 900 beds, and more than 62, 000 inpatients are being treated per year.
+The clinic houses the largest maternity ward in Austria with more than 3,500 births per
+year. For this maternity ward, we have access to duty rosters of physicians and medical
+11The KUH provides basic health care services for the Linz area and top level medical services for the
+whole province of Upper Austria.
+8
+nursing sta↵ including midwives. The data cover the period from 2013 to October 2019,
+with the exception of 2016. Thus, we can observe on a daily basis how many doctors (by
+type) and nurses are on duty.
+2.3 Estimation sample and descriptive statistics
+We start with a sample of all 1,323,838 inpatient births between 2002 and 2018. After
+deleting inpatient births outside maternity units (30,431) and observations with missing
+variables (12,084), we end up with an estimation sample of 1,281,323 observations across
+90 hospitals.
+2.3.1 Main outcome variable
+Figure 1 provides descriptive statistics for our outcome variable. On average, about 27.0
+percent of all births are CDs. This share has increased over time from 20.1 percent in
+2002 to 28.9 percent in 2018 (see panel b). While there is little variation across calendar
+months (see panel c), we observe the same patterns across weekdays (see panels d and e) as
+discussed in the literature. First, in terms of day of procedure, there are significantly fewer
+CDs on Saturdays and Sundays. The most obvious explanation for this is that planned
+CDs are not scheduled on weekends. Second, there are more CDs on Fridays (as compared
+to Monday to Thursday). The dominant explanation for this is that there are more nonmedically indicated CDs on a Friday than on any other working day, as obstetricians
+prefer to finish their shift on time. There is also considerable variation between the 90
+hospitals, with private hospitals at the top of the distribution (see panel f). Finally, there
+is significant daily variation in CD rates over time (see panel a).
+2.3.2 Treatment variable
+Maternity units are responsible for childbirth and other gynaecological services. Childbirth is the most common cause of admission (33.6 percent) in these hospital units.12
+In terms of bed occupancy, childbirth is even more dominant. In our estimation sample, about 74 percent of all occupied hospital beds, are occupied by women admitted for
+delivery (see Appendix Figure A.1 for detailed statistics). As can be seen, the share of
+maternity beds has increased from 60 percent in 2003 to 80 percent in 2017, most likely
+due to unit specialization. For the purpose of our analysis, it is important to distinguish
+between admissions for births and admissions for other reasons. The majority of births
+(with the exception of planned CDs, see Section 3.3.1) are unplanned, while the majority of non-birth admissions are planned. This means that maternity bed occupancy rate
+is less predictable and idiosyncratic on a day-to-day basis. For this reason, we define
+12This is followed by non-inflammatory disorders of the female genital tract (ICD N8, 16.4 percent)
+and malignant neoplasm of the breast (ICD C5, 16.4 percent). See Appendix Table A.1.
+9
+Figure 1: Descriptive statistics on cesarean delivery rates
+(a) Average across time (daily data)
+0 .05 .1 .15 .2 .25 .3 .35 .4 .45 2002 2004 2005 2007 2009 2011 2013 2015 2017
+(b) Average across years
+0 .05 .1 .15 .2 .25 .3 .35 2002 2004 2006 2008 2010 2012 2014 2016 2018
+(c) Average across calendar months
+0 .05 .1 .15 .2 .25 .3 .35
+1 2 3 4 5 6 7 8 9 10 11 12
+(d) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .05 .1 .15 .2 .25 .3 .35
+(e) Average across weekday of procedure
+Mon Tue Wed Thu Fri Sat Sun
+0 .05 .1 .15 .2 .25 .3 .35
+(f) Average across hospitals (by type)
+0 .1 .2 .3 .4 .5 .6
+Public
+Private
+90 hospitals
+Notes: Cesarean delivery rates are the number of births delivered by cesarean divided by the total
+number of live births. The number of underlying observations is 1.281,323.
+our main treatment variable as the share of all beds occupied by women admitted for
+childbirth:
+Number of beds occupied by women admitted for childbirth
+Number of beds available in the unit , (1)
+10
+Figure 2: Descriptive statistics on maternity bed occupancy rate
+(a) Density function
+ N = 1279555
+ Median = .5
+ Mean = .53
+ S.d. = .24
+0 .5 1 1.5 2
+Density
+0 .5 1 1.5 2
+(b) Average across time (daily data)
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2002 2004 2005 2007 2009 2011 2013 2015 2017
+(c) Average across years
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2001 2003 2005 2007 2009 2011 2013 2015 2017
+Median p25/p75
+(d) Average across calendar months
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+1 2 3 4 5 6 7 8 9 10 11 12
+Median p25/p75
+(e) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+Median p25/p75
+(f) Average across hospitals (by type)
+0 .2 .4 .6 .8 1 1.2 1.4
+Public
+Private
+p25-p75
+90 hospitals
+Notes: The variable of interest is defined as the number of women admitted to the maternity unit for
+childbirth divided by the total number of beds in the unit (i.e., the maternity bed occupancy rate).
+The number of underlying observations is 1.281,323, except in panel (a) where 1,768 observations
+with maternity bed occupancy rate values greater than 2 are excluded. The standard deviation in
+the full sample is 0.29. Descriptive statistics on the share of all occupied hospital beds occupied by
+women admitted to the maternity ward for delivery are shown in Appendix Figure A.1. Descriptive
+statistics on the overall bed occupancy rate (i.e, defined as the proportion of all beds occupied by
+patients with any diagnosis) are shown in Appendix Figure A.2.
+11
+and refer to it as the maternity bed occupancy rate. In contrast, the overall bed occupancy
+rate has a nominator which is the number of all beds occupied regardless of the reason
+for admission. This variable should not be treated as exogenous. Given the dominance
+of childbirth, the correlation between the two occupancy rates is quite high and amounts
+to 0.8.13
+Figure 2 provides descriptive statistics for the maternity bed occupancy rate. The average maternity bed occupancy rate is around 50 percent (see panel a). Most importantly,
+it varies considerably from day to day (see panel b). While there is a slight increase over
+time (see panel c), there is no variation across calendar months (see panel d) or across
+weekdays (see panel e). Finally, there is considerable variation between the 90 hospitals
+(see panel f). Appendix Figure A.2 provides descriptive statistics for total bed occupancy
+rate. We see broadly similar patterns, with the exception of greater variation between
+weekdays. The comparatively lower overall occupancy at weekends suggests that overall
+occupancy is comparatively more predictable (and less idiosyncratic) than maternity bed
+occupancy.
+2.4 Estimation approaches
+To examine the e↵ect of maternity bed occupancy rate (denoted as maternity bed occihymw)
+on the likelihood of cesarean delivery (CDihymw) of mother i, we start with a simple linear
+probability model,
+CDihymw = ↵ + ⌧ · maternity bed occihymw + h + y + ⇠m + w + ✏ihymw, (2)
+where we control for hospital (h), year ( y, y = 2002,..., 2018), calendar month (⇠m,
+m = Jan,..., Dec), and week-day (w) fixed e↵ects. This approach follows Freedman
+(2016). The week-day fixed e↵ects are a series of binary indicators for a leisure day
+(i.e., Saturday, Sunday and any public holiday), for a pre-leisure day (i.e., Friday or any
+working day before a public holiday), and for each other weekday (i.e., Monday, Tuesday,
+Thursday), which is neither a leisure nor a pre-leisure day. The basegroup are Wednesdays,
+which are neither a leisure nor a pre-leisure day.
+In further specifications, we replace the hospital and year fixed e↵ects with “hospital
+⇥ year”, “hospital ⇥ quarter” or even “hospital ⇥ month” fixed e↵ects. For each specification of fixed e↵ects, we vary the set of further covariates and stepwise include controls
+for mother’s age, and the plan positions for medical personnel. The latter comprises the
+regular number of doctors, midwives and nurses (in each case measured per available
+13In Section 3.3.2, we demonstrate the innocuousness of non-birth bed occupancy for the identification
+of our treatment e↵ects. In an alternative estimation approach, we use the overall bed occupancy rate
+as an endogenous treatment variable, which we instrument with the maternity bed occupancy rate (see
+Appendix Section B). This analysis provides equivalent conclusions.
+12
+beds). We can anticipate that the included control variables will have no relevant e↵ect
+on our estimated treatment e↵ects.
+We also use a semi-parametric specification of the maternity bed occupancy rate,
+CDihymw = ↵ +X
+8
+p=1
+⌧ p · maternity bed occp
+ihymw + h + y + ⇠m + w + ✏ihymw, (3)
+where we use binary indicators for the p-th percentile in the maternity bed occupancy
+rate distribution. The advantage of this specification is that there is no need to impose an
+explicit functional form between the maternity bed occupancy rate and the probability of
+cesarean delivery. In equation (2), we impose a a linear functional form. Again, we enrich
+our estimation models with more detailed fixed e↵ects and further covariates.
+In all estimation approaches, we calculate clustered standard errors by hospital ⇥ year.
+2.5 Identifying assumptions
+In our estimations, we rely in the most detailed specification on hospital-specific month
+fixed e↵ects. These allow us to exploit within-hospital variation in maternity bed availability. We thus flexibly control for factors correlated with maternal preferences, hospitalspecific treatment style, cyclicality and trends in mode of delivery, and hospital-specific
+cyclicality and trends.
+The identifying assumption underlying our empirical approach is that unobserved
+within-hospital-month variation in patient characteristics is uncorrelated with withinhospital-month variation in maternity bed occupancy. Put di↵erently, if the types of
+patients admitted to a hospital change systematically when there are shocks to the number
+of empty maternity beds, then our empirical strategy fails.
+There are two facts that support our identification assumption. First, expectant mothers choose their hospital in advance. Only in very rare cases are women transferred to
+another hospital during labor. Second, the exact date and time of delivery is unknown.
+According to the clinical literature, pregnant women are routinely assigned a due date of
+approximately 280 days after the onset of their last menstrual period. However, only 4
+percent of women deliver exactly on the 280th day, and only 70 percent deliver within 10
+days of their predicted due date, even when determined by ultrasound (Mongelli et al.,
+1996). Thus, even if hospitals know the expected due dates of their future patients, the
+number of births admitted per day is dicult to predict and is likely to vary idiosyncratically.
+13
+3 Main estimation results
+3.1 Linear specification
+Table 1 presents the results of our estimates of the e↵ect of maternity bed occupancy rate
+on the probability of CD, based on the linear specification. The specifications in panels A
+through D di↵er by the covariates included. The covariates are listed/indicated below
+the coecient of primary interest. The specifications in columns (1) to (4) di↵er by type
+of included fixed e↵ects (FE). In column (1), we control in for hospital and year FE. In
+column (2), we use instead “hospital ⇥ year” FE. In column (3), we change to “hospital
+⇥ quarter” FE, and in column (4) to “hospital ⇥ month” FE. In all specifications, we
+find a statistically negative e↵ect of the maternity bed occupancy rate on the probability
+of CD.
+The inclusion of covariates (see across panels) has virtually no e↵ect on the estimated
+e↵ect size. In panel A, we control only for calendar month FE, weekday FE, and those
+FE indicated in the header of the column. In panel B, we add maternal age FE. Although
+this variable is an important determinant of CD, its inclusion has virtually no e↵ect on
+our estimated treatment e↵ect size. This shows that maternal age (conditional on our
+FEs) is not correlated with the maternity bed occupancy rate. Unfortunately, we do not
+have other socioeconomic characteristics in our data set, but we are confident that there
+is no correlation between maternal characteristics and our treatment variable.Consistent
+with our expectations, we find that higher age is associated with a higher likelihood of
+CD. Compared to the youngest mothers (under 14), mothers in the 30 to 34 age group
+have an increased likelihood of about six percentage points. For mothers in the 40 to 44
+age group, this gap increases to about 17 percentage points.
+In panel C, we add controls for planned medical sta↵ positions. These comprise the
+regular number of physicians, midwives, and nurses per available bed on a yearly basis.
+Only one covariate is consistently statistically significant. We find that a one standard
+deviation increase in the regular number of doctors per available bed (which is equivalent
+to 0.094) is associated with an increase in the probability of a CD of about 2.13 percentage
+points.14 The inclusion of these additional control variables has no e↵ect on the estimated
+magnitude of the treatment e↵ect of interest. We interpret this irrelevance as evidence
+supporting the assumption that our treatment variable is conditionally exogenous. Finally,
+in panel D we control for the non-birth bed occupancy rate. Although this variable cannot
+be assumed to be exogenous and should not itself be interpreted, it is reassuring to see
+that its inclusion has virtually no e↵ect on our estimated treatment e↵ect size.
+The more detailed FE specifications we use (see across columns), the higher is the
+estimated e↵ect size. Our preferred specification is the one with lean covariates and
+14In section 4, we present evidence based on the actual number of doctors on duty.
+14
+Table 1: The impact of maternity bed occupancy rate on the likelihood of CD
+(1) (2) (3) (4)
+Hospital & year
+FE
+Hospital⇥year
+FE
+Hospital⇥quarter
+FE
+Hospital⇥month
+FE
+Panel A
+Occupancy -0.012⇤⇤⇤ -0.020⇤⇤⇤ -0.028⇤⇤⇤ -0.038⇤⇤⇤
+(0.004) (0.006) (0.007) (0.010)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Panel B
+Occupancy -0.012⇤⇤⇤ -0.019⇤⇤⇤ -0.026⇤⇤⇤ -0.037⇤⇤⇤
+(0.004) (0.006) (0.007) (0.010)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel C
+Occupancy -0.012⇤⇤⇤ -0.024⇤⇤⇤ -0.028⇤⇤⇤ -0.037⇤⇤⇤
+(0.004) (0.007) (0.009) (0.011)
+Docs per used bed 0.038⇤ 0.166⇤⇤ 0.221⇤⇤ 0.238⇤⇤
+(0.020) (0.069) (0.095) (0.109)
+Nurses per used bed -0.006 0.006 0.009 0.014
+(0.009) (0.021) (0.021) (0.022)
+Midwives per used bed -0.014 -0.031 -0.036 -0.035
+(0.009) (0.022) (0.022) (0.023)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel D
+Occupancy -0.011⇤⇤⇤ -0.022⇤⇤⇤ -0.026⇤⇤⇤ -0.035⇤⇤⇤
+(0.003) (0.006) (0.007) (0.009)
+Docs per used bed 0.026 0.143⇤⇤ 0.193⇤⇤ 0.205⇤
+(0.019) (0.066) (0.093) (0.107)
+Nurses per used bed -0.007 0.015 0.020 0.027
+(0.009) (0.020) (0.020) (0.020)
+Midwives per used bed -0.011 -0.022 -0.026 -0.024
+(0.009) (0.021) (0.021) (0.021)
+OccupancyNB 0.030⇤⇤⇤ 0.035⇤⇤⇤ 0.044⇤⇤⇤ 0.052⇤⇤⇤
+(0.008) (0.010) (0.009) (0.009)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Number of observations 1,281,323 1,281,323 1,281,323 1,281,323
+Mean of outcome 0.27 0.27 0.27 0.27
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy rate on the probability of
+cesarean delivery (CD). The basic regression model is shown in equation (2). The specifications in panels A through
+panel D di↵er by the covariates included. These covariates are listed/indicated below the coecient of primary interest.
+Calendar month FE are a series of binary indicators for January to December. Weekday FE are a series of binary
+indicators for a leisure day (i.e., Saturday, Sunday and any public holiday), for a pre-leisure day (i.e., Friday or any
+working day before a public holiday), and for each other weekday (i.e., Monday, Tuesday, Thursday) that is neither a
+leisure nor a pre-leisure day. The base group is Wednesdays, which are neither a leisure nor a pre-leisure day. Mother’s
+age FE are a series of binary indicators for the following age groups:  14 (base group), 15-19, 20-24, 25-29, 30-34,
+35-39, 40-44, 45-49,  50. The variable OccupancyNB captures the proportion of beds occupied by patients other than
+expectant mothers. The specifications in columns (1) to (4) di↵er by the type of FE included. In column (1), we control
+for hospital and year FE. In column (2), we use “hospital ⇥ year” FE instead. In column (3), we switch to “hospital ⇥
+quarter” FE. In column (4) we use “hospital ⇥ month” FE. Clustered standard errors by hospital ⇥ year are reported
+in parentheses below the coecients. Asterisks indicate statistical significance: *** p<0.01, ** p<0.05, * p<0.1.
+15
+“hospital ⇥ month” FE (see column 4 in panel B). Based on this specification, we find
+that a one standard deviation increase in the maternity bed occupancy rate reduces the
+probability of a CD by 1.07 percentage points, or 3.95 percent. This is an economically
+non-negligible e↵ect size. For comparison, this e↵ect is one third of the e↵ect of a onestandard-deviation-increase in the maternal age, which is a major indication for CD.15
+3.2 Semi-parametric specification
+Table 2 summarizes results based on the semi-parametric specification (see equation 3) for
+varying fixed e↵ects. Here we use our preferred lean covariate specification. We see that
+the probability of CD increases across the entire distribution of maternity bed occupancy
+rates. The changes between the binary indicators for the di↵erent percentiles show fairly
+constant changes, suggesting that our simple linear specification from above captures the
+empirical relationship fairly well. As in the case of the linear specification, we find that
+more detailed FE specifications (see across columns) lead to larger estimated e↵ect sizes.
+Appendix Figure A.5 summarizes estimation results of the semi-parametric specification
+for all combinations of fixed e↵ects and covariates. We see that in each case, the inclusion
+of covariates has virtually no impact.
+3.3 Additional identification checks
+Our basic identification strategy has two components. First, since the vast majority of
+births are unplanned, the exact maternity bed occupancy rate should be exogenous. Second, we control for hospital-specific month fixed e↵ects and exploit only within-hospital
+variation in the maternity bed occupancy rate, which should not be correlated with (unobserved) patient characteristics. Below, we perform two identification checks that vary
+our identifying assumptions. First, we exclude planned CDs. Second, we use sub-samples
+in which the occupancy rate of maternity beds is, for structural reasons, very close to the
+overall occupancy rate of beds.
+3.3.1 Excluding planned CDs
+While we cannot accurately identify planned CDs in our data at the individual level,
+we can exclude these through a simple sample restriction.16 We take advantage of the
+fact that Austrian hospitals schedule planned CDs on working days (i.e., from Monday
+to Friday) only, and re-run our estimates in the sample of Saturday, Sundays and public
+15A one-standard-deviation-increase in maternal age (i.e, by 5.53 years) increases the probability of a
+CD by 3.88 percentage points, or 13.24 percent.
+16It is well known that mothers sometimes request a CD that is not medically indicated, and physicians
+often comply and schedule a planned CD. In this case, physicians essentially have to fake a reason for the
+CD. They could either fake a condition that justifies a planned CD, or they could categorize it ex-post
+as an unplanned CD. This creates a measurement error in the planned versus unplanned variable.
+16
+Table 2: The impact of maternity bed occupancy rate on the likelihood of CD, semiparametric specification
+(1) (2) (3) (4)
+Hospital & year
+FE
+Hospital⇥year
+FE
+Hospital⇥quarter
+FE
+Hospital⇥month
+FE
+10th: Base group
+20th -0.003 -0.004⇤ -0.005⇤⇤ -0.006⇤⇤⇤
+(0.002) (0.002) (0.002) (0.002)
+30th -0.006⇤⇤⇤ -0.007⇤⇤⇤ -0.009⇤⇤⇤ -0.013⇤⇤⇤
+(0.003) (0.002) (0.003) (0.003)
+40th -0.005⇤ -0.007⇤⇤ -0.009⇤⇤⇤ -0.015⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+50th -0.010⇤⇤⇤ -0.013⇤⇤⇤ -0.016⇤⇤⇤ -0.023⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+60th -0.013⇤⇤⇤ -0.016⇤⇤⇤ -0.019⇤⇤⇤ -0.028⇤⇤⇤
+(0.003) (0.004) (0.004) (0.004)
+70th -0.017⇤⇤⇤ -0.021⇤⇤⇤ -0.025⇤⇤⇤ -0.034⇤⇤⇤
+(0.004) (0.004) (0.004) (0.005)
+80th -0.017⇤⇤⇤ -0.023⇤⇤⇤ -0.027⇤⇤⇤ -0.037⇤⇤⇤
+(0.004) (0.004) (0.005) (0.005)
+90th -0.017⇤⇤⇤ -0.026⇤⇤⇤ -0.031⇤⇤⇤ -0.043⇤⇤⇤
+(0.004) (0.005) (0.005) (0.005)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Number of observations 1,281,323 1,281,323 1,281,323 1,281,323
+Mean of outcome 0.27 0.27 0.27 0.27
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy rate on the probability of
+cesarean delivery (CD). The basic regression model is shown in equation (3). These covariates are indicated below the
+coecient of primary interest. Calendar month FE are a series of binary indicators for January to December. Weekday
+FE are a series of binary indicators for a leisure day (i.e., Saturday, Sunday and any public holiday), for a pre-leisure day
+(i.e., Friday or any working day before a public holiday), and for each other weekday (i.e., Monday, Tuesday, Thursday)
+that is neither a leisure nor a pre-leisure day. The base group is Wednesdays, which are neither a leisure nor a pre-leisure
+day. Mother’s age FE are a series of binary indicators for the following age groups:  14 (base group), 15-19, 20-24,
+25-29, 30-34, 35-39, 40-44, 45-49,  50. The specifications in columns (1) to (4) di↵er by the type of FE included. In
+column (1), we control for hospital and year FE. In column (2), we use “hospital ⇥ year” FE instead. In column (3), we
+switch to “hospital ⇥ quarter” FE. In column (4) we use “hospital ⇥ month” FE. Clustered standard errors by hospital
+⇥ year are reported in parentheses below the coecients. Asterisks indicate statistical significance: *** p<0.01, **
+p<0.05, * p<0.1.
+17
+Table 3: The impact of bed occupancy rate on the likelihood of CD, excluding planned
+CDs
+All days Working days Non-working days
+Occupancy 0.037⇤⇤⇤ 0.038⇤⇤⇤ 0.036⇤⇤⇤
+(0.010) (0.011) (0.009)
+Hospital⇥month FE Yes Yes Yes
+Calendar month FE Yes Yes Yes
+Weekday FE Yes No No
+Mother’s age Yes Yes Yes
+Number of Obs. 1,281,323 933,910 347,413
+Mean of Outcome 0.27 0.29 0.23
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy
+rate on the probability of cesarean delivery (CD). The basic regression model is shown in
+equation (2). The covariates are indicated below the coecient of primary interest. Calendar
+month FE are a series of binary indicators for January to December. Weekday FE are a series
+of binary indicators for a leisure day (i.e., Saturday, Sunday and any public holiday), for a
+pre-leisure day (i.e., Friday or any working day before a public holiday), and for each other
+weekday (i.e., Monday, Tuesday, Thursday) that is neither a leisure nor a pre-leisure day.
+The base group is Wednesdays, which are neither a leisure nor a pre-leisure day. Mother’s age
+FE are a series of binary indicators for the following age groups:  14 (base group), 15-19,
+20-24, 25-29, 30-34, 35-39, 40-44, 45-49,  50. Clustered standard errors by hospital ⇥ year
+are reported in parentheses below the coecients. Asterisks indicate statistical significance:
+*** p<0.01, ** p<0.05, * p<0.1.
+holidays. For comparison, we also repeat our estimation in the inverse sample.17 As can
+be seen in Table 3, the estimated treatment e↵ects in the two samples di↵er only slightly.
+The same holds true for the semi-parametric specification (see Appendix Table A.3). We
+conclude that planned CDs are not a concern in our baseline specification.
+3.3.2 Non-maternity bed occupancy
+In our baseline specification, we deliberately defined our treatment variable as the maternity bed occupancy rate, ignoring other bed occupancy. We have already shown that i.)
+the maternity bed occupancy rate and the overall bed occupancy rate are highly correlated, and ii.) that controlling for non-birth bed occupancy has virtually no e↵ect on the
+estimated treatment e↵ect.
+We now repeat our analysis in subsamples of maternity units with persistently di↵erent
+levels of non-birth bed occupancy. There are maternity units which have consistently a
+higher share of all occupied hospital beds occupied by women admitted for childbirth
+(see panel f of Appendix Figure A.1). We divide our sample into four subsamples defined
+by the quartiles of the latter distribution. Then we re-run our estimations in these four
+equal-sized sub-samples. Figure 3 summarizes the estimation results. Across all four
+subsamples, we find comparable estimated treatment e↵ects. This provides additional
+evidence that maternity unit’s non-birth bed occupancy has virtually no e↵ect in our
+17As expected, the CD rate is significantly lower in the Saturday, Sunday and holiday sample compared
+to the weekday sample (0.23 versus 0.29).
+18
+estimation approach.18
+In an alternative estimation approach, we use the overall bed occupancy rate as an
+endogenous treatment variable and instrument it with the maternity bed occupancy rate.
+The logic is that the overall bed occupancy rate is endogenous due to scheduled non-birth
+admissions, and the instrumental variable (hereafter IV) approach allows us to focus on
+the exogenous part due to birth admissions. This analysis leads to equivalent conclusions
+(see Appendix Section B).
+Figure 3: The impact of maternity bed occupancy rate on the likelihood of cesarean
+delivery by maternity units’ share of occupancy by women admitted for childbirth -.075 -.05 -.025 0 .025 Estimated treatmnet effect
+1 2 3 4
+Percentile of units' share of total occupancy by women admitted for childbirth
+Notes: This figure summarizes regression results of the e↵ect of maternity bed occupancy rate on
+the probability of cesarean delivery in four di↵erent sub-samples. These sub-samples are defined
+as the quartiles in the maternity unit’s distribution of the share of overall occupancy by women
+admitted for childbirth. Each regression is based on an equivalent estimation specification as the
+estimate summarized in Column (4) of panel B of Table 1. Orange bars represent 95 percent
+confidence intervals.
+4 Supplementary evidence from duty rosters
+To better understand the mechanism behind our treatment e↵ect, we use our data from
+duty rosters. In particular, we test whether hospital management adjusts stang in
+response to low or high maternity bed occupancy rates. In doing so, we regress the
+daily maternity bed occupancy rate on the number of doctors and nurses on duty. As
+in our main estimation model (see equation 2), we control for year, calendar month, and
+18Alternatively, we define the distribution of the share of overall occupancy by women admitted for
+childbirth based on hospital⇥month observations and split the sample based on the resulting distribution.
+This approach also captures contemporaneous fluctuations and focuses less on structural di↵erences.
+Again, we observe very comparable treatment e↵ects across these subsamples.
+19
+Table 4: The impact of maternity bed occupancy rate on the number of medical sta↵
+on duty
+Number of
+docs
+Number of
+obstetricians
+Number of
+surgeons
+Number of
+nurses
+Occupancy rate 0.261 0.151 0.116 10.997***
+(0.189) (0.162) (0.099) (1.691)
+[0.010] [0.006] [0.016] [0.048]
+Year FE Yes Yes Yes Yes
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Number of Obs. 2,129 2,129 2,129 2,129
+Mean of Outcome 8.40 7.02 1.76 103.34
+R-squared 0.92 0.92 0.68 0.93
+Notes: These regressions are based on daily duty roster data from the biggest maternity ward in Austria. It covers the years 2013 through 2019 (with the exception
+of 2016). Standard errors in parenthesis below with *** p<0.01, ** p<0.05, *
+p<0.1. Beta coecients in brackets below.
+weekday fixed e↵ects. The estimation results are summarized in Table 4. It turns out
+that hospital management does not adjust the number of doctors on duty to the actual
+occupancy rate of maternity beds (see column 1). The estimated coecient is statistically
+and economically insignificant. This is also the case for obstetricians (see column 2) and
+surgeons (see column 3) separately. This suggests that the maternity unit is sticking to its
+fixed roster of doctors. For nurses, there is a small pro-cyclical adjustment (see column 4).
+A one standard deviation increase in the maternity bed occupancy rate is associated with
+a 0.05 standard deviation increase in the number of nurses on duty. This e↵ect is highly
+statistically significant but economically small.
+Assuming that this practice of planning stang levels applies to other maternity units
+in Austria, we can refine our conclusions from above. We conclude that the e↵ect that
+a lower maternity bed occupancy rate leads to more CDs can be interpreted by holding
+hospital sta↵ (almost) constant. This finding is also important for the interpretation of
+results for subsequent maternal health presented in the next section.
+5 The impact of bed occupancy rate on readmission
+A CD is not only more expensive than a vaginal birth, it may also have negative health
+consequences. An important step in our analysis is therefore to examine whether women,
+who end up having a CD because of low maternity bed occupancy rates, also have worse
+health outcomes. We use readmissions to assess subsequent maternal health.
+First, as a sanity check, we regress the length of the initial hospital stay on the
+maternity bed occupancy rate.19 Recovery from a CD typically takes longer than it
+19Descriptive statistics for the length of the initial hospital stay are provided in Appendix Figures A.3.
+20
+would from a vaginal birth. Descriptively, we see that mothers who deliver by CD have an
+additional 2.72 days in hospital (4.01 days versus 6.73 days). We use the same regression
+setup as in the case of CDs (see equation 2) and regress the length of the initial hospital
+stay (measured in days) on the maternity bed occupancy rate. Note that in this case
+we cannot easily apply a causal interpretation. There could be an reverse causal e↵ect
+of maternity bed occupancy on length of stay. Hospitals may send patients home earlier
+when hospital beds are scarce.
+The estimation results are summarized in Table A.2. We find a negative association
+between maternity bed occupancy and length of initial hospital stay. This is consistent
+with an explanation in which a higher maternity bed occupancy rate reduces the likelihood
+of CD and, in turn, shortens hospital stay. It is also consistent with patients being sent
+home early due to bed shortages. Based on our preferred specification (see column 4
+in panel B), a one standard deviation decrease in the maternity bed occupancy rate is
+associated with a 0.20 days (or 4.29 percent) shorter length of hospital.
+Between 2015 and 2018, 4.2 percent of all women admitted for childbirth were readmitted within 6 months to a maternity unit (which includes the department of obstetrics
+and gynecology).20 The maternal readmission rate is higher for women who delivered by
+CD (3.8 percent versus 4.9 percent). To test whether lower maternity bed occupancy
+a↵ects readmission, we use the same estimation approach as for CDs (see equation 2),
+and regress the binary readmission variable on the maternity bed occupancy rate. The
+estimation results are summarized in Table 5. Again, we find that the inclusion of additional covariates has little impact, while the use of more detailed fixed e↵ects leads to
+larger estimated e↵ect sizes in absolute terms. Based on our preferred specification, we
+find that a one standard deviation decrease in the maternity bed occupancy rate increases
+the likelihood of readmission by 0.24 percentage points. Given an average readmission
+rate of 5.84 percent, this is an economically significant e↵ect of low occupancy rates on
+maternal health.21
+The negative e↵ect of less hospital crowding on maternal health seems counterintuitive
+at first glance. The finding is at odds with most of the literature on hospital crowding,
+which examines a broad range of admissions. However, it is explained by the specific
+e↵ect of hospital crowding in maternity units on procedure choice. In maternity units,
+less hospital crowding leads to more CDs. Given that these CDs have more postpartum
+complications, we find lower readmission rates for women admitted to a more crowded
+maternity unit. Since these CDs lead to more readmissions, this could be considered
+20Descriptive statistics for readmissions are provided in Appendix Figure A.4.
+21Estimates based on the semi-parametric specification for these two additional outcomes are summarized in Appendix Figures A.6 and A.7. As in the case of CD, we see that the changes between the
+binary indicators for the di↵erent percentiles show fairly constant changes, suggesting that our simple
+linear specification from above captures the empirical relationship fairly well. The inclusion of covariates
+has virtually no e↵ect. In the case of hospitalization, more detailed fixed e↵ects lead to larger estimated
+e↵ect sizes in absolute terms. This is less pronounced for readmission.
+21
+harmful overtreatment. We conclude that expectant mothers may benefit from a crowded
+hospital, even with an unfavorable patient-sta↵ ratio (see Section 4) — because it leads to
+less harmful overtreatment.
+6 Heterogenous treatment e↵ects
+In a final step, we check for several dimensions of potential treatment e↵ect heterogeneity.22 First, we split our sample by maternal age. The results are shown in the panels
+on the left side of Figure 4. Maternity bed occupancy has a statistically significant negative e↵ect on the odds of CD across the maternal age distribution (see panel a). The
+estimated e↵ect sizes are very similar across all age groups. In contrast, for the outcome
+length of hospital stay, we see clear heterogeneity in the treatment e↵ect (see panel c).
+The e↵ect increases with maternal age. This suggests that while the probability of a CD
+decreases uniformly with age, additional CDs result in comparatively longer hospital stays
+for “older” mothers. This can be explained by a longer recovery time after surgery for
+“older” patients. The e↵ects on readmission by age are less clear (see panel e). While
+we find negative e↵ects of more “crowded” hospitals except for the youngest group of
+mothers, the e↵ects are statistically significant only for mothers in the 25-29 age group.
+This may be related to the reduced sample size for the readmission outcome.
+Second, we split our sample by hospitals’ CD rates. The results are shown in the
+panels on the right side of Figure 4. We find statistically significant treatment e↵ects for
+CDs across the distribution of hospital CD rates. For hospitals with the highest CD rates
+(i.e., those in the fourth quartile), we see slightly higher treatment e↵ects (see panel b).
+This pattern is reinforced by the results for length of stay (see panel d). With respect to
+readmissions, we do not find a very clear pattern. The estimated e↵ect size is more ore
+less constant from the first to the four quartile and only significant in the third quartile.
+The lack of statistical significance may be due to the reduced sample size.
+7 Summary and policy implications
+The e↵ect of the availability of medical resources on their rate of utilization and health
+outcomes is hard to identify. This paper examines this question in the context of maternity
+units and procedure choice. This is an important and interesting setting because of recent
+increases in cesarean delivery rates. To identify the e↵ect of available maternity beds on
+the likelihood of a CD and hospital readmission, we estimate the e↵ect of the number
+of empty beds available in the maternity unit on the day of mother’s admission. The
+number of admitted births is hard to predict and idiosyncratic. In our estimations, we
+22We do not have socioeconomic information on the mothers.
+22
+Table 5: The impact of the maternity bed occupancy rate on the likelihood of readmission
+(1) (2) (3) (4)
+Hospital
+FE
+Hospital⇥year
+FE
+Hospital⇥quarter
+FE
+Hospital⇥month
+FE
+Panel A
+Occupancy 0.008⇤⇤⇤ 0.010⇤⇤⇤ 0.011⇤⇤⇤ 0.011⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Panel B
+Occupancy 0.009⇤⇤⇤ 0.010⇤⇤⇤ 0.011⇤⇤⇤ 0.011⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel C
+Occupancy 0.008⇤⇤⇤ 0.009⇤⇤⇤ 0.010⇤⇤⇤ 0.009⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+Docs per used bed 0.015 0.098 0.120 0.123
+(0.017) (0.068) (0.073) (0.074)
+Nurses per used bed 0.000 0.002 0.000 0.001
+(0.004) (0.007) (0.007) (0.007)
+Midwives per used bed 0.007⇤ 0.003 0.002 0.002
+(0.004) (0.006) (0.007) (0.008)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel D
+Occupancy 0.008⇤⇤⇤ 0.009⇤⇤⇤ 0.009⇤⇤⇤ 0.009⇤⇤⇤
+(0.003) (0.003) (0.003) (0.003)
+Docs per used bed 0.015 0.097 0.118 0.121⇤
+(0.017) (0.067) (0.072) (0.073)
+Nurses per used bed 0.000 0.002 0.000 0.001
+(0.004) (0.007) (0.007) (0.007)
+Midwives per used bed 0.007 0.003 0.002 0.002
+(0.004) (0.006) (0.007) (0.007)
+OccupancyNB 0.002 0.000 0.003 0.002
+(0.003) (0.005) (0.005) (0.005)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Number of observations 329,025 329,025 329,025 329,025
+Mean of Outcome 0.04 0.04 0.04 0.04
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy rate on the likelihood of
+readmission. The basic regression model is shown in equation (2). The specifications in panels A through panel D di↵er
+by the covariates included. These covariates are listed/indicated below the coecient of primary interest. Calendar
+month FE are a series of binary indicators for January to December. Weekday FE are a series of binary indicators
+for a leisure day (i.e., Saturday, Sunday and any public holiday), for a pre-leisure day (i.e., Friday or any working day
+before a public holiday), and for each other weekday (i.e., Monday, Tuesday, Thursday) that is neither a leisure nor a
+pre-leisure day. The base group is Wednesdays, which are neither a leisure nor a pre-leisure day. Mother’s age FE are
+a series of binary indicators for the following age groups:  14 (base group), 15-19, 20-24, 25-29, 30-34, 35-39, 40-44,
+45-49,  50. The variable OccupancyNB captures the proportion of beds occupied by patients other than expectant
+mothers. The specifications in columns (1) to (4) di↵er by the type of FE included. In column (1), we control for
+hospital and year FE. In column (2), we use “hospital ⇥ year” FE instead. In column (3), we switch to “hospital ⇥
+quarter” FE. In column (4) we use “hospital ⇥ month” FE. Clustered standard errors by hospital ⇥ year are reported
+in parentheses below the coecients. Asterisks indicate statistical significance: *** p<0.01, ** p<0.05, * p<0.1.
+23
+rely on hospital-specific monthly fixed e↵ects, which enable us to exploit within hospitalmonth variation in maternity beds availability. We therefore flexibly control for factors
+correlated with the mother’s preferences, hospital specific treatment style, the cyclicality
+and trends in delivery type, and the cyclicality and trends specific to each hospital.
+We find that a one standard deviation increase in the maternity bed occupancy rate
+reduces the likelihood of a CD by 1.14 percentage points or 4.12 percent. The estimated
+treatment e↵ect varies little with the inclusion of control variables, such as the share of
+beds with non-birth admissions. Semi-parametric specifications show that the e↵ect is
+also fairly constant across the distribution of maternity bed occupancy rates. Our finding
+suggests that physicians are more likely to perform a CD when there are more empty
+beds in the ward. This is of financial benefit to the hospital and, in many cases, to the
+attending obstetrician as well.
+A CD is not only more costly than a vaginal birth, but it can also have negative
+health consequences. We find that a one standard deviation decrease in the maternity
+bed occupancy rate increases the length of hospital stay by 0.20 days or 4.29 percent
+and the likelihood of readmission by 0.24 percentage points or 5.84 percent. The negative
+e↵ect of less hospital crowding on maternal health seems counterintuitive at first, and also
+contradicts most of the literature on hospital crowding. However, it is explained by the
+specific e↵ect of hospital crowding in maternity units on procedure choice. In maternity
+wards, less crowding leads to more CDs which increase the length of stay. Given that these
+CDs have more postpartum complications, we find lower readmission rates for women
+admitted to a more crowded maternity unit. We conclude that expectant mothers may
+benefit from a crowded hospital, even with an unfavorable patient-sta↵ ratio— because
+it may lead to less harmful overtreatment. While additional care and specialized medical
+technologies improve child outcomes in many cases (see, e.g., Bharadwaj et al., 2013;
+Daysal et al., 2015; Jensen and W¨ust, 2015), institutional settings must achieve an optimal
+level of treatment intensity (Almond and Doyle, 2011).
+While these findings are interesting in the context of maternity units, they may apply
+to any type of care where there is a choice of procedure that is related to hospital stay
+or other dimensions of reimbursement in which utilization rates vary. In the context of a
+medical technology with high fixed costs, physicians and hospitals face incentives to use
+this technology rather than leave it unused.
+24
+Figure 4: Treatment e↵ects on all outcomes by mother’s age and hospital’s CD rate
+(a) CD by mothers’ age
+-.125 -.1 -.075 -.05 -.025 0 .025 .05
+Estimated effect
+<24 25-29 30-34 35-39 >40
+Sub-sample by mother's age
+(b) CD by hospitals’ CD-rate
+-.125 -.1 -.075 -.05 -.025 0 .025 .05
+Estimated effect
+1st quartile 2nd quartile 3rd quartile 4th quartile
+Sub-samples by hospital's CD rate
+(c) Length of hospital stay by mothers’ age -2 -1.75 -1.5 -1.25 -1 -.75 -.5 -.25 0 .25
+Estimated effect
+<24 25-29 30-34 35-39 >40
+Sub-sample by mother's age
+(d) Length of hospital stay by hospitals’ CD-rate -2 -1.75 -1.5 -1.25 -1 -.75 -.5 -.25 0 .25 Estimated effect
+1st quartile 2nd quartile 3rd quartile 4th quartile
+Sub-samples by hospital's CD rate
+(e) Readmission by mothers’ age
+-.04-.035-.03-.025-.02-.015-.01-.005 0 .005 .01 .015 .02
+Estimated effect
+<24 25-29 30-34 35-39 >40
+Sub-sample by mother's age
+(f) Readmission by hospitals’ CD-rate
+-.04 -.035 -.03 -.025 -.02 -.015 -.01 -.005 0 .005 .01 .015 .02
+Estimated effect
+1st quartile 2nd quartile 3rd quartile 4th quartile
+Sub-samples by hospital's CD rate
+Notes: This figure summarizes regression results of the e↵ect of maternity bed occupancy rate on all
+three outcomes (i.e., probability of cesarean delivery, duration of hospital stay, and readmission).
+The left panels show estimates by mothers’ age (see panels a, c, and e). Five sub-samples are
+defined by mother’s age at admission. The number of observations for the first two outcomes in
+each sub-sample are as follows: < 24: 244,674, 25-29: 394,877, 30-34: 398,369, 35-39: 199,267,
+> 40: 44,136. The number of observation for the outcome readmission is lower, since we do not
+observe readmissions before 2015. The right panels show estimates by hospitals’ CD-rate (see
+panels b, d, and f). Four sub-samples are defined as the quartiles in the CD rate distribution
+across hospitals (see panel f in Figure 1). Each regression is based on an equivalent estimation
+specification as the estimate summarized in Column (4) of panel B of Table 1. Orange bars
+represent 95 percent confidence intervals.
+25
+References
+Almond, Douglas and Joseph J. Doyle (2011), ‘After Midnight: A Regression Discontinuity Design in Length of Postpartum Hospital Stays’, American Economic Journal:
+Economic Policy 3(3), 1–34.
+Bachner, Florian, Julia Bobek, Katharina Habimana, Joy Ladurner, Lena Lepusch¨utz
+Herwig, Ostermann, Lukas Rainer, Andrea E. Schmidt, Martin Zuba, Quentin Wilm
+and Juliane Winkelmann (2018), ‘Austria: Health System Review’, Health Systems in
+Transition 20(3), 1–254.
+Benses, Simon (2022), Time to Spare and Too Much Care? Congestion, Treatment Provision and Health Outcomes in the Maternity Unit, Unpublished Manuscript, Statistics
+Norway, Oslo, Norway.
+Bharadwaj, Prashant, Katrine Vellesen Løken and Christopher Neilson (2013), ‘Early
+Life Health Interventions and Academic Achievement’, American Economic Review
+103(5), 1862–1891.
+Brown III, H S (1996), ‘Physician Demand for Leisure: Implications for Cesarean Section
+Rates’, Journal of Health Economics 15, 233–242.
+Costa-Ram´on, Ana Mar´ıa, Ana Rodr´ıguez-Gonz´alez, Miquel Serra-Burriel and Carlos
+Campillo-Artero (2018), ‘It’s about Time: Cesarean Sections and Neonatal Health’,
+Journal of Health Economics 59, 46–59.
+Costa-Ram´on, Ana, Mika Kortelainen, Ana Rodr´ıguez-Gonz´alez and Lauri S¨a¨aksvuori
+(2022), ‘The Long-Run E↵ects of Cesarean Sections’, Journal of Human Resources
+57(6), 2048–2085.
+Currie, Janet and W. Bentley MacLeod (2008), ‘First Do No Harm? Tort Reform and
+Birth Outcomes’, Quarterly Journal of Economics 123(2), 795–830.
+Daysal, N. Meltem, Mircea Trandafir and Reyn van Ewijk (2015), ‘Saving Lives at Birth:
+The Impact of Home Births on Infant Outcomes’, American Economic Journal: Applied
+Economics 7(3), 28–50.
+Dulleck, Uwe and Rudolf Kerschbamer (2006), ‘On Doctors, Mechanics, and Computer
+Specialists: The Economics of Credence Goods’, Journall of Economic Literature
+44(1), 5–42.
+Evans, William N. and Beomsoo Kim (2006), ‘Patient Outcomes when Hospitals Experience a Surge in Admissions’, Journal of Health Economics 25(2), 365–388.
+26
+Facchini, Gabriel (2022), ‘Low Stang in the Maternity Ward: Keep Calm and Call the
+Surgeon’, Journal of Economic Behavior and Organization 197, 370–394.
+Foo, Patricia K., Robin S. Lee and Kyna Fong (2017), ‘Physician Prices, Hospital Prices,
+and Treatment Choice in Labor and Delivery’, American Journal of Health Economics
+3(3), 422–453.
+Freedman, Seth (2016), ‘Capacity and Utilization in Health Care: The E↵ect of Empty
+Beds on Neonatal Intensive Care Admission’, American Economic Journal: Economic
+Policy 8(2), 154–185.
+Geissler, Alexander, David Scheller-Kreinsen, Wilm Quentin and Reinhard Busse (2012),
+‘DRG Systems in Europe. Incentives, Purposes and Di↵erences in 12 Countries’, Bundesgesundheitsblatt, Gesundheitsforschung, Gesundheitsschutz 55(5), 633–642.
+Grant, Darren (2009), ‘Physician Financial Incentives and Cesarean Delivery: New Conclusions from the Healthcare Cost and Utilization Project’, Journal of Health Economics
+28(1), 244–250.
+Gruber, Jon, John Kim and Dina Mayzlin (1999), ‘Physician Fees and Procedure Intensity:
+The Case of Cesarean Delivery’, Journal of Health Economics 18(4), 473–490.
+Gruber, Jonathan and Maria Owings (1996), ‘Physician Financial Incentives and Cesarean
+Section Delivery’, The RAND Journal of Economics 27(1), 99–123.
+Halla, Martin, Harald Mayr, Gerald J. Pruckner and Pilar Garc´ıa-G´omez (2020), ‘Cutting
+Fertility? E↵ects of Cesarean Deliveries on Subsequent Fertility and Maternal Labor
+Supply’, Journal of Health Economics 72, 102325.
+Hoe, Thomas P. (2022), ‘Does Hospital Crowding Matter? Evidence from Trauma and
+Orthopedics in England’, American Economic Journal: Economic Policy 14(2), 231–
+262.
+Hoot, Nathan R. and Dominik Aronsky (2008), ‘Systematic Review of Emergency Department Crowding: Causes, E↵ects, and Solutions’, Annals of Emergency Medicine
+52(2), 126–136.
+Jensen, Vibeke Myrup and Miriam W¨ust (2015), ‘Can Caesarean Section Improve Child
+and Maternal Health? The Case of Breech Babies’, Journal of Health Economics
+39, 289–302.
+Johnson, Erin M. and M. Marit Rehavi (2016), ‘Physicians Treating Physicians: Information and Incentives in Childbirth’, American Economic Journal: Economic Policy
+8(1), 115–141.
+27
+Koechlin, F, L Lorenzoni and P Schreyer (2010), ‘Comparing Price Levels of Hospital
+Services across Countries: Results of a Pilot Study’, OECD Health Working Paper,
+No. 53, OECD Publishing.
+Maibom, Jonas, Hans H. Sievertsen, Marianne Simonsen and Miriam W¨ust (2021), ‘Maternity Ward Crowding, Procedure Use, and Child Health’, Journal of Health Economics
+75, 102399.
+Marks, Mindy and Moonkyung Kate Choi (2019), ‘Baby Boomlets and Baby Health:
+Hospital Crowdedness, Hospital Spending, and Infant Health’, American Journal of
+Health Economics 5(3), 376–406.
+McGuire, Thomas G. (2000), Physician Agency, in A. J.Culyer and J. P.Newhouse, eds,
+‘Handbook of Health Economics’, Vol. 1A, Elsevier Science B.V., pp. 461–536.
+Mongelli, Max, Mark Wilcox and Jason Gardosi (1996), ‘Estimating the Date of Confinement: Ultrasonographic Biometry versus Certain Menstrual Dates’, American Journal
+of Obstetrics and Gynecology 174(1), 278–281.
+M¨uhlrad, Hanna (2022), ‘Cesarean Sections for High-risk Births: Health, Fertility, and
+Labor Market Outcomes’, Scandinavian Journal of Economics 124(4), 1056–1086.
+NICE (2023), Caesarean Section, NICE Guideline, Technical report, National Institute
+for Health and Care Excellence, Manchester and London, UK.
+OECD (2013), Health at a Glance 2013: OECD Indicators, OECD Publishing, Paris.
+OECD (2019), Health at a Glance 2019: OECD Indicators, OECD Publishing, Paris.
+Pilvara, Hanifa and Kowsar Yousefi (2021), ‘Changing Physicians’ Incentives to Control
+the C-section Rate: Evidence from a Major Health Care Reform in Iran’, Journal of
+Health Economics 79, 102514.
+Sachs, B.P., C. Kobelin, M.A. Castro and F. Frigoletto (1999), ‘The Risks of Lowering
+the Cesarean-Delivery Rate’, New England Journal of Medicine 340, 54–57.
+Spetz, Joanne, Mark W. Smith and Sean F. Ennis (2001), ‘Physician Incentives and the
+Timing of Cesarean Sections: Evidence from California’, Medical Care 39(6), 536–550.
+Tonei, Valentina (2019), ‘Mother’s Mental Health after Childbirth: Does the Delivery
+Method Matter?’, Journal of Health Economics 63, 182–196.
+World Health Organization (2015), WHO Statement on Caesarean Section Rates, Executive Summary, Department of Reproductive Health and Research, Geneva, Switzerland.
+28
+Web appendix
+This web appendix provides additional material discussed in the unpublished
+manuscript “Do Empty Beds Cause Cesarean Deliveries?” by Florian Bachner,
+Martin Halla, and Gerald J. Pruckner.
+A.1
+A Additional figures and tables
+Table A.1: Top-10 non-delivery diagnosis groups in Austrian maternity units, by di↵erent ICD-10 digits groups
+Abs. Rel. Cum.
+ICD-10 diagnosis group no. share share
+1-digit diagnosis groups
+N - Diseases of the genitourinary system 866,448 0.472 0.472
+C - Malignant neoplasms 449,444 0.245 0.717
+D - Other neoplasms (in situ, benign, other) 214,290 0.117 0.834
+R - Symptoms, signs and abnormal clinical and laboratory . . . 77,559 0.042 0.876
+Z - Factors influencing health status and contact with . . . 58,586 0.032 0.908
+A - Certain infectious and parasitic diseases 28,809 0.016 0.924
+P - Certain conditions originating in the perinatal period 24,246 0.013 0.937
+K - Diseases of the digestive system 20,375 0.011 0.948
+T - Injuries involving multiple body regions 16,627 0.009 0.957
+2-digits diagnosis groups
+N8 - Noninflammatory disorders of female genital tract 420,607 0.164 0.164
+C5 - Malignant neoplasm of breast 420,471 0.164 0.328
+N9 - Other noninflammatory disorders of vulva and perineum 282,219 0.110 0.438
+O0 - Pregnancy with abortive outcome 214,737 0.084 0.522
+O2 - Other abnormal products of conception 192,925 0.075 0.598
+D2 - Benign neoplasm of soft tissue of (retro)peritoneum 144,004 0.056 0.654
+O4 - Polyhydramnios 117,537 0.046 0.700
+N7 - Salpingitis and oophoritis 73,057 0.029 0.728
+O3 - Multiple gestation 72,427 0.028 0.756
+N3 - Zystitis 64,540 0.025 0.782
+3-digits diagnosis groups
+C50 - Malignant neoplasm of breast 190,308 0.074 0.074
+N92 - Excessive, frequent and irregular menstruation 141,448 0.055 0.128
+C56 - Malignant neoplasm of uterus, part unspecified 127,758 0.049 0.178
+O02 - Other abnormal products of conception 115,231 0.045 0.223
+D25 - Leiomyoma of uterus 97,217 0.038 0.260
+N84 - Polyp of female genital tract 95,162 0.037 0.297
+N83 - Noninflammatory disorders of ovary, fallopian tube 89,789 0.035 0.332
+O47 - Medical abortion 89,628 0.035 0.367
+N81 - Female genital prolapse 62,273 0.024 0.391
+N87 - Dysplasia of cervix uteri 61,941 0.024 0.415
+Notes: These figures refer to all patients admitted to a maternity unit in Austria in the period between
+2002 and 2018 with a diagnosis other than “O80-O84 Delivery”. The figures are extracted from the
+Austrian DRG system (the so-called LKF-System).
+A.2
+Figure A.1: Descriptive statistics on the share of maternity beds
+(a) Density function
+N = 1281274
+Median = .74
+Mean = .7000000000000001
+S.d. = .22
+0 2 4 6 8
+Density
+0 .2 .4 .6 .8 1
+(b) Average across time (daily data)
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2002 2004 2005 2007 2009 2011 2013 2015 2017
+(c) Average across years
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2001 2003 2005 2007 2009 2011 2013 2015 2017
+Median p25/p75
+(d) Average across calendar months
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+1 2 3 4 5 6 7 8 9 10 11 12
+Median p25/p75
+N = 1281323
+(e) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+Median p25/p75
+(f) Average across hospitals (by type)
+0 .2 .4 .6 .8 1
+Public
+Private
+p25-p75
+90 hospitals
+Notes: The variable of interest is defined as the share of all occupied hospital beds occupied by
+women admitted to the maternity ward for delivery. The number of underlying observations is
+1,281,274.
+A.3
+Figure A.2: Descriptive statistics on the overall bed occupancy rate
+(a) Density function
+ N = 1278806
+ Median = .75
+ Mean = .75
+ S.d. = .21
+0 .5 1 1.5 2
+Density
+0 .5 1 1.5 2
+(b) Average across time (daily data)
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2002 2004 2005 2007 2009 2011 2013 2015 2017
+(c) Average across years
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1 2001 2003 2005 2007 2009 2011 2013 2015 2017
+Median p25/p75
+(d) Average across calendar months
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+1 2 3 4 5 6 7 8 9 10 11 12
+Median p25/p75
+(e) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .1 .2 .3 .4 .5 .6 .7 .8 .9 1
+Median p25/p75
+(f) Average across hospitals (by type)
+0 .2 .4 .6 .8 1 1.2 1.4
+Public
+Private
+p25-p75
+90 hospitals
+Notes: The overall bed occupancy rate is defined as the proportion of all beds occupied by patients
+with any diagnosis. The number of underlying observations is 1.281,323. Except in panel (a), where
+2,517 observations with overall bed occupancy rate values greater than 2 are excluded.
+A.4
+Figure A.3: Descriptive statistics on the length of hospital stay
+(a) Distribution
+ N = 1276239
+ Median = 4
+ Mean = 4.62
+ S.d. = 2.2
+0 .2 .4 .6 .8
+Density
+0 5 10 15 20
+(b) Average across years
+0 .5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 6.5 7 2001 2003 2005 2007 2009 2011 2013 2015 2017
+Median p25/p75
+(c) Average across calendar months
+0 .5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 6.5 7
+1 2 3 4 5 6 7 8 9 10 11 12
+Median p25/p75
+(d) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 6.5 7
+Median p25/p75
+(e) Average across weekday of procedure
+Mon Tue Wed Thu Fri Sat Sun
+0 .5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 6.5 7
+Median p25/p75
+(f) Average across hospitals (by type)
+0 1 2 3 4 5 6 7
+Public
+Private
+p25-p75
+90 hospitals
+Notes: The number of underlying observations is 1,281,323, except in panel (a), where 5,084
+observations with hospital stays longer than 21 days are excluded.
+A.5
+Figure A.4: Descriptive statistics on readmissions
+(a) Average across time (daily data)
+0 .01 .02 .03 .04 .05 .06 .07 .08 .09 .1 .11 2015 2016 2016 2017 2018
+(b) Average across years
+0 .01 .02 .03 .04 .05 .06 2015 2016 2017 2018
+(c) Average across calendar months
+0 .01 .02 .03 .04 .05 .06
+1 2 3 4 5 6 7 8 9 10 11 12
+(d) Average across weekday of admission
+Mon Tue Wed Thu Fri Sat Sun
+0 .01 .02 .03 .04 .05 .06
+(e) Average across weekday of procedure
+Mon Tue Wed Thu Fri Sat Sun
+0 .01 .02 .03 .04 .05 .06
+(f) Average across hospitals (by type)
+0 .01 .02 .03 .04 .05 .06 .07 .08 .09
+Public
+Private
+75 hospitals
+Notes: Readmission is defined as an admission to an obstetric department within 6 months of
+delivery. We can observe readmissions from 2015 onwards. The number of observations is 329,059.
+A.6
+Figure A.5: The impact of maternity bed occupancy rate on the likelihood of CD; summary of di↵erent semi-parametric specifications
+(a) Hospital & year fixed e↵ects
+-.06 -.05 -.04 -.03 -.02 -.010
+Estimated effect on probability of CD
+20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) & year FE  - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(b) Hospital ⇥ year fixed e↵ects
+-.06 -.05 -.04 -.03 -.02 -.010
+Estimated effect on probability of CD
+20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x year - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(c) Hospital ⇥ quarter fixed e↵ects
+-.06 -.05 -.04 -.03 -.02 -.010
+Estimated effect on probability of CD
+20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x quarter - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(d) Hospital ⇥ month fixed e↵ects
+-.06 -.05 -.04 -.03 -.02 -.010
+Estimated effect on probability of CD
+20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x month - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+Notes: This figure summarizes the regression results of the e↵ect of maternity bed occupancy rate on the likelihood of cesarean delivery (CD). Thebasic regression model is shown in equation (3). The specifications in panels (a) to (d) di↵er by type of included fixed e↵ects (FE). These are indicatedin the header. In each panel, we summarize three specifications with varying covariates. These covariates are listed on the bottom of each panel. Thebars show 95 percent confidence intervals based on clustered standard errors by hospital ⇥ year.
+A.7
+Table A.2: The impact of the maternity bed occupancy rate on length of hospital stay
+(1) (2) (3) (4)
+Hospital & year
+FE
+Hospital⇥year
+FE
+Hospital⇥quarter
+FE
+Hospital⇥month
+FE
+Panel A
+Occupancy 0.311⇤⇤⇤ 0.408⇤⇤⇤ 0.555⇤⇤⇤ 0.702⇤⇤⇤
+(0.109) (0.147) (0.178) (0.222)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Panel B
+Occupancy 0.309⇤⇤⇤ 0.404⇤⇤⇤ 0.550⇤⇤⇤ 0.696⇤⇤⇤
+(0.109) (0.146) (0.178) (0.221)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel C
+Occupancy 0.310⇤⇤⇤ 0.453⇤⇤⇤ 0.529⇤⇤⇤ 0.649⇤⇤⇤
+(0.105) (0.166) (0.189) (0.231)
+Docs per used bed 0.619⇤ 3.799⇤⇤⇤ 4.465⇤⇤⇤ 4.652⇤⇤⇤
+(0.351) (1.171) (1.556) (1.784)
+Nurses per used bed 0.257⇤ 0.184 0.121 0.057
+(0.146) (0.476) (0.482) (0.493)
+Midwives per used bed 0.129 0.636 0.622 0.648
+(0.194) (0.547) (0.578) (0.591)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Panel D
+Occupancy 0.272⇤⇤⇤ 0.421⇤⇤⇤ 0.484⇤⇤⇤ 0.596⇤⇤⇤
+(0.084) (0.129) (0.148) (0.184)
+Docs per used bed 0.336 3.165⇤⇤⇤ 3.791⇤⇤⇤ 3.904⇤⇤
+(0.343) (1.034) (1.447) (1.670)
+Nurses per used bed 0.275⇤ 0.061 0.153 0.233
+(0.144) (0.442) (0.441) (0.446)
+Midwives per used bed 0.193 0.884⇤ 0.850 0.889⇤
+(0.185) (0.495) (0.522) (0.529)
+OccupancyNB 0.730⇤⇤⇤ 0.982⇤⇤⇤ 1.087⇤⇤⇤ 1.175⇤⇤⇤
+(0.149) (0.177) (0.157) (0.169)
+Calendar month FE Yes Yes Yes Yes
+Weekday FE Yes Yes Yes Yes
+Mother’s age Yes Yes Yes Yes
+Number of observations 1.281,323 1.281,323 1.281,323 1.281,323
+Mean of outcome 4.75 4.75 4.75 4.75
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy rate on the length of
+hospital stay. The basic regression model is shown in equation (2). The specifications in panels A through panel D
+di↵er by the covariates included. These covariates are listed/indicated below the coecient of primary interest. Calendar
+month FE are a series of binary indicators for January to December. Weekday FE are a series of binary indicators
+for a leisure day (i.e., Saturday, Sunday and any public holiday), for a pre-leisure day (i.e., Friday or any working day
+before a public holiday), and for each other weekday (i.e., Monday, Tuesday, Thursday) that is neither a leisure nor a
+pre-leisure day. The base group is Wednesdays, which are neither a leisure nor a pre-leisure day. Mother’s age FE are
+a series of binary indicators for the following age groups:  14 (base group), 15-19, 20-24, 25-29, 30-34, 35-39, 40-44,
+45-49,  50. The variable OccupancyNB captures the proportion of beds occupied by patients other than expectant
+mothers. The specifications in columns (1) to (4) di↵er by the type of FE included. In column (1), we control for
+hospital and year FE. In column (2), we use “hospital ⇥ year” FE instead. In column (3), we switch to “hospital ⇥
+quarter” FE. In column (4) we use “hospital ⇥ month” FE. Clustered standard errors by hospital ⇥ year are reported
+in parentheses below the coecients. Asterisks indicate statistical significance: *** p<0.01, ** p<0.05, * p<0.1.
+A.8
+Figure A.6: The impact of maternity bed occupancy rate on the length of hospital stay; summary of di
+↵erent semi-parametric specifications
+(a) Hospital & year fixed e
+↵ects
+-1.25 -1 -.75 -.5 -.25 0
+Estimated effect on the length of hospital stay 20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) & year FE  - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(b) Hospital
+⇥ year fixed e
+↵ects
+-1.25 -1 -.75 -.5 -.25 0
+Estimated effect on the length of hospital stay 20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x year - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(c) Hospital
+⇥ quarter fixed e
+↵ects
+-1.25 -1 -.75 -.5 -.25 0
+Estimated effect on the length of hospital stay 20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x quarter - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(d) Hospital
+⇥ month fixed e
+↵ects
+-1.25 -1 -.75 -.5 -.25 0
+Estimated effect on the length of hospital stay 20th 30th 40th 50th 60th 70th 80th 90th
+Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x month - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+Notes: This figure summarizes the regression results of the e
+↵ect of maternity bed occupancy rate on the length of hospital stay. The basic regression
+model is shown in equation (3). The specifications in panels (a) to (d) di
+↵er by type of included fixed e
+↵ects (FE). These are indicated in the header.
+In each panel, we summarize three specifications with varying covariates. These covariates are listed on the bottom of each panel. The bars show 95percent confidence intervals, based on clustered standard errors by hospital
+⇥ year.
+A.9
+Figure A.7: The impact of maternity bed occupancy rate on the likelihood of readmission; summary of di
+↵erent semi-parametric
+specifications
+(a) Hospital & year fixed e
+↵ects
+-.02 -.015 -.01 -.005 0
+Estimated effect on the likelihood of readmission 20th 30th 40th 50th 60th 70th 80th 90th Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) & year FE  - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(b) Hospital
+⇥ year fixed e
+↵ects
+-.02 -.015 -.01 -.005 0
+Estimated effect on the likelihood of readmission 20th 30th 40th 50th 60th 70th 80th 90th Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x year - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(c) Hospital
+⇥ quarter fixed e
+↵ects
+-.02 -.015 -.01 -.005 0
+Estimated effect on the likelihood of readmission 20th 30th 40th 50th 60th 70th 80th 90th Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x quarter - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+(d) Hospital
+⇥ month fixed e
+↵ects
+-.02 -.015 -.01 -.005 0
+Estimated effect on the likelihood of readmission 20th 30th 40th 50th 60th 70th 80th 90th Percentile of maternity bed occupancy distribution
+Covs1 Covs2 Covs3
+This figure shows estimates with 95% confidence intervals.All estimations control for hospital fixed effects (FE) x month - Covs1 = Calendar month FE, Weekday FE - Covs2 = Covs1 + mother's age-group FE - Covs3 = Covs2 + doctors, nurses, & midwives per uses bed
+Notes: This figure summarizes the regression results of of the e
+↵ect of maternity bed occupancy rate on the likelihood of readmission. The basic
+regression model is shown in equation (3). The specifications in panels (a) to (d) di
+↵er by type of included fixed e
+↵ects (FE). These are indicated in
+the header. In each panel, we summarize three specifications with varying covariates. These covariates are listed on the bottom of each panel. Thebars show 95 percent confidence intervals, based on clustered standard errors by hospital
+⇥ year.
+A.10
+Table A.3: The impact of bed occupancy rate on the likelihood of CD, excluding planned
+CDs; semi-parametric specification
+All days Working days Non-working days
+10th: Base group
+20th 0.006⇤⇤⇤ 0.007⇤⇤⇤ 0.006⇤
+(0.002) (0.003) (0.004)
+30th 0.013⇤⇤⇤ 0.015⇤⇤⇤ 0.008⇤
+(0.003) (0.003) (0.004)
+40th 0.015⇤⇤⇤ 0.018⇤⇤⇤ 0.012⇤⇤
+(0.003) (0.003) (0.005)
+50th 0.023⇤⇤⇤ 0.026⇤⇤⇤ 0.018⇤⇤⇤
+(0.003) (0.004) (0.005)
+60th 0.028⇤⇤⇤ 0.032⇤⇤⇤ 0.020⇤⇤⇤
+(0.004) (0.004) (0.006)
+70th 0.034⇤⇤⇤ 0.037⇤⇤⇤ 0.029⇤⇤⇤
+(0.005) (0.005) (0.006)
+80th 0.037⇤⇤⇤ 0.040⇤⇤⇤ 0.033⇤⇤⇤
+(0.005) (0.005) (0.006)
+90th 0.043⇤⇤⇤ 0.046⇤⇤⇤ 0.039⇤⇤⇤
+(0.005) (0.006) (0.007)
+Hospital⇥month FE Yes Yes Yes
+Calendar month FE Yes Yes Yes
+Weekday FE Yes No No
+Mother’s age Yes Yes Yes
+Number of Obs. 1,281,323 933,910 347,413
+Mean of Outcome 0.27 0.29 0.23
+Notes: This table summarizes the regression results of the e↵ect of maternity bed occupancy
+rate on the probability of cesarean delivery (CD). The basic regression model is shown in
+equation (3). The covariates are indicated below the coecient of primary interest. Calendar
+month FE are a series of binary indicators for January to December. Weekday FE are a series
+of binary indicators for a leisure day (i.e., Saturday, Sunday and any public holiday), for a
+pre-leisure day (i.e., Friday or any working day before a public holiday), and for each other
+weekday (i.e., Monday, Tuesday, Thursday) that is neither a leisure nor a pre-leisure day.
+The base group is Wednesdays, which are neither a leisure nor a pre-leisure day. Mother’s age
+FE are a series of binary indicators for the following age groups:  14 (base group), 15-19,
+20-24, 25-29, 30-34, 35-39, 40-44, 45-49,  50. Clustered standard errors by hospital ⇥ year
+are reported in parentheses below the coecients. Asterisks indicate statistical significance:
+*** p<0.01, ** p<0.05, * p<0.1.
+A.11
+B Instrumental variable approach
+In an alternative estimation approach, we use the overall bed occupancy rate as an endogenous treatment variable and instrument it with the maternity bed occupancy rate.
+The logic is that the overall bed occupancy rate is endogenous due to planable non-birth
+admission, and the instrumental variable (henceforth IV) approach allows us to focus on
+the exogenous part due to birth admissions. Therefore, we estimate the following first
+stage estimation:
+overall bed occihymw = 1 + 1 · maternity bed occihymw + h + y + ⇠m + w + ✏ihymw. (4)
+We find a robust positive e↵ect of maternity bed occupancy rate on overall bed occupancy
+rate. The 1 is about 10, which corresponds with a beta coecients of 0.18. The F-statistic
+on the instrument is 12.79. From the first-stage regression, we derive the predicted values
+ˆ overall bed occihymw, which represent the variation in the the overall bed occupancy rate
+that is driven by the maternity bed occupancy rate. We use this exogenous variation in
+the second stage equation to estimated parameter of interest:
+CDihymw = 2 + 2 · ˆ overall bed occihymw + h + y + ⇠m + w + uihymw, (5)
+We obtain a ˆ2 of minus 0.0037. In this IV framework, our original equation (3) can be
+interpreted as the reduced form that relates the (exogenous) IV to the outcome variable.
+The LATE-estimate 2 is essentially a by the first-stage coecient re-scaled version from
+the reduced form estimate: 0.037/10 = 0.0037.
+For our IV to be a valid, we must assume (i) that the maternity bed occupancy rate
+a↵ects the probability of a probability of cesarean delivery only through the channel
+of overall bed occupancy rate, and (ii) that it is not correlated with any unobserved
+determinants of cesarean delivery included in the error term uihymw.
+If th
