@@ -198,6 +198,57 @@ postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
   }
   tx <- resize_tabular(tx, resize, fontsize, tabcolsep)
   writeLines(tx, file)
+  standardize_notes(file)
+}
+
+# ---------------------------------------------------------------------------
+# standardize_notes(): one note style for every exhibit in both documents.
+# A note emitted as a bare "\\[2pt]\footnotesize\textit{Notes:} ..." line, or
+# behind a "\par \raggedright", sits directly in the float and inherits its
+# \centering, so it prints centred or ragged while the hand-built tables print
+# a justified full-width block. That is the note misalignment. This rewrites
+# any of the older forms into the canonical block
+#
+#   \begin{minipage}{\linewidth}\footnotesize
+#   \textit{Notes:} ...
+#   \end{minipage}
+#
+# whose \@parboxrestore cancels the float's \centering, so the note is
+# justified at full width. Idempotent (a file that already carries a minipage
+# is left alone); runs inside postprocess_tex() and inside write_table_tex().
+# The figure notes match it through \fignotes in paper.tex / supplement.tex.
+# ---------------------------------------------------------------------------
+NOTE_OPEN  <- "\\begin{minipage}{\\linewidth}\\footnotesize"
+NOTE_CLOSE <- "\\end{minipage}"
+
+standardize_notes <- function(file) {
+  if (!file.exists(file)) return(invisible(file))
+  tx <- readLines(file, warn = FALSE)
+  if (any(grepl("\\begin{minipage}", tx, fixed = TRUE))) return(invisible(file))
+  i <- grep("\\textit{Notes:}", tx, fixed = TRUE)
+  if (!length(i)) return(invisible(file))
+  i <- i[1L]
+  j <- grep("^\\s*\\\\end\\{(sideways)?table\\}", tx)
+  j <- j[j > i][1L]
+  if (is.na(j)) j <- length(tx) + 1L
+  blk <- tx[i:(j - 1L)]
+  blk[1L] <- sub("\\\\[2pt]", "", blk[1L], fixed = TRUE)   # bare line break
+  blk[1L] <- sub("\\footnotesize", "", blk[1L], fixed = TRUE)
+  blk[1L] <- trimws(blk[1L], which = "left")
+  k <- i - 1L                                              # drop "\par \raggedright"
+  while (k >= 1L && grepl("^\\s*(\\\\par\\s*|\\\\raggedright\\s*)*$", tx[k])) k <- k - 1L
+  writeLines(c(tx[seq_len(k)], NOTE_OPEN, blk, NOTE_CLOSE,
+               tx[j:length(tx)]), file)
+  invisible(file)
+}
+
+# Write a hand-built table and put its note in the canonical block. Use this
+# instead of writeLines() for every .tex table, so a re-run cannot revert the
+# note style.
+write_table_tex <- function(tx, file) {
+  writeLines(tx, file)
+  standardize_notes(file)
+  invisible(file)
 }
 
 # etable() escapes underscores everywhere in `notes`, including inside \ref{} and

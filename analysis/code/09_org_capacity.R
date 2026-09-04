@@ -15,9 +15,9 @@
 # CHOICE OF CAPACITY MEASURE (validation-driven; see build/01d_cnes_estab.R).
 # The natural measure, the count of obstetricians registered at the establishment
 # in CNES-PF, fails validation: among establishments with at least fifty
-# deliveries in the previous year, about half register ZERO obstetricians and the
-# median of the remainder is one, equally in the public and the for-profit
-# sector. Brazilian obstetricians hold their CNES bond at their own practice, not
+# deliveries in the previous year, 14 percent of for-profit and 27 percent of
+# public maternities register ZERO obstetricians, and the medians are three and
+# two. Brazilian obstetricians hold their CNES bond at their own practice, not
 # at the maternity where they deliver, so the count measures registration rather
 # than the on-call roster. We therefore measure capacity by the establishment's
 # OBSTETRIC BEDS, with its annual DELIVERY VOLUME as a scale control, and report
@@ -214,9 +214,9 @@ etable(m1, m2, m3, m4, m5, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "fixed effects of columns 2--5 restrict identification to municipality-days on",
          "which more than one for-profit establishment records a birth. Column 5 replaces",
          "obstetric beds with the count of obstetricians registered at the establishment",
-         "in CNES-PF; about half of these maternities register none, equally in the public",
-         "and the for-profit sector, because Brazilian obstetricians hold their bond at",
-         "their own practice, so this is a weak proxy for the obstetric team and is",
+         "in CNES-PF; 14 percent of for-profit and 27 percent of public maternities",
+         "register none, because Brazilian obstetricians hold their bond at their own",
+         "practice, so this is a weak proxy for the obstetric team and is",
          "reported for completeness only. Establishment size does not separate the",
          "individual physician's calendar from institutional staffing; both predict",
          "attenuation at larger establishments. Standard errors, two-way clustered by",

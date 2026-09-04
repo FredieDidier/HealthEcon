@@ -25,12 +25,12 @@
 \usepackage{xr}                 % external cross-references to the main paper
 \externaldocument{paper}        % resolves \eqref{eq:...} and \ref{tab:...} etc.
 
-% Figure-notes macro, identical to paper.tex.
+% Figure-notes macro, identical to paper.tex (justified, full width).
 \newcommand{\fignotes}[1]{%
   \par\vspace{1pt}%
-  \centerline{\begin{minipage}{0.85\textwidth}%
-  \footnotesize\centering\textit{Notes:} #1%
-  \end{minipage}}}
+  \begin{minipage}{\linewidth}\footnotesize%
+  \textit{Notes:} #1%
+  \end{minipage}}
 
 \title{Supplementary Appendix\\
 \large Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean Delivery

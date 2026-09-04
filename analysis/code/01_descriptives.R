@@ -116,7 +116,7 @@ tex <- c(
         "(2015--2024). TISS variables from ANS private-insurance claims; SINASC and",
         "covariates as described in the text."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab01_descriptives.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab01_descriptives.tex"))
 print(desc)
 
 message("01_descriptives.R done")
@@ -188,7 +188,7 @@ tex <- c(
         "occurring at a uniformly random moment of the week would fall in business",
         "hours with probability 29.8\\%."),
   "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab07_business_hours.tex"))
+write_table_tex(tex, file.path(TABLE, "tab07_business_hours.tex"))
 
 cat("\nShare of births in weekday business hours (benchmark 29.8%):\n")
 print(bh_w[, .(sector, Cesarean = round(100 * Cesarean, 1), Vaginal = round(100 * Vaginal, 1))])

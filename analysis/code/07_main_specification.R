@@ -185,7 +185,7 @@ tex <- c(tex,
   "Standard errors, two-way clustered by municipality and date, are reported in",
   "parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab_main_gradient.tex"))
+write_table_tex(tex, file.path(TABLE, "tab_main_gradient.tex"))
 
 cat("\n[07] For-profit differential (pp):\n")
 print(round(100 * rbind(baseline = coef(m1)[KG], predetermined = coef(m2)[KG],

@@ -81,7 +81,7 @@ tex <- c("\\begin{table}[H]\\centering",
         "valid before/during-labor code. Robson 1 = nulliparous, term, singleton,",
         "cephalic, spontaneous labor; Robson 2 = same but induced or prelabor cesarean."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab_ref_c3_robson_validation.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c3_robson_validation.tex"))
 cat(sprintf("\n[B/C3] Robson-1 prelabor share = %.3f (must be ~0). R1 dip %.1fpp (in-labor %.1fpp). R1-vs-R10 test p=%.3f\n",
             val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, p_r1r10))
 
@@ -134,7 +134,7 @@ tex <- c("\\begin{table}[H]\\centering",
         "so there is no robust relationship between the relative fee and the",
         "cesarean rate."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab_ref_c5_feegap_ci.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c5_feegap_ci.tex"))
 cat("\n[C/C5] fee-gap coefficient CIs:\n"); print(rows)
 
 # =============================================================================
@@ -243,7 +243,7 @@ tex <- c("\\begin{table}[H]\\centering",
         "specifications in Table~\\ref{tab:fees} have several hundred clusters",
         "and are unaffected."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab_ref_c10_fewcluster.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c10_fewcluster.tex"))
 cat(sprintf("\n[E/C10] fee-shock: %d clusters, analytic p=%.3f, wild-Webb p=%s\n",
             n_state, analytic_p, ifelse(is.na(wild_p), "n/a", sprintf("%.3f", wild_p))))
 
@@ -285,7 +285,7 @@ tex <- c("\\begin{table}[H]\\centering",
         "from about 2012. Analyses that need each variable use the corresponding",
         "sub-sample, as noted in each table."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab_ref_c12_sampleflow.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c12_sampleflow.tex"))
 
 # missingness of the timing indicator among cesareans, by weekend x sector
 b2[, weekend := as.integer(dow %in% c(1, 7))]
@@ -307,7 +307,7 @@ tex2 <- c("\\begin{table}[H]\\centering",
         "weekend rates imply the prelabor/in-labor split is not driven by differential",
         "missingness across the week."),
   "\\end{table}")
-writeLines(resize_tabular(tex2), file.path(TABLE, "tab_ref_c12_missingness.tex"))
+write_table_tex(resize_tabular(tex2), file.path(TABLE, "tab_ref_c12_missingness.tex"))
 cat("\n[F/C12] sample flow:\n"); print(flow); cat("timing-indicator missingness:\n"); print(mw)
 
 # =============================================================================
@@ -354,7 +354,7 @@ tex <- c("\\begin{table}[H]\\centering",
         "the week are not exchangeable under a known assignment mechanism, this is a",
         "descriptive ranking, not an exact randomization-inference $p$-value."), rk),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab_ref_c7_placebo_ranking.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c7_placebo_ranking.tex"))
 
 # =============================================================================
 # H (C11) — PARTO ADEQUADO HOSPITAL-LEVEL EVENT STUDY (Sun & Abraham).
@@ -600,7 +600,7 @@ tex <- c("\\begin{table}[H]",
     "$q$-value \\citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding",
     "columns of the source tables."),
   "\\end{table}", "")
-writeLines(tex, file.path(TABLE, "tab_multiple_testing.tex"))
+write_table_tex(tex, file.path(TABLE, "tab_multiple_testing.tex"))
 cat("\n[K] Multiple-testing families:\n"); print(mt)
 
 message("\n07_referee_response.R done")

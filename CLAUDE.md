@@ -167,7 +167,12 @@ obstetricians** (median 3/2), because Brazilian obstetricians hold their CNES bo
 at their own practice, not the delivery hospital, so the count reflects
 registration not the on-call roster. (The earlier "46%, equally, median 1" was an
 artifact of the wrong CBO set — only 225250, no 223132 — plus a 17-of-27-UF
-download; both fixed. Prose softened, do NOT reintroduce "half"/"equally".) Beds
+download; both fixed. Prose softened, do NOT reintroduce "half"/"equally".
+⚠️ That softening had reached the paper body and `tab_org_capacity_valid` but NOT
+the note of `tab_org_capacity` itself, which still said "about half … equally" in
+both `09_org_capacity.R` and the generated `.tex` until 2026-09-04; it now reads
+"14 percent of for-profit and 27 percent of public maternities register none".
+`09` was not re-run — the change is text only.) Beds
 carry the analysis; obstetrician count is col 5 only. **RESULT is weak/mixed:**
 every interaction is positive (larger = flatter gradient) but only the
 delivery-**scale** interaction is significant (weekend×log deliveries ≈ +0.70pp);
@@ -200,7 +205,8 @@ build/    00_utils.R          admission proxies + TUSS delivery codes
           02_deliveries.R     TISS delivery events + muni-month panel
           03_workfile.R       → main_data.parquet
 analysis/ code/  00_utils.R (theme_paper, PAL, sector_display, tex_row/tex_coef/
-                 tex_nobs, postprocess_tex, unescape_refs) · 01_descriptives.R ·
+                 tex_nobs, postprocess_tex, standardize_notes, write_table_tex,
+                 unescape_refs) · 01_descriptives.R ·
                  02_regressions.R (price channel → tab_fees) · 03_mechanisms.R
                  (scheduling/Robson/prelabor → tab_prelabor_lowrisk; decomposition) ·
                  04_heterogeneity.R (supp) · 05_cost.R · 06_robustness.R (policy
@@ -315,7 +321,19 @@ so the trimmed body is fine; do not re-inflate it.
 **All table and figure captions are bold** (`\caption{\textbf{...}}`), matching
 the house style. `postprocess_tex()` bolds the caption of every etable table on
 re-run; hand-built `writeLines` tables include `\textbf` in source. If you add a
-new table, keep the bold.
+new table, keep the bold. The **figure** captions in `paper.tex` and
+`sup_appendix.tex` were the exception until 2026-09-04 (they were plain while all
+29 tables were bold) and are now bold too, so the rule finally holds literally.
+Note that in an etable table the `\label` comes *first*
+(`\caption{\label{tab:x} \textbf{Title}}`), so a grep for `caption{\textbf`
+misses ten of them and will tell you they are unbolded — they are not.
+
+**Body subsections carry no letter** (since 2026-09-04, user request): write
+`\subsection{The price channel}`, not `\subsection{A. The price channel}`, so the
+heading prints as "4.1", not "4.1 A". The organizational-capacity subsection
+carries `\label{sec:capacity}` because two cross-references used to point at it
+as `Section~\ref{sec:mechanism}\,D`; reference subsections by label, never by
+letter.
 
 **Supplement** (`sup_appendix.tex`, built by 10_supplement + 06_robustness + moved
 body exhibits). **Reorganized 2026-07-16 into three appendices so a reader can
@@ -416,6 +434,24 @@ Supplemental Appendix is a separate document.
   from `00_utils.R`. `postprocess_tex()` (booktabs + shrink-only `\resizebox`);
   `unescape_refs()` on any table whose note cites a `\ref{}` with an underscore in
   the label. Very wide tables (≥6 cols) → `sidewaystable` (needs `rotating`).
+- **One note style for every exhibit in both documents** (2026-09-04). A note is
+  a full-width justified block:
+  `\begin{minipage}{\linewidth}\footnotesize` / `\textit{Notes:} ...` /
+  `\end{minipage}`. The minipage matters: its `\@parboxrestore` cancels the
+  float's `\centering`, so the note is justified instead of centred. A note
+  written straight into the float as `\\[2pt]\footnotesize\textit{Notes:} ...`
+  comes out **centred**, and one behind a `\par \raggedright` comes out
+  **ragged** — that is what made the notes look misaligned from table to table.
+  `standardize_notes(file)` in `analysis/code/00_utils.R` rewrites any of the old
+  forms into the canonical block; it is idempotent, runs at the end of
+  `postprocess_tex()`, and is applied to hand-built tables through
+  **`write_table_tex(tx, file)`**. *Write every `.tex` table with
+  `write_table_tex()`, never with bare `writeLines()`* — that is what stops a
+  re-run from silently reverting the style.
+- **Figure notes match the table notes.** `\fignotes` in BOTH `paper.tex` and
+  `supplement.tex` is the same full-width justified minipage. It used to be
+  `\centerline{minipage 0.85\textwidth}` with `\centering`; do not narrow it or
+  re-add `\centering`.
 - **fixest interaction naming**: an interaction may resolve as `a:b` or `b:a`;
   when building rows by name, look the term up in `rownames(coeftable(m))` or give
   BOTH orders a `dict` entry (see `09_org_capacity.R`).
@@ -633,6 +669,55 @@ SINASC), institution names are given in English with the Portuguese in parenthes
 (ANS, IBGE, IEPS, SUS, CNES), and `HOSPITALAR` appears only inside a literal URL.
 The remaining all-caps tokens in the compiled PDF are DATASUS, UFBA and RAND (the
 journal) — all legitimate.
+
+## The 2026-09-04 revision (AI-tic copy-edit + one note style)
+
+Applying the `MONASTERIO.md` logic from the sibling **WorldCupHealth** repo (his
+handwritten-PDF + WhatsApp round on that paper) to this manuscript. Nothing
+numerical changed; 36 files, no re-run of any 42M-row script.
+
+**Prose (34 edits in `paper.tex`, 4 in `sup_appendix.tex`).** Three tics, all his:
+- ⭐ **The two-to-five-word sentence used as a drumbeat.** "Second, the calendar
+  does." · "Panel B shows why." · "This shift is not costless." · "Two facts
+  emerge." · "We therefore turn to counts." · "Two cautions apply." — all
+  dissolved into the neighbouring sentence, none of the content dropped.
+- **The meta voice, the text commenting on the text** (what Fredie cut in
+  WorldCup as "…deserves naming"): "Two features of the estimand deserve
+  emphasis" · "Two extensions discipline the reading" · "We read this as follows"
+  · "Table 1 makes this precise" · "Panel B supplies the context" · "We are
+  deliberate about what this comparison can and cannot do" · "we report these
+  honestly" · "The next two sections develop each panel in turn" · "previews the
+  two designs on a single canvas".
+- **The grandiose opener he struck out** ("Economics has a name for…"): here
+  "Economic theory offers a natural suspect and a large literature to back it."
+  — deleted outright. Also the repeated crutch "natural" (5 uses: suspect /
+  concern / threat / explanation / question) down to the clinical term only, and
+  "not confined to" from 3 uses to 1.
+- Antithesis and cleft tics: "is not X. It is Y" · "What the data reveal instead
+  is…" · "What is portable is…" rewritten as direct statements.
+- `behaviour`/`behavioural` → `behavior`/`behavioral` — the only two British
+  spellings in the manuscript.
+
+**No italics or bold in body prose** (user request). 11 `\emph{}` removed from
+`paper.tex`, 1 from `sup_appendix.tex`. KEPT, deliberately: the front-matter
+labels (`\textbf{JEL classification:}`, `\textbf{Keywords:}`), the CRediT author
+names (Elsevier convention), and the `\emph{Panel A. ...}` headers inside tables
+(structural, not emphasis — without them a panel header reads as a data row).
+
+**Subsection letters dropped and one note style everywhere** — see the Exhibit map
+and Conventions sections above for the rules that now bind.
+
+**Build after all of it:** paper 35 pages, supplement 23; 0 undefined refs and 0
+undefined citations in both. The one overfull hbox in `paper` (2.8pt, the
+generative-AI declaration) and the one overfull vbox in `supplement` (46pt, at
+`tab15_permutation`) are BOTH pre-existing — verified by stashing the changes and
+recompiling the baseline. Do not go hunting for them as regressions.
+
+⚠️ **Something external clears `latex/*.aux`.** Twice during this session the
+`.aux`/`.log`/`.bbl` files vanished from `latex/` between two commands. Because
+`xr` runs both ways, a clean in the middle of the cycle turns all ~29
+`\satab`/`\safig` references into `??`. If the references print as `??`, suspect
+this before suspecting the source.
 
 ## ACTION items for Fredie
 

@@ -187,5 +187,5 @@ tex <- c(tex,
   "inference in both columns is complemented by a 9,999-draw Webb-weight wild-cluster",
   "bootstrap. Standard errors, clustered by state, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab_fees.tex"))
+write_table_tex(tex, file.path(TABLE, "tab_fees.tex"))
 message("tab_fees.tex written")

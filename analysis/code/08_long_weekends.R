@@ -438,7 +438,7 @@ lines <- c(lines,
   "\\newline", SIGNIF_NOTE,
   "\\end{minipage}",
   "\\end{table}")
-writeLines(lines, file.path(TABLE, "tab_long_weekends.tex"))
+write_table_tex(lines, file.path(TABLE, "tab_long_weekends.tex"))
 cat("\n[6] wrote tab_long_weekends.tex\n")
 
 # =============================================================================
@@ -534,7 +534,7 @@ sup <- c(sup,
   "excluded from the main specification. Standard errors, two-way clustered by",
   "municipality and date, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-writeLines(sup, file.path(TABLE, "tab_displacement_robust.tex"))
+write_table_tex(sup, file.path(TABLE, "tab_displacement_robust.tex"))
 
 # hand the hypothesis family to the multiple-testing table (Section K of 07_*.R)
 ph <- m_tax$pre_hol$ct

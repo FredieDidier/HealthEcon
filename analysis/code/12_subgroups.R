@@ -269,7 +269,7 @@ tex <- c(
   "Table~\\ref{tab:multiple_testing}. Standard errors, two-way clustered by",
   "municipality and date, are in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab_subgroup_gradients.tex"))
+write_table_tex(tex, file.path(TABLE, "tab_subgroup_gradients.tex"))
 unescape_refs(file.path(TABLE, "tab_subgroup_gradients.tex"))
 
 cat("\n[12B] Term vs preterm for-profit differential (pp):\n")

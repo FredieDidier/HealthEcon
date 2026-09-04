@@ -317,7 +317,7 @@ if (exists("r1_priv")) {
     "its cesareans are intrapartum by construction. Standard errors, two-way clustered",
     "by municipality and date, are reported in parentheses.",
     "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-  writeLines(tex, file.path(TABLE, "tab_prelabor_lowrisk.tex"))
+  write_table_tex(tex, file.path(TABLE, "tab_prelabor_lowrisk.tex"))
   message("tab_prelabor_lowrisk.tex written")
 }
 
@@ -391,7 +391,7 @@ tex <- c(
         "for-profit--public cesarean gap into Robson-group composition and",
         "within-group rate differences."),
   "\\end{table}")
-writeLines(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))
+write_table_tex(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))
 
 # --- (b) excess weekday cesareans (scheduling counterfactual) ------------------
 # benchmark: each sector-year's WEEKEND cesarean rate; excess = weekday births ×

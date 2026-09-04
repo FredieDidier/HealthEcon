@@ -108,7 +108,7 @@ tex <- c(
   "sectors and is not interpreted as the causal effect of prelabor scheduling.",
   "Standard errors, clustered by municipality, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab09_health.tex"))
+write_table_tex(tex, file.path(TABLE, "tab09_health.tex"))
 etable(m_et0, m_et1, m_lb1, m_ap1, keep = "%private", fitstat = ~ n, digits = 4)
 
 message("05_cost.R: gestation + health block done")
@@ -167,6 +167,6 @@ if (!have_cost) {
       "and a vaginal delivery bill nearly the same total amount, so the epidemic is not explained by higher ",
       "cesarean billing."),
     "\\end{table}")
-  writeLines(resize_tabular(tex), file.path(TABLE, "tab12_cost.tex"))
+  write_table_tex(resize_tabular(tex), file.path(TABLE, "tab12_cost.tex"))
   message("financial-cost table (tab12_cost) done")
 }

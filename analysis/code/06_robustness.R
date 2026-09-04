@@ -267,7 +267,7 @@ tex <- c("\\begin{table}[H]\\centering",
   "\\bottomrule", "\\end{tabular}",
   "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the for-profit cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
   "\\end{table}")
-writeLines(tex, file.path(TABLE, "tab15_permutation.tex"))
+write_table_tex(tex, file.path(TABLE, "tab15_permutation.tex"))
 
 # --- (b) private cesareans with no recorded clinical indication ---------------
 # ICD-10 3-char prefixes that RECORD a cesarean-relevant indication:
@@ -295,7 +295,7 @@ tex2 <- c("\\begin{table}[H]\\centering",
   "\\bottomrule", "\\end{tabular}",
   "\\\\[2pt]\\footnotesize\\textit{Notes:} TISS private cesarean deliveries, 2015--2024. A delivery is coded ``no indication'' when the primary diagnosis (ICD-10 code) is a delivery-outcome code (O80--O84) or blank, rather than an ICD-10 code recording a recognized cesarean indication (malpresentation, disproportion, placental or fetal complications, obstructed labor, etc.). Diagnosis coding in claims is incomplete, so this describes recorded indications, not clinical necessity.",
   "\\end{table}")
-writeLines(tex2, file.path(TABLE, "tab15b_no_indication.tex"))
+write_table_tex(tex2, file.path(TABLE, "tab15b_no_indication.tex"))
 
 message("06_robustness.R: Block (c) permutation + no-indication done")
 
