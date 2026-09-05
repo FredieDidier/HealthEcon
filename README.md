@@ -23,6 +23,7 @@ analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
                         #   07_main_specification.R  (Equation 3, the main gradient)
                         #   08_long_weekends.R       (holiday taxonomy + displacement)
                         #   09_org_capacity.R        (establishment-capacity heterogeneity)
+                        #   13_demand_smoothing.R    (the de Elejalde-Giolito channel)
                         #   10_supplement.R          (Supplemental Appendix exhibits)
                         #   12_subgroups.R           (Robson / gestational-age / maternal-age splits)
                         #   11_body_figures.R        (merged multi-panel body figures; needs 12)
@@ -159,21 +160,22 @@ Then:
 - **Expected runtime** on a 2021 MacBook Pro (M2 Pro, 16 GB RAM): the data build
   is ~3 h (dominated by the raw TISS download); the full analysis is ~90 min. The
   slowest single script is `07_main_specification.R` at ~40 min, dominated by
-  reading and aggregating the ~24M-row `sinasc_births.parquet` into
+  reading and aggregating the 42M-row `sinasc_births.parquet` into
   municipality × date × sector cells; the `fixest` regressions themselves run on
-  those aggregated cells and are fast.
-- **Peak memory** ~12 GB, driven by loading the birth-level SINASC file (~24M
+  those aggregated cells and are fast. `13_demand_smoothing.R` is cheap (~1 min):
+  it reads only the cached `sinasc_daily_estab.parquet`.
+- **Peak memory** ~12 GB, driven by loading the birth-level SINASC file (42M
   records) into memory before aggregation. Do **not** run two of the large
-  birth-level scripts (`03`, `05`, `06`, `07`, `08`, `09`) concurrently — each
+  birth-level scripts (`03`, `05`, `06`, `07`, `08`, `09`, `12`) concurrently — each
   loads `sinasc_births.parquet` and two together exhaust memory. The master
   analysis script runs them sequentially.
 
 ## Program-to-output inventory
 
 Every script re-sources `config/config.R` and its utils, so scripts can also be
-run individually. **Order matters at the tail:** `07`/`08`/`09` each save a
-hypothesis family (`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R`
-reads for the multiple-testing table; run them in numeric order. `08` also builds
+run individually. **Order matters at the tail:** `07`/`08`/`09`/`13` each save a
+hypothesis family (`analysis/output/fam_{A,D,E,F}.rds`) that `10_supplement.R`
+reads for the multiple-testing table; run them in that order (`13` before `10`). `08` also builds
 `graphs/fig_long_weekend_event`, the displacement event study now shown in the
 Supplementary Appendix. `12_subgroups.R` runs **before** `11` despite its number:
 it saves `analysis/output/robson_grad.rds`, the coefficients `11` draws as panel
@@ -192,6 +194,7 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `07_main_specification.R` | **Table 2** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
+| `13_demand_smoothing.R` | (supplement) | `tables/tab_demand_smoothing.tex`; `fam_F.rds` |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
 | `12_subgroups.R` | (supplement) | `tables/tab_subgroup_gradients.tex` (gestational-age + maternal-age splits of Equation 3), `graphs/fig_robson_gradient`, `robson_grad.rds` (feeds **Figure 3** panel c) |
 | `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth + Robson gradient), `graphs/fig_gestation_panels` (Supplementary Appendix) |
@@ -199,3 +202,50 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 Figures are written as both `.pdf` and `.png`. The LaTeX in `latex/` `\input`s the
 `.tex` tables and `\includegraphics`es the `.pdf` figures to produce `paper.pdf`
 and `supplement.pdf`.
+
+## Compiling the manuscript
+
+The `xr` package cross-references run **both ways**: `supplement.tex` reads
+`paper.aux` and `paper.tex` reads `supplement.aux` for the ~30 `\satab`/`\safig`
+pointers into the Supplemental Appendix. The cycle therefore has to be run twice,
+paper to supplement and back, and **the `.aux` files must survive between passes**
+(never clean in the middle). Running only paper then supplement on a fresh
+checkout is what makes every supplement reference print as `??`.
+
+```
+cd latex
+pdflatex paper;      bibtex paper
+pdflatex supplement; bibtex supplement; pdflatex supplement
+pdflatex paper;      pdflatex paper
+pdflatex supplement
+```
+
+The supplement needs its own `bibtex` pass because it cites Holm (1979) and
+Benjamini and Hochberg (1995) in Appendix D. Verify with
+
+```
+grep -c "Reference .* undefined" latex/paper.log      # must be 0
+grep -c "Citation .* undefined" latex/paper.log       # must be 0
+```
+
+`latex/highlights.txt` holds the Highlights, uploaded to the journal as a
+separate file (at most 85 characters per bullet).
+
+## Deposit checklist
+
+The package is assembled here and is deposited in a trusted open repository
+(Zenodo or openICPSR) before acceptance; the DOI then replaces the placeholder in
+the Data availability statement of `latex/paper.tex`. Before depositing, confirm:
+
+- [ ] `config/config.R` ships with a placeholder `DROPBOX_ROOT`, not a local path.
+- [ ] `renv.lock` and `sessionInfo.txt` are current for the R version used in the
+      final run.
+- [ ] The full pipeline has been run end to end on a clean checkout, and every
+      file in the program-to-output inventory above was regenerated.
+- [ ] `analysis/output/` in the deposit matches the exhibits in the compiled
+      `paper.pdf` and `supplement.pdf`.
+- [ ] No microdata are included. Every source is public and is reached by the
+      `build/01*` download scripts; the data citations above give the archived
+      versions.
+- [ ] The one-time download scripts run against the current source URLs.
+- [ ] A `LICENSE` for the code (MIT or BSD-2) is present.

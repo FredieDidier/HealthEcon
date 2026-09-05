@@ -86,11 +86,29 @@ cat(sprintf("\n[B/C3] Robson-1 prelabor share = %.3f (must be ~0). R1 dip %.1fpp
             val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, p_r1r10))
 
 # =============================================================================
-# C (C5) — NOT-A-PRICE WITH CONFIDENCE INTERVALS + AN EQUIVALENCE REGION.
-# "Precisely estimated near-zero" is not what the specs show. We report each
-# coefficient with its 95% CI and the number of clusters, and test it against a
-# pre-registered economically-negligible region [-0.02, 0.02] (a 2 pp change in
-# the cesarean share per log-point of the fee gap).
+# C (C5) — THE FEE COEFFICIENT WITH CONFIDENCE INTERVALS, AN EQUIVALENCE REGION,
+# AND THE LITERATURE'S OWN MAGNITUDE.
+#
+# "Precisely estimated near-zero" is not what the specifications show, and the
+# table must not be read as if it were. Each coefficient is reported with its 95%
+# CI and its number of clusters against TWO yardsticks:
+#   (i) a pre-registered economically-negligible region [-0.02, 0.02], a 2 pp
+#       change in the cesarean share per log point of the fee gap. NO
+#       specification's CI fits inside it, so the data do not establish
+#       equivalence; they establish that the sign is unstable and the variation
+#       uninformative about small responses.
+#  (ii) the canonical price response of \citet{gruber1999physician}, about one
+#       percentage point per US$1,000 of the cesarean-vaginal fee differential.
+#       Converted at our own fee levels this is roughly 0.7 pp per log point of
+#       the fee gap (see GKM_BENCHMARK below), and NO CI excludes it either. We
+#       say so: the canonical magnitude cannot be rejected here.
+#
+# WHY THE SECTION STILL STANDS. Because that canonical magnitude is far too small
+# to matter at this scale. The fee gap is about 0.10 to 0.35 log points negative
+# in the largest states, which at the GKM elasticity predicts a movement of a
+# quarter of a percentage point against a for-profit-public gap of 35 pp. The
+# price channel is not rejected here; it is calibrated, and it is two orders of
+# magnitude too small. The raw fact carries the section, not the regression.
 #   -> tab_ref_c5_feegap_ci.tex
 # =============================================================================
 
@@ -108,31 +126,62 @@ specs <- list(
   `State FE + controls`      = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | state + year, w, weights = ~tiss_deliveries),
   `Municipality FE + controls` = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | muni6 + year, w, weights = ~tiss_deliveries))
 EQ <- 0.02
+
+# The Gruber-Kim-Mayzlin benchmark, converted into our units. GKM report about
+# one percentage point of cesarean rate per US$1,000 of the cesarean-vaginal fee
+# differential in 1988-1992 Medicaid data. US prices roughly doubled between 1990
+# and 2020 (CPI-U 130.7 -> 258.8), and the World Bank PPP conversion factor for
+# Brazil in 2020 is about R$2.35 to the international dollar, so US$1,000 of 1990
+# fees is on the order of R$4,650. One log point of our fee gap, evaluated at the
+# delivery-weighted mean cesarean fee, changes the differential by
+# fee_cesarean x (e - 1). The conversion is rough and is labeled as such in the
+# note; the point does not turn on its second digit.
+fee_c   <- w[, weighted.mean(fee_cesarean, tiss_deliveries, na.rm = TRUE)]
+GKM_BRL <- 4650
+GKM_BENCHMARK <- 0.01 * fee_c * (exp(1) - 1) / GKM_BRL
+cat(sprintf("\n[C/C5] mean cesarean fee R$%.0f; GKM benchmark = %.4f (%.2f pp per log point)\n",
+            fee_c, GKM_BENCHMARK, 100 * GKM_BENCHMARK))
+
 rows <- rbindlist(lapply(names(specs), function(nm) {
   m <- specs[[nm]]; ci <- confint(m, "log_fee_gap")
   data.table(spec = nm, beta = coef(m)["log_fee_gap"], lo = ci[[1]], hi = ci[[2]],
              nclust = m$fixef_sizes[[1]],
-             negligible = ifelse(ci[[1]] >= -EQ && ci[[2]] <= EQ, "within", "not within"))
+             negligible = ifelse(ci[[1]] >= -EQ && ci[[2]] <= EQ, "within", "not within"),
+             rules_out  = ifelse(ci[[1]] > GKM_BENCHMARK || ci[[2]] < GKM_BENCHMARK,
+                                 "excluded", "not excluded"))
 }))
 ctab <- rows[, .(Specification = spec,
                  `Coefficient` = sprintf("%+.4f", beta),
                  `95\\% CI` = sprintf("[%+.4f, %+.4f]", lo, hi),
                  `Clusters` = nclust,
-                 `In $[-0.02,0.02]$?` = negligible)]
+                 `In $[-0.02,0.02]$?` = negligible,
+                 `GKM benchmark` = rules_out)]
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{The fee-gap coefficient: point estimates, confidence intervals, and an equivalence region}}",
+  "\\caption{\\textbf{The fee-gap coefficient against two yardsticks: an equivalence region and the canonical price response}}",
   "\\label{tab:feegap_ci}", "\\small",
-  "\\begin{tabular}{lcccc}", "\\toprule",
+  "\\begin{tabular}{lccccc}", "\\toprule",
   paste(names(ctab), collapse = " & "), "\\\\", "\\midrule",
   apply(ctab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\bottomrule", "\\end{tabular}",
-  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} Coefficient on the log economic",
-        "fee gap from Table~\\ref{tab:fees}. The equivalence region",
-        "$[-0.02, 0.02]$ corresponds to a 2 percentage-point change in the cesarean",
-        "share per log-point of the fee gap. The estimates range from negative to",
-        "positive across specifications and are not stably distinguishable from zero,",
-        "so there is no robust relationship between the relative fee and the",
-        "cesarean rate."),
+  paste(sprintf(paste(
+    "\\\\[2pt]\\footnotesize\\textit{Notes:} Coefficient on the log economic fee gap",
+    "from Table~\\ref{tab:fees}. The equivalence region $[-0.02, 0.02]$ corresponds to a",
+    "2 percentage-point change in the cesarean share per log point of the fee gap. The",
+    "final column asks whether the interval excludes the canonical price response of",
+    "\\citet{gruber1999physician}, about one percentage point per US\\$1{,}000 of the",
+    "cesarean-vaginal fee differential, which at our delivery-weighted mean cesarean fee",
+    "of R\\$%s is %.2f percentage points per log point of the fee gap; the conversion",
+    "uses US consumer prices between 1990 and 2020 and the World Bank purchasing-power",
+    "factor for Brazil, and is deliberately rough. Two things follow, and the paper",
+    "states both. No interval fits inside the equivalence region, so these data do not",
+    "establish that the price response is negligible. And the two schemes disagree about",
+    "the canonical magnitude: the within-municipality intervals exclude it, the",
+    "state-level intervals, estimated on twenty-seven clusters, are too wide to. The sign",
+    "itself is unstable across the two schemes. The economic argument of",
+    "Section~\\ref{sec:notprice} does not rest on this table: at the canonical magnitude,",
+    "the 0.10 to 0.35 log point negative fee gap of the largest states would move the",
+    "cesarean rate by about a quarter of a percentage point, against a for-profit--public",
+    "gap of 35 points."), formatC(fee_c, format = "d", big.mark = ","), 100 * GKM_BENCHMARK)),
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c5_feegap_ci.tex"))
 cat("\n[C/C5] fee-gap coefficient CIs:\n"); print(rows)
@@ -567,7 +616,7 @@ fam_C <- data.table(
 rm(b, m_et, m_lb, m_ap); gc()
 
 mt <- rbindlist(Filter(Negate(is.null),
-  list(fam_A, fam_B, fam_C, read_fam("fam_D"), read_fam("fam_E"))))
+  list(fam_A, fam_B, fam_C, read_fam("fam_D"), read_fam("fam_E"), read_fam("fam_F"))))
 mt[, `:=`(p_holm = p.adjust(p, "holm"), q_bh = p.adjust(p, "BH")), by = family]
 fmt_p <- function(x) fifelse(x < 0.001, "$<$0.001", sprintf("%.3f", x))
 
@@ -594,7 +643,8 @@ tex <- c("\\begin{table}[H]",
     "tests; family C the for-profit--public outcome differences of",
     "Table~\\ref{tab:health}; family D the long-weekend taxonomy and displacement tests of",
     "Table~\\ref{tab:long_weekends}; family E the organizational-capacity interactions of",
-    "Table~\\ref{tab:org_capacity}. Holm $p$ is the",
+    "Table~\\ref{tab:org_capacity}; and family F the demand-smoothing tests of",
+    "Table~\\ref{tab:demand_smoothing}. Holm $p$ is the",
     "Holm--Bonferroni adjusted $p$-value \\citep{holm1979}, which controls the familywise",
     "error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate",
     "$q$-value \\citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding",

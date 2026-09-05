@@ -1,21 +1,21 @@
 \begin{table}[H]\centering
-\caption{\textbf{The fee-gap coefficient: point estimates, confidence intervals, and an equivalence region}}
+\caption{\textbf{The fee-gap coefficient against two yardsticks: an equivalence region and the canonical price response}}
 \label{tab:feegap_ci}
 \small
 \small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-Specification & Coefficient & 95\% CI & Clusters & In $[-0.02,0.02]$?
+Specification & Coefficient & 95\% CI & Clusters & In $[-0.02,0.02]$? & GKM benchmark
 \\
 \midrule
-State FE & +0.0469 & [-0.0020, +0.0958] &  27 & not within \\
-Municipality FE & -0.0163 & [-0.0340, +0.0015] & 719 & not within \\
-State FE + controls & +0.0166 & [-0.0306, +0.0638] &  27 & not within \\
-Municipality FE + controls & -0.0143 & [-0.0321, +0.0036] & 714 & not within \\
+State FE & +0.0469 & [-0.0020, +0.0958] &  27 & not within & not excluded \\
+Municipality FE & -0.0163 & [-0.0340, +0.0015] & 719 & not within & excluded \\
+State FE + controls & +0.0166 & [-0.0306, +0.0638] &  27 & not within & not excluded \\
+Municipality FE + controls & -0.0143 & [-0.0321, +0.0036] & 714 & not within & excluded \\
 \bottomrule
 \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} Coefficient on the log economic fee gap from Table~\ref{tab:fees}. The equivalence region $[-0.02, 0.02]$ corresponds to a 2 percentage-point change in the cesarean share per log-point of the fee gap. The estimates range from negative to positive across specifications and are not stably distinguishable from zero, so there is no robust relationship between the relative fee and the cesarean rate.
+\textit{Notes:} Coefficient on the log economic fee gap from Table~\ref{tab:fees}. The equivalence region $[-0.02, 0.02]$ corresponds to a 2 percentage-point change in the cesarean share per log point of the fee gap. The final column asks whether the interval excludes the canonical price response of \citet{gruber1999physician}, about one percentage point per US\$1{,}000 of the cesarean-vaginal fee differential, which at our delivery-weighted mean cesarean fee of R\$1,941 is 0.72 percentage points per log point of the fee gap; the conversion uses US consumer prices between 1990 and 2020 and the World Bank purchasing-power factor for Brazil, and is deliberately rough. Two things follow, and the paper states both. No interval fits inside the equivalence region, so these data do not establish that the price response is negligible. And the two schemes disagree about the canonical magnitude: the within-municipality intervals exclude it, the state-level intervals, estimated on twenty-seven clusters, are too wide to. The sign itself is unstable across the two schemes. The economic argument of Section~\ref{sec:notprice} does not rest on this table: at the canonical magnitude, the 0.10 to 0.35 log point negative fee gap of the largest states would move the cesarean rate by about a quarter of a percentage point, against a for-profit--public gap of 35 points.
 \end{minipage}
 \end{table}

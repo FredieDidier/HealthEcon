@@ -35,8 +35,19 @@ The paper is *structured descriptive and mechanism evidence organized around one
 tightly controlled quasi-experimental contrast*. Per-result labels, which must
 hold in abstract, intro, strategy section, table notes, and conclusion:
 
-- **fee regressions** = conditional associations, sign-unstable. Say "no robust
-  positive price relationship," never "fees don't matter."
+- **fee regressions** = conditional associations, sign-unstable, and NOT an
+  equivalence result (fixed 2026-09-05; see "The 2026-09-05 revision"). The
+  intervals do not fit inside the pre-registered negligible region, so never say
+  "there is no relationship" or "fees don't matter." Say: the sign is unstable
+  across fixed-effect schemes, and the canonical magnitude
+  (\citet{gruber1999physician}, ~1pp per US$1,000 = ~0.72pp per log point at our
+  fee levels) is too small to matter at this scale, predicting ~0.25pp against a
+  35pp gap. The RAW FACT leads, the regression follows.
+- **demand smoothing** (Eq. de Elejalde-Giolito) = tested and NOT supported. The
+  pull-forward null is weak (say so); the throughput result points the other way
+  but is only marginally significant and dies under the family adjustment, so
+  report it as an ABSENCE of levelling, never as evidence that scheduling makes
+  the flow lumpier.
 - **weekend/holiday gradients** (Eq. 2) = calendar sorting of deliveries, NOT the
   causal effect of a random weekend. Never write "the day a birth falls is as
   good as random w.r.t. medical need" — the observed date is partly chosen.
@@ -116,9 +127,11 @@ reintroduce `else → Public`.
    (SINASC) vs ~44% public; ~66% even in Robson 1 (spontaneous labor) on weekdays.
 2. **Not a positive price story** — with the *economic* vaginal fee (delivery fee
    + separately billed hourly labor assistance, TUSS 31309038), the fee gap is
-   negative in the big states yet they are ~80% cesarean; the coefficient is small
-   and sign-unstable (+0.017 UF FE / −0.014 muni FE, n.s.); ±2 log-point state
+   negative in the big states yet they are ~80% cesarean; the coefficient is
+   sign-unstable (+0.017 UF FE / −0.014 muni FE, n.s.; +0.047 UF FE without
+   controls, marginally significant — do NOT call it "small"); ±2 log-point state
    swings move nothing; the 2015 court order never became an actual fee change.
+   The claim is calibrated, not an equivalence result: see the taxonomy above.
 3. **A scheduling story** — cesareans cluster on weekdays and dip on weekends
    (−8.3pp for-profit / −6.7 public) and holidays (−5.6 / −3.5); 8–11am OR spike;
    half of cesareans in weekday business hours vs 29.8% uniform benchmark.
@@ -134,7 +147,8 @@ reintroduce `else → Public`.
    prelabor vs +1.7pp in-labor; persists in low-risk Robson 1–2 (−7.4pp) and
    Robson 1 alone (−6.5pp, all intrapartum).
 6. **The cost** — +11.7pp early-term (37–38wk) with maternal controls; 72%
-   practice style (Kitagawa); ~50k excess weekday cesareans/yr; near-parity in
+   practice style (Kitagawa); ~39k excess weekday cesareans/yr against the
+   OWN-MUNICIPALITY weekend benchmark (10.0% of weekday cesareans); near-parity in
    billed amounts.
 
 ## The two new extensions (2026-07-10) and their honest results
@@ -213,8 +227,10 @@ analysis/ code/  00_utils.R (theme_paper, PAL, sector_display, tex_row/tex_coef/
                  nulls, permutation, neonatal) · 07_main_specification.R (Eq 3 →
                  tab_main_gradient) · 08_long_weekends.R · 09_org_capacity.R ·
                  10_supplement.R · 12_subgroups.R (Robson/gestation/age splits →
-                 tab_subgroup_gradients + robson_grad.rds) · 11_body_figures.R
-                 (merged panels; RUN AFTER 12)
+                 tab_subgroup_gradients + robson_grad.rds) ·
+                 13_demand_smoothing.R (de Elejalde-Giolito channel →
+                 tab_demand_smoothing + fam_F.rds; RUN BEFORE 10) ·
+                 11_body_figures.R (merged panels; RUN AFTER 12)
           output/ {graphs, tables, maps}      committed to git
 latex/    paper.tex · model.tex (App A) · appendix.tex (A+B) · supplement.tex
           (standalone) · sup_appendix.tex (shared C+D body) · refs.bib
@@ -222,14 +238,16 @@ dictionary/ ANS TISS dictionaries · build_dictionary.R · variable_dictionary.x
 ```
 
 Scripts are self-contained (each re-sources config + utils + its own data).
-**Order matters at the tail:** 07/08/09 each save a hypothesis family
-(`analysis/output/fam_{A,D,E}.rds`) that `10_supplement.R` reads for the
+**Order matters at the tail:** 07/08/09/13 each save a hypothesis family
+(`analysis/output/fam_{A,D,E,F}.rds`) that `10_supplement.R` reads for the
 multiple-testing table; 08 also builds `fig_long_weekend_event`, the displacement
 event study now shown in the supplement. **`12_subgroups.R` runs BEFORE `11`**
 despite its number: it saves `robson_grad.rds`, the coefficients `11` draws as
 Figure 3 panel (c) (`11` falls back to the old two-panel layout if the file is
 absent). `11_body_figures.R` is otherwise self-contained (it reads
 `sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
+`13_demand_smoothing.R` is cheap (~1 min, reads only the cached
+`sinasc_daily_estab.parquet`), so it is outside the memory constraint below.
 **Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06, 12) concurrently** —
 each loads `sinasc_births.parquet` and two together exhaust memory (12 alone peaks
 around 14GB of R vector cells). Run sequentially.
@@ -363,7 +381,10 @@ bootstrap, sample flow, timing missingness, Robson validation, **the Parto
 Adequado hospital-level Sun–Abraham event study only** (`fig_ref_c11`, from
 `10_supplement.R` H/C11, styled: x-axis in years, dashed line at the 2017 onset,
 y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multiple_testing`
-(5 families A–E, incl. long weekends D and capacity E).
+(6 families A–F, incl. long weekends D, capacity E and demand smoothing F).
+D.10 is `tab_demand_smoothing` (added 2026-09-05, inside the organizational-capacity
+block); it pushed heterogeneity to D.11 and everything after down one — re-derive
+from `supplement.aux`, never renumber by hand.
 
 ## Key numbers (sanity checks; SINASC = 2010–2024)
 
@@ -384,7 +405,11 @@ y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multi
 | Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
 | Early-term (37–38wk) for-profit gap, maternal controls | +11.7pp*** |
 | Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
-| Excess weekday cesareans | ~50k/yr for-profit (~10.5%) |
+| Excess weekday cesareans (own-municipality benchmark) | 39,135/yr for-profit = 10.0% of weekday cesareans (national sector-year benchmark would give 50,073; do NOT mix them) |
+| Reconciliation of the two counterfactuals | 8.3pp gross × 482k weekday births = ~40k/yr; Eq. (3) 2.3pp × 482k = ~11k/yr |
+| GKM benchmark in our units | ~0.72pp per log point of the fee gap (R$1,941 mean cesarean fee) |
+| Demand smoothing, pull-forward δ | −0.21pp (SE 0.29) n.s.; forecast slope 0.065 out of sample; MDE 0.80pp |
+| Demand smoothing, throughput | prelabor share → log VMR of weekly births +0.27 (p=0.065, Holm 0.196) |
 | `log_fee_gap` coef (UF / muni FE) | +0.017 / −0.014 (n.s.) |
 
 ## Compile
@@ -520,7 +545,7 @@ Two Proof Patrol reports (PDF in Downloads, "GPT Feedback") drove this round:
   wards), Melo (bed-allocation classes), and us (natureza jurídica).
 - **New literature block** (capacity/staffing/crowding): maibom2021 (JHE),
   bensnes2026 (Health Econ), facchini2022 (JEBO), bachner2024 (IZA DP 16981);
-  timing lit expanded with cohen1983, spetz2001, spinola2025 (the published
+  timing lit expanded with cohen1983, spetz2001, spinola2026 (the published
   EJHE version of Rocha–Spinola 2016), gans2012, lo2003. All verified.
 - **Language softened** (3 exact substitutions): "identifies supply-side
   scheduling without identifying whose convenience" → "documents an
@@ -719,16 +744,125 @@ recompiling the baseline. Do not go hunting for them as regressions.
 `\satab`/`\safig` references into `??`. If the references print as `??`, suspect
 this before suspecting the source.
 
+## The 2026-09-05 revision (internal-review items 1-5, 7, 10 and O4)
+
+Executing the "Prioridade Revisada" of `parto_cesareo/PARECER_INTERNO_2026-08-20.md`.
+Roadmap rewritten in that order; temperature robustness dropped from scope.
+
+**1. de Elejalde & Giolito (2021, JHE 75:102411) is now cited** — it was absent
+from the whole manuscript, which was an editorial risk at the target journal and
+left the direct counter-hypothesis unaddressed. Their Chilean private hospitals
+were paid the SAME price for either delivery mode and the cesarean rate rose 8.6pp
+anyway; the mechanism is schedulability used to smooth demand. Added to the agency
+block of the intro, the contribution block, Section 6D, the conclusion, and a new
+Supplemental Appendix subsection. ⚠️ Cite **8.6pp** (the published JHE version),
+not the 4.6pp of the IZA DP in `parto_cesareo/Literature/`.
+
+**2. The WHO 10-15% error is fixed** (3 occurrences: abstract, intro, background).
+That band is from the **1985** statement; it was attributed to `who2015cesarean`,
+which says the opposite. The current declaration (WHO/RHR/15.02) sets NO target
+rate, says population-level survival gains stop appearing above ~10%, and directs
+institutional comparison through the Robson classification. The text now says all
+three, and points out that we use Robson throughout. Do not reintroduce "10-15%
+reference range". ⚠️ The sentence naming the 1985 statement as the source of the
+10-15% band was written and then **cut at Fredie's request** (2026-09-05): the
+correction stands on what the current guidance says, and does not need to litigate
+where the old number came from. Do not re-add it.
+
+**3. The price claim is recalibrated, and this is the substantive change.**
+`tab_ref_c5_feegap_ci` said "not within" four times while its note concluded "there
+is no robust relationship" — the table never supported that. It now carries a fifth
+column, the Gruber-Kim-Mayzlin magnitude (~1pp per US$1,000, converted at our own
+fee levels to **0.72pp per log point**). Result: the two municipality-FE intervals
+EXCLUDE the canonical magnitude, the two state-FE intervals (27 clusters) do not,
+and none establishes equivalence. Section 5 now reports the two schemes separately
+and drops the false "small" applied to the +0.047 state-FE coefficient. **The
+argument now rests on calibration, not on the regression**: applied to the 0.10 to
+0.35 log-point negative gap of the big states, the canonical response predicts
+~0.25pp against a 35pp gap. Abstract, intro, Section 5, conclusion and
+`highlights.txt` all reworded to match.
+
+**4. The ~50,000 excess weekday cesareans: text and code now agree.** The body
+described an own-municipality benchmark; `03_mechanisms.R` computed a national
+sector-year one. The code was migrated to the municipality version (the one the
+text claims and the more defensible one, since it absorbs geographic composition)
+and now reads `sinasc_daily_muni.parquet` instead of the birth-level file:
+**39,135/yr, 10.0% of for-profit weekday cesareans**. The denominator in the prose
+was also wrong (10.5% is the share of ALL cesareans, not weekday ones). A new
+footnote reconciles the two counterfactuals: the benchmark prices the gross 8.3pp
+gradient (~40k/yr on 482k weekday births), Eq. (3) prices only the 2.3pp for-profit
+differential (~11k/yr).
+
+**5. `.bib` corrections applied** — `johnson2016` title ("Information and
+incentives", not "Information asymmetry and incentives"), `melo2024` (33(9):2013-2058),
+`parfitt2026` (art. 103725 + DOI), `elejalde2021` added, **`melo2023` added and
+cited** in Section 2 (the published evaluation of the very policy the section
+describes: -1.6pp, +0.07 weeks, +10g). `curriemacleod2016` was already cited.
+`spinola2025` was renamed **`spinola2026`** and now carries its published volume
+(EJHE 27:1117--1148, 2026; online 29 Dec 2025), supplied by Fredie the same day.
+
+**7. Demand smoothing tested: `analysis/code/13_demand_smoothing.R`.** Two
+pre-specified tests on establishment-week cells of for-profit births, 2015-2024
+(672 establishments, 281,748 cells), from the cached `sinasc_daily_estab.parquet`.
+(A) **Pull-forward**: the prelabor cesarean share of week w against expected demand
+in w+1, where expected demand is the leave-one-out mean of the establishment's own
+births in that week of the year across other years. **Null** (-0.21pp, SE 0.29) —
+but the forecast is weak (out-of-sample slope 0.065, MDE 0.80pp), so report it as
+bounding only large responses, NOT as a rejection.
+⚠️ **The leave-one-out mean must be normalized by the establishment's own annual
+mean before averaging across years.** Without it the LOO mean is mechanically
+NEGATIVE against the value it omits whenever the establishment trends, and the
+forecast validation comes out at -0.44. The first version of the script had this
+bug.
+(B) **Throughput**: log variance-to-mean ratio of weekly births on the
+establishment-year prelabor share. +0.27 within establishments (p=0.065, Holm
+0.196) — the OPPOSITE sign to levelling. Report as an absence of levelling, not as
+evidence that scheduling makes the flow lumpier. Becomes **family F** in
+`tab_multiple_testing` (now six families) and Supplement Table **D.10**.
+Net effect on positioning: we confirm their headline (the incentive survives the
+absence of a price gap) and locate the margin elsewhere (weekly and
+ownership-specific, not seasonal and throughput-levelling).
+
+**10. Replication package assembled.** `README.md` gained a **Compiling the
+manuscript** section (the two-way `xr` cycle, verbatim, with the `grep -c` checks)
+and a **Deposit checklist**. Script 13 wired into `config/00_master_analysis.R`
+(before 10) and into the program-to-output inventory. Two stale facts corrected:
+the birth file is **42M** rows, not 24M, and `12` belongs in the do-not-run-in-parallel
+list. The deposit itself and a `LICENSE` file are still open.
+
+**O4. Prose pass** (the parecer's note was that the intro carries 60+ word
+sentences, off-model for Johnson & Rehavi). Meta voice removed: "Panel B gives the
+context", "Panel B shows why", "The raw gradients supply the context", "previews
+the two designs", "and two facts emerge". Long sentences broken: the 97-word data
+sentence, the 96-word four-defenses sentence, the 79-word capacity sentence, the
+72-word conclusion opener. The remaining 60+ word sentences are equation-variable
+definitions and citation lists, which are conventional. One drumbeat I had
+introduced myself ("The margin differs, however.") was folded back in.
+
+**Build after all of it:** paper **37 pages** (was 35), supplement **27** (was 23);
+0 undefined refs and 0 undefined citations in both; 1 overfull hbox in paper and 1
+overfull vbox in supplement, BOTH the documented pre-existing ones. The body
+exhibit map is unchanged (6 tables + 3 figures, same numbers).
+⚠️ A `$` written unescaped inside an R-generated table note ("US$1,000") opens math
+mode and produced four overfull hboxes of ~300pt in the supplement. Escape it as
+`US\$` in the R source. Caught and fixed the same day.
+
 ## ACTION items for Fredie
 
 - Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes cited in
   the Cost-section back-of-envelope and verify citations.
-- **Temperature robustness (Proof Patrol R1 C4, still open):** acquire municipal
-  daily temperature (INMET or ERA5) and re-estimate Eq (3) adding
-  ForProfit×temperature-bin controls (+ precipitation if available; + dropping
-  days above the local 95th percentile), reported next to the main spec in the
-  supplement, to show the calendar gradient is not an unmodeled Parfitt climate
-  channel. No temperature data exists in the repo yet, so this was NOT done.
+- ~~**Temperature robustness (Proof Patrol R1 C4)**~~ — **OUT OF SCOPE**, user
+  decision 2026-09-05. The muni×date FE already absorb temperature common to both
+  sectors; the residual threat requires the two sectors to respond *differently*
+  to heat in a calendar-correlated way, which nobody has articulated. Kept as a
+  referee-response item only; the execution plan survives in
+  `parto_cesareo/ROADMAP.md` Part VI. Do not put it back on the critical path.
+- **Reproduce end-to-end** (`config/00_master_analysis.R` in full, 13 before 10).
+  The blocks touched on 2026-09-05 were re-run individually and check out, but the
+  whole pipeline has not been run since. Prerequisite for the deposit checklist.
+- **Deposit the replication package** (Zenodo/openICPSR) and replace the
+  placeholder sentence in the Data availability section with the DOI. The package
+  is assembled; `README.md` now carries the compile cycle and a deposit checklist.
 - **Confirm the CRediT roles** drafted in paper.tex (marked TODO) before
   submission; Elsevier requires them to be accurate.
 - Prepare the Elsevier declarations-tool entries (competing interests Word doc)

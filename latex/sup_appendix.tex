@@ -169,6 +169,51 @@ measures and samples.
 \input{../analysis/output/tables/tab_org_capacity.tex}
 \input{../analysis/output/tables/tab_org_capacity_valid.tex}
 
+\subsection{The demand-smoothing channel}\label{app:smoothing}
+
+\citet{elejalde2021} show that Chilean private hospitals raised their cesarean
+rate after a demand shock even though a vaginal delivery and a cesarean were paid
+the same price, and attribute the response to schedulability: booking a cesarean
+lets a hospital move a delivery off a week it expects to be crowded and take more
+deliveries in total. It is the closest published alternative to our own reading of
+a calendar gradient without a fee gap, and two of its implications are testable
+here. Table~\ref{tab:demand_smoothing} reports both, on establishment-week cells
+of for-profit births from 2015 to 2024. We fixed the primary outcome, the primary
+parameter, and the sample before estimating.
+
+Panel A tests pull-forward. Expected demand for an establishment in a given week
+of the year is the leave-one-out mean of its own births in that week of the year
+across all other years, with each week first expressed relative to the
+establishment's own average week in its own year. The normalization matters: a
+raw leave-one-out mean is mechanically negatively related to the value it omits
+whenever the establishment is growing, since the early years of an expanding
+maternity fall below and the later years above the mean of the other years. If
+deliveries are moved off anticipated crowding, the coefficient on expected demand
+in the following week is positive. It is a small negative in every column and
+never distinguishable from zero. That null carries limited weight, and the table
+says why. Out of sample the forecast recovers only 0.065 log points of realized
+relative demand per log point, because an individual maternity's week-to-week
+volume is close to unforecastable from its own seasonal history, and the design
+would reject only responses above 0.8 percentage points per log point.
+
+Panel B tests the primitive of the same model, that scheduling levels the flow of
+deliveries, and is better powered. The outcome is the log variance-to-mean ratio
+of the establishment-year's weekly birth counts, which is zero under a purely
+Poisson arrival process and positive when weekly volume is lumpier than chance.
+Within establishments a higher prelabor cesarean share goes with a higher ratio,
+by 0.27 log points per unit of the share. That coefficient is significant at ten
+percent on its own and not after the family adjustment of
+Table~\ref{tab:multiple_testing}, so we read it as an absence of levelling rather
+than as evidence that scheduling makes the flow lumpier. Its sign is nonetheless
+the opposite of the one demand smoothing predicts. Both panels report associations
+rather than the causal effect of crowding or of scheduling, and neither
+contradicts the Chilean result, which comes from a different institutional shock.
+Taken together they say that the mechanism operating without a price gap in Chile
+is not the one visible in Brazil: scheduling here is organized around the week,
+not around the levelling of throughput.
+
+\input{../analysis/output/tables/tab_demand_smoothing.tex}
+
 \subsection{Heterogeneity and demand-side alternatives}
 
 Table~\ref{tab:heterogeneity} reports the
@@ -213,7 +258,7 @@ is not a missingness artifact.
 \subsection{Multiple hypothesis testing}\label{app:multiple}
 
 The paper reports more than one test in several places where a reader may worry
-about selective reporting. We therefore group the hypotheses into five
+about selective reporting. We therefore group the hypotheses into six
 pre-specified families and adjust within each. Family A is the for-profit
 calendar gradient of Table~\ref{tab:main_gradient}, which tests the weekend,
 holiday, and eve interactions together. Family B is the supplemental
@@ -224,14 +269,19 @@ for-profit--public outcome differences of Table~\ref{tab:health}: early-term
 birth, low birthweight, and low Apgar score. Family D is the long-weekend family
 of Table~\ref{tab:long_weekends}: the three holiday-type interactions and the
 pre-holiday displacement sum. Family E is the pair of organizational-capacity
-interactions of Table~\ref{tab:org_capacity}. Families are defined by the
+interactions of Table~\ref{tab:org_capacity}. Family F is the demand-smoothing
+family of Table~\ref{tab:demand_smoothing}: the two forward-demand coefficients
+and the throughput-dispersion coefficient. Families are defined by the
 substantive question a reader would pose, not by the outcome of the test.
 Table~\ref{tab:multiple_testing} reports, within each family, the Holm-Bonferroni
 adjusted $p$-value \citep{holm1979}, which controls the familywise error rate, and
 the Benjamini-Hochberg $q$-value \citep{benjamini1995}, which controls the false
-discovery rate. The adjustments do not change any conclusion: the estimates that
-are individually significant remain so, and the tests that were insignificant to
-begin with stay insignificant. The precision comes from sample sizes in the
+discovery rate. The adjustments do not change any conclusion the paper draws. The estimates that
+are individually significant at conventional levels remain so, and the tests that
+were insignificant to begin with stay insignificant; the one coefficient that
+loses its marginal significance under the adjustment, the throughput dispersion of
+family F, is one the paper reports as an absence of evidence rather than as a
+finding. The precision comes from sample sizes in the
 millions rather than from a fortunate choice among tests.
 
 \input{../analysis/output/tables/tab_multiple_testing.tex}

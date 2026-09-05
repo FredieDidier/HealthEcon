@@ -1,0 +1,52 @@
+\begin{table}[H]\centering
+\caption{\textbf{The demand-smoothing channel: pull-forward and throughput}}
+\label{tab:demand_smoothing}
+\small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+\multicolumn{6}{l}{\emph{Panel A. Prelabor timing and expected demand in the following week}} \\
+\addlinespace[2pt]
+ & \multicolumn{3}{c}{Prelabor cesarean share} & Cesarean share & In-labor share \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-5}\cmidrule(lr){6-6}
+ & (1) & (2) & (3) & (4) & (5) \\
+\midrule
+Expected demand, following week & -0.281 & -0.210 & -0.264 & -0.242 & -0.020 \\
+ & (0.306) & (0.287) & (0.447) & (0.189) & (0.282) \\
+\addlinespace[2pt]
+Expected demand, current week & 0.428 & 0.428 & 0.780$^{*}$ & -0.072 & -0.475$^{*}$ \\
+ & (0.283) & (0.291) & (0.469) & (0.185) & (0.282) \\
+\addlinespace[2pt]
+Expected demand, preceding week & 0.280 & -0.025 & 0.066 & 0.013 & -0.110 \\
+ & (0.328) & (0.289) & (0.453) & (0.164) & (0.294) \\
+\addlinespace[2pt]
+\midrule
+Establishment FE & Yes & $\times$ year & $\times$ year & $\times$ year & $\times$ year \\
+Week-of-year FE & Yes & Yes & -- & Yes & Yes \\
+Year FE & Yes & -- & -- & -- & -- \\
+Municipality $\times$ week FE & -- & -- & Yes & -- & -- \\
+Establishment-weeks & 281,748 & 281,748 & 281,748 & 281,748 & 281,748 \\
+Forecast slope, out of sample & \multicolumn{5}{c}{0.065 (0.013)} \\
+Minimum detectable $\delta$ (pp) & \multicolumn{5}{c}{0.80} \\
+\midrule
+\multicolumn{6}{l}{\emph{Panel B. Prelabor scheduling and the dispersion of the weekly delivery flow}} \\
+\addlinespace[2pt]
+ & \multicolumn{4}{c}{Log variance-to-mean ratio of weekly births} & \\
+\cmidrule(lr){2-5}
+ & (1) & (2) & (3) & (4) & \\
+\midrule
+Prelabor cesarean share & 0.087 & 0.267$^{*}$ &  &  & \\
+ & (0.122) & (0.145) &  &  & \\
+\addlinespace[2pt]
+Cesarean share &  &  & 0.264 & 0.497 & \\
+ &  &  & (0.192) & (0.466) & \\
+\addlinespace[2pt]
+Establishment FE & -- & Yes & -- & Yes & \\
+Municipality $\times$ year FE & Yes & Yes & Yes & Yes & \\
+Establishment-years & 5,467 & 5,467 & 5,467 & 5,467 & \\
+\bottomrule
+\end{tabular}
+}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} SINASC, for-profit establishments, 2015--2024. The sample keeps establishments averaging at least one hundred births a year and observed in at least five years. \emph{Panel A} tests the pull-forward prediction of \citet{elejalde2021}: a maternity that expects a crowded week should book deliveries out of it in advance, so the coefficient on expected demand in the following week should be positive. Expected demand for an establishment in a given week of the year is the leave-one-out mean of its births in that week of the year across all other years, each week first expressed relative to the establishment's own average week in its own year; leaving out the current year breaks the mechanical link with the births that form the outcome. Coefficients are in percentage points of the outcome share per log point of expected demand, and every column also controls for the number of national holidays in the current and the following week. The forecast slope is the out-of-sample regression of realized relative demand in the following week on the forecast, and the minimum detectable $\delta$ is the effect this design would reject at 80 percent power and 5 percent size. \emph{Panel B} tests the primitive of the same model, that scheduling levels the flow of deliveries: the outcome is the log of the variance-to-mean ratio of the establishment-year's weekly birth counts, which is zero under a purely Poisson arrival process, and coefficients are log points per unit of the share. Cells are weighted by births; standard errors are two-way clustered by establishment and week in Panel A and clustered by establishment in Panel B. Both panels report associations, not the causal effect of crowding or of scheduling.
+\end{minipage}
+\end{table}

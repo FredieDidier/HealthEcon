@@ -330,9 +330,10 @@ message("03_mechanisms.R: Block 3 (mechanism checks) done")
 #       practice style -> the epidemic is about how medicine is practiced, not
 #       who gives birth where. Report as accounting, not caused cesareans.
 #   (b) EXCESS WEEKDAY CESAREANS: a transparent scheduling benchmark — hold each
-#       sector-year's weekend cesarean propensity as the "unscheduled" rate and
-#       count weekday cesareans above it (~50k/yr for-profit). A MECHANICAL
-#       benchmark, not the number of cesareans caused by scheduling.
+#       MUNICIPALITY's own weekend cesarean propensity as the "unscheduled" rate
+#       and count weekday cesareans above it (~39k/yr for-profit, one in ten
+#       weekday cesareans). A MECHANICAL benchmark, not the number of cesareans
+#       caused by scheduling.
 #   -> tab11_decomposition (body, Table 6) + headline numbers printed for the text.
 # =============================================================================
 
@@ -394,16 +395,39 @@ tex <- c(
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))
 
 # --- (b) excess weekday cesareans (scheduling counterfactual) ------------------
-# benchmark: each sector-year's WEEKEND cesarean rate; excess = weekday births ×
-# (weekday rate − weekend rate), summed. Reported per year, private and public.
-b[, weekend := as.integer(dow %in% c(1, 7))]
-ex <- b[, .(births = .N, ces = sum(cesarean)), by = .(sector, year, weekend)]
-exw <- dcast(ex, sector + year ~ weekend, value.var = c("births", "ces"))
+# Benchmark: each MUNICIPALITY's own weekend cesarean rate, within sector and
+# year; excess = that municipality-year's weekday births x (its weekday rate -
+# its weekend rate), summed. The own-municipality version is the one the paper
+# describes and the more defensible one, because it absorbs the geographic
+# composition of births; benchmarking instead against the NATIONAL sector-year
+# weekend rate gives a larger count (50,073 for-profit) by letting high-cesarean
+# municipalities be scored against the weekend rate of the whole country.
+# The count is expressed as a share of WEEKDAY cesareans, which is the
+# denominator the sentence in the body refers to.
+# A MECHANICAL benchmark, not the number of cesareans caused by scheduling.
+dm <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
+dm[, date := as.IDate(date)]
+dm <- dm[year(date) <= 2024 & sector %in% c("Private", "Public")]
+dm[, `:=`(year = year(date), weekend = as.integer(wday(date) %in% c(1, 7)))]
+n_years <- uniqueN(dm$year)
+ex  <- dm[, .(births = sum(births), ces = sum(cesarean)),
+          by = .(sector, year, muni, weekend)]
+exw <- dcast(ex, sector + year + muni ~ weekend, value.var = c("births", "ces"))
+exw <- exw[!is.na(births_0) & !is.na(births_1) & births_1 > 0]
 exw[, `:=`(rate_wd = ces_0 / births_0, rate_we = ces_1 / births_1)]
 exw[, excess := births_0 * (rate_wd - rate_we)]
-cat("\nExcess weekday cesareans per year (scheduling counterfactual):\n")
-print(exw[, .(mean_per_year = format(round(mean(excess)), big.mark = ","),
-              share_of_cesareans = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0 + ces_1))),
+cat("\nExcess weekday cesareans per year (own-municipality weekend benchmark):\n")
+print(exw[, .(mean_per_year = format(round(sum(excess) / n_years), big.mark = ","),
+              share_of_weekday_cesareans = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0)),
+              share_of_all_cesareans     = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0 + ces_1))),
           by = sector])
+# Reconciliation with the headline differential of Equation (3). The benchmark
+# above uses the sector's OWN weekend rate, so it prices the full gross gradient
+# (8.3pp for-profit); the headline coefficient nets out the weekly scheduling
+# common to both sectors and prices only the 2.3pp for-profit differential.
+wd <- dm[sector == "Private" & weekend == 0, .(births = sum(births))]$births / n_years
+cat(sprintf("for-profit weekday births per year: %s\n  8.3pp of them = %s (gross weekend benchmark)\n  2.3pp of them = %s (Eq. 3 differential)\n",
+            format(round(wd), big.mark = ","), format(round(0.083 * wd), big.mark = ","),
+            format(round(0.023 * wd), big.mark = ",")))
 
 message("03_mechanisms.R: Block 4 (decomposition) done")
