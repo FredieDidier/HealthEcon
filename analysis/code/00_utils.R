@@ -10,6 +10,21 @@ PAL <- c(red = "#C0392B", blue = "#2471A3", grey = "#616A6B",
          orange = "#E67E22", navy = "#2C3E50")
 
 # ---------------------------------------------------------------------------
+# REDUNDANT ENCODING: every series distinguished by colour also gets a line type.
+# The palette itself is colour-vision safe (dichromat simulation, 2026-09-06:
+# the closest pair that ever shares a figure is red/orange at Delta-E 24 under
+# tritanopia, well above the ~10 confusion threshold), but red, blue and grey are
+# near-isoluminant (relative luminance 0.143 / 0.148 / 0.139), so a photocopy or
+# a greyscale printout of a colour-only line chart collapses the series into one.
+# Map `linetype` to the SAME variable as `colour` and pass the series names in
+# the SAME order as the colour scale: identical breaks and an empty title (see
+# theme_paper) make ggplot merge the two guides into a single legend.
+# Point-based panels (Figure 2b, Figure 3c) use `shape` for the same purpose.
+# ---------------------------------------------------------------------------
+LTY <- c("solid", "22", "44", "1343", "73")
+lty_for <- function(nms) stats::setNames(LTY[seq_along(nms)], nms)
+
+# ---------------------------------------------------------------------------
 # NAMING CONVENTION for the two "private" populations, which are overlapping but
 # not identical. Keep them lexically distinct everywhere in exhibits and prose:
 #

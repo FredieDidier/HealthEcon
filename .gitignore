@@ -21,3 +21,9 @@ latex/*.pdf
 latex/*.synctex.gz
 
 .DS_Store
+
+# Machine-specific data root (never distributed)
+config/config_local.R
+
+# Rscript side effect when a base-graphics device is opened headless
+Rplots.pdf

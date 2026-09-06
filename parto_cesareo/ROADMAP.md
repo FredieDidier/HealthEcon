@@ -133,18 +133,27 @@ continuando a passada de 04/09/2026.
 | **R1** | Reprodução end-to-end com o dataset local (`config/00_master_analysis.R` inteiro, na ordem, com `13` antes de `10`) | Claude | Baixo |
 | **T1** | Rodada formal de revisão interna dos quatro coautores. **Acrescentar ao roteiro de leitura os itens 1–4 do parecer**, que mudaram o *conteúdo* das alegações | Coautores | Médio |
 | **D1** | Confirmar os papéis CRediT (hoje um rascunho marcado TODO em `paper.tex`) | Fredie | Baixo |
-| **D2** | Verificar as magnitudes de Tita et al. (2009) citadas no back-of-envelope de custo | Fredie | Baixo |
-| **D4** | Entradas da ferramenta de declarações da Elsevier (conflito de interesse em Word) | Fredie | Baixo |
-| **D5b** | **Depositar** o pacote (Zenodo ou openICPSR) e trocar o placeholder do Data availability por DOI. O pacote está montado; falta o depósito e o checklist do `README.md` | Vinicius + Fredie | Baixo |
+| **D5b** | **Depositar** o pacote (Zenodo ou openICPSR) e trocar o placeholder do Data availability por DOI. O pacote está montado e o checklist do `README.md` está fechado exceto pelos itens que dependem de R1 | Vinicius + Fredie | Baixo |
+
+**Resolvidos em 06/09/2026:** D2 (Tita conferido contra o registro do Europe PMC —
+NEJM 360(2):111–120; OR ajustada 2,1 a 37 semanas e 1,5 a 38, contra 39; o corpo não
+cita magnitude nenhuma, só direção, e a direção está certa), D4 (`latex/submission/
+declaration_of_interest.docx`, com as declarações-companheiras copiadas literalmente
+do `paper.tex`), O5 (ver Parte IX) e três itens do checklist de depósito: `LICENSE`
+(MIT), `config/config.R` com placeholder + `config_local.R` git-ignorado, e a
+compilação nos dois sentidos verificada (37 e 27 páginas, zero referência e zero
+citação indefinidas). **D1 fica como está** — os papéis CRediT do rascunho são os
+definitivos, por decisão do Fredie (06/09/2026); o TODO no `paper.tex` pode sair na
+véspera da submissão.
 
 ### 🟡 Desejáveis, não bloqueantes
 
 | # | Item | Nota |
 |---|---|---|
-| O3 | Sugestão de referees | **Subiu de importância depois de R-B.** Com de Elejalde citado e bem posicionado, ele vira nome *sugerível* em vez de risco. Montar a lista pensando em quem é aliado natural da tese de agendabilidade |
+| ~~O3~~ | ~~Sugestão de referees~~ | **Retirado do escopo** por decisão do Fredie (06/09/2026): não sugeriremos pareceristas |
 | O1 | Cover letter para o JHE | Escrever em janeiro |
 | O2 | Preprint SSRN gratuito na submissão | Decisão do Fredie |
-| O5 | Checagem de acessibilidade das figuras (daltonismo) | `PAL` já é razoável; vale confirmar |
+| ~~O5~~ | ~~Acessibilidade das figuras~~ | ✅ Feito em 06/09/2026. Ver Parte IX |
 
 ---
 
@@ -247,3 +256,43 @@ Valem para qualquer pessoa (ou agente) que edite o paper. Detalhamento em
 9. **Não rodar dois scripts de 42M linhas em paralelo.**
 10. **Não commitar dados.**
 11. **Se mover um exhibit, re-derivar o mapa de `paper.aux`** — nunca renumerar à mão.
+
+
+---
+
+## Parte IX — O5: acessibilidade das figuras (06/09/2026)
+
+**Daltonismo: passa.** Simulação dicromática de Viénot–Brettel–Mollon das cinco
+cores do `PAL` (`analysis/code/00_utils.R`), com distância ΔE em CIE-Lab de todos
+os pares que aparecem juntos em alguma figura:
+
+| Par | Normal | Protanopia | Deuteranopia | Tritanopia |
+|---|---|---|---|---|
+| vermelho/azul (for-profit vs. público) | 93 | 68 | 91 | 91 |
+| vermelho/laranja | 35 | 33 | 27 | 24 |
+| azul/laranja | 105 | 95 | 114 | 79 |
+| vermelho/cinza | 70 | 35 | 54 | 67 |
+| azul/navy | 29 | 30 | 31 | 28 |
+
+O pior caso é vermelho/laranja sob tritanopia, ΔE 24 — bem acima do limiar de ~10
+em que duas séries começam a se confundir. **Nenhuma mudança de cor é necessária.**
+
+**O que a checagem achou de fato: impressão em preto e branco.** Vermelho, azul e
+cinza são quase isoluminantes (luminâncias relativas 0,143, 0,148 e 0,139; razão de
+contraste 1,03). Em fotocópia, as séries for-profit e pública viram a mesma linha
+cinza. As figuras que dependem só de cor são a Figura 1 (tendência), a Figura 3(a)
+(dia da semana), a 3(b) (hora do parto) e os painéis de idade gestacional do
+suplemento; a Figura 2(b) e a 3(c) já trazem `shape` redundante.
+
+**Corrigido no mesmo dia**, a pedido do Fredie. `analysis/code/00_utils.R` ganhou
+`LTY` e `lty_for()`, e as sete figuras que dependiam só de cor passaram a mapear
+`linetype` para a mesma variável de `colour`, na mesma ordem, o que faz o ggplot
+fundir os dois guides numa legenda única: Figura 1, Figura 3(a) e 3(b) no corpo;
+`fig02_dow_cesarean`, `fig03_robson_dow`, `fig07_hour_of_birth`,
+`fig08_daily_counts` e os dois painéis de idade gestacional no suplemento. A
+Figura 2(b) e a 3(c) já traziam `shape` redundante e ficaram como estavam.
+
+Os scripts 01, 03, 05 e 11 foram re-rodados em sequência (7min30 no total) e
+**nenhuma tabela mudou um byte** — o que, de quebra, é a primeira verificação
+parcial de R1: os números de 01, 03, 05 e 11 se reproduzem exatamente. Paper e
+suplemento recompilados depois disso.

@@ -80,11 +80,13 @@ dow_tab <- sd[sector %in% SECTOR_LEVELS,
               .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
 dow_tab[, sector := sector_display(sector)]
 dow_tab[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
-fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
+fig2 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector,
+                            linetype = sector)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]),
                                  Nonprofit = unname(PAL["orange"]),
                                  Public = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("For-profit", "Nonprofit", "Public"))) +
   # no hard y-limits: scale_y_continuous(limits=) DROPS out-of-range points
   # (with the 2010-2024 sample private weekday rates exceed 75%, which erased
   # the private line); let the scale adapt instead.
@@ -155,9 +157,11 @@ if (!file.exists(BIRTHS)) {
                  .(rate = mean(cesarean, na.rm = TRUE)), by = .(sector, dow)]
   dow_tab[, sector := sector_display(sector, c("Private", "Public"))]
   dow_tab[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
-  fig3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
+  fig3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector,
+                              linetype = sector)) +
     geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
     scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]), Public = unname(PAL["blue"]))) +
+    scale_linetype_manual(values = lty_for(c("For-profit", "Public"))) +
     labs(x = NULL, y = "Cesarean rate (%), Robson groups 1-2") +
     theme_paper()
   save_fig(fig3, "fig03_robson_dow")
@@ -269,12 +273,13 @@ cnt <- b[, .(births = .N), by = .(type = fifelse(cesarean == 1, "Cesarean", "Vag
 cnt[, sector := sector_display(sector, c("Private", "Public"))]
 cnt[, dow_lab := factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat"))]
 cnt[, idx := 100 * mean_daily / mean_daily[dow == 3], by = .(type, sector)]  # Tue = 100
-fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type)) +
+fig8 <- ggplot(cnt, aes(dow_lab, idx, colour = type, group = type, linetype = type)) +
   geom_hline(yintercept = 100, colour = "grey70") +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   facet_wrap(~sector) +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]),
                                  Vaginal = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("Cesarean", "Vaginal"))) +
   labs(x = NULL, y = "Mean daily births (Tuesday = 100)") +
   theme_paper()
 save_fig(fig8, "fig08_daily_counts", height = 3.8)

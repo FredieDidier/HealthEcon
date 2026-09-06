@@ -37,9 +37,16 @@ b <- b[year <= 2024 & sector %in% c("Private", "Public")]
 g <- b[semana_gestacao %between% c(32, 43)]
 ga <- g[, .N, by = .(sector, week = semana_gestacao)]
 ga[, share := N / sum(N), by = sector]
-fig9a <- ggplot(ga, aes(week, 100 * share, colour = sector)) +
+# Display names, never the raw `sector` levels: the SINASC group is "For-profit"
+# (natureza juridica 2xxx), and a legend reading "Private" would conflate it with
+# the private-insurance sector of TISS. Relabel the aggregate only -- `g` keeps
+# the raw levels because the next block subsets on sector == "Private".
+ga[, sector := sector_display(sector, c("Private", "Public"))]
+fig9a <- ggplot(ga, aes(week, 100 * share, colour = sector, linetype = sector)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
-  scale_colour_manual(values = c(Private = unname(PAL["red"]), Public = unname(PAL["blue"]))) +
+  scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]),
+                                 Public = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("For-profit", "Public"))) +
   scale_x_continuous(breaks = seq(32, 43, 1)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)") +
   theme_paper()
@@ -52,11 +59,13 @@ gp[, group := fcase(cesarean == 0, "Vaginal",
                     cesarea_antes_parto == 2, "In-labor cesarean")]
 gd <- gp[!is.na(group), .N, by = .(group, week = semana_gestacao)]
 gd[, share := N / sum(N), by = group]
-fig9b <- ggplot(gd, aes(week, 100 * share, colour = group)) +
+fig9b <- ggplot(gd, aes(week, 100 * share, colour = group, linetype = group)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   scale_colour_manual(values = c("Prelabor cesarean" = unname(PAL["red"]),
                                  "In-labor cesarean" = unname(PAL["orange"]),
                                  "Vaginal" = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("Prelabor cesarean", "In-labor cesarean",
+                                           "Vaginal"))) +
   scale_x_continuous(breaks = seq(32, 43, 1)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)") +
   theme_paper()

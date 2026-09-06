@@ -96,7 +96,13 @@ flag. Enforced in code via `sector_display()` / `SECTOR_DISPLAY` in
   Call it the **"private-insurance sector"**. ~82% cesarean.
 
 Never write bare "private" as the SINASC group name, and never "private
-for-profit" (conflates payer and ownership). Headline contrast is **for-profit
+for-profit" (conflates payer and ownership). The rule binds figure legends too:
+`fig09_gestation` (from `05_cost.R`) labelled its series "Private"/"Public" until
+2026-09-06 and now calls `sector_display()` like everywhere else. Relabel the
+AGGREGATE, not the source table -- the block right after it subsets on
+`sector == "Private"`. That figure and `fig09b_gestation_by_timing` are orphan
+outputs, included in no `.tex`: the supplement's Figure C.4 is
+`fig_gestation_panels`, built by `11_body_figures.R`. Headline contrast is **for-profit
 (2xxx) vs public (1xxx)**; nonprofit (3xxx, SUS-heavy) shows in figures, excluded
 from headline tests. Do NOT lump 3xxx into for-profit (inflates the share to
 ~56%).
@@ -406,6 +412,7 @@ from `supplement.aux`, never renumber by hand.
 | Early-term (37–38wk) for-profit gap, maternal controls | +11.7pp*** |
 | Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
 | Excess weekday cesareans (own-municipality benchmark) | 39,135/yr for-profit = 10.0% of weekday cesareans (national sector-year benchmark would give 50,073; do NOT mix them) |
+| Same benchmark, municipality pooled over years (NOT what the code does) | 41,535/yr = 10.6% -- this is the 41.5k of the internal review; the script benchmarks municipality x YEAR, which is tighter and gives 39,135. Both are "own-municipality"; the difference is the year-specific weekend rate. Verified 2026-09-06 |
 | Reconciliation of the two counterfactuals | 8.3pp gross × 482k weekday births = ~40k/yr; Eq. (3) 2.3pp × 482k = ~11k/yr |
 | GKM benchmark in our units | ~0.72pp per log point of the fee gap (R$1,941 mean cesarean fee) |
 | Demand smoothing, pull-forward δ | −0.21pp (SE 0.29) n.s.; forecast slope 0.065 out of sample; MDE 0.80pp |
@@ -442,6 +449,21 @@ Supplemental Appendix is a separate document.
   `save_fig()`. **Never `scale_y_continuous(limits=)`** — it silently drops
   out-of-range points; use `breaks` or `coord_cartesian`. Multi-panel body figures
   use `patchwork`.
+- **Colour accessibility (checked 2026-09-06, roadmap Part IX).** `PAL` passes
+  dichromat simulation: the worst pair that ever shares a figure is red/orange at
+  Delta-E 24 under tritanopia, far above the ~10 confusion threshold, so the
+  palette needs no change. What it does NOT survive is greyscale: red, blue and
+  grey are near-isoluminant (0.143 / 0.148 / 0.139), so a black-and-white printout
+  collapses for-profit and public in Figure 1, Figure 3(a), Figure 3(b) and the
+  supplement's gestational-age panels. Figures 2(b) and 3(c) already carry a
+  redundant `shape`. **Fixed the same day**: `LTY` + `lty_for()` in
+  `analysis/code/00_utils.R`, and every colour-only line figure now maps
+  `linetype` to the SAME variable as `colour`, with the series names passed in the
+  SAME order, so the two guides merge into one legend (pass them out of order and
+  you get two legends). Seven figures changed -- Figure 1, Figure 3(a), Figure
+  3(b), and the supplement's `fig02_dow_cesarean`, `fig03_robson_dow`,
+  `fig07_hour_of_birth`, `fig08_daily_counts`, `fig_gestation_panels`. Scripts 01,
+  03, 05, 11 were re-run (7.5 minutes total) and NO table changed a byte.
 - **Figure size = printed size (`FIG_WIDTH = 6.5` in `analysis/code/00_utils.R`).**
   Both documents are 12pt `article` with 1in margins, so the text block is exactly
   6.5in and every ggplot figure is included at `width=\textwidth` (the maps at
@@ -739,7 +761,12 @@ generative-AI declaration) and the one overfull vbox in `supplement` (46pt, at
 recompiling the baseline. Do not go hunting for them as regressions.
 
 ⚠️ **Something external clears `latex/*.aux`.** Twice during this session the
-`.aux`/`.log`/`.bbl` files vanished from `latex/` between two commands. Because
+`.aux`/`.log`/`.bbl` files vanished from `latex/` between two commands.
+(Confirmed again 2026-09-06: a full clean cycle finished, the greps on `paper.log`
+and `supplement.log` ran fine inside the same command, and by the next command
+every `.aux`/`.log`/`.bbl` was gone while both PDFs survived. Consequence: capture
+the log greps in the SAME command as the compile, and never run a single
+`pdflatex` pass expecting the previous run's `.aux` to still be there.) Because
 `xr` runs both ways, a clean in the middle of the cycle turns all ~29
 `\satab`/`\safig` references into `??`. If the references print as `??`, suspect
 this before suspecting the source.
@@ -849,8 +876,14 @@ mode and produced four overfull hboxes of ~300pt in the supplement. Escape it as
 
 ## ACTION items for Fredie
 
-- Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes cited in
-  the Cost-section back-of-envelope and verify citations.
+- ~~Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes~~ —
+  **done 2026-09-06.** Checked against the Europe PMC record: NEJM 360(2):111--120,
+  title and pages in `refs.bib` are right; elective repeat cesarean at 37 vs 39
+  weeks carries an adjusted OR of 2.1 (95% CI 1.7--2.5) for the composite adverse
+  neonatal outcome and 1.5 (1.3--1.7) at 38 weeks, with respiratory morbidity,
+  ventilation, sepsis, hypoglycemia and NICU admission each elevated. The body
+  quotes NO magnitude from Tita, only the direction, and the direction is correct;
+  nothing to change. (If a referee wants the number, the ORs are the ones to add.)
 - ~~**Temperature robustness (Proof Patrol R1 C4)**~~ — **OUT OF SCOPE**, user
   decision 2026-09-05. The muni×date FE already absorb temperature common to both
   sectors; the residual threat requires the two sectors to respond *differently*
@@ -863,7 +896,19 @@ mode and produced four overfull hboxes of ~300pt in the supplement. Escape it as
 - **Deposit the replication package** (Zenodo/openICPSR) and replace the
   placeholder sentence in the Data availability section with the DOI. The package
   is assembled; `README.md` now carries the compile cycle and a deposit checklist.
-- **Confirm the CRediT roles** drafted in paper.tex (marked TODO) before
-  submission; Elsevier requires them to be accurate.
-- Prepare the Elsevier declarations-tool entries (competing interests Word doc)
-  and consider the free SSRN preprint option at submission.
+  Three checklist items closed 2026-09-06: `LICENSE` (MIT, the four authors);
+  `config/config.R` now ships a placeholder `DROPBOX_ROOT` and resolves the real
+  path from `HEALTHECON_DATA` or from the git-ignored `config/config_local.R`
+  (which is where Fredie's own path now lives), erroring out if the directory has
+  no `build/`; and the two-way compile verified (37 + 27 pages, 0 undefined refs,
+  0 undefined citations).
+- ~~**Confirm the CRediT roles**~~ — Fredie's decision 2026-09-06: the drafted
+  allocation stands as written. Drop the TODO comment at submission; do not
+  reallocate roles.
+- **Elsevier declarations**: `latex/submission/declaration_of_interest.docx`
+  (written 2026-09-06) carries the signed-interest form plus the funding, data
+  availability, generative-AI and CRediT statements copied verbatim from
+  `paper.tex`, so the entries typed into Elsevier's tool match the manuscript.
+  Fredie signs and dates it.
+- Consider the free SSRN preprint option at submission. **Suggesting referees is
+  out of scope** (Fredie, 2026-09-06).

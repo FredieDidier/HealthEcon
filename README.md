@@ -9,6 +9,7 @@ Lucas Emanuel (UFBA, lucasemanuel@ufba.br)
 ```
 config/
   config.R              # <-- THE ONLY FILE TO EDIT (set DROPBOX_ROOT)
+  config_local.R        # optional, git-ignored: your own DROPBOX_ROOT
   00_master_build.R     # runs the data build
   00_master_analysis.R  # runs all analysis scripts, in order
 build/
@@ -237,7 +238,11 @@ The package is assembled here and is deposited in a trusted open repository
 (Zenodo or openICPSR) before acceptance; the DOI then replaces the placeholder in
 the Data availability statement of `latex/paper.tex`. Before depositing, confirm:
 
-- [ ] `config/config.R` ships with a placeholder `DROPBOX_ROOT`, not a local path.
+- [x] `config/config.R` ships with a placeholder `DROPBOX_ROOT`, not a local path.
+      The data root is resolved in three steps: the `HEALTHECON_DATA` environment
+      variable, then `config/config_local.R` (git-ignored, one assignment), then
+      the placeholder in `config.R` itself. Whichever wins, the file stops with a
+      clear message if the directory it names has no `build/` subdirectory.
 - [ ] `renv.lock` and `sessionInfo.txt` are current for the R version used in the
       final run.
 - [ ] The full pipeline has been run end to end on a clean checkout, and every
@@ -248,4 +253,7 @@ the Data availability statement of `latex/paper.tex`. Before depositing, confirm
       `build/01*` download scripts; the data citations above give the archived
       versions.
 - [ ] The one-time download scripts run against the current source URLs.
-- [ ] A `LICENSE` for the code (MIT or BSD-2) is present.
+- [x] A `LICENSE` for the code (MIT) is present.
+- [x] `paper.pdf` and `supplement.pdf` compile through the two-way cycle above
+      with zero undefined references and zero undefined citations (verified
+      2026-09-06: 37 and 27 pages).

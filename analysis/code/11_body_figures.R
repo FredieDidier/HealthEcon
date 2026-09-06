@@ -196,11 +196,13 @@ dsec <- sd[sector %in% SECTOR_LEVELS]   # drop "Other" (unmatched estabs)
 dow_tab <- dsec[, .(rate = sum(cesarean) / sum(births)), by = .(sector, dow)]
 dow_tab[, `:=`(dow_lab = factor(dow, 1:7, c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")),
                sector = sector_display(sector))]
-pa3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector)) +
+pa3 <- ggplot(dow_tab, aes(dow_lab, 100 * rate, colour = sector, group = sector,
+                           linetype = sector)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]),
                                  Nonprofit = unname(PAL["orange"]),
                                  Public = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("For-profit", "Nonprofit", "Public"))) +
   scale_y_continuous(breaks = seq(30, 90, 10)) +
   labs(x = NULL, y = "Cesarean rate (%)", subtitle = "(a) Cesarean rate by day of week") +
   theme_paper() + panel_title
@@ -220,10 +222,11 @@ hd[, share := N / sum(N), by = .(sector, type)]
 # title up relative to the unfaceted panels (a) and (c), which is exactly the
 # asymmetry the shared `panel_title` element is there to avoid. The x-axis title
 # is dropped because the panel title already names the axis.
-pb3 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
+pb3 <- ggplot(hd, aes(hour, 100 * share, colour = type, linetype = type)) +
   geom_line(linewidth = 0.9) +
   facet_wrap(~sector, strip.position = "bottom") +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]), Vaginal = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("Cesarean", "Vaginal"))) +
   # drop the 24 break: next to the 0 of the neighbouring facet the two labels touch
   scale_x_continuous(breaks = seq(0, 18, 6)) +
   labs(x = NULL, y = "Share of births (%)", subtitle = "(b) Hour of birth") +
@@ -273,9 +276,10 @@ g <- g[year <= 2024 & sector %in% c("Private", "Public") & semana_gestacao %betw
 ga <- g[, .N, by = .(sector, week = semana_gestacao)]
 ga[, share := N / sum(N), by = sector]
 ga[, sector := sector_display(sector, c("Private", "Public"))]
-qa <- ggplot(ga, aes(week, 100 * share, colour = sector)) +
+qa <- ggplot(ga, aes(week, 100 * share, colour = sector, linetype = sector)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.4) +
   scale_colour_manual(values = c(`For-profit` = unname(PAL["red"]), Public = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("For-profit", "Public"))) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
        subtitle = "(a) By establishment sector") +
@@ -288,14 +292,16 @@ gp[, group := fcase(cesarean == 0, "Vaginal", cesarea_antes_parto == 1, "Prelabo
                     cesarea_antes_parto == 2, "In-labor cesarean")]
 gd2 <- gp[!is.na(group), .N, by = .(group, week = semana_gestacao)]
 gd2[, share := N / sum(N), by = group]
-qb <- ggplot(gd2, aes(week, 100 * share, colour = group)) +
+qb <- ggplot(gd2, aes(week, 100 * share, colour = group, linetype = group)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.4) +
   scale_colour_manual(values = c("Prelabor cesarean" = unname(PAL["red"]),
                                  "In-labor cesarean" = unname(PAL["orange"]),
                                  "Vaginal" = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("Prelabor cesarean", "In-labor cesarean",
+                                           "Vaginal"))) +
   scale_x_continuous(breaks = seq(32, 43, 2)) +
   # three long labels in a 3.25in panel: one per row, otherwise the last is clipped
-  guides(colour = guide_legend(ncol = 1)) +
+  guides(colour = guide_legend(ncol = 1), linetype = guide_legend(ncol = 1)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)",
        subtitle = "(b) For-profit, by delivery timing") +
   theme_paper() +

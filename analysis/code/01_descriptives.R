@@ -56,15 +56,17 @@ pal_sector <- c("Private insurance (TISS claims)"    = unname(PAL["red"]),
                 "For-profit establishments (SINASC)" = unname(PAL["orange"]),
                 "Public establishments (SINASC)"     = unname(PAL["blue"]))
 
-fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series)) +
+fig1 <- ggplot(trend, aes(year, 100 * rate, colour = series, linetype = series)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.6) +
   scale_colour_manual(values = pal_sector) +
+  scale_linetype_manual(values = lty_for(names(pal_sector))) +
   scale_x_continuous(breaks = seq(2010, 2024, 2)) +   # SINASC now starts in 2010
   scale_y_continuous(breaks = seq(0, 90, 15)) +
   coord_cartesian(ylim = c(0, 90)) +                  # zoom, never drop points
   labs(x = NULL, y = "Cesarean rate (%)") +
   # three long series labels: wrap the bottom legend to 2 rows so none is clipped
-  guides(colour = guide_legend(nrow = 2, byrow = TRUE)) +
+  guides(colour = guide_legend(nrow = 2, byrow = TRUE),
+         linetype = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_paper()
 save_fig(fig1, "fig01_csection_trend", height = 4.2)
 
@@ -150,11 +152,12 @@ b[, `:=`(type    = fifelse(cesarean == 1, "Cesarean", "Vaginal"),
 # --- hour-of-birth distribution, by delivery type × sector --------------------
 hd <- b[, .N, by = .(sector, type, hour)]
 hd[, share := N / sum(N), by = .(sector, type)]
-fig7 <- ggplot(hd, aes(hour, 100 * share, colour = type)) +
+fig7 <- ggplot(hd, aes(hour, 100 * share, colour = type, linetype = type)) +
   geom_line(linewidth = 0.9) + geom_point(size = 1.2) +
   facet_wrap(~sector) +
   scale_colour_manual(values = c(Cesarean = unname(PAL["red"]),
                                  Vaginal = unname(PAL["blue"]))) +
+  scale_linetype_manual(values = lty_for(c("Cesarean", "Vaginal"))) +
   scale_x_continuous(breaks = seq(0, 24, 4)) +
   labs(x = "Hour of birth", y = "Share of births (%)") +
   theme_paper()
