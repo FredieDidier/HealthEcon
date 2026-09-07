@@ -220,18 +220,28 @@ postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
 # standardize_notes(): one note style for every exhibit in both documents.
 # A note emitted as a bare "\\[2pt]\footnotesize\textit{Notes:} ..." line, or
 # behind a "\par \raggedright", sits directly in the float and inherits its
-# \centering, so it prints centred or ragged while the hand-built tables print
-# a justified full-width block. That is the note misalignment. This rewrites
-# any of the older forms into the canonical block
+# \centering, so it prints centred line by line or ragged. This rewrites any of
+# those forms into the canonical block
 #
 #   \begin{minipage}{\linewidth}\footnotesize
 #   \textit{Notes:} ...
 #   \end{minipage}
 #
-# whose \@parboxrestore cancels the float's \centering, so the note is
-# justified at full width. Idempotent (a file that already carries a minipage
-# is left alone); runs inside postprocess_tex() and inside write_table_tex().
-# The figure notes match it through \fignotes in paper.tex / supplement.tex.
+# a JUSTIFIED block at the FULL width of the text column: the minipage's
+# \@parboxrestore cancels the float's \centering, so the note is justified
+# instead of centred. Idempotent (a file that already carries a minipage is left
+# alone); runs inside postprocess_tex() and inside write_table_tex(). The figure
+# notes match it through \fignotes in paper.tex / supplement.tex.
+#
+# HISTORY, so this is not flipped again by accident. This is the MONASTERIO form
+# and it is what the project uses. Until 2026-09-04 the notes were an
+# unstandardized mixture, which is exactly what Monasterio flagged on the sibling
+# WorldCupHealth paper ("padronizar o alinhamento das notas... tem umas que estao
+# desalinhadas, nao justificadas"), and the fix there and here was this full-width
+# justified block. On 2026-09-07 it was briefly changed to a narrower centred
+# block, because a one-line note at full width sits flush left under a centred
+# caption and reads as misaligned, and REVERTED the same day at Fredie's request.
+# Do not narrow it, do not wrap it in \centerline, and do not re-add \centering.
 # ---------------------------------------------------------------------------
 NOTE_OPEN  <- "\\begin{minipage}{\\linewidth}\\footnotesize"
 NOTE_CLOSE <- "\\end{minipage}"

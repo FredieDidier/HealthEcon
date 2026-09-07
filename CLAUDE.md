@@ -236,6 +236,8 @@ analysis/ code/  00_utils.R (theme_paper, PAL, sector_display, tex_row/tex_coef/
                  tab_subgroup_gradients + robson_grad.rds) ·
                  13_demand_smoothing.R (de Elejalde-Giolito channel →
                  tab_demand_smoothing + fam_F.rds; RUN BEFORE 10) ·
+                 14_estab_practice_style.R (Robson-standardized dispersion across
+                 maternities → tab_estab_practice_style) ·
                  11_body_figures.R (merged panels; RUN AFTER 12)
           output/ {graphs, tables, maps}      committed to git
 latex/    paper.tex · model.tex (App A) · appendix.tex (A+B) · supplement.tex
@@ -254,7 +256,7 @@ absent). `11_body_figures.R` is otherwise self-contained (it reads
 `sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
 `13_demand_smoothing.R` is cheap (~1 min, reads only the cached
 `sinasc_daily_estab.parquet`), so it is outside the memory constraint below.
-**Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06, 12) concurrently** —
+**Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06, 12, 14) concurrently** —
 each loads `sinasc_births.parquet` and two together exhaust memory (12 alone peaks
 around 14GB of R vector cells). Run sequentially.
 
@@ -267,11 +269,14 @@ around 14GB of R vector cells). Run sequentially.
   SINASC/input/sinasc_births.parquet (~42M, 2010–2024) · sinasc_daily_muni.parquet
          (muni×date×sector) · sinasc_daily_timing_muni.parquet (adds prelabor/
          in-labor/vaginal counts, cached by 08) · sinasc_daily_estab.parquet
-         (establishment×date for-profit cells, cached by 09)
+         (establishment×date for-profit cells, cached by 09) ·
+         sinasc_estab_year_robson.parquet (establishment-year × Robson cells with
+         case-mix sums, all three sectors, cached by 14)
   CNES/input/cnes_beds_muni_year.parquet (MONTHLY — 12 competências/yr; take
          December only when aggregating) · cnes_obstetricians_muni_year.parquet ·
          cnes_obstetricians_estab_year.parquet · cnes_estab_year.parquet (the
-         establishment capacity panel from 01d)
+         establishment capacity panel from 01d; carries beds_sus /
+         beds_obstetric_sus / sus_share / sus_share_obstetric since 2026-09-07)
   IEPS/output/ieps_muni_year.parquet
   covariates/input/parto_adequado_fase2_hospitais.csv
   workfile/output/main_data.parquet                 THE muni-year analytical file
@@ -388,6 +393,9 @@ Adequado hospital-level Sun–Abraham event study only** (`fig_ref_c11`, from
 `10_supplement.R` H/C11, styled: x-axis in years, dashed line at the 2017 onset,
 y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multiple_testing`
 (6 families A–F, incl. long weekends D, capacity E and demand smoothing F).
+**`tab_estab_practice_style` (added 2026-09-07) is Table C.4**, which pushed
+`tab12_cost` from C.4 to C.5; appendix D is unchanged. Re-derive from
+`supplement.aux`, never renumber by hand.
 D.10 is `tab_demand_smoothing` (added 2026-09-05, inside the organizational-capacity
 block); it pushed heterogeneity to D.11 and everything after down one — re-derive
 from `supplement.aux`, never renumber by hand.
@@ -411,6 +419,13 @@ from `supplement.aux`, never renumber by hand.
 | Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
 | Early-term (37–38wk) for-profit gap, maternal controls | +11.7pp*** |
 | Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
+| Robson-standardized rate by sector (estab-year, births-weighted) | for-profit 72.1 / nonprofit 58.0 / public 47.9 (observed 78.8 / 59.9 / 44.8) |
+| Standardization removes of the 34.0pp for-profit–public gap | 9.8pp = 28.8%, matching the Kitagawa's 28% by another route |
+| Dispersion ACROSS for-profit maternities, standardized | SD 14.4pp; 6.6pp survives muni×year + maternal composition + capacity (46% of raw) |
+| Two for-profit maternities, same municipality-year | 13.4pp mean absolute gap in the standardized rate |
+| SUS share of obstetric beds by nat_jur | public 98.8% / for-profit 22.2% (median 0) / nonprofit 72.0% |
+| Weekend × SUS share of obstetric beds (for-profit) | +2.12pp (SE 1.04, p=0.041); holiday +3.37pp (SE 1.19, p=0.005) |
+| Weekend × log contracted obstetrician hours | −0.10pp (SE 0.17) — a precise zero, while scale stays +1.21pp*** |
 | Excess weekday cesareans (own-municipality benchmark) | 39,135/yr for-profit = 10.0% of weekday cesareans (national sector-year benchmark would give 50,073; do NOT mix them) |
 | Same benchmark, municipality pooled over years (NOT what the code does) | 41,535/yr = 10.6% -- this is the 41.5k of the internal review; the script benchmarks municipality x YEAR, which is tighter and gives 39,135. Both are "own-municipality"; the difference is the year-specific weekend rate. Verified 2026-09-06 |
 | Reconciliation of the two counterfactuals | 8.3pp gross × 482k weekday births = ~40k/yr; Eq. (3) 2.3pp × 482k = ~11k/yr |
@@ -496,9 +511,18 @@ Supplemental Appendix is a separate document.
   `write_table_tex()`, never with bare `writeLines()`* — that is what stops a
   re-run from silently reverting the style.
 - **Figure notes match the table notes.** `\fignotes` in BOTH `paper.tex` and
-  `supplement.tex` is the same full-width justified minipage. It used to be
-  `\centerline{minipage 0.85\textwidth}` with `\centering`; do not narrow it or
-  re-add `\centering`.
+  `supplement.tex` is the same full-width justified minipage. **This is the
+  Monasterio form**, the one his round on the sibling WorldCupHealth paper
+  settled on ("padronizar o alinhamento das notas... tem umas que estao
+  desalinhadas, nao justificadas"). Do not narrow it, do not wrap it in
+  `\centerline`, and do not re-add `\centering`.
+  ⚠️ **It was changed to a centred `0.9\textwidth` block on 2026-09-07 and
+  reverted the same day, at Fredie's instruction.** The motivation for trying it
+  was real (a one-line note at full width sits flush left under a centred caption
+  and reads as misaligned, Figure C.2 being the example) and it is not a reason to
+  try again. If it ever comes back, the change is three places that must agree:
+  `NOTE_OPEN`/`NOTE_CLOSE` in `00_utils.R`, `\fignotes` in `paper.tex`, and
+  `\fignotes` in `supplement.tex`, plus a migration over the 31 generated tables.
 - **fixest interaction naming**: an interaction may resolve as `a:b` or `b:a`;
   when building rows by name, look the term up in `rownames(coeftable(m))` or give
   BOTH orders a `dict` entry (see `09_org_capacity.R`).
@@ -873,6 +897,116 @@ exhibit map is unchanged (6 tables + 3 figures, same numbers).
 ⚠️ A `$` written unescaped inside an R-generated table note ("US$1,000") opens math
 mode and produced four overfull hboxes of ~300pt in the supplement. Escape it as
 `US\$` in the R source. Caught and fixed the same day.
+
+## The 2026-09-07 revision (Vinicius's CNES-level agenda: three items adopted)
+
+From a call in which Vinicius proposed going deeper at the establishment and
+care-team level. Six ideas; three adopted, three declined. The full memo, with the
+reasoning for every one of them, is `parto_cesareo/AGENDA_CNES_VINICIUS_2026-09-07.md`
+— read it before reopening any of this.
+
+**1. `14_estab_practice_style.R` (new) → Table C.4, `tab_estab_practice_style`.**
+The body's Kitagawa is a BETWEEN-SECTOR statement on two national aggregates; this
+makes the same statement BETWEEN HOSPITALS, where the decision is taken. One arrow
+pass over the birth file builds establishment-year × Robson cells (cached as
+`sinasc_estab_year_robson.parquet`), and each maternity gets a **Robson-standardized**
+cesarean rate: its own group-specific rates reweighted to the national Robson
+distribution of the same year, which is the institutional comparison WHO/RHR/15.02
+directs. Sample: 2014–2024, groups 01–10, establishment-years with ≥100 births,
+coverage ≥90% of the reference weight.
+- Panel A: standardization removes 28.8% of the for-profit–public gap (34.0→24.2pp),
+  **independently reproducing the Kitagawa's 28%**, and almost none of the
+  between-hospital dispersion (for-profit SD 16.2→14.5, P90−P10 40.8→38.1).
+- Panel B: outcome is the STANDARDIZED rate. 6.6pp of SD survives municipality×year,
+  maternal composition and obstetric capacity = 46% of the raw dispersion.
+- ⚠️ **Panel B must NOT use the observed rate with the ten Robson shares as
+  regressors.** That gives R²=0.951 / residual 4.6pp because the shares proxy the
+  within-group practice they correlate with. It is an UPPER BOUND on case-mix and is
+  reported as such in the note, never as a row. The first version of the script had
+  it as a row; the standardization is the conservative accounting.
+- Label it accounting, not a causal decomposition: the residual holds unmeasured
+  case-mix and unmeasured capacity alongside practice.
+
+**2. `obst_hours_hosp` finally used → `tab_org_capacity_valid` column 5.** The
+variable had been built by `01d` since July and never entered a regression. Sum of
+HORAHOSP over the establishment's obstetrician bonds; distinguishes a 4-hour
+registration from a 40-hour one. **Result is a precise zero** (weekend × log hours
+−0.10pp, SE 0.17) while the delivery-SCALE interaction is unchanged at +1.21pp***.
+This STRENGTHENS the existing caveat: the attenuation tracks the size of the service,
+not measured obstetric time. Median 34 h/week, 16.9% zero.
+
+**3. SUS bed shares → the payer-versus-ownership check.** `cnes_beds_muni_year.parquet`
+carries `n_beds_sus` / `n_beds_not_sus`, which sum to `n_existing_beds` exactly and
+had never been read. `01d` now aggregates them; only `build_estab_panel()` was
+re-run (**no CNES-PF re-download**), and the panel still has 84,213 rows.
+- Validation, obstetric beds: public 98.8% SUS, for-profit 22.2% (median 0),
+  nonprofit 72.0%. The median for-profit maternity places NO obstetric bed with the
+  SUS, which is what licenses reading 2xxx as a private-payer population, and the
+  nonprofit number is why 3xxx stays out of the headline. This went into the body's
+  sector-definition paragraph.
+- `tab_org_capacity_valid` column 6: **weekend × SUS share +2.12pp (p=0.041), holiday
+  +3.37pp (p=0.005)** — a for-profit maternity more exposed to the SUS has a FLATTER
+  calendar gradient. Same answer with the all-bed share (+2.08 / +2.59), which keeps
+  the establishments with no registered obstetric bed.
+- ⚠️ Report as an ASSOCIATION. Payer exposure is not assigned and `estab^year` holds
+  the level only. Permitted: "the calendar pattern varies with payer within a single
+  ownership type, which ownership alone cannot show." Forbidden: the causal effect of
+  a payer mix.
+
+**Declined, with reasons (do not re-litigate without new data):**
+- **"Establishment versus care team"** — the two make the SAME prediction, and the
+  separating design is *movers* (physician switching hospitals; Molitor 2018,
+  Chandra–Staiger), which needs a physician-to-birth link. SINASC has no professional
+  identifier and TISS has no hospital identifier. Turnover and multi-bond ARE
+  computable from CNES-PF (`CNS_PROF` × establishment × year) but inherit the
+  zero-obstetrician measurement failure, which is worse in changes than in levels.
+  The one piece worth a paper 2 is multi-bond at the MUNICIPALITY level (the
+  attribution error cancels within municipality), which is directly the model's Π.
+- **CBO in TISS** — verified in both dictionary vintages: `CBO` exists ONLY in
+  `Ambulatorial_DET`, never in `Hospitalar_DET`/`Hospitalar_CONS`. Deliveries are
+  hospital events, so the field does not exist for them. SIH has it but is 100% SUS,
+  the wrong sector, and is not in this project. The well-posed version is obstetrician
+  versus **nurse-midwife** supply, for which `is_enfermeiro_obstetra` (CBO 7145) is
+  already sitting in `build/00_utils.R`.
+- **A MONTHLY establishment panel** — the identification is DAILY (weekend, holiday,
+  muni×date); aggregating to month throws away the design. A monthly panel answers a
+  LEVELS question, not a scheduling one. What of it belonged here entered as
+  establishment-YEAR. Establishment trajectories over time are new and feasible but
+  descriptive without a shock, and exposed to mean reversion plus entry/exit.
+
+**No existing number moved.** `09`'s coefficients reproduced exactly (weekend × log
+obstetric beds +0.445pp under muni×date FE). Build: paper 37 pages, supplement 28
+(was 27), 0 undefined refs and 0 undefined citations in both, and the same two
+documented pre-existing overfull boxes.
+
+**Note style audited the same day** (Monastério's "padronizar o alinhamento das
+notas", from the WorldCupHealth round): all 31 generated tables carry the canonical
+`\begin{minipage}{\linewidth}\footnotesize` block, and all 10 figures in both
+documents use `\fignotes`, which is the same block. There is no exception. A SHORT
+note (Figure C.2's is one line) sits flush left under a centered caption and reads as
+misaligned, but that is what full-width justification looks like on one line, and it
+is identical to the table notes. A centred `0.9\textwidth` block was tried the
+same day and **reverted the same day** at Fredie's instruction: the notes stay in
+the Monasterio full-width justified form. Do not narrow it or re-add
+`\centering`.
+
+**Source upgrade in the background section.** The footnote behind "About a quarter
+of Brazilians hold private health insurance" (`paper.tex:420`) cited a **Fenacor**
+news page, a broker federation reporting on ANS, and was the manuscript's ONLY
+inline `\href`. It now cites **ANS (2026)** directly, the regulator's own sector
+dashboard at
+`https://www.gov.br/ans/pt-br/acesso-a-informacao/perfil-do-setor/dados-gerais`.
+Verified against the live page the same day: 53,080,809 beneficiaries of
+medical-hospital plans (June 2026) and a stated coverage rate of **25.0 percent**
+(July 2026), so "about a quarter" is exactly what the primary source says. The
+footnote keeps the inline-`\href` form rather than becoming a `@misc` entry; if it
+is ever converted, match the `data_ans_tiss` pattern in `refs.bib`.
+
+**No em dashes as punctuation.** Checked across `paper.tex`, `sup_appendix.tex`,
+`model.tex`, `appendix.tex` and all 31 table files: the only `--` occurrences are
+numeric ranges (2014--2024), en-dashed compounds (for-profit--public,
+physician--patient, Sun--Abraham), Elsevier's own CRediT terms ("Writing -- original
+draft") and the absent-marker dash in fixed-effect rows. All correct; keep them.
 
 ## ACTION items for Fredie
 

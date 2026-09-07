@@ -17,13 +17,14 @@ build/
   01a_tiss.R            # one-time ANS TISS Hospitalar download (CONS + DET)
   01b_sinasc_cnes.R     # one-time SINASC (Base dos Dados) + CNES downloads
   01c_ieps.R            # IEPS municipality-year covariates
-  01d_cnes_estab.R      # establishment-year CNES capacity panel (beds + obstetricians)
+  01d_cnes_estab.R      # establishment-year CNES capacity panel (beds, SUS bed shares, obstetricians)
   02_deliveries.R       # TISS delivery events + municipality-month panel
   03_workfile.R         # merges everything into main_data.parquet
 analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
                         #   07_main_specification.R  (Equation 3, the main gradient)
                         #   08_long_weekends.R       (holiday taxonomy + displacement)
                         #   09_org_capacity.R        (establishment-capacity heterogeneity)
+                        #   14_estab_practice_style.R (establishment-level dispersion)
                         #   13_demand_smoothing.R    (the de Elejalde-Giolito channel)
                         #   10_supplement.R          (Supplemental Appendix exhibits)
                         #   12_subgroups.R           (Robson / gestational-age / maternal-age splits)
@@ -168,7 +169,9 @@ Then:
 - **Peak memory** ~12 GB, driven by loading the birth-level SINASC file (42M
   records) into memory before aggregation. Do **not** run two of the large
   birth-level scripts (`03`, `05`, `06`, `07`, `08`, `09`, `12`) concurrently — each
-  loads `sinasc_births.parquet` and two together exhaust memory. The master
+  loads `sinasc_births.parquet` and two together exhaust memory. `14` reads the
+  same file but aggregates inside `arrow` and caches the result, so it is heavy
+  only on its first run. The master
   analysis script runs them sequentially.
 
 ## Program-to-output inventory
@@ -195,6 +198,7 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `07_main_specification.R` | **Table 2** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
 | `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
+| `14_estab_practice_style.R` | (supplement) | `tables/tab_estab_practice_style.tex` (Robson-standardized dispersion across maternities); caches `sinasc_estab_year_robson.parquet` |
 | `13_demand_smoothing.R` | (supplement) | `tables/tab_demand_smoothing.tex`; `fam_F.rds` |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
 | `12_subgroups.R` | (supplement) | `tables/tab_subgroup_gradients.tex` (gestational-age + maternal-age splits of Equation 3), `graphs/fig_robson_gradient`, `robson_grad.rds` (feeds **Figure 3** panel c) |

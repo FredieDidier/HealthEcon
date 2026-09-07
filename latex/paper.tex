@@ -40,6 +40,10 @@
 % table notes built by standardize_notes() in analysis/code/00_utils.R. Do not
 % narrow it or re-add \centering -- that is what made figure and table notes
 % look misaligned.
+% Figure notes must match the table notes: the same justified block at the FULL
+% width of the text column (NOTE_OPEN / NOTE_CLOSE in analysis/code/00_utils.R).
+% This is the Monasterio form. Do not narrow it, do not wrap it in \centerline,
+% and do not re-add \centering; see the note-style history in CLAUDE.md.
 \newcommand{\fignotes}[1]{%
   \par\vspace{1pt}%
   \begin{minipage}{\linewidth}\footnotesize%
@@ -413,7 +417,7 @@ model.
 % =============================================================================
 
 About a quarter of Brazilians hold private health
-insurance,\footnote{See \href{https://fenacor.org.br/noticias/ans-25-dos-brasileiros-tem-planos-de-saude}{Fenacor}.}
+insurance,\footnote{See \href{https://www.gov.br/ans/pt-br/acesso-a-informacao/perfil-do-setor/dados-gerais}{ANS (2026)}.}
 a parallel system
 of insurers and accredited hospitals regulated by the federal
 private-health-insurance authority, the National Supplementary Health Agency
@@ -503,7 +507,13 @@ an insurance-coverage one, and is not identical to the insurance-financed
 population observed in TISS: a SUS-financed birth can occur in a for-profit
 hospital, and an insured mother can deliver in a nonprofit one. We therefore
 reserve ``private-insurance sector'' for TISS results and describe SINASC results
-as comparing for-profit with public establishments.
+as comparing for-profit with public establishments. The two definitions do line up
+in practice. The facility registry records how many of an establishment's beds are
+made available to the SUS, and among obstetric beds the SUS share is 99 percent in
+public establishments, 22 percent in for-profit ones and 72 percent in nonprofit
+ones, with a median of zero across for-profit maternities. That is why the
+headline contrast is for-profit against public and the nonprofit sector, which is
+mostly SUS-financed, is shown in the figures but kept out of it.
 
 From these sources we build two files. The first is a municipality-year panel of
 private deliveries from the claims, with the cesarean rate, the two fees, and
@@ -511,8 +521,8 @@ municipal covariates, used for the fee analysis. The second is a
 municipality-by-date file of births by sector from the registry, used for the
 timing analysis. The organizational-capacity analysis of
 Section~\ref{sec:capacity} adds a third file, an establishment-year panel of
-obstetric beds and registered professionals from the facility registry, linked to
-each birth through the establishment code. Appendix~\ref{app:data} documents the
+obstetric beds, registered professionals and SUS bed shares from the facility
+registry, linked to each birth through the establishment code. Appendix~\ref{app:data} documents the
 construction and defines the main variables, \satab{tab:descriptives} reports
 summary statistics, and \satab{tab:sampleflow} reports the sample-construction
 flow.
@@ -1122,7 +1132,14 @@ percent reflects differences in case-mix; the remaining 72 percent is
 within-group practice style, the same women managed differently. That most of the
 gap is practice style rather than patient composition echoes the finding, in the
 literature on geographic variation in health care, that supply-side practice
-patterns dominate patient case-mix \citep{finkelstein2016,molitor2018}.
+patterns dominate patient case-mix \citep{finkelstein2016,molitor2018}. Reweighting each
+maternity's own group-specific rates to a common Robson distribution, the
+comparison the WHO's current guidance directs, leaves the standard deviation of
+cesarean intensity across for-profit maternities at 14 percentage points, of which
+6.6 points survive municipality-by-year fixed effects, predetermined maternal
+composition and obstetric capacity. Two for-profit maternities delivering in the
+same municipality and year differ by 13 percentage points on average in the
+standardized rate (\satab{tab:estab_practice_style}).
 Benchmarking
 each municipality's weekday cesarean propensity against its own weekend rate
 places about 39,000 for-profit weekday cesareans per year above that mechanical

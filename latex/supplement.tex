@@ -26,6 +26,10 @@
 \externaldocument{paper}        % resolves \eqref{eq:...} and \ref{tab:...} etc.
 
 % Figure-notes macro, identical to paper.tex (justified, full width).
+% Figure notes must match the table notes: the same justified block at the FULL
+% width of the text column (NOTE_OPEN / NOTE_CLOSE in analysis/code/00_utils.R).
+% This is the Monasterio form. Do not narrow it, do not wrap it in \centerline,
+% and do not re-add \centering; see the note-style history in CLAUDE.md.
 \newcommand{\fignotes}[1]{%
   \par\vspace{1pt}%
   \begin{minipage}{\linewidth}\footnotesize%

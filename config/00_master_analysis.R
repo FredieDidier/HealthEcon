@@ -18,6 +18,7 @@
 #   07_main_specification.R →  Equation (3), the main gradient table (Table 2).
 #   08_long_weekends.R      →  Long-weekend taxonomy + displacement event study.
 #   09_org_capacity.R       →  Organizational-capacity heterogeneity (needs 01d build).
+#   14_estab_practice_style.R → Establishment-level practice-style dispersion.
 #   13_demand_smoothing.R   →  The de Elejalde-Giolito demand-smoothing channel (null).
 #   10_supplement.R         →  Supplemental Appendix exhibits + multiple testing.
 #   12_subgroups.R          →  Robson / gestational-age / maternal-age subgroups.
@@ -27,7 +28,9 @@
 # (analysis/output/fam_*.rds) and 08 saves the event-study coefficients that
 # 10_supplement.R and 11_body_figures.R read, so keep 10 and 11 last. 12 runs
 # BEFORE 11 despite its number: it saves robson_grad.rds, the coefficients that
-# 11 draws as panel (c) of Figure 3.
+# 11 draws as panel (c) of Figure 3. 14 is descriptive and saves no family, so it
+# only has to run before the LaTeX compile; it sits next to 09 because both work at
+# the establishment level.
 #
 # PATHS: set DROPBOX_ROOT once in config/config.R (the only path to change on a
 #   new machine); every script sources it. GitHub-repo paths use here::here().
@@ -48,6 +51,7 @@ source(here("analysis", "code", "06_robustness.R"))         # policy nulls, refe
 source(here("analysis", "code", "07_main_specification.R")) # Equation (3), main gradient table
 source(here("analysis", "code", "08_long_weekends.R"))      # long-weekend taxonomy + displacement
 source(here("analysis", "code", "09_org_capacity.R"))       # organizational-capacity heterogeneity
+source(here("analysis", "code", "14_estab_practice_style.R"))  # establishment-level practice-style dispersion
 source(here("analysis", "code", "13_demand_smoothing.R"))   # demand-smoothing channel (family F)
 source(here("analysis", "code", "10_supplement.R"))         # supplemental exhibits + multiple testing
 source(here("analysis", "code", "12_subgroups.R"))          # Robson / gestational-age / maternal-age subgroups

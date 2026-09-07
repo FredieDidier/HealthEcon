@@ -30,7 +30,11 @@ comparison, which a formal test cannot distinguish from the Robson group 1 dip, 
 we do not treat preterm births as a placebo. Figure~\ref{fig:gestation} plots the
 distribution of gestational age at birth, by sector and, within the for-profit
 sector, by delivery timing; it is the descriptive counterpart to the early-term
-result of Table~\ref{tab:health}. Table~\ref{tab:cost} sums every item
+result of Table~\ref{tab:health}. Table~\ref{tab:estab_practice_style} moves
+the body's Kitagawa decomposition from the sector to the establishment, reporting
+how much of the dispersion in cesarean intensity across maternities survives the
+local market, the Robson case-mix, predetermined maternal composition and
+obstetric capacity. Table~\ref{tab:cost} sums every item
 billed under each delivery hospitalization and finds that a cesarean and a vaginal
 delivery generate similar gross billed amounts.
 
@@ -68,6 +72,7 @@ cesareans mass at 37--38 weeks, while in-labor cesareans and vaginal births mass
 at 39--40.}
 \end{figure}
 
+\input{../analysis/output/tables/tab_estab_practice_style.tex}
 \input{../analysis/output/tables/tab12_cost.tex}
 
 % =============================================================================
@@ -164,7 +169,25 @@ two-way clustered by municipality and date.}
 Table~\ref{tab:org_capacity} reports the organizational-capacity regressions of
 Section~\ref{sec:capacity} in full, and
 Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
-measures and samples.
+measures and samples. Two of those columns bear on the reading of the exercise.
+Column 5 measures obstetric capacity by the hours contracted at the establishment
+rather than by a headcount of registered obstetricians, which distinguishes a
+four-hour registration from a forty-hour one; the interaction is a precise zero
+($-$0.10 percentage points, standard error 0.17), while the delivery-scale
+interaction is unchanged, so the attenuation we do find tracks the size of the
+service and not measured obstetric time. Column 6 adds the SUS share of the
+establishment's obstetric beds, the one establishment-level measure of payer as
+distinct from ownership in our data. It is zero at the median for-profit
+maternity-year, which is what licenses reading natureza jur\'idica 2xxx as a
+predominantly private-payer population, and its interactions are positive: a
+for-profit maternity that places all of its obstetric beds with the SUS has a
+weekend gradient 2.1 percentage points flatter and a holiday gradient 3.4 points
+flatter than one that places none. Payer exposure is not assigned, and
+for-profit maternities serving the SUS differ from those that do not in ways the
+establishment-by-year fixed effects hold fixed only in levels, so we read this as
+an association rather than as the causal effect of a payer mix. It does say that
+the calendar pattern varies with payer within a single ownership type, which
+ownership alone cannot show.
 
 \input{../analysis/output/tables/tab_org_capacity.tex}
 \input{../analysis/output/tables/tab_org_capacity_valid.tex}

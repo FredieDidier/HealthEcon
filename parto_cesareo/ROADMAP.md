@@ -296,3 +296,84 @@ Os scripts 01, 03, 05 e 11 foram re-rodados em sequência (7min30 no total) e
 **nenhuma tabela mudou um byte** — o que, de quebra, é a primeira verificação
 parcial de R1: os números de 01, 03, 05 e 11 se reproduzem exatamente. Paper e
 suplemento recompilados depois disso.
+
+---
+
+## Parte X — A agenda de CNES do Vinicius (07/09/2026)
+
+Da call em que ele propôs descer ao nível do estabelecimento e da equipe médica.
+Seis ideias, **três adotadas e três recusadas**. O memorando completo, com a razão
+de cada uma, está em `parto_cesareo/AGENDA_CNES_VINICIUS_2026-09-07.md`; aqui fica
+só o placar.
+
+### Adotadas
+
+| # | Ideia | Onde ficou | Resultado |
+|---|---|---|---|
+| **C1** | Intensidade de cesárea por CNES padronizada por Robson, e o que sobra depois de controlar mercado, case-mix e capacidade | `14_estab_practice_style.R` → **Tabela C.4** + um acréscimo curto ao parágrafo do Kitagawa no corpo | Padronizar remove **28,8%** do gap for-profit−público (34,0→24,2pp), reproduzindo o Kitagawa por outro caminho, e quase nada da dispersão **entre** hospitais. Sobram **6,6pp de DP** entre maternidades for-profit depois de município×ano, composição materna e capacidade (46% do bruto); duas for-profit no mesmo município-ano diferem **13,4pp** |
+| **C2** | Carga horária | `09_org_capacity.R` → **Tabela D.9, coluna 5** | **Zero preciso** (−0,10pp, EP 0,17) enquanto a interação de escala fica em +1,21pp\*\*\*. Reforça a ressalva: a atenuação acompanha o tamanho do serviço, não o tempo obstétrico medido |
+| **C3** | "100% SUS" como medida de **pagador** (e não de propriedade) | `01d_cnes_estab.R` passa a agregar leitos SUS; validação no corpo; **Tabela D.9, coluna 6** | Leitos obstétricos SUS: público 98,8%, for-profit 22,2% (**mediana 0**), nonprofit 72,0%. E o gradiente é **mais plano** onde a for-profit atende SUS: fim de semana **+2,12pp** (p=0,041), feriado **+3,37pp** (p=0,005). Primeira evidência do paper baseada em pagador |
+
+### Recusadas
+
+| # | Ideia | Por quê |
+|---|---|---|
+| **C4** | Separar "efeito do estabelecimento" de "efeito da equipe" | Limite de dado, não de especificação: as duas histórias fazem a **mesma** predição, e o desenho que separaria é *movers*, que exige ligar **médico a parto**. SINASC não tem identificador de profissional; TISS não tem nem de hospital. Rotatividade e multi-vínculo são calculáveis pelo CNES-PF mas herdam a falha de medida do zero-obstetra, que é pior em diferenças que em nível |
+| **C5** | CBO nos dados de produção (TISS, SIH) | Verificado nos dois dicionários: `CBO` existe **só** em `Ambulatorial_DET`, nunca em `Hospitalar_DET`/`CONS`. Parto é evento hospitalar. SIH tem, mas é 100% SUS, o setor errado, e não está neste projeto. A versão bem-posta é **obstetra versus enfermeiro obstetra**, cujos classificadores já existem em `build/00_utils.R` |
+| **C6** | Painel CNES-**mensal** e trajetórias de estabelecimento | O desenho do paper é **diário**; agregar a mês joga fora a variação que identifica. Responde pergunta de **nível**, não de agendamento — é paper 2. O que dele cabia aqui entrou como estabelecimento-**ano** |
+
+**Nenhum número existente do paper mudou.** Os coeficientes do `09` reproduziram
+exatamente (fim de semana × log leitos = +0,445pp sob EF muni×data). Build: paper
+**37** páginas, suplemento **28** (era 27), zero referência e zero citação
+indefinida nos dois, e os mesmos dois overfull pré-existentes documentados.
+
+⚠️ **Renumeração:** a tabela nova é **C.4**, o que empurrou `tab12_cost` de C.4 para
+**C.5**. O apêndice D não mudou.
+
+**Paper 2, se quisermos.** O fato já está estabelecido pela Tabela C.4; falta o
+mecanismo. O caminho seria (i) painel de vínculos CNES-PF com multi-vínculo medido
+por município, que é diretamente o Π do modelo, (ii) composição obstetra versus
+enfermeiro obstetra, (iii) trajetórias com painel balanceado, e (iv) *movers*, se
+algum dia aparecer identificador de profissional ligado ao parto. Nada disso está no
+caminho crítico de março/2027.
+
+---
+
+## Parte XI — Notas de tabela e figura: bloco centrado (07/09/2026)
+
+Auditoria pedida pelo Fredie, aplicando a lógica do `MONASTERIO.md` do
+WorldCupHealth ("padronizar o alinhamento das notas") a este manuscrito.
+
+**O que a auditoria achou.** As notas **já estavam padronizadas**: as 31 tabelas
+geradas carregavam todas o bloco canônico `\begin{minipage}{\linewidth}` e as 10
+figuras dos dois documentos usavam todas `\fignotes`, que é o mesmo bloco. Nenhuma
+exceção. O que o Fredie viu na Figura C.2 é uma nota de **uma linha só**: em largura
+total ela encosta na margem esquerda debaixo de uma legenda centrada, e lê como
+desalinhada, embora seja exatamente o que justificação em largura total faz numa
+linha.
+
+**O que foi tentado, e desfeito no mesmo dia.** A geometria chegou a mudar para
+**bloco centrado a 0,9\textwidth** com o texto ainda justificado por dentro, aplicada
+uniformemente em `00_utils.R`, nas 31 tabelas geradas e no `\fignotes` dos dois
+documentos. **O Fredie mandou voltar**, e voltou: as notas estão de novo no bloco
+justificado em largura total, que é a **forma do Monasterio** e a que a rodada dele
+no WorldCup fixou. A migração de volta cobriu os mesmos três lugares e as 31 tabelas.
+
+⚠️ **Não tentar de novo.** A motivação era real (nota de uma linha em largura total
+encosta na margem esquerda debaixo de legenda centrada) e ainda assim a decisão é
+manter a largura total. Se algum dia mudar, são três lugares que têm de bater:
+`NOTE_OPEN`/`NOTE_CLOSE` em `analysis/code/00_utils.R`, `\fignotes` em `paper.tex` e
+`\fignotes` em `supplement.tex`, mais a migração das tabelas já geradas.
+
+**Build depois de voltar:** paper **37** páginas, suplemento **28**, zero referência e
+zero citação indefinida nos dois, e os dois overfull pré-existentes de volta aos
+valores documentados (hbox de 2,8pt no paper, vbox de 46pt no suplemento; com o bloco
+estreito o vbox tinha ido a 58pt). Os PDFs voltaram ao mesmo tamanho em bytes de
+antes da mudança.
+
+**Travessões:** conferido em `paper.tex`, `sup_appendix.tex`, `model.tex`,
+`appendix.tex` e nos 31 arquivos de tabela. Não há travessão usado como pontuação. As
+únicas ocorrências de `--` são intervalos numéricos (2014--2024), compostos com
+en-dash (for-profit--public, physician--patient, Sun--Abraham), os termos CRediT da
+própria Elsevier ("Writing -- original draft") e o traço de ausência nas linhas de
+efeito fixo. Todas corretas, manter.

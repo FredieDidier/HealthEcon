@@ -14,6 +14,18 @@
 #       1 surgical, 2 clinical, 3 complementary (ICU), 4 OBSTETRIC,
 #       5 pediatric, 6 other specialties, 7 day hospital.
 #
+#       PAYER EXPOSURE. The same file splits every bed count into beds made
+#       available to the SUS and beds that are not (`n_beds_sus` /
+#       `n_beds_not_sus`, which sum to `n_existing_beds` exactly), so the panel
+#       also carries the establishment's SUS bed share. This is the only
+#       establishment-level measure of PAYER in the project: `nat_jur` is
+#       ownership, and the paper's headline contrast reads it as a proxy for the
+#       payer mix. The share validates that reading -- among obstetric beds in
+#       the December competencias, 98.8 percent of public, 22.2 percent of
+#       for-profit and 72.0 percent of nonprofit beds are SUS beds -- and it is
+#       also why nonprofit (3xxx) establishments stay out of the headline
+#       contrast rather than being lumped with for-profit ones.
+#
 #   (b) OBSTETRICIANS. CNES-PF (professional bonds), one competencia per year
 #       (December), pulled UF by UF and aggregated immediately. We count
 #       DISTINCT professionals (CNS_PROF) per establishment, not bonds, because
@@ -32,6 +44,7 @@
 # Output (Dropbox):
 #   build/CNES/input/cnes_estab_year.parquet
 #     cnes, codufmun, year, nat_jur, beds_total, beds_obstetric,
+#     beds_sus, beds_obstetric_sus, sus_share, sus_share_obstetric,
 #     n_obstetricians, n_obst_bonds, obst_hours_hosp, n_physicians
 #
 # CAVEAT carried into the paper: a CNES-registered obstetrician is not
@@ -66,17 +79,21 @@ UF_LIST <- c("AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
 build_estab_beds <- function() {
   b <- as.data.table(arrow::read_parquet(
     BEDS_IN, col_select = c("competence", "cnes", "codufmun", "nat_jur", "tipo_leito",
-                            "n_existing_beds", "year")))
+                            "n_existing_beds", "n_beds_sus", "year")))
   for (cc in c("competence", "cnes", "codufmun", "nat_jur", "tipo_leito"))
     set(b, j = cc, value = as.character(b[[cc]]))
-  set(b, j = "n_existing_beds", value = as.integer(as.character(b$n_existing_beds)))
+  for (cc in c("n_existing_beds", "n_beds_sus"))
+    set(b, j = cc, value = as.integer(as.character(b[[cc]])))
   b <- b[!is.na(n_existing_beds)]
+  set(b, i = which(is.na(b$n_beds_sus)), j = "n_beds_sus", value = 0L)
   b <- b[substr(competence, 5, 6) == "12"]   # December only: the file is monthly
   b[, cnes7 := formatC(as.integer(cnes), width = 7, flag = "0")]
-  out <- b[, .(beds_total     = sum(n_existing_beds),
-               beds_obstetric = sum(n_existing_beds[tipo_leito == "4"]),
-               nat_jur        = nat_jur[1],
-               codufmun       = codufmun[1]),
+  out <- b[, .(beds_total         = sum(n_existing_beds),
+               beds_obstetric     = sum(n_existing_beds[tipo_leito == "4"]),
+               beds_sus           = sum(n_beds_sus),
+               beds_obstetric_sus = sum(n_beds_sus[tipo_leito == "4"]),
+               nat_jur            = nat_jur[1],
+               codufmun           = codufmun[1]),
            by = .(cnes = cnes7, year)]
   message("establishment-year beds: ", nrow(out), " rows")
   out
@@ -139,6 +156,12 @@ build_estab_panel <- function() {
   panel[, sector := fifelse(grepl("^2", nat_jur), "Private",
                     fifelse(grepl("^3", nat_jur), "Nonprofit",
                     fifelse(grepl("^1", nat_jur), "Public", "Other")))]
+  # SUS bed shares: payer exposure, NA rather than 0/0 where the denominator is
+  # empty, so an establishment with no obstetric bed does not read as 0% SUS.
+  panel[, `:=`(sus_share = fifelse(beds_total > 0L, beds_sus / beds_total, NA_real_),
+               sus_share_obstetric = fifelse(beds_obstetric > 0L,
+                                             beds_obstetric_sus / beds_obstetric,
+                                             NA_real_))]
   arrow::write_parquet(panel, ESTAB_OUT)
   message("saved cnes_estab_year.parquet (", nrow(panel), " rows, ",
           uniqueN(panel$cnes), " establishments)")
