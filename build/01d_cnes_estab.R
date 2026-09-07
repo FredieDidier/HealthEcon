@@ -20,9 +20,9 @@
 #       a physician can hold several bonds at the same hospital.
 #
 #       VALIDATION RESULT (do not treat this variable as the obstetric team).
-#       Among establishments with at least fifty deliveries in the year, roughly
-#       half register ZERO obstetricians (is_obstetra) and the median of the rest
-#       is one, in the public sector as much as in the for-profit one. Brazilian
+#       Among establishments with at least fifty deliveries in the year, 14
+#       percent of for-profit and 27 percent of public maternities register ZERO
+#       obstetricians (is_obstetra), and the medians are three and two. Brazilian
 #       obstetricians hold their CNES bond at their own practice rather than at
 #       the maternity where they deliver, so this count measures registration,
 #       not the on-call roster. The analysis therefore uses OBSTETRIC BEDS and
@@ -35,8 +35,8 @@
 #     n_obstetricians, n_obst_bonds, obst_hours_hosp, n_physicians
 #
 # CAVEAT carried into the paper: a CNES-registered obstetrician is not
-# necessarily an obstetrician physically on call. The measure captures the size
-# of the establishment's obstetric team, not its on-call roster.
+# necessarily an obstetrician physically on call. The measure captures registered
+# bonds, not the establishment's on-call roster.
 #
 # PATHS: DROPBOX_ROOT from config/config.R.
 # =============================================================================
