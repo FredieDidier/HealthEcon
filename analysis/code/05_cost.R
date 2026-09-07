@@ -3,10 +3,19 @@
 #             newborn health, and billed cost.
 #
 # WHAT THIS SCRIPT DOES.
-#   (a) Gestational-age distribution by sector (for-profit mass at 37-38 vs
-#       public at 39-40) and by cesarean timing (prelabor vs in-labor). Feeds
-#       fig_gestation_panels, merged by 11_body_figures.R and now shown in the
-#       Supplementary Appendix (Figure C.4), not the body.
+#   (a) Gestational-age distribution by sector and by cesarean timing (prelabor vs
+#       in-labor). Feeds fig_gestation_panels, merged by 11_body_figures.R and now
+#       shown in the Supplementary Appendix (Figure C.4), not the body.
+#       READ THE PANELS CORRECTLY. BOTH sectors peak at week 39; the for-profit
+#       distribution is shifted earlier, not massed at 37-38. For-profit puts 40.1
+#       percent of births at 37-38 against 26.2 percent for public, and 17.3
+#       percent at 40-41 against 32.5 percent. Panel (b) is a three-way ORDERING,
+#       not a prelabor-versus-rest split: at 37-38 weeks, prelabor cesarean 44.6
+#       percent, in-labor cesarean 39.6, vaginal 30.4, all three peaking at week
+#       39. In-labor sits much closer to prelabor than to vaginal, so do not group
+#       it with vaginal births. (The body sentence and the figure note said
+#       "for-profit births mass at 37-38" and "in-labor cesareans and vaginal
+#       births mass at 39-40" until 2026-09-07; both were wrong and are fixed.)
 #   (b) Sector gaps in early-term birth, low birthweight, and low Apgar, with and
 #       without maternal controls (age, education, race) + muni+year FE.
 #       -> tab09_health (body, Table 5).

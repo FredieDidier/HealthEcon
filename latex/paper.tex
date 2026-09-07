@@ -131,7 +131,7 @@ highest documented for any large health system. The excess is
 not confined to complicated pregnancies. Among first-time mothers at term with a
 single, well-positioned baby who are already in spontaneous labor, the group for
 which surgery is hardest to justify on clinical grounds, two thirds of for-profit
-weekday deliveries end in a cesarean, against roughly one third in public
+weekday deliveries end in a cesarean, against 37 percent in public
 hospitals. Understanding what sustains surgical rates of this magnitude in a
 modern, well-financed health sector is a first-order question for health policy
 well beyond Brazil.
@@ -140,12 +140,13 @@ When patients cannot judge treatment necessity, physicians act as imperfect
 agents and can tilt clinical decisions toward their own interests
 \citep{dranove1988,mcguire2000}. The canonical version of this argument is
 financial: providers do more of what pays more. \citet{gruber1996physician} show
-that obstetricians substitute toward cesareans when fee differentials widen,
-\citet{gruber1999physician} confirm the fee margin in Medicaid data, and
+that obstetricians perform more cesareans when a falling birth rate squeezes
+their incomes, \citet{gruber1999physician} estimate the response of the cesarean
+rate to the cesarean--vaginal fee differential across Medicaid programs, and
 \citet{clemens2014} document strong treatment responses to payment changes in
 Medicare. The financial channel is not universal, however, even in childbirth:
-\citet{grant2009} finds that fee incentives explain little of the cross-sectional
-variation in cesarean use, and \citet{alexander2020} shows that paying physicians
+\citet{grant2009} re-estimates that fee response on corrected data and finds it
+about a quarter as large as originally reported, and \citet{alexander2020} shows that paying physicians
 to economize can move treatment in unintended ways. The sharpest counterexample
 comes from Chile. \citet{elejalde2021} study a reform that moved publicly insured women into
 private hospitals paid the same price for a vaginal delivery and for a cesarean,
@@ -159,8 +160,9 @@ decision is frequent, discretionary, and well measured: \citet{currie2008} show
 that
 liability pressure distorts delivery mode, \citet{johnson2016} find that
 physicians treat informed patients (other physicians) differently from everyone
-else, and \citet{card2023} show that being delivered in a hospital with a high
-cesarean propensity harms the marginal newborn. Throughout most of this literature the
+else, and \citet{card2023} find that among low-risk first births a hospital's
+cesarean propensity has offsetting effects on the newborn, improving condition at
+birth by averting prolonged labor while raising later respiratory presentations. Throughout most of this literature the
 operative margin is money. Yet the physician's scarcest input is not billable
 revenue but time. A vaginal delivery is a long commitment of uncertain onset and
 duration that blocks nights, weekends, and office hours; a scheduled cesarean is
@@ -202,18 +204,19 @@ times more for vaginal deliveries produced no movement in fees or in cesarean
 rates. These estimates do not prove that the price response is zero. The
 intervals are wide, and the state-level ones contain the canonical estimate of
 the literature. They do show that the sign is unstable across fixed-effect
-schemes, and the canonical magnitude is itself too small to matter at this scale:
-at the response \citet{gruber1999physician} estimate, the negative fee gap of
-Brazil's largest states moves the cesarean rate by about a quarter of a
-percentage point, against a for-profit--public gap of 35 points.
+schemes, and the magnitudes the literature has established are themselves too
+small to matter at this scale: at the fee response \citet{gruber1999physician}
+estimate, the negative fee gap of Brazil's largest states moves the cesarean rate
+by about one percentage point, and by about a quarter of a point at the smaller
+response \citet{grant2009} obtains on corrected data, against a
+for-profit--public gap of 35 points.
 
 Second, the calendar carries a pattern that the fee data do not. The natural
 onset of spontaneous labor ignores the week, but the observed delivery date can
 be moved through induction and prelabor scheduling, so systematic weekly patterns
 in surgery document how deliveries are ordered across dates. That delivery dates
 are shifted for non-clinical reasons is well established: births respond to tax
-and holiday incentives
-\citep{dickertconlin1999,gans2009}. Our central estimate compares for-profit with
+and transfer incentives \citep{dickertconlin1999,gans2009}. Our central estimate compares for-profit with
 public establishments within the same municipality and the same day, so
 that municipality-by-date fixed effects absorb every shock the two sectors share
 on a given local day. That comparison leaves a for-profit-specific weekend decline
@@ -252,16 +255,18 @@ clinical groups attributes 72\% of the 35 percentage-point for-profit--public ga
 practice style within identical clinical groups, not to differences in case-mix.
 Benchmarking each municipality's weekday cesarean propensity against its own
 weekend rate places about 39,000 for-profit weekday cesareans per year above that
-mechanical benchmark, one in ten of all weekday cesareans, a count of surgery
+mechanical benchmark, one in ten of the cesareans the sector performs on
+weekdays, a count of surgery
 above the weekend rate rather than of procedures that scheduling alone caused. Convenience is also
 associated with earlier births: for-profit births are 11.7 percentage points more likely to occur
 at 37--38 weeks of gestation than public births after controlling for maternal
-age, education, and race, and prelabor cesareans mass exactly at those weeks.
+age, education, and race, and prelabor cesareans are the earliest of the three
+delivery types.
 Early-term delivery is the margin that the clinical literature links
 to higher neonatal respiratory morbidity and intensive-care admission
-\citep{tita2009}, and quasi-experimental evidence confirms that non-indicated
-cesareans and earlier scheduled births harm newborn health
-\citep{costaramon2018,card2023,borra2019}.
+\citep{tita2009}, and quasi-experimental evidence links non-indicated
+cesareans and earlier scheduled births to worse newborn health
+\citep{costaramon2018,borra2019}.
 
 The calendar regressions identify the ordering of deliveries across dates, not the
 total number of cesareans caused by scheduling. Equation~\eqref{eq:gradient}
@@ -356,8 +361,9 @@ evidence and a within-municipality-day differential between for-profit and publi
 establishments. Our calendar evidence relates most directly to work connecting
 provider incentives and convenience to the timing of delivery
 \citep{cohen1983,brown1996,spetz2001,fabbri2016,jacobson2021}. Within Brazil,
-\citet{spinola2026} document convenience-related timing patterns around bridge
-weekdays, while \citet{melo2024} estimate birth displacement around Carnival.
+\citet{spinola2026} document birth-timing manipulation around inconvenient dates
+such as public holidays and medical congresses, markedly stronger in the private
+sector, while \citet{melo2024} estimate birth displacement around Carnival.
 Relative to this literature, we combine actual billed physician fees,
 same-municipality-day ownership contrasts, prelabor timing, Robson-group
 composition, and establishment capacity. The closest contemporaneous study is
@@ -435,7 +441,7 @@ Health Organization finds survival gains to stop.
 \caption{\textbf{Cesarean rate by sector, 2010--2024}}\label{fig:trend}
 \fignotes{Cesarean share of deliveries. ``Private insurance (TISS claims)'' is the
 insurance-financed sector; ``For-profit / Public establishments (SINASC)''
-classify births by the legal nature of the birth establishment.}
+classify births by the legal-entity type of the birth establishment.}
 \end{figure}
 
 High cesarean rates cover the Center-South and much of the country rather than a
@@ -501,7 +507,7 @@ penetration, and health-system quality.
 The two datasets identify two related but distinct populations, and we keep the
 distinction throughout. The TISS claims are insurance-financed deliveries, so
 their unit is a payer relationship: we call this the private-insurance sector.
-SINASC does not record the payer. Its sector flag is the legal nature of the birth
+SINASC does not record the payer. Its sector flag is the legal-entity type of the birth
 establishment, so its ``for-profit'' category is a provider-ownership contrast, not
 an insurance-coverage one, and is not identical to the insurance-financed
 population observed in TISS: a SUS-financed birth can occur in a for-profit
@@ -509,9 +515,10 @@ hospital, and an insured mother can deliver in a nonprofit one. We therefore
 reserve ``private-insurance sector'' for TISS results and describe SINASC results
 as comparing for-profit with public establishments. The two definitions do line up
 in practice. The facility registry records how many of an establishment's beds are
-made available to the SUS, and among obstetric beds the SUS share is 99 percent in
-public establishments, 22 percent in for-profit ones and 72 percent in nonprofit
-ones, with a median of zero across for-profit maternities. That is why the
+made available to the SUS. Among obstetric beds, 99 percent of the public sector's
+are SUS beds, against 22 percent of the for-profit sector's and 72 percent of the
+nonprofit sector's, and the median for-profit establishment registering an
+obstetric bed places none of them with the SUS. That is why the
 headline contrast is for-profit against public and the nonprofit sector, which is
 mostly SUS-financed, is shown in the figures but kept out of it.
 
@@ -731,7 +738,7 @@ negative 0.016 within municipalities and a positive 0.047 across states, the
 largest estimate in the table and marginally significant. Precision differs as
 much as the sign does. The within-municipality intervals place the response below
 half a percentage point per log point of the fee gap; the state-level intervals,
-resting on twenty-seven clusters, are roughly five times wider and rule out
+resting on twenty-seven clusters, are about three times wider and rule out
 little.
 
 Fees do move over time, and Panel B exploits that variation directly. State-level
@@ -750,15 +757,17 @@ does the 95 percent interval fit inside a region of plus or minus two percentage
 points per log point, so nothing here proves that fees are irrelevant, and the two
 state-level intervals are wide enough to contain the canonical price response of
 the literature (\satab{tab:feegap_ci}). What settles the question is calibration,
-and it does not depend on our estimates at all. \citet{gruber1999physician} find that the
-cesarean rate rises by about one percentage point per US\$1,000 of the
-cesarean--vaginal fee differential, which converted at our own fee levels is
-roughly 0.7 percentage points per log point of the fee gap. Applied to the 0.10 to
-0.35 log point negative gap of Brazil's largest states, that canonical response
-predicts a movement of about a quarter of a percentage point, against a
+and it does not depend on our estimates at all. \citet{gruber1999physician} find
+that the cesarean rate rises with the cesarean--vaginal fee differential, at a
+rate of roughly four percentage points per US\$1,000; re-estimating that response
+on corrected data, \citet{grant2009} obtains about one percentage point per
+US\$1,000. Converted at our own fee levels, the two bracket a response of roughly
+0.7 to 2.9 percentage points per log point of the fee gap. Applied to the 0.10 to
+0.35 log point negative gap of Brazil's largest states, they predict a movement of
+between a quarter of a percentage point and one point, against a
 for-profit--public gap of 35 points and a for-profit rate near 80 percent. A price
 channel of the size the literature has documented cannot carry an epidemic of this
-magnitude even if it is operating here, and the raw fact that the cesarean is the
+magnitude even at the larger of the two responses, and the raw fact that the cesarean is the
 worse-paid procedure precisely where cesarean rates are highest does not rest on
 any of these regressions.
 
@@ -1083,9 +1092,12 @@ scheduling decisions.
 it before labor, and to be sure of preceding labor the physician must book it
 before the natural rise in the delivery hazard around week 39. The mechanical
 consequence is a shift of births to earlier gestational ages.
-\safig{fig:gestation}, panel (a), shows that for-profit births mass at 37 and 38
-weeks where public births mass at 39 and 40, and panel (b) shows that the shift
-is concentrated among prelabor cesareans. Table~\ref{tab:health} estimates that
+\safig{fig:gestation}, panel (a), shows both sectors peaking at 39 weeks with the
+for-profit distribution sitting earlier: 40 percent of for-profit births fall at 37
+or 38 weeks against 26 percent of public births, and 17 percent at 40 or 41 weeks
+against 33 percent. Panel (b) orders the same shift by delivery timing within the
+for-profit sector, prelabor cesareans earliest, in-labor cesareans next and vaginal
+births latest. Table~\ref{tab:health} estimates that
 for-profit births are 11.7 percentage points more likely to be early-term
 (37--38 weeks) than public births, after controlling for maternal age,
 education, and race with municipality and year fixed effects. The estimate is
@@ -1095,8 +1107,8 @@ cesarean, or the measurement of gestational age, so the early-term coefficient
 is a descriptive sector difference and is not interpreted as the causal effect
 of prelabor scheduling. Early-term delivery is the margin the clinical
 literature links to higher neonatal respiratory morbidity and intensive-care use
-\citep{tita2009}, and quasi-experimental work confirms that non-indicated and
-early cesareans harm newborn health \citep{costaramon2018,card2023}. For-profit
+\citep{tita2009}, and quasi-experimental work links non-indicated and
+early cesareans to worse newborn health \citep{costaramon2018,borra2019}. For-profit
 births show lower low-birthweight and low-Apgar rates, which reflects the better
 resources and healthier mothers of that sector; the descriptive health margin
 associated with the for-profit delivery system is a shift toward early-term
@@ -1111,7 +1123,7 @@ not convert our associational sector gap into a count of harmed newborns: the
 mapping from a chosen sector to a causal harm requires a design we do not have.
 The direction, however, is what both the clinical literature \citep{tita2009} and
 quasi-experimental evidence on non-indicated and early cesareans
-\citep{costaramon2018,card2023} would predict, and it locates the cost of the
+\citep{costaramon2018,borra2019} would predict, and it locates the cost of the
 convenience margin in earlier, riskier births rather than in spending.
 
 \input{../analysis/output/tables/tab09_health.tex}
@@ -1135,9 +1147,9 @@ literature on geographic variation in health care, that supply-side practice
 patterns dominate patient case-mix \citep{finkelstein2016,molitor2018}. Reweighting each
 maternity's own group-specific rates to a common Robson distribution, the
 comparison the WHO's current guidance directs, leaves the standard deviation of
-cesarean intensity across for-profit maternities at 14 percentage points, of which
-6.6 points survive municipality-by-year fixed effects, predetermined maternal
-composition and obstetric capacity. Two for-profit maternities delivering in the
+cesarean intensity across for-profit maternities at 14 percentage points.
+Municipality-by-year fixed effects, predetermined maternal composition and obstetric
+capacity together bring it to 6.6 points, 46 percent of where it started. Two for-profit maternities delivering in the
 same municipality and year differ by 13 percentage points on average in the
 standardized rate (\satab{tab:estab_practice_style}).
 Benchmarking
@@ -1214,15 +1226,17 @@ delivery from a single attending physician's calendar, through laborist or
 shift-based on-call coverage and midwife-led continuity of care, socializes the
 cost of unschedulable time that the premium capitalizes. The second changes how
 care is organized rather than how it is priced. Because most of the for-profit--public
-gap is supply-side practice style rather than case-mix, and because practice
-styles travel with providers rather than with patients
-\citep{finkelstein2016,molitor2018,cutler2019}, salaried or vertically integrated
-arrangements in place of the private-office fee-for-service model act on the
-margin that actually varies, whereas relative-price reforms act on one whose
+gap is supply-side practice style rather than case-mix, and because a physician's
+practice style adjusts to the environment she practices in, which
+\citet{molitor2018} estimates accounts for 60 to 80 percent of regional variation
+in physician behavior \citep[see also][]{finkelstein2016,cutler2019}, salaried or
+vertically integrated arrangements in place of the private-office fee-for-service
+model act on the margin that actually varies, whereas relative-price reforms act on one whose
 documented magnitude is too small to matter here
 \citep{clemens2014,alexander2020}. The third ties regulation to gestational and
-delivery outcomes rather than to prices, since the harm the epidemic produces is
-concentrated in the delivery practices themselves \citep{card2023}. The fee
+delivery outcomes rather than to prices, since it is delivery practice, and not
+the price of a delivery, that the evidence links to newborn health
+\citep{costaramon2018,card2023,borra2019}. The fee
 evidence gives no reason to expect much from prices, while the calendar evidence
 points to the organization of obstetric time as a promising policy margin.
 
@@ -1247,8 +1261,7 @@ elsewhere is an empirical question our data cannot settle for other countries.
 % data availability, generative-AI use. All appear before the references.
 % =============================================================================
 \section*{CRediT authorship contribution statement}
-% TODO (Fredie): confirm each author's CRediT roles before submission; this is
-% a draft allocation and the journal requires it to be accurate.
+% Roles confirmed by Fredie on 2026-09-07 and final. Do not reallocate.
 \textbf{Fredie Didier:} Conceptualization, Methodology, Software, Formal
 analysis, Data curation, Writing -- original draft, Writing -- review \&
 editing. \textbf{Vinicius Mendes:} Conceptualization, Methodology, Writing --

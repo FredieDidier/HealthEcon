@@ -97,18 +97,23 @@ cat(sprintf("\n[B/C3] Robson-1 prelabor share = %.3f (must be ~0). R1 dip %.1fpp
 #       specification's CI fits inside it, so the data do not establish
 #       equivalence; they establish that the sign is unstable and the variation
 #       uninformative about small responses.
-#  (ii) the canonical price response of \citet{gruber1999physician}, about one
-#       percentage point per US$1,000 of the cesarean-vaginal fee differential.
-#       Converted at our own fee levels this is roughly 0.7 pp per log point of
-#       the fee gap (see GKM_BENCHMARK below), and NO CI excludes it either. We
-#       say so: the canonical magnitude cannot be rejected here.
+#  (ii) the canonical price response of the literature. ATTRIBUTION MATTERS HERE
+#       and was wrong until 2026-09-07: the figure of about ONE percentage point
+#       per US$1,000 of the cesarean-vaginal fee differential is GRANT's (2009)
+#       re-estimate on corrected data, which he reports as "one-quarter of the
+#       effect estimated originally" by Gruber, Kim and Mayzlin. GKM's own
+#       magnitude is therefore about FOUR points per US$1,000. We carry both,
+#       converted at our own fee levels to roughly 0.7 and 2.9 pp per log point
+#       of the fee gap, and the verdict of the table is the same for either.
 #
-# WHY THE SECTION STILL STANDS. Because that canonical magnitude is far too small
-# to matter at this scale. The fee gap is about 0.10 to 0.35 log points negative
-# in the largest states, which at the GKM elasticity predicts a movement of a
-# quarter of a percentage point against a for-profit-public gap of 35 pp. The
-# price channel is not rejected here; it is calibrated, and it is two orders of
-# magnitude too small. The raw fact carries the section, not the regression.
+# WHY THE SECTION STILL STANDS. Because those magnitudes are far too small to
+# matter at this scale. The fee gap is about 0.10 to 0.35 log points negative in
+# the largest states, which predicts a movement of a quarter of a percentage point
+# at Grant's magnitude and about one point at GKM's, against a for-profit-public
+# gap of 35 pp. Calibrate against the LARGER one: it is the conservative choice
+# against our own claim, and the claim survives it. The price channel is not
+# rejected here; it is calibrated, and it is far too small. The raw fact carries
+# the section, not the regression.
 #   -> tab_ref_c5_feegap_ci.tex
 # =============================================================================
 
@@ -127,9 +132,12 @@ specs <- list(
   `Municipality FE + controls` = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | muni6 + year, w, weights = ~tiss_deliveries))
 EQ <- 0.02
 
-# The Gruber-Kim-Mayzlin benchmark, converted into our units. GKM report about
-# one percentage point of cesarean rate per US$1,000 of the cesarean-vaginal fee
-# differential in 1988-1992 Medicaid data. US prices roughly doubled between 1990
+# The literature's benchmarks, converted into our units. GRANT (2009) reports
+# about one percentage point of cesarean rate per US$1,000 of the cesarean-vaginal
+# fee differential, re-estimating GRUBER, KIM AND MAYZLIN (1999) on corrected data
+# and describing his own figure as one-quarter of theirs, which puts GKM at about
+# four points per US$1,000. Both are in 1988-1992 Medicaid dollars.
+# US prices roughly doubled between 1990
 # and 2020 (CPI-U 130.7 -> 258.8), and the World Bank PPP conversion factor for
 # Brazil in 2020 is about R$2.35 to the international dollar, so US$1,000 of 1990
 # fees is on the order of R$4,650. One log point of our fee gap, evaluated at the
@@ -138,16 +146,21 @@ EQ <- 0.02
 # note; the point does not turn on its second digit.
 fee_c   <- w[, weighted.mean(fee_cesarean, tiss_deliveries, na.rm = TRUE)]
 GKM_BRL <- 4650
-GKM_BENCHMARK <- 0.01 * fee_c * (exp(1) - 1) / GKM_BRL
-cat(sprintf("\n[C/C5] mean cesarean fee R$%.0f; GKM benchmark = %.4f (%.2f pp per log point)\n",
-            fee_c, GKM_BENCHMARK, 100 * GKM_BENCHMARK))
+per_1000  <- function(pp) 0.01 * pp * fee_c * (exp(1) - 1) / GKM_BRL
+GRANT_BENCHMARK <- per_1000(1)   # Grant (2009), the corrected magnitude
+GKM_BENCHMARK   <- per_1000(4)   # Gruber, Kim and Mayzlin (1999), the original
+cat(sprintf("\n[C/C5] mean cesarean fee R$%.0f; Grant benchmark = %.4f (%.2f pp per log point); GKM benchmark = %.4f (%.2f pp per log point)\n",
+            fee_c, GRANT_BENCHMARK, 100 * GRANT_BENCHMARK,
+            GKM_BENCHMARK, 100 * GKM_BENCHMARK))
 
 rows <- rbindlist(lapply(names(specs), function(nm) {
   m <- specs[[nm]]; ci <- confint(m, "log_fee_gap")
   data.table(spec = nm, beta = coef(m)["log_fee_gap"], lo = ci[[1]], hi = ci[[2]],
              nclust = m$fixef_sizes[[1]],
              negligible = ifelse(ci[[1]] >= -EQ && ci[[2]] <= EQ, "within", "not within"),
-             rules_out  = ifelse(ci[[1]] > GKM_BENCHMARK || ci[[2]] < GKM_BENCHMARK,
+             rules_out  = ifelse(ci[[1]] > GRANT_BENCHMARK || ci[[2]] < GRANT_BENCHMARK,
+                                 "excluded", "not excluded"),
+             rules_out_gkm = ifelse(ci[[1]] > GKM_BENCHMARK || ci[[2]] < GKM_BENCHMARK,
                                  "excluded", "not excluded"))
 }))
 ctab <- rows[, .(Specification = spec,
@@ -155,11 +168,12 @@ ctab <- rows[, .(Specification = spec,
                  `95\\% CI` = sprintf("[%+.4f, %+.4f]", lo, hi),
                  `Clusters` = nclust,
                  `In $[-0.02,0.02]$?` = negligible,
-                 `GKM benchmark` = rules_out)]
+                 `Excludes Grant?` = rules_out,
+                 `Excludes GKM?` = rules_out_gkm)]
 tex <- c("\\begin{table}[H]\\centering",
   "\\caption{\\textbf{The fee-gap coefficient against two yardsticks: an equivalence region and the canonical price response}}",
   "\\label{tab:feegap_ci}", "\\small",
-  "\\begin{tabular}{lccccc}", "\\toprule",
+  "\\begin{tabular}{lcccccc}", "\\toprule",
   paste(names(ctab), collapse = " & "), "\\\\", "\\midrule",
   apply(ctab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\bottomrule", "\\end{tabular}",
@@ -167,21 +181,25 @@ tex <- c("\\begin{table}[H]\\centering",
     "\\\\[2pt]\\footnotesize\\textit{Notes:} Coefficient on the log economic fee gap",
     "from Table~\\ref{tab:fees}. The equivalence region $[-0.02, 0.02]$ corresponds to a",
     "2 percentage-point change in the cesarean share per log point of the fee gap. The",
-    "final column asks whether the interval excludes the canonical price response of",
-    "\\citet{gruber1999physician}, about one percentage point per US\\$1{,}000 of the",
-    "cesarean-vaginal fee differential, which at our delivery-weighted mean cesarean fee",
-    "of R\\$%s is %.2f percentage points per log point of the fee gap; the conversion",
-    "uses US consumer prices between 1990 and 2020 and the World Bank purchasing-power",
-    "factor for Brazil, and is deliberately rough. Two things follow, and the paper",
-    "states both. No interval fits inside the equivalence region, so these data do not",
-    "establish that the price response is negligible. And the two schemes disagree about",
-    "the canonical magnitude: the within-municipality intervals exclude it, the",
-    "state-level intervals, estimated on twenty-seven clusters, are too wide to. The sign",
-    "itself is unstable across the two schemes. The economic argument of",
-    "Section~\\ref{sec:notprice} does not rest on this table: at the canonical magnitude,",
-    "the 0.10 to 0.35 log point negative fee gap of the largest states would move the",
-    "cesarean rate by about a quarter of a percentage point, against a for-profit--public",
-    "gap of 35 points."), formatC(fee_c, format = "d", big.mark = ","), 100 * GKM_BENCHMARK)),
+    "final two columns ask whether the interval excludes the price response the",
+    "literature has estimated. \\citet{gruber1999physician} report about four percentage",
+    "points of cesarean rate per US\\$1{,}000 of the cesarean-vaginal fee differential;",
+    "re-estimating that response on corrected data, \\citet{grant2009} obtains about one",
+    "point, which he describes as a quarter of the original. At our delivery-weighted",
+    "mean cesarean fee of R\\$%s the two are %.2f and %.2f percentage points per log point",
+    "of the fee gap; the conversion uses US consumer prices between 1990 and 2020 and the",
+    "World Bank purchasing-power factor for Brazil, and is deliberately rough. Two things",
+    "follow, and the paper states both. No interval fits inside the equivalence region, so",
+    "these data do not establish that the price response is negligible. And the two",
+    "fixed-effect schemes disagree about both magnitudes: the within-municipality",
+    "intervals exclude them, the state-level intervals, estimated on twenty-seven",
+    "clusters, are too wide to. The sign itself is unstable across the two schemes. The",
+    "economic argument of Section~\\ref{sec:notprice} does not rest on this table: the",
+    "0.10 to 0.35 log point negative fee gap of the largest states would move the cesarean",
+    "rate by about a quarter of a percentage point at Grant's magnitude and about one",
+    "point at the original, against a for-profit--public gap of 35 points."),
+    formatC(fee_c, format = "d", big.mark = ","),
+    100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK)),
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c5_feegap_ci.tex"))
 cat("\n[C/C5] fee-gap coefficient CIs:\n"); print(rows)

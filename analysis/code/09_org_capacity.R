@@ -151,7 +151,7 @@ d[, `:=`(pre_share = n_pre / births, ces_share = n_ces / births,
 # so it stays a robustness column, not the main measure.
 # The SUS share of obstetric beds is the project's only establishment-level
 # measure of PAYER as opposed to ownership. Among for-profit maternities it is
-# zero at the median, which is what licenses reading natureza juridica 2xxx as a
+# zero at the median, which is what licenses reading legal-entity type 2xxx as a
 # private-payer population; the interaction asks whether the calendar gradient
 # is concentrated in the for-profit establishments least exposed to the SUS.
 sus_desc <- unique(d[!is.na(sus_obst), .(estab, year, sus_obst)])
@@ -326,11 +326,12 @@ etable(m6, m7, m8, m9, m10, m11, tex = TRUE, file = f2, replace = TRUE, dict = d
          "ownership: it is",
          sprintf("%.2f at the median for-profit maternity-year, and %.1f percent of them",
                  median(sus_desc$sus_share), 100 * mean(sus_desc$sus_share > 0.5)),
-         "place more than half of their obstetric beds with the SUS, so natureza",
-         "juridica 2xxx identifies a predominantly private-payer population. Column 6 drops",
+         "place more than half of their obstetric beds with the SUS, so legal-entity",
+         "type 2xxx identifies a predominantly private-payer population. Column 6 drops",
          "the establishments that register no obstetric bed, for which the share is",
-         "undefined; measuring payer exposure by the SUS share of ALL beds keeps them and",
-         "leaves the interactions unchanged. All capacity",
+         "undefined; measuring payer exposure by the SUS share of all beds keeps them,",
+         "leaves the weekend interaction unchanged at 2.08 percentage points and returns a",
+         "smaller but still significant holiday interaction of 2.59. All capacity",
          "measures are lagged one year and their levels are absorbed by the",
          "establishment$\\times$year fixed effects. The CNES establishment code links",
          sprintf("%.1f percent of for-profit births in 2015--2024, and", 100 * birth_link),

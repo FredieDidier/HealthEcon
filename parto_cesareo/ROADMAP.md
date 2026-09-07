@@ -132,7 +132,7 @@ continuando a passada de 04/09/2026.
 |---|---|---|---|
 | **R1** | Reprodução end-to-end com o dataset local (`config/00_master_analysis.R` inteiro, na ordem, com `13` antes de `10`) | Claude | Baixo |
 | **T1** | Rodada formal de revisão interna dos quatro coautores. **Acrescentar ao roteiro de leitura os itens 1–4 do parecer**, que mudaram o *conteúdo* das alegações | Coautores | Médio |
-| **D1** | Confirmar os papéis CRediT (hoje um rascunho marcado TODO em `paper.tex`) | Fredie | Baixo |
+| ~~**D1**~~ | ~~Confirmar os papéis CRediT~~ | ✅ **Fechado em 07/09/2026.** A alocação impressa no `paper.tex` é a final; o comentário `% TODO` saiu. Não realocar | Fredie |
 | **D5b** | **Depositar** o pacote (Zenodo ou openICPSR) e trocar o placeholder do Data availability por DOI. O pacote está montado e o checklist do `README.md` está fechado exceto pelos itens que dependem de R1 | Vinicius + Fredie | Baixo |
 
 **Resolvidos em 06/09/2026:** D2 (Tita conferido contra o registro do Europe PMC —

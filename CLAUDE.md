@@ -1002,11 +1002,143 @@ medical-hospital plans (June 2026) and a stated coverage rate of **25.0 percent*
 footnote keeps the inline-`\href` form rather than becoming a `@misc` entry; if it
 is ever converted, match the `data_ans_tiss` pattern in `refs.bib`.
 
+⚠️ **Figure C.4 (gestational age) was being described wrongly, and the fix is text
+only.** Both the body sentence and the figure note said "for-profit births mass at
+37--38 weeks, public births at 39--40" and that "in-labor cesareans and vaginal
+births mass at 39--40". Checked against the data on 2026-09-07: **both sectors peak
+at week 39**. For-profit puts 40.1 percent of births at 37--38 against public's 26.2,
+and 17.3 percent at 40--41 against 32.5, so the for-profit distribution is SHIFTED
+earlier rather than massed at 37--38. Panel (b) is a three-way ORDERING, not a
+prelabor-versus-rest split: at 37--38 weeks, prelabor cesarean 44.6 percent, in-labor
+39.6, vaginal 30.4, all three peaking at week 39. In-labor sits much closer to
+prelabor than to vaginal, so never group it with vaginal births. The substantive
+result is untouched (the +11.7pp early-term gap of Table 5 is the 40.1-versus-26.2
+contrast with controls); only the verbal description was wrong. Corrected in
+`paper.tex`, in the `\fignotes` of `sup_appendix.tex` and in the header of
+`05_cost.R`; no script was re-run, because the figure itself was always right.
+
+**Note on the two C.4s.** Appendix C now holds Figure C.4 (gestational age) and
+Table C.4 (`tab_estab_practice_style`). Figures and tables carry separate counters,
+so this is legal and every cross-reference names one or the other; the overlap
+already existed before 2026-09-07 (four figures against four tables) and is not a
+numbering bug.
+
 **No em dashes as punctuation.** Checked across `paper.tex`, `sup_appendix.tex`,
 `model.tex`, `appendix.tex` and all 31 table files: the only `--` occurrences are
 numeric ranges (2014--2024), en-dashed compounds (for-profit--public,
 physician--patient, Sun--Abraham), Elsevier's own CRediT terms ("Writing -- original
 draft") and the absent-marker dash in fixed-effect rows. All correct; keep them.
+
+## The 2026-09-07 audit (citations, magnitudes, terminology)
+
+A full sweep of `paper.tex`, `appendix.tex`, `model.tex` and `sup_appendix.tex` for
+wrong numbers, misattributed citations, overclaims and Portuguese left in English
+prose. Six real defects, all pre-existing. **No estimate changed; two exhibits were
+regenerated (`tab_ref_c5_feegap_ci`, `tab_org_capacity_valid`).**
+
+**1. 🚨 `card2023` was cited backwards, in four places.** Card, Fenizia and Silver
+(2023 AEJ:Policy) find that among LOW-RISK FIRST BIRTHS, infants quasi-randomly
+delivered at a HIGHER-cesarean-propensity hospital are born in BETTER condition and
+are less likely to be readmitted, because prolonged labor is averted, with the
+tradeoff that they present more often later for respiratory problems. The paper said
+they "show that being delivered in a hospital with a high cesarean propensity harms
+the marginal newborn" and cited them three more times for "cesareans harm newborn
+health". The claim they were carrying is supported by `costaramon2018` and
+`borra2019`, which now carry it alone; `card2023` is cited for what it actually
+finds. **Never cite card2023 for unqualified cesarean harm.** (The "Clinical-cost
+positioning" section above lists it among papers that "price the harm"; read that as
+pricing the harm of DELIVERY PRACTICES, offsetting in sign for the newborn.)
+
+**2. 🚨 The price calibration was attributed to the wrong paper, and the magnitude
+was the small one.** "About one percentage point per US$1,000" is **Grant's (2009)**
+re-estimate on corrected data, which he describes as "one-quarter of the effect
+estimated originally" by Gruber, Kim and Mayzlin. GKM's own magnitude is therefore
+about **four** points per US$1,000. `10_supplement.R` now carries both, converted at
+our fee levels to **0.72 pp (Grant) and 2.87 pp (GKM) per log point**, and
+`tab_ref_c5_feegap_ci` has two verdict columns. The verdict is the SAME for both
+(municipality FE excludes them, state FE does not), and the calibration sentence now
+quotes the range: the 0.10--0.35 log-point gap of the largest states moves the rate
+by a quarter of a point at Grant's magnitude and **about one point at GKM's**,
+against 35. Calibrate against the LARGER one; it is the conservative choice against
+our own claim and the claim survives it.
+
+**3. `gruber1996physician` and `gruber1999physician` were described as each other.**
+Gruber and Owings (1996 RAND) is the FERTILITY-DECLINE/income-shock paper, not
+"substitute toward cesareans when fee differentials widen"; Gruber, Kim and Mayzlin
+(1999 JHE) is the fee-differential paper, not a "confirmation" of it.
+
+**4. `spinola2026` does not study bridge weekdays.** Spinola and Rocha study birth
+timing around INCONVENIENT DATES (bank holidays, Carnival, medical congresses),
+finding manipulation markedly stronger in the private sector and among white
+mothers. Verified against the local copy in `parto_cesareo/Literature/`; the words
+"bridge" and "long weekend" do not appear in it.
+
+**5. The demand-smoothing overclaim reached the manuscript in three places** (intro,
+Section 6D, conclusion), saying establishments that schedule more "show a lumpier
+weekly delivery flow" or "have the lumpiest weekly flow". That is exactly what the
+evidence taxonomy above forbids: p=0.065, Holm 0.196. All three now say the levelling
+prediction is not supported and flag the point estimate as marginal.
+
+**6. Smaller numeric and wording fixes.** "roughly five times wider" for the
+state-versus-municipality intervals was **2.6x** (now "about three times");
+"one in ten of all weekday cesareans" is one in ten of the SECTOR's;
+"prelabor cesareans mass exactly at [37--38 weeks]" is false (their mode is 39, see
+the Figure C.4 entry above); Robson-1 public weekday rate is **36.8 percent**, not
+"roughly one third"; `gans2009` is a transfer/bonus paper, so it no longer supports
+"holiday incentives".
+
+**Verified correct, do NOT "fix" these:**
+- **"twenty-two states" and "twenty-seven clusters" are BOTH right.** Panel A (levels,
+  municipality-year, TISS deliveries >= 20) has 27 state clusters; Panel B (state-year
+  first difference, n > 2000) has 22. Different samples.
+- **The fee facts are right.** The state gap must be computed as
+  `log(mean fee_cesarean / mean fee_vaginal_econ)` WITHIN the state, not as the
+  delivery-weighted mean of the municipality log gaps, which is Jensen-biased toward
+  zero and gives about -2% for SP. Done correctly: SP -15.1%, MG -27.7%, PR -13.2%,
+  RJ -9.3%, SC -11.6%, RS -13.8%, i.e. the "10 to 30 percent" and the "0.10 to 0.35
+  log point" of the text.
+- `parfitt2026` is described exactly right, "conditional on physician attendance"
+  included (verified against the published abstract).
+- Public cesarean 36.9% (2010) to 51.3% (2024); no-indication share 87.2--91.2%;
+  timing missing 16.0%; displacement window -8.33 pp prelabor share against -0.05 for
+  the overall cesarean share; median cesarean bills 4.6% more. All match the text.
+
+**7. `molitor2018` was cited for the opposite of what it finds, in the policy
+conclusion.** Molitor (2018) exploits cardiologist MIGRATION and finds that a
+physician's behavior adjusts 0.6--0.8 percentage points for each point of change
+in the practice environment, so the ENVIRONMENT explains 60 to 80 percent of
+regional variation. The conclusion cited him for "practice styles travel with
+providers rather than with patients", which is the reverse. The sentence now states
+his actual estimate, and the policy argument is STRONGER for it: if the environment
+dominates, organizational arrangements are exactly the lever. Note that the two
+OTHER uses of `molitor2018` (contribution block and Section 7, "supply-side
+practice patterns dominate patient case-mix") are accurate and were left alone.
+
+**8. Model appendix.** P3's cross-reference pointed at `sec:mechanism`, the whole
+section, instead of `sec:capacity`; it now points at the label and states that the
+prediction is supported for obstetrician density and only weakly for establishment
+capacity. P4 said scheduling shifts prelabor cesareans "to 37--38 weeks" (their
+mode is 39; the shift is relative, see the Figure C.4 entry). P5's heading
+"Supply, not demand" claimed more than the education split delivers and now matches
+the body's hedge.
+
+**Verified clean, so do not re-audit:** all 52 bib entries are cited and all 52
+citations resolve, with zero orphans and zero bibtex warnings in both documents;
+`costaramon2018` (time-of-day instrument driven by physician leisure, causal
+negative effect on Apgar and cord pH) and `borra2019` support the newborn-harm
+claim they now carry alone; metadata on `currie2008`, `finkelstein2016`,
+`cutler2019`, `betran2021`, `sun2021`, `clemens2014`, `maibom2021` all check out;
+the eight fixed and four Easter-based movable holidays match `holiday_dates()`;
+21 two-day placebo pairs is C(7,2); highlights are all under 85 characters; the
+declarations block is complete in the Elsevier order. The metadata sweep of
+2026-08-20 (`parto_cesareo/Literature/verificacao_citacoes.md`) covered titles,
+volumes and pages; THIS sweep covered what the papers actually say, which is where
+every defect above was hiding.
+
+**Terminology.** `natureza jur\'idica` is now **"legal-entity type"** everywhere, in
+prose and in generated notes; the calque "legal nature" was also replaced (paper
+twice, appendix twice). Shouting caps swept from every note and from the prose: the
+only survivors are real acronyms (ICD, BH, TUSS, DOW, FP).
 
 ## ACTION items for Fredie
 
@@ -1036,9 +1168,12 @@ draft") and the absent-marker dash in fixed-effect rows. All correct; keep them.
   (which is where Fredie's own path now lives), erroring out if the directory has
   no `build/`; and the two-way compile verified (37 + 27 pages, 0 undefined refs,
   0 undefined citations).
-- ~~**Confirm the CRediT roles**~~ — Fredie's decision 2026-09-06: the drafted
-  allocation stands as written. Drop the TODO comment at submission; do not
-  reallocate roles.
+- ~~**Confirm the CRediT roles**~~ — **CLOSED 2026-09-07.** The allocation printed
+  in `paper.tex` is final: Fredie (Conceptualization, Methodology, Software, Formal
+  analysis, Data curation, Writing original draft, Writing review & editing);
+  Vinicius, Pablo and Lucas (Conceptualization, Methodology, Writing review &
+  editing). The `% TODO (Fredie)` comment has been removed and replaced with a
+  note recording the confirmation. Do not reallocate roles or reopen this.
 - **Elsevier declarations**: `latex/submission/declaration_of_interest.docx`
   (written 2026-09-06) carries the signed-interest form plus the funding, data
   availability, generative-AI and CRediT statements copied verbatim from
