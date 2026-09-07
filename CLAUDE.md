@@ -1135,6 +1135,22 @@ declarations block is complete in the Elsevier order. The metadata sweep of
 volumes and pages; THIS sweep covered what the papers actually say, which is where
 every defect above was hiding.
 
+**9. `fischer2026` added (2026-09-07).** Fischer, Kaneko, Royer and White,
+"Disentangling sources of variation in C-section rates", AEJ:Policy forthcoming
+(NBER WP 34469, doi:10.1257/pol.20260196). US birth records 1989--2019, with the
+delivery location instrumented by closures of a county's LAST obstetric unit,
+which push mothers to counties with different baseline rates. **A one percentage
+point higher cesarean rate in the delivery county raises a mother's own cesarean
+probability by about one point**, so the delivery environment passes through nearly
+one for one. This is the cesarean-specific causal version of the paper's own
+practice-style claim, it is in a journal a JHE referee reads, and it was missing.
+Cited in three places: the geographic-variation list in the contribution block,
+the Kitagawa paragraph of Section 7 (with the magnitude), and the conclusion's
+policy argument alongside the corrected `molitor2018`.
+⚠️ **It is FORTHCOMING.** The entry carries `year={2026}` and a `note` saying so;
+fill in volume, issue and pages before submitting, since it will very likely have
+appeared by March 2027.
+
 **Terminology.** `natureza jur\'idica` is now **"legal-entity type"** everywhere, in
 prose and in generated notes; the calque "legal nature" was also replaced (paper
 twice, appendix twice). Shouting caps swept from every note and from the prose: the
