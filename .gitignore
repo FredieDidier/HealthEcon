@@ -27,3 +27,4 @@ config/config_local.R
 
 # Rscript side effect when a base-graphics device is opened headless
 Rplots.pdf
+latex/Born_on_Schedule.tex

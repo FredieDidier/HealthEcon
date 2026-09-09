@@ -73,15 +73,13 @@ save_fig(fig1, "fig01_csection_trend", height = 4.2)
 # =============================================================================
 # BLOCK 2 — summary statistics (Supplement, Table C.1): municipality-year.
 # One row per municipality-year; the body cites this table but prints it in the
-# Supplemental Appendix. Fees, rates, ICU use, obstetrician density, covariates.
+# Supplemental Appendix. Fees, rates, obstetrician density, covariates.
 # =============================================================================
 w <- as.data.table(read_parquet(WFO))
 vars <- c(
   tiss_csection_rate           = "Cesarean rate, private (TISS)",
   sinasc_private_csection_rate = "Cesarean rate, for-profit (SINASC)",
   log_fee_gap                  = "Log economic fee gap (cesarean minus vaginal)",
-  mean_los                     = "Length of stay (days)",
-  any_uti_share                = "Share of deliveries with any ICU day",
   obstetricians_per_1k_births  = "Obstetricians per 1,000 births",
   gdp_pc                       = "GDP per capita (R\\$ thousands)",
   plan_cov                     = "Private health-plan coverage (\\%)",

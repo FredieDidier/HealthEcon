@@ -78,8 +78,8 @@ E-mail addresses: fdidier@terra.com.br (F. Didier), vdmendes@ufba.br
 cesarean, the highest rate documented for any large health system and far above
 the population share of about 10\% beyond which the World Health Organization
 finds no further gain in maternal and newborn survival. Overuse is not
-innocuous: unnecessary cesareans raise maternal morbidity, neonatal respiratory
-complications, and costs, and scheduled cesareans shift births to early-term
+innocuous: unnecessary cesareans raise maternal morbidity and neonatal
+respiratory complications, and scheduled cesareans shift births to early-term
 weeks that the clinical literature links to worse newborn outcomes. We ask what
 sustains surgery at this scale, combining the universe of private-insurance
 claims, which record the physician fee billed for every delivery, with 42
@@ -450,8 +450,8 @@ few states, with the lowest rates in parts of the North;
 
 Private obstetricians are paid fee-for-service on a procedure schedule. A
 delivery generates a fee for the procedure itself, and a vaginal delivery
-additionally generates an hourly ``labor assistance'' fee for time spent
-attending labor, billed up to six hours. This detail matters for measuring
+additionally generates a separately billed ``labor assistance'' fee for each
+hour spent attending labor. This detail matters for measuring
 incentives and is central to Section~\ref{sec:notprice}.
 
 Three policy episodes recur in the paper, and their institutional scope differs.
@@ -498,11 +498,11 @@ professionals file and with municipal covariates from the Institute for Health
 Policy Studies (Instituto de Estudos para Pol\'iticas de Sa\'ude, IEPS), an
 independent Brazilian research institute that consolidates administrative records
 from many sources, spanning the health system, the economy, and demographics, into
-a single municipality-year panel. From it we take gross domestic product per capita,
-household income per capita, population, the share of the population with private
-health-plan coverage, and the share of births with adequate prenatal care, which
-enter the fee regressions as controls for local income, market size, insurance
-penetration, and health-system quality.
+a single municipality-year panel. From it we take gross domestic product per
+capita, the share of the population with private health-plan coverage, and the
+share of births with adequate prenatal care. Together with obstetricians per
+1,000 births, these enter the fee regressions as controls for local income,
+insurance penetration, health-system quality, and obstetric supply.
 
 The two datasets identify two related but distinct populations, and we keep the
 distinction throughout. The TISS claims are insurance-financed deliveries, so
@@ -748,9 +748,8 @@ wrong-signed; once the twenty-two states are treated as the clusters they are, a
 wild-cluster bootstrap \citep{cameron2008,webb2023} cannot distinguish it from
 zero ($p=0.21$), and in levels
 with state and year fixed effects it is likewise insignificant (bootstrap
-$p=0.15$). Consistent with
-all of this, the 2015 court order to triple vaginal pay produced no jump in the
-fee series and no change in the cesarean rate.
+$p=0.15$). The 2015 court order to triple vaginal pay never became a price shock
+at all: the agency appealed, no rule issued, and relative fees never changed.
 
 These estimates do not establish equivalence. In none of the four specifications
 does the 95 percent interval fit inside a region of plus or minus two percentage
@@ -1113,7 +1112,7 @@ births show lower low-birthweight and low-Apgar rates, which reflects the better
 resources and healthier mothers of that sector; the descriptive health margin
 associated with the for-profit delivery system is a shift toward early-term
 birth. A suggestive, and statistically weak, ecological check relating
-early-term shifting to neonatal admissions is in
+early-term shifting to neonatal hospital use is in
 \satab{tab:neonatal_suggestive}.
 
 The shift is not costless: \citet{tita2009} find that elective delivery at

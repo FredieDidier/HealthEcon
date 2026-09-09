@@ -1156,6 +1156,105 @@ prose and in generated notes; the calque "legal nature" was also replaced (paper
 twice, appendix twice). Shouting caps swept from every note and from the prose: the
 only survivors are real acronyms (ICD, BH, TUSS, DOW, FP).
 
+## The 2026-09-09 revision (orphan claims and dangling pointers)
+
+A sweep for statements the manuscript makes but never shows, prompted by two of
+Fredie's own catches. Seven defects, all pre-existing, all text except the last.
+**No estimate changed. One exhibit regenerated (`tab01_descriptives`), and only
+block 2 of `01_descriptives.R` was re-run.**
+
+**1. The two bare "Supplemental Appendix" pointers in the model.** P5's
+`[Tested: maternal-education interaction, Supplemental Appendix.]` named no
+exhibit, and **P3 had the same defect** ("municipality obstetrician density in the
+Supplemental Appendix"). Both point at the same table and now use
+`\satab{tab:heterogeneity}`, which prints "Supplementary Appendix Table D.11".
+These were the manuscript's ONLY exhibit-less appendix pointers; the ones in
+`paper.tex` all name their table or figure. Note that `model.tex` reaches the
+build only through `paper.tex` -> `appendix.tex`, so `\satab` is defined there.
+
+**2. 🚨 The admission-count sentence was describing machinery the paper never
+uses, and it is gone.** Appendix B said "Because a TISS event can bundle several
+inpatient days, a plain event count understates admissions; where an admission
+count is needed we use the ratio of the billed daily-visit items to the mean
+length of stay, which reproduces the regulator's published figure." **No admission
+count appears anywhere in the paper, the appendix, or the supplement.** Deliveries
+are counted one event per delivery (`n_deliveries = .N` in `02_deliveries.R`), and
+the suggestive neonatal check counts CONS rows (`.N`), not weighted admissions --
+its own table note already says "TISS hospital events". The proxy is real but is a
+BUILD-TIME validation only: `admission_weight()` / `estimate_admissions()` in
+`build/00_utils.R` reconstruct about 8.9M (aggregate ratio) and 9.4M (per-event
+ratio) hospital admissions for 2023 against the roughly 9.2M the ANS publishes.
+That check belongs in the replication package, not in the manuscript. Proof the
+sentence was orphan: after removing it, "length of stay" appears nowhere in any
+`.tex`. Do NOT reintroduce it unless an admission count actually enters a result.
+
+**3. The covariate list named two variables that enter nothing.** The data section
+said IEPS supplies "gross domestic product per capita, household income per
+capita, population ... which enter the fee regressions as controls for local
+income, market size, insurance penetration, and health-system quality".
+`inc_pc`, `pop_total` and `esf_cov` are built into `main_data.parquet` and are
+**used by no analysis script**, while obstetrician density, which IS a control,
+was missing from the list. The sentence now names exactly the four controls of
+`02_regressions.R` (log GDP per capita, plan coverage, adequate prenatal care,
+obstetricians per 1,000 births), which is also exactly what Table C.1 reports.
+
+**4. "No jump in the fee series" had no exhibit.** Section 5 closed with "the 2015
+court order to triple vaginal pay produced no jump in the fee series and no change
+in the cesarean rate". It is TRUE in the data (delivery-weighted log fee gap
+-0.069 in 2015, -0.061 in 2016, -0.090 in 2017), but **no figure or table in
+either document plots a fee series over time**, and no script tests the court
+order. The sentence now rests on the institutional fact Section 2 already
+documents: "The 2015 court order to triple vaginal pay never became a price shock
+at all: the agency appealed, no rule issued, and relative fees never changed." If
+a referee wants the series, the numbers above are the ones to plot.
+
+**5. The six-hour cap on labor assistance is not in the data.** Section 2 said the
+hourly labor-assistance fee is "billed up to six hours". Checked in the TISS DET
+files, code 31309038: the maximum billed quantity is 6 in 2015, 2020 and 2022 and
+**4 in the other seven years**, the 99th percentile is 4 in every year, and the
+mean is 2.74 hours (which is the ~2.7h the dictionary records). The text now says
+"a separately billed labor assistance fee for each hour spent attending labor",
+which is what the schedule does and what the data support.
+
+**6. "Neonatal admissions" -> "neonatal hospital use"** in `paper.tex` and
+`sup_appendix.tex`. The outcome counts TISS hospital events, as the table's own
+note and title already said; with defect 2 removed, "admissions" was the last
+loose usage.
+
+**7. The abstract claimed a cost the paper does not find.** It said unnecessary
+cesareans "raise maternal morbidity, neonatal respiratory complications, and
+costs", while Table C.5 finds near-parity in billed amounts (median cesarean bill
+4.6% higher) and the conclusion locates the cost "in earlier, riskier births
+rather than in spending". "and costs" was dropped FROM THE ABSTRACT ONLY. The
+intro keeps it, because there it is the system-level claim and is cited
+(`sandall2018`, `boerma2018`).
+
+**8. Table C.1 lost two orphan rows.** `mean_los` ("Length of stay (days)") and
+`any_uti_share` ("Share of deliveries with any ICU day") were reported in the
+summary statistics and appeared in no regression and no sentence. Removed from
+`vars` in `01_descriptives.R` block 2. Only block 2 was re-run (it reads the
+11.5k-row `main_data`, never the 42M-row birth file), and `tab01_descriptives.tex`
+came back **2 deletions, 0 insertions**: every remaining number byte-identical.
+"ICU" now appears in no `.tex` in the project.
+
+**Build after all of it:** paper 37 pages, supplement 28; 0 undefined references
+and 0 undefined citations in both; the same two documented pre-existing overfull
+boxes. Exhibit numbering unchanged (`tab:descriptives` C.1,
+`tab:estab_practice_style` C.4, `tab:heterogeneity` D.11).
+
+**Working-paper build added.** `latex/build_wp.sh` produces
+`latex/Born_on_Schedule.pdf`, a SINGLE document = paper + Appendices A/B +
+Supplementary Appendix C/D/E, for circulation as a working paper. It is
+GENERATED, never hand-edited: the script derives `Born_on_Schedule.tex` from
+`paper.tex` at build time (preamble minus `xr`/`\externaldocument`, with
+`\satab`/`\safig` redefined as plain `Table~\ref`/`Figure~\ref` since the
+supplement is now internal), then appends `\input{sup_appendix}` after
+`\input{appendix}` so the section counter continues into C, D and E on its own.
+One bibliography serves all of it (`holm1979` and `benjamini1995` are cited in
+the body as well as in Appendix D). Editing `paper.tex` or `sup_appendix.tex` and
+re-running the script is the only supported way to update the working paper.
+
+
 ## ACTION items for Fredie
 
 - ~~Verify the Tita et al. (2009) early-term neonatal-morbidity magnitudes~~ —
