@@ -161,6 +161,10 @@ postprocess_tex(f, fontsize = "\\footnotesize", tabcolsep = 3)
 .i13 <- grep("multicolumn\\{3\\}\\{c\\}\\{Cesarean rate\\}", .t13)
 if (length(.i13))
   .t13 <- append(.t13, "      \\cmidrule(lr){2-4}\\cmidrule(lr){5-6}", after = .i13[1])
+# six-column table: shrunk to \textwidth it prints at about 6.5pt, so typeset it
+# in landscape instead, as tab08_mechanism_checks and tab13c_dip_by_region_period are
+.t13 <- gsub("\\begin{table}[H]", "\\begin{sidewaystable}\\centering", .t13, fixed = TRUE)
+.t13 <- gsub("\\end{table}", "\\end{sidewaystable}", .t13, fixed = TRUE)
 writeLines(.t13, f)
 etable(m_tv, m_sun, m_rest, m_ap, m_lb, dict = dict, fitstat = ~ n, digits = 4,
        headers = c("TV sector", "Sunday", "Rest", "Apgar", "LBW"))
@@ -373,7 +377,8 @@ etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "$<$1 age band, at the provider municipality; perinatal conditions are",
          "primary diagnoses of conditions originating in the perinatal period.",
          "Ecological and correlational, a corroboration of the early-term margin,",
-         "not a causal estimate. SE clustered by municipality.", SIGNIF_NOTE))
+         "not a causal estimate. Standard errors, clustered by municipality, are",
+         "reported in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)
 etable(m1, m2, m3, dict = dict, fitstat = ~ n, digits = 4)
 

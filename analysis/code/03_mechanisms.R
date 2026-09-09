@@ -257,8 +257,9 @@ etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10,
          "by births, SINASC 2010--2024. Columns 1--4 split the cesarean rate into its",
          "prelabor (cesarean performed before labor began) and in-labor components.",
          "Columns 5--6 contrast schedulable low-risk births (Robson groups 1--2)",
-         "with preterm births (Robson group 10), which cannot be freely scheduled. SE",
-         "two-way clustered by municipality and date.", SIGNIF_NOTE))
+         "with preterm births (Robson group 10), which cannot be freely scheduled.",
+         "Standard errors, two-way clustered by municipality and date, are reported",
+         "in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 4, resize = TRUE)
 # six-column table: typeset in landscape so it is readable at full size
 .tx <- readLines(f)

@@ -67,8 +67,8 @@ implied_lines <- list(
   "Implied dip, low obstetrician density / high education" =
     c(sprintf("%.4f", dip_dens_lo), sprintf("%.4f", dip_educ_hi)))
 
-dict <- c(weekend = "Weekend", "weekend:low_dens" = "Weekend $\\times$ Low obstetrician density",
-          "weekend:educ_hi" = "Weekend $\\times$ Mother has 8+ years of schooling",
+dict <- c(weekend = "Weekend", "weekend:low_dens" = "Weekend $\\times$ low obstetrician density",
+          "weekend:educ_hi" = "Weekend $\\times$ mother has 8+ years of schooling",
           muni = "Municipality", year = "Year", rate = "Cesarean share")
 f <- file.path(TABLE, "tab10_heterogeneity.tex")
 etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,

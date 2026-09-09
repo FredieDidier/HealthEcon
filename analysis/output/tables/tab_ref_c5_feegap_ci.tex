@@ -1,4 +1,4 @@
-\begin{table}[H]\centering
+\begin{sidewaystable}\centering
 \caption{\textbf{The fee-gap coefficient against two yardsticks: an equivalence region and the canonical price response}}
 \label{tab:feegap_ci}
 \small
@@ -8,14 +8,14 @@
 Specification & Coefficient & 95\% CI & Clusters & In $[-0.02,0.02]$? & Excludes Grant? & Excludes GKM?
 \\
 \midrule
-State FE & +0.0469 & [-0.0020, +0.0958] &  27 & not within & not excluded & not excluded \\
-Municipality FE & -0.0163 & [-0.0340, +0.0015] & 719 & not within & excluded & excluded \\
-State FE + controls & +0.0166 & [-0.0306, +0.0638] &  27 & not within & not excluded & not excluded \\
-Municipality FE + controls & -0.0143 & [-0.0321, +0.0036] & 714 & not within & excluded & excluded \\
+State fixed effects & +0.0469 & [-0.0020, +0.0958] &  27 & not within & not excluded & not excluded \\
+Municipality fixed effects & -0.0163 & [-0.0340, +0.0015] & 719 & not within & excluded & excluded \\
+State fixed effects + controls & +0.0166 & [-0.0306, +0.0638] &  27 & not within & not excluded & not excluded \\
+Municipality fixed effects + controls & -0.0143 & [-0.0321, +0.0036] & 714 & not within & excluded & excluded \\
 \bottomrule
 \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
 \textit{Notes:} Coefficient on the log economic fee gap from Table~\ref{tab:fees}. The equivalence region $[-0.02, 0.02]$ corresponds to a 2 percentage-point change in the cesarean share per log point of the fee gap. The final two columns ask whether the interval excludes the price response the literature has estimated. \citet{gruber1999physician} report about four percentage points of cesarean rate per US\$1{,}000 of the cesarean-vaginal fee differential; re-estimating that response on corrected data, \citet{grant2009} obtains about one point, which he describes as a quarter of the original. At our delivery-weighted mean cesarean fee of R\$1,941 the two are 0.72 and 2.87 percentage points per log point of the fee gap; the conversion uses US consumer prices between 1990 and 2020 and the World Bank purchasing-power factor for Brazil, and is deliberately rough. Two things follow, and the paper states both. No interval fits inside the equivalence region, so these data do not establish that the price response is negligible. And the two fixed-effect schemes disagree about both magnitudes: the within-municipality intervals exclude them, the state-level intervals, estimated on twenty-seven clusters, are too wide to. The sign itself is unstable across the two schemes. The economic argument of Section~\ref{sec:notprice} does not rest on this table: the 0.10 to 0.35 log point negative fee gap of the largest states would move the cesarean rate by about a quarter of a percentage point at Grant's magnitude and about one point at the original, against a for-profit--public gap of 35 points.
 \end{minipage}
-\end{table}
+\end{sidewaystable}

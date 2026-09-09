@@ -74,7 +74,7 @@ tex <- c("\\begin{table}[H]\\centering",
   "Robson group & Cesareans & Share coded prelabor (\\%) \\\\", "\\midrule",
   apply(vtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f pp is therefore entirely in-labor (in-labor component %.1f pp). A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm placebo is weak.} \\\\",
+  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points is therefore entirely in-labor (in-labor component %.1f percentage points). A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm placebo is weak.} \\\\",
           100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, p_r1r10),
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2010--2024, cesareans with a",
@@ -126,10 +126,10 @@ w <- as.data.table(read_parquet(WFO))
 w[, `:=`(state = substr(muni6, 1, 2), log_gdp_pc = log(gdp_pc))]
 w <- w[year <= 2024 & tiss_deliveries >= 20 & is.finite(log_fee_gap) & is.finite(tiss_csection_rate)]
 specs <- list(
-  `State FE`                 = feols(tiss_csection_rate ~ log_fee_gap | state + year,  w, weights = ~tiss_deliveries),
-  `Municipality FE`          = feols(tiss_csection_rate ~ log_fee_gap | muni6 + year, w, weights = ~tiss_deliveries),
-  `State FE + controls`      = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | state + year, w, weights = ~tiss_deliveries),
-  `Municipality FE + controls` = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | muni6 + year, w, weights = ~tiss_deliveries))
+  `State fixed effects`                 = feols(tiss_csection_rate ~ log_fee_gap | state + year,  w, weights = ~tiss_deliveries),
+  `Municipality fixed effects`          = feols(tiss_csection_rate ~ log_fee_gap | muni6 + year, w, weights = ~tiss_deliveries),
+  `State fixed effects + controls`      = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | state + year, w, weights = ~tiss_deliveries),
+  `Municipality fixed effects + controls` = feols(tiss_csection_rate ~ log_fee_gap + log_gdp_pc + plan_cov + prenatal + obstetricians_per_1k_births | muni6 + year, w, weights = ~tiss_deliveries))
 EQ <- 0.02
 
 # The literature's benchmarks, converted into our units. GRANT (2009) reports
@@ -201,7 +201,14 @@ tex <- c("\\begin{table}[H]\\centering",
     formatC(fee_c, format = "d", big.mark = ","),
     100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK)),
   "\\end{table}")
-write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c5_feegap_ci.tex"))
+.fci <- file.path(TABLE, "tab_ref_c5_feegap_ci.tex")
+write_table_tex(resize_tabular(tex), .fci)
+# seven-column table: shrunk to \textwidth it prints smaller than its own note,
+# so typeset it in landscape, as the other wide tables are
+.tfci <- readLines(.fci)
+.tfci <- gsub("\\begin{table}[H]\\centering", "\\begin{sidewaystable}\\centering", .tfci, fixed = TRUE)
+.tfci <- gsub("\\end{table}", "\\end{sidewaystable}", .tfci, fixed = TRUE)
+writeLines(.tfci, .fci)
 cat("\n[C/C5] fee-gap coefficient CIs:\n"); print(rows)
 
 # =============================================================================
@@ -251,8 +258,9 @@ if (length(evf) == 0) {
            "only the delivery procedure fee; the economic fee gap adds the",
            "separately-billed hourly labor-assistance fee to the vaginal fee. The",
            "coefficient is small and sign-unstable under both definitions, so the null",
-           "is not an artifact of the endogenous billed hours. SE clustered by the",
-           "fixed-effect geography.", SIGNIF_NOTE))
+           "is not an artifact of the endogenous billed hours. Standard errors,",
+           "clustered on the fixed-effect geography, are reported in parentheses.",
+           SIGNIF_NOTE))
   postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
   cat(sprintf("\n[D/C6] base gap: uf %+.4f / muni %+.4f | econ gap: uf %+.4f / muni %+.4f\n",
               coef(b_uf)["gap_base"], coef(b_muni)["gap_base"], coef(e_uf)["gap_econ"], coef(e_muni)["gap_econ"]))

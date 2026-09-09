@@ -248,6 +248,12 @@ etable(m1, m2, m3, m4, m5, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "attenuation at larger establishments. Standard errors, two-way clustered by",
          "establishment and date, are reported in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\footnotesize", tabcolsep = 3)
+# wide table: shrunk to \\textwidth it prints at about 6pt, so typeset it in
+# landscape, as tab08_mechanism_checks and tab13c_dip_by_region_period are
+.tx <- readLines(f)
+.tx <- gsub("\\begin{table}[H]", "\\begin{sidewaystable}\\centering", .tx, fixed = TRUE)
+.tx <- gsub("\\end{table}", "\\end{sidewaystable}", .tx, fixed = TRUE)
+writeLines(.tx, f)
 
 cat("\n[3] Weekend x log(obstetric beds), prelabor share (pp per log point):\n")
 print(round(100 * c(date_FE = coef(m1)[["weekend:log_beds"]],
@@ -340,6 +346,12 @@ etable(m6, m7, m8, m9, m10, m11, tex = TRUE, file = f2, replace = TRUE, dict = d
          "registered obstetricians measure capacity. Standard errors, two-way clustered by",
          "establishment and date, are reported in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f2, fontsize = "\\footnotesize", tabcolsep = 3)
+# wide table: shrunk to \\textwidth it prints at about 6pt, so typeset it in
+# landscape, as tab08_mechanism_checks and tab13c_dip_by_region_period are
+.tx <- readLines(f2)
+.tx <- gsub("\\begin{table}[H]", "\\begin{sidewaystable}\\centering", .tx, fixed = TRUE)
+.tx <- gsub("\\end{table}", "\\end{sidewaystable}", .tx, fixed = TRUE)
+writeLines(.tx, f2)
 unescape_refs(f2)
 
 cat("\n[4] Payer exposure, weekend and holiday interactions (pp):\n")

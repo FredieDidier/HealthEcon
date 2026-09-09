@@ -496,6 +496,26 @@ Supplemental Appendix is a separate document.
   from `00_utils.R`. `postprocess_tex()` (booktabs + shrink-only `\resizebox`);
   `unescape_refs()` on any table whose note cites a `\ref{}` with an underscore in
   the label. Very wide tables (≥6 cols) → `sidewaystable` (needs `rotating`).
+  **This rule is about type size, not column count**: `\resizebox` is shrink-only,
+  so a table wider than the 6.5in text block is scaled DOWN and its type with it,
+  exactly as an over-wide figure is (see the `FIG_WIDTH` note above). Measured on
+  2026-09-09, the six landscape tables are `tab08_mechanism_checks` (C.3),
+  `tab13_referee_robustness` (D.1), `tab13c_dip_by_region_period` (D.2),
+  `tab_org_capacity` (D.8), `tab_org_capacity_valid` (D.9) and
+  `tab_ref_c5_feegap_ci` (D.14); every other table prints at 9.9-10.9pt, and the
+  only upright exception is `tab14_neonatal_suggestive` (D.6) at 8.1pt, whose
+  width comes from three long `dict` outcome labels and which is left alone.
+  Rotation is applied as a `gsub` on the generated `.tex` right after
+  `postprocess_tex()`; never convert a regression table into a figure.
+- **House wording inside tables** (standardized 2026-09-09; 17 tables already
+  followed it). Fixed-effect rows spell out **"fixed effects"**, never "FE"
+  (the abbreviation survives only in prose, where it is a listed acronym).
+  The standard-error sentence is **"Standard errors, clustered by X, are reported
+  in parentheses."** -- never "SE clustered by X", and never omit the
+  parentheses clause when the table shows them. **"pp" is allowed only as a
+  column-header unit** (`Cesarean dip (pp)`); in any sentence write
+  "percentage points". Interaction row labels are lowercase after the times sign
+  (`Weekend $\times$ low obstetrician density`).
 - **One note style for every exhibit in both documents** (2026-09-04). A note is
   a full-width justified block:
   `\begin{minipage}{\linewidth}\footnotesize` / `\textit{Notes:} ...` /
@@ -1241,6 +1261,36 @@ came back **2 deletions, 0 insertions**: every remaining number byte-identical.
 and 0 undefined citations in both; the same two documented pre-existing overfull
 boxes. Exhibit numbering unchanged (`tab:descriptives` C.1,
 `tab:estab_practice_style` C.4, `tab:heterogeneity` D.11).
+
+**Typographic sweep the same day (Fredie's three questions).** All three were real
+inconsistencies, and the sweep found two more. Everything below was applied **to
+the R source AND to the generated `.tex` with the identical string**, so no
+42M-row script was re-run and a re-run cannot silently revert any of it.
+- **"FE" vs "fixed effects."** 15 tables spelled it out, 2 did not
+  (`tab_demand_smoothing` D.10, `tab_ref_c5_feegap_ci` D.14). Both now spell it
+  out. In `10_supplement.R` the strings are the NAMES of the `specs` list, which
+  become the row labels; they are consumed generically through `names(specs)`,
+  so renaming them is safe.
+- **"SE" vs "Standard errors."** 13 tables used the full sentence, 3 used "SE"
+  (`tab08_mechanism_checks` C.3, `tab14_neonatal_suggestive` D.6,
+  `tab_ref_c6_fee_base_econ` D.15) -- and those same 3 were the only ones that
+  never said the errors are **in parentheses**, which they are. One rewrite fixed
+  both. ("SEs" appears nowhere; the note Fredie saw was one of these three.)
+- **Table type size.** Measured from the PDF word boxes rather than by eye:
+  against a 10.9pt baseline, `tab_org_capacity_valid` (D.9) was printing at
+  **6.3pt**, `tab13_referee_robustness` (D.1) at 6.5, `tab_org_capacity` (D.8) at
+  7.8 and `tab_ref_c5_feegap_ci` (D.14) at 8.5, all because `\resizebox` had
+  shrunk them to the text width. All four are ≥6 columns, so the repo's own
+  convention already called for landscape; they are now `sidewaystable` and print
+  at full size. The supplement went 28 → 29 pages. **A regression table never
+  becomes a figure**; rotation is the fix.
+- Two more found in the same pass: `-6.5 pp` written out as "percentage points"
+  in the inline note of `tab_ref_c3_robson_validation` (D.13), and the two
+  capitalized interaction labels of `tab10_heterogeneity` (D.11) lowercased.
+- After it: every table prints at 9.9-10.9pt except D.6 at 8.1pt; paper 37 pages,
+  supplement 29; 0 undefined references and 0 undefined citations in both; one
+  overfull box each, the documented pre-existing ones; every exhibit number
+  unchanged.
 
 **Working-paper build added.** `latex/build_wp.sh` produces
 `latex/Born_on_Schedule.pdf`, a SINGLE document = paper + Appendices A/B +
