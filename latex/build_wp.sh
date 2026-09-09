@@ -11,6 +11,12 @@
 #   * takes paper.tex's preamble verbatim, minus \usepackage{xr} and
 #     \externaldocument{supplement} (the supplement is internal here, so the
 #     external cross-reference machinery would only duplicate labels);
+#   * applies the two WP-ONLY edits listed under WP_EDITS below: a dated title
+#     page, and a data-availability sentence that does not address editors and
+#     referees, who do not exist for a working paper. paper.tex, the version
+#     submitted to the journal, keeps neither. Both are guarded: if a future edit
+#     to paper.tex moves the text they match, this script FAILS instead of
+#     silently producing a WP without them;
 #   * redefines \satab / \safig as plain Table~\ref / Figure~\ref;
 #   * takes the body through \input{appendix} (Appendices A and B), then adds a
 #     banner and \input{sup_appendix}, whose sections continue the counter as
@@ -51,6 +57,19 @@ grep -q '^\\input{appendix}' "$SRC" || { echo "build_wp.sh: no \\input{appendix}
 \end{document}
 TEX
 } > "$OUT.tex"
+
+# --- WP_EDITS: the two differences between the working paper and the submission
+# 1. a dated title page (the journal version carries no date)
+# 2. a data-availability sentence addressed to readers, not to editors and referees
+export WP_VERSION="${WP_VERSION:-September 2026}"
+perl -0777 -i -pe '
+  BEGIN { $v = $ENV{WP_VERSION} }
+  $n = 0;
+  $n += s/^\\date\{\}$/\\date{This version: $v}/m;
+  $n += s/A draft replication package is available to editors and referees and will be\n(deposited in a trusted open repository prior to acceptance\.)/A draft replication package is available from the corresponding author on\nrequest and will be $1/;
+  die "build_wp.sh: WP_VERSION is empty\n" unless length $v;
+  die "build_wp.sh: WP_EDITS matched $n of 2 patterns; paper.tex has moved the text they anchor on\n" unless $n == 2;
+' "$OUT.tex"
 
 pdflatex -interaction=nonstopmode "$OUT" >/dev/null
 bibtex "$OUT" >/dev/null

@@ -101,7 +101,11 @@ for-profit" (conflates payer and ownership). The rule binds figure legends too:
 2026-09-06 and now calls `sector_display()` like everywhere else. Relabel the
 AGGREGATE, not the source table -- the block right after it subsets on
 `sector == "Private"`. That figure and `fig09b_gestation_by_timing` are orphan
-outputs, included in no `.tex`: the supplement's Figure C.4 is
+outputs, included in no `.tex` (so are `tab_ref_c7_placebo_ranking.tex`, whose
+content the included `tab15_permutation` carries, `map01_csection_all`,
+`fig_long_weekend_event_blocks`, and the two single-panel figures named in the
+colour note below; 30 of the 31 generated tables are included, and every exhibit
+that IS included is cited in the text -- verified 2026-09-09): the supplement's Figure C.4 is
 `fig_gestation_panels`, built by `11_body_figures.R`. Headline contrast is **for-profit
 (2xxx) vs public (1xxx)**; nonprofit (3xxx, SUS-heavy) shows in figures, excluded
 from headline tests. Do NOT lump 3xxx into for-profit (inflates the share to
@@ -476,8 +480,10 @@ Supplemental Appendix is a separate document.
   `linetype` to the SAME variable as `colour`, with the series names passed in the
   SAME order, so the two guides merge into one legend (pass them out of order and
   you get two legends). Seven figures changed -- Figure 1, Figure 3(a), Figure
-  3(b), and the supplement's `fig02_dow_cesarean`, `fig03_robson_dow`,
-  `fig07_hour_of_birth`, `fig08_daily_counts`, `fig_gestation_panels`. Scripts 01,
+  3(b), the standalone `fig02_dow_cesarean` and `fig07_hour_of_birth` (the
+  single-panel versions that `11` re-draws into Figure 3, included in no `.tex`
+  themselves), and the supplement's `fig03_robson_dow`, `fig08_daily_counts` and
+  `fig_gestation_panels`. Scripts 01,
   03, 05, 11 were re-run (7.5 minutes total) and NO table changed a byte.
 - **Figure size = printed size (`FIG_WIDTH = 6.5` in `analysis/code/00_utils.R`).**
   Both documents are 12pt `article` with 1in margins, so the text block is exactly
