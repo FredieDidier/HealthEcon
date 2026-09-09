@@ -1310,6 +1310,18 @@ One bibliography serves all of it (`holm1979` and `benjamini1995` are cited in
 the body as well as in Appendix D). Editing `paper.tex` or `sup_appendix.tex` and
 re-running the script is the only supported way to update the working paper.
 
+**The working paper differs from the submission in exactly two places, and both
+live in `build_wp.sh` under the `WP_EDITS` marker** (added 2026-09-09, Fredie's
+request): a dated title page (`\date{This version: September 2026}`, overridable
+with the `WP_VERSION` environment variable; `paper.tex` carries a bare `\date{}`,
+which is right for the journal), and a data-availability sentence that offers the
+replication package "from the corresponding author on request" rather than "to
+editors and referees", who do not exist for a working paper. The commitment
+itself is unchanged. Both are applied by a `perl -0777` pass over the GENERATED
+`.tex`, never to `paper.tex`, and both are **guarded**: the script dies with a
+non-zero exit if either pattern fails to match, so a future edit that moves the
+text cannot silently produce a working paper without them (tested).
+
 
 ## ACTION items for Fredie
 
