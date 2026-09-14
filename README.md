@@ -4,6 +4,10 @@
 Vinicius Mendes (UFBA, vdmendes@ufba.br), Pablo Castro (UFBA, pablocastro@ufba.br),
 Lucas Emanuel (UFBA, lucasemanuel@ufba.br)
 
+**Working paper:** [SSRN 7437660](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7437660)
+(`latex/Born_on_Schedule.pdf`, built by `latex/build_wp.sh` — see "Compiling the
+manuscript" below).
+
 ## Repository layout
 
 ```
@@ -232,6 +236,13 @@ Benjamini and Hochberg (1995) in Appendix D. Verify with
 grep -c "Reference .* undefined" latex/paper.log      # must be 0
 grep -c "Citation .* undefined" latex/paper.log       # must be 0
 ```
+
+For a single-document working-paper edition (paper + Appendices A/B + the
+Supplemental Appendix as C/D/E, one bibliography), run `cd latex &&
+./build_wp.sh` after the two-way cycle above. It generates
+`Born_on_Schedule.tex`/`.pdf` from `paper.tex` — never edit the generated file
+by hand. This is the edition posted to SSRN
+(<https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7437660>).
 
 `latex/highlights.txt` holds the Highlights, uploaded to the journal as a
 separate file (at most 85 characters per bullet).

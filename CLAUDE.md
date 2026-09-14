@@ -1322,6 +1322,18 @@ itself is unchanged. Both are applied by a `perl -0777` pass over the GENERATED
 non-zero exit if either pattern fails to match, so a future edit that moves the
 text cannot silently produce a working paper without them (tested).
 
+## The 2026-09-14 revision: posted as a working paper on SSRN
+
+The `build_wp.sh` edition, `Born_on_Schedule.pdf`, is now circulating as a
+working paper on SSRN:
+<https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7437660>. This is a
+distribution event, not a content revision — nothing in `paper.tex`,
+`sup_appendix.tex`, the code, or any exhibit changed. `paper.tex` (the journal
+submission) carries no date and no SSRN reference; only the working-paper
+edition does, via the dated title page in `build_wp.sh`'s `WP_EDITS` (see
+above). If the manuscript is revised before or during JHE review, re-run
+`build_wp.sh` and re-post to SSRN as a new version rather than editing the
+posted PDF by hand.
 
 ## ACTION items for Fredie
 
@@ -1362,5 +1374,7 @@ text cannot silently produce a working paper without them (tested).
   availability, generative-AI and CRediT statements copied verbatim from
   `paper.tex`, so the entries typed into Elsevier's tool match the manuscript.
   Fredie signs and dates it.
-- Consider the free SSRN preprint option at submission. **Suggesting referees is
-  out of scope** (Fredie, 2026-09-06).
+- ~~Consider the free SSRN preprint option at submission~~ — **done 2026-09-14.**
+  Posted as a working paper: <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7437660>
+  (the `build_wp.sh` single-document edition). See "The 2026-09-14 revision"
+  above. **Suggesting referees is out of scope** (Fredie, 2026-09-06).
