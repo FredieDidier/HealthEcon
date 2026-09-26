@@ -22,10 +22,10 @@ seção de literatura. Magnitudes conferidas contra os textos originais.
 |---|---|---|
 | Gruber & Owings (1996), *RAND* 27(1):99-123 | EUA 1970–82, queda de fecundidade | −10% fecundidade → +0,97 p.p. cesárea |
 | Gruber, Kim & Mayzlin (1999), *JHE* 18(4):473-490 | Diferencial Medicaid | +US$100 diferencial → +3,9% cesárea |
-| Grant (2009), *JHE* 28(1):244-250 | HCUP, reanálise | Revisa conclusões acima |
+| Grant (2009), *JHE* 28(1):244-250 | HCUP, reanálise | ≈ 1 p.p. por US$1.000, um quarto de GKM |
 | Clemens & Gottlieb (2014), *AER* 104(4):1320-1349 | Medicare, choque de preço | Elasticidade de oferta ≈2,5; eletivo responde 2× |
 | Alexander (2020), *JPE* 128(11):4046-4096 | Pagar médico para reduzir custo | Consequências não intencionais |
-| de Elejalde & Giolito (2021), *JHE* 75:102411 | Chile, acesso a privado | +8,7 p.p. privado; +4,6 p.p. cesárea |
+| de Elejalde & Giolito (2021), *JHE* 75:102411 | Chile, acesso a privado | +8,6 p.p. cesárea (versão JHE; o IZA DP reporta 4,6) |
 | Foo, Lee & Fong (2017), *AJHE* 3(3):422-453 | Preço de médico vs. hospital | Separa as duas margens |
 
 **O ponto teórico que organiza o bloco:** McGuire (2000) e Dranove (1988) formalizam

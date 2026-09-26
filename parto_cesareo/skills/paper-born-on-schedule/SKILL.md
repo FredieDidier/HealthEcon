@@ -1,6 +1,6 @@
 ---
 name: "paper-born-on-schedule"
-description: "Gerencia o paper \"Born on Schedule\" (cesáreas no Brasil, alvo Journal of Health Economics, submissão março/2027) do Vinicius com Fredie Didier, Pablo Castro e Lucas Emanuel. Use quando ele perguntar sobre o projeto de parto cesáreo/cesárea, o paper do JHE, status ou próximos passos da pesquisa, a robustez de temperatura, a Equação (3), os dados TISS/SINASC/CNES, quiser rodar ou revisar scripts do repositório HealthEcon, compilar o LaTeX, checar números do paper, atualizar o Notion do projeto, preparar a revisão interna dos coautores, ou pedir para editar qualquer parte do manuscrito."
+description: "Gerencia o paper \"Born on Schedule\" (cesáreas no Brasil, alvo Journal of Health Economics, submissão março/2027) do Vinicius com Fredie Didier, Pablo Castro e Lucas Emanuel. Use quando ele perguntar sobre o projeto de parto cesáreo/cesárea, o paper do JHE, status ou próximos passos da pesquisa, a Equação (3), os dados TISS/SINASC/CNES, quiser rodar ou revisar scripts do repositório HealthEcon, compilar o LaTeX, checar números do paper, atualizar o Notion do projeto, preparar a revisão interna dos coautores, ou pedir para editar qualquer parte do manuscrito."
 ---
 
 # Gerenciamento do paper *Born on Schedule*
@@ -56,7 +56,7 @@ Aplique-as em qualquer edição de texto, tabela, figura ou código. Se um pedid
 5. **Nunca reintroduzir `else → Public`** na classificação de `nat_jur`. `Public` é o conjunto explícito 1xxx; não pareados vão para `Other`.
 6. **Nunca passar de 6,5in** numa figura de `\textwidth` — adicionar uma linha, não uma coluna.
 7. **Compilar nos dois sentidos**, sem limpar os `.aux` no meio (ver §7).
-8. **Não rodar dois scripts de 42M linhas em paralelo** (03, 05, 06, 07, 08, 09, 12).
+8. **Não rodar dois scripts de 42M linhas em paralelo** (03, 05, 06, 07, 08, 09, 12, 14).
 9. **Não commitar dados.** Commitar/dar push só quando pedido.
 10. **Se mover um exhibit, re-derivar o mapa de `paper.aux`** — nunca renumerar à mão.
 
@@ -66,14 +66,15 @@ Aplique-as em qualquer edição de texto, tabela, figura ou código. Se um pedid
 
 O paper é *evidência descritiva e de mecanismo estruturada em torno de um contraste quase-experimental fortemente controlado*. Os rótulos abaixo valem em abstract, introdução, seção de estratégia, notas de tabela e conclusão.
 
-- **Regressões de honorário** → associações condicionais, sinal instável. "No robust positive price relationship", nunca "fees don't matter".
+- **Regressões de honorário** → associações condicionais, sinal instável, e **não** um resultado de equivalência. O argumento é de calibragem: na magnitude canônica, o gap negativo dos estados grandes move a taxa em no máximo ~1 p.p. contra um gap de 35. Nunca "fees don't matter" nem "no relationship".
+- **Demand smoothing (de Elejalde & Giolito)** → testado e não sustentado; reportar como ausência de nivelamento, nunca como fluxo "mais irregular".
 - **Gradientes de fim de semana/feriado (Eq. 2)** → ordenação de calendário dos partos. Nunca escrever que o dia do parto é tão bom quanto aleatório em relação à necessidade médica.
 - **Eq. (3)** → o differential for-profit–público dentro do município-dia; causal só sob gradiente comum.
 - **Pré-parto vs. intraparto** → evidência de mecanismo.
 - **Feriados prolongados** → previsões não confirmadas; o nulo delimita a alegação.
 - **Capacidade organizacional** → "redundância organizacional atenua o gradiente", nunca "o calendário do médico individual vs. o hospital".
 - **Kitagawa** → contabilidade; 72% estilo de prática.
-- **~50 mil cesáreas em excesso** → benchmark mecânico, não cesáreas causadas.
+- **~39 mil cesáreas em excesso/ano** (benchmark do próprio município-ano) → benchmark mecânico, não cesáreas causadas.
 - **Parto Adequado** → falha de desenho causal, não efeito de programa.
 
 **Frase-padrão de escopo:** *"The evidence identifies calendar sorting and a tightly controlled for-profit–public differential; it does not identify the total number of cesareans or neonatal outcomes caused by scheduling."*
@@ -111,13 +112,14 @@ config/00_master_analysis.R → analysis/code/ 00_utils · 01_descriptives ·
                               02_regressions · 03_mechanisms · 04_heterogeneity ·
                               05_cost · 06_robustness · 07_main_specification ·
                               08_long_weekends · 09_org_capacity ·
+                              13_demand_smoothing · 14_estab_practice_style ·
                               10_supplement · 12_subgroups · 11_body_figures
 ```
 
-- **07/08/09** salvam `fam_{A,D,E}.rds` que **10** lê para os testes múltiplos.
+- **07/08/09/13** salvam `fam_{A,D,E,F}.rds` que **10** lê para os testes múltiplos; 13 roda antes de 10.
 - **12 roda antes de 11** apesar do número: salva `robson_grad.rds` para o painel (c) da Figura 3.
-- Pico de memória ~12 GB; análise completa ~90 min; `07` sozinho ~40 min.
-- **`DROPBOX_ROOT` em `config/config.R` é a única edição por máquina.** O código monta `file.path(DROPBOX_ROOT, "build", ...)`, então `DROPBOX_ROOT` precisa apontar para um diretório que contenha `build/`. A pasta local se chama `dataset/`, não `build/` — resolva isso antes de tentar rodar qualquer coisa (meta R1).
+- Pico de memória ~14 GB (script 12); análise completa ~90 min; `07` sozinho ~40 min.
+- **O caminho dos dados vem de `HEALTHECON_DATA` ou de `config/config_local.R`** (git-ignorado); `config/config.R` traz só um placeholder. O código monta `file.path(DROPBOX_ROOT, "build", ...)` e para com erro se o diretório não tiver `build/`. A pasta local se chama `dataset/`, não `build/` — resolva isso antes de tentar rodar qualquer coisa (meta R1).
 
 ### Mapa de exhibits (corpo: 3 figuras + 6 tabelas)
 
@@ -181,7 +183,7 @@ Verificar: `grep -c "Reference .* undefined" paper.log` → **0**.
 
 **"Qual o status?" / "O que falta?"** → Leia `ROADMAP.md` e consulte as metas no Notion. Dê o marco do mês corrente, os bloqueadores abertos e o que está atrasado. Seja específico sobre quem é o dono de cada item pendente.
 
-**Robustez de temperatura (meta E1)** → É o único item empírico aberto e o de maior lead time. Plano em `ROADMAP.md` Parte III. Pontos a lembrar: os EF município×data **já absorvem** a temperatura comum aos dois setores, então isto é cinto-e-suspensório, não conserto; a ameaça residual exigiria resposta *diferencial* dos setores à temperatura. ERA5-Land é preferível ao INMET por cobertura. Novo script `13_temperature.R`, depois de 07.
+**Robustez de temperatura (meta E1)** → Fora do escopo por decisão do Fredie; fica só como item de resposta a parecerista (`ROADMAP.md` Parte VI). Os EF município×data já absorvem a temperatura comum aos dois setores; a ameaça residual exigiria resposta *diferencial* dos setores ao calor. Não a recoloque no caminho crítico.
 
 **Editar o manuscrito** → Leia a seção inteira antes de editar. Cheque a taxonomia de evidência (§4) e as dez regras (§3). Evite travessões longos e frases sinuosas — é o estilo da casa. Depois de editar, recompile e confirme zero referência indefinida.
 
@@ -189,7 +191,7 @@ Verificar: `grep -c "Reference .* undefined" paper.log` → **0**.
 
 **Revisão interna dos coautores (meta T1)** → Pablo lê seções 4–5 (identificação e honorários); Lucas lê 6–7 + suplemento (nulos e consistência de números); Fredie lê integral. Consolide comentários em uma lista única priorizada, não numa colagem.
 
-**Bibliografia (meta D3)** → A verificação das 50 entradas já foi feita (20/08/2026, achados em `Literature/verificacao_citacoes.md`). O que falta são as correções no `.bib` e duas decisões do Fredie: incluir `melo2023` na seção institucional e resolver `curriemacleod2016`.
+**Bibliografia (meta D3)** → Metadados e conteúdo das citações já verificados (`Literature/verificacao_citacoes.md` e a auditoria de 07/09 em `REVISION_LOG.md`). Pendência conhecida: preencher volume e páginas de `fischer2026` antes de submeter.
 
 **Ao terminar qualquer bloco de trabalho** → Atualize `ROADMAP.md`, a tarefa no Notion e o `CLAUDE.md` se um número mudou. Diga o que mudou.
 

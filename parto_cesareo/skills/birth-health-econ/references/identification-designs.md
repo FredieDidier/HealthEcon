@@ -167,7 +167,8 @@ Não seria publicado assim agora.
 **Referência:** Gruber, Kim & Mayzlin (1999), *JHE* 18(4):473-490.
 
 **Achado:** +US$100 no diferencial cesárea–vaginal → +3,9% na taxa de cesárea
-(≈ 1 p.p. por US$1.000).
+(≈ 4 p.p. por US$1.000). O "≈ 1 p.p. por US$1.000" é a reestimativa de Grant (2009),
+cerca de um quarto do efeito original.
 
 **Nota prática:** o PDF do NBER WP 6744 é digitalização sem OCR.
 
@@ -188,7 +189,7 @@ padrão "eletivo responde mais" — que é exatamente a previsão testável para
 **Variação:** política que reduziu o custo de parto em hospital privado para
 seguradas do sistema público. DiD por elegibilidade.
 
-**Achados:** +8,7 p.p. de partos em hospital privado; +4,6 p.p. de cesárea (+15%);
+**Achados:** +8,6 p.p. de cesárea na versão publicada (o IZA DP 12297 reporta 4,6);
 piora em peso e tamanho ao nascer.
 
 **A contribuição conceitual mais importante do paper:** o preço da cesárea e do parto

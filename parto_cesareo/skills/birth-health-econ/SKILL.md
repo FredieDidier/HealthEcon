@@ -26,8 +26,9 @@ Três coisas tornam o parto um laboratório privilegiado, e vale dizê-las
 explicitamente na introdução de qualquer paper da área:
 
 1. **O timing é manipulável, a gravidez não.** A data de concepção é fixa; a data
-   do parto é escolhida. Isso gera variação de curto prazo que não se correlaciona
-   com a saúde subjacente.
+   do parto é escolhida. Isso gera variação de curto prazo, mas a data observada é
+   em parte escolhida, então ela não é "tão boa quanto aleatória" em relação à
+   necessidade médica. Trate-a como ordenação de calendário, não como experimento.
 2. **A margem é binária e bem medida.** Cesárea vs. vaginal aparece em registro
    administrativo universal, sem erro de medida relevante.
 3. **A população é jovem e majoritariamente saudável.** Diferente de infarto ou
@@ -108,10 +109,10 @@ Antes de acreditar num coeficiente próprio, compare com `references/literature-
 Ele traz as estimativas centrais publicadas, com desenho e contexto. Ordens de
 grandeza que servem de sanidade:
 
-- Resposta a honorário: **~1 p.p. por US$1.000** de diferencial (Gruber-Kim-Mayzlin)
+- Resposta a honorário: **~1 p.p. por US$1.000** de diferencial (reestimativa de Grant 2009); a de Gruber-Kim-Mayzlin é cerca de quatro vezes maior
 - Gradiente de conveniência (hora do dia, véspera de feriado): **1–2 p.p.**, ~10% da média
 - Capacidade / leito vazio: **~1 p.p. por desvio-padrão** de ocupação (Bachner et al.)
-- Choque de acesso a hospital privado: **4,6 p.p.** (Chile, de Elejalde & Giolito)
+- Choque de acesso a hospital privado: **8,6 p.p.** (Chile, de Elejalde & Giolito, versão publicada no JHE)
 - Gap público–privado no Brasil: **~35 p.p.** bruto — mas ~30% é composição
 
 Se seu efeito é muito maior que isso, quase sempre há contaminação por composição
