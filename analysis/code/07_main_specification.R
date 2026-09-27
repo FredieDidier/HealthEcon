@@ -110,7 +110,9 @@ fml <- function(y, controls = character(0))
 
 m1 <- feols(fml("rate"), cells, weights = ~births, cluster = ~muni + date)
 m2 <- feols(fml("rate", predet_cols), cells, weights = ~births, cluster = ~muni + date)
-m3 <- feols(fml("rate", c(predet_cols, robson_cols)), cells, weights = ~births, cluster = ~muni + date)
+# Robson groups exist only from 2014: before that every cell is 100% "miss" and the
+# shares control for nothing.
+m3 <- feols(fml("rate", c(predet_cols, robson_cols)), cells[year >= 2014], weights = ~births, cluster = ~muni + date)
 m4 <- feols(fml("rate_pre"), cells[year >= 2012], weights = ~births, cluster = ~muni + date)
 m5 <- feols(fml("rate_lab"), cells[year >= 2012], weights = ~births, cluster = ~muni + date)
 
@@ -143,7 +145,7 @@ tex <- c(
   "Predetermined maternal composition & No & Yes & Yes & No & No \\\\",
   "Robson-group shares & No & No & Yes & No & No \\\\",
   "Municipality $\\times$ date fixed effects & Yes & Yes & Yes & Yes & Yes \\\\",
-  "Sample & 2010--2024 & 2010--2024 & 2010--2024 & 2012--2024 & 2012--2024 \\\\",
+  "Sample & 2010--2024 & 2010--2024 & 2014--2024 & 2012--2024 & 2012--2024 \\\\",
   tex_nobs(MAIN),
   "\\midrule",
   "\\multicolumn{6}{l}{\\emph{Panel B. Each sector's own gradient}} \\\\",

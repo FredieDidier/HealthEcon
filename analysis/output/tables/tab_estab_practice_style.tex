@@ -11,9 +11,9 @@
 \midrule
 \multicolumn{9}{l}{\emph{Panel A. Dispersion across maternities, by sector}} \\
 \addlinespace[2pt]
-For-profit & 6,392 & 5,986,550 & 78.8 & 16.2 & 40.8 & 72.1 & 14.5 & 38.1 \\
-Nonprofit & 9,548 & 10,218,078 & 59.9 & 18.0 & 47.6 & 58.0 & 14.4 & 36.5 \\
-Public & 9,927 & 11,705,433 & 44.8 & 14.8 & 36.3 & 47.9 & 12.7 & 31.0 \\
+For-profit & 6,103 & 5,618,571 & 80.2 & 15.3 & 37.9 & 73.0 & 14.1 & 36.7 \\
+Nonprofit & 9,440 & 9,989,135 & 60.7 & 18.0 & 47.7 & 58.7 & 14.4 & 36.4 \\
+Public & 10,412 & 12,390,693 & 45.1 & 14.8 & 36.2 & 48.0 & 12.6 & 30.8 \\
 \addlinespace[4pt]
 \midrule
 \multicolumn{9}{l}{\emph{Panel B. Dispersion of the standardized rate surviving each block}} \\
@@ -22,15 +22,15 @@ Public & 9,927 & 11,705,433 & 44.8 & 14.8 & 36.3 & 47.9 & 12.7 & 31.0 \\
 \cmidrule(lr){2-4}\cmidrule(lr){6-8}
  & $R^2$ & Residual SD & \% of raw & & $R^2$ & Residual SD & \% of raw & \\
 \midrule
-None (raw dispersion) &  & 16.26 & 100 &  &  & 14.44 & 100 &  \\
-Sector & 0.296 & 13.64 & 84 &  &  &  &  &  \\
-$+$ Municipality $\times$ year & 0.749 & 8.15 & 50 &  & 0.670 & 8.30 & 57 &  \\
-$+$ Maternal case-mix & 0.867 & 5.93 & 36 &  & 0.784 & 6.71 & 46 &  \\
-$+$ Obstetric capacity & 0.870 & 5.87 & 36 &  & 0.793 & 6.57 & 46 &  \\
+None (raw dispersion) &  & 16.25 & 100 &  &  & 14.09 & 100 &  \\
+Sector & 0.310 & 13.51 & 83 &  &  &  &  &  \\
+$+$ Municipality $\times$ year & 0.759 & 7.97 & 49 &  & 0.731 & 7.31 & 52 &  \\
+$+$ Maternal case-mix & 0.868 & 5.92 & 36 &  & 0.792 & 6.42 & 46 &  \\
+$+$ Obstetric capacity & 0.870 & 5.85 & 36 &  & 0.803 & 6.26 & 44 &  \\
 \bottomrule
 \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} SINASC 2014--2024 (Robson classification populated from 2014), Robson groups 01--10, establishment-years with at least 100 births, weighted by births throughout. The Robson-standardized rate reweights each maternity's own group-specific cesarean rates to the national Robson distribution of the same year, the institutional comparison the World Health Organization's current guidance directs \citep{who2015cesarean}. Maternities are kept when the groups they deliver cover at least 90 percent of the reference weight, with the weights renormalized over the covered groups. Panel B takes the standardized rate as the outcome, so the Robson case-mix is already held, and reports for nested sets of the remaining determinants the share of its weighted variance they explain, the residual standard deviation in percentage points, and that residual as a percentage of the raw dispersion in the first row. It runs on the 23,048 establishment-years carrying no missing regressor, so every row shares one sample. Maternal case-mix is the mother's mean age and the shares under 20, 35 or older, with at most seven years of schooling, and not recorded as white, none of which is an input to the Robson classification. Obstetric capacity is the establishment's obstetric beds and delivery volume from CNES. The sector row is empty in the for-profit columns, which hold one sector by construction. Entering the ten Robson group shares as regressors on the observed rate instead of standardizing absorbs more ($R^2$ of 0.95, residual 4.6 percentage points), but it is an upper bound on what case-mix explains, because a maternity's group shares also proxy the within-group practice they correlate with. Two for-profit maternities delivering in the same municipality and year differ by 13.4 percentage points on average in the standardized rate. This is accounting rather than a causal decomposition: the residual dispersion is what these covariates do not explain, and it contains unmeasured case-mix and unmeasured capacity alongside differences in practice.
+\textit{Notes:} SINASC 2014--2024 (Robson classification populated from 2014), Robson groups 01--10, establishment-years with at least 100 births, weighted by births throughout. The Robson-standardized rate reweights each maternity's own group-specific cesarean rates to the national Robson distribution of the same year, the institutional comparison the World Health Organization's current guidance directs \citep{who2015cesarean}. Maternities are kept when the groups they deliver cover at least 90 percent of the reference weight, with the weights renormalized over the covered groups. Panel B takes the standardized rate as the outcome, so the Robson case-mix is already held, and reports for nested sets of the remaining determinants the share of its weighted variance they explain, the residual standard deviation in percentage points, and that residual as a percentage of the raw dispersion in the first row. It runs on the 23,048 establishment-years carrying no missing regressor, so every row shares one sample. Maternal case-mix is the mother's mean age and the shares under 20, 35 or older, with at most seven years of schooling, and not recorded as white, none of which is an input to the Robson classification. Obstetric capacity is the establishment's obstetric beds and delivery volume from CNES. The sector row is empty in the for-profit columns, which hold one sector by construction. Entering the ten Robson group shares as regressors on the observed rate instead of standardizing absorbs more ($R^2$ of 0.95, residual 4.5 percentage points), but it is an upper bound on what case-mix explains, because a maternity's group shares also proxy the within-group practice they correlate with. Two for-profit maternities delivering in the same municipality and year differ by 11.9 percentage points on average in the standardized rate. This is accounting rather than a causal decomposition: the residual dispersion is what these covariates do not explain, and it contains unmeasured case-mix and unmeasured capacity alongside differences in practice.
 \end{minipage}
 \end{table}

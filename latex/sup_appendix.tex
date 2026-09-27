@@ -117,15 +117,15 @@ calendar gradient itself differs by age, overall and among the low-risk Robson
 1--2 births.
 
 The results line up with the Robson profile. In Panel A the for-profit weekend
-differential is $-2.5$ percentage points among term births, while among preterm
-births it is $0.8$ points and statistically indistinguishable from zero; the
-difference of $3.4$ points is precisely estimated. The ownership-specific
-calendar pattern is a term-birth phenomenon. In Panel B the differential is
-$-3.0$ points for mothers under 35 and an insignificant $1.3$ points for mothers
-aged 35 or older; within the low-risk Robson 1--2 sample of Panel C it is $-5.0$
-points under 35 and an insignificant $-1.4$ points at 35 or older. The gradient
-is therefore concentrated among younger mothers and cannot be distinguished from
-zero among older ones. Two readings are consistent with this, and
+differential is $-2.1$ percentage points among term births, while among preterm
+births it is positive, $1.5$ points (standard error 0.7); the difference of $3.6$
+points is precisely estimated. The ownership-specific weekend decline is a
+term-birth phenomenon. In Panel B the differential is
+$-2.5$ points for mothers under 35 and a positive $1.7$ points, significant only
+at the 10 percent level, for mothers aged 35 or older; within the low-risk Robson
+1--2 sample of Panel C it is $-4.8$ points under 35 and an insignificant $-1.4$
+points at 35 or older. The weekend decline is therefore concentrated among
+younger mothers and absent among older ones. Two readings are consistent with this, and
 our design does not separate them. Older mothers are already close to the ceiling
 of the for-profit cesarean distribution, and a differential expressed in
 percentage points is mechanically compressed as the underlying rate approaches
@@ -174,15 +174,16 @@ measures and samples. Two of those columns bear on the reading of the exercise.
 Column 5 measures obstetric capacity by the hours contracted at the establishment
 rather than by a headcount of registered obstetricians, which distinguishes a
 four-hour registration from a forty-hour one; the interaction is a precise zero
-($-$0.10 percentage points, standard error 0.17), while the delivery-scale
-interaction stays positive and significant, so the attenuation we do find tracks the
-size of the service rather than measured obstetric time. Column 6 adds the SUS share of the
+($-$0.16 percentage points, standard error 0.17), while the delivery-scale
+interaction is positive and significant in that column (1.31 points, standard
+error 0.45), so what attenuation the point estimates suggest tracks the size of
+the service rather than measured obstetric time. Column 6 adds the SUS share of the
 establishment's obstetric beds, the one establishment-level measure of payer as
 distinct from ownership in our data. It is zero at the median for-profit
 maternity-year, which is what licenses reading legal-entity type 2xxx as a
 predominantly private-payer population, and its interactions are positive: a
 for-profit maternity that places all of its obstetric beds with the SUS has a
-weekend gradient 2.1 percentage points flatter and a holiday gradient 3.4 points
+weekend gradient 2.6 percentage points flatter and a holiday gradient 2.9 points
 flatter than one that places none. Payer exposure is not assigned, and
 for-profit maternities serving the SUS differ from those that do not in ways the
 establishment-by-year fixed effects hold fixed only in levels, so we read this as
@@ -213,9 +214,11 @@ raw leave-one-out mean is mechanically negatively related to the value it omits
 whenever the establishment is growing, since the early years of an expanding
 maternity fall below and the later years above the mean of the other years. If
 deliveries are moved off anticipated crowding, the coefficient on expected demand
-in the following week is positive. It is a small negative in every column and
-never distinguishable from zero. That null carries limited weight, and the table
-says why. Out of sample the forecast recovers only 0.065 log points of realized
+in the following week is positive. It is negative in every column, and
+distinguishable from zero only for the overall cesarean share (column 4, $-0.41$,
+standard error 0.20), where its sign is the opposite of the prediction. The null
+on the prelabor share carries limited weight, and the table says why. Out of
+sample the forecast recovers only 0.062 log points of realized
 relative demand per log point, because an individual maternity's week-to-week
 volume is close to unforecastable from its own seasonal history, and the design
 would reject only responses above 0.8 percentage points per log point.
@@ -225,10 +228,10 @@ deliveries, and is better powered. The outcome is the log variance-to-mean ratio
 of the establishment-year's weekly birth counts, which is zero under a purely
 Poisson arrival process and positive when weekly volume is lumpier than chance.
 Within establishments a higher prelabor cesarean share goes with a higher ratio,
-by 0.27 log points per unit of the share. That coefficient is significant at ten
-percent on its own and not after the family adjustment of
-Table~\ref{tab:multiple_testing}, so we read it as an absence of levelling rather
-than as evidence that scheduling makes the flow lumpier. Its sign is nonetheless
+by 0.32 log points per unit of the share (standard error 0.15). That coefficient
+is significant at five percent on its own and only at ten percent after the family
+adjustment of Table~\ref{tab:multiple_testing}, so we read it as an absence of
+levelling rather than as evidence that scheduling makes the flow lumpier. Its sign is nonetheless
 the opposite of the one demand smoothing predicts. Both panels report associations
 rather than the causal effect of crowding or of scheduling, and neither
 contradicts the Chilean result, which comes from a different institutional shock.
@@ -293,20 +296,26 @@ cooperative-insurer contrast of Table~\ref{tab:modality}. Family C is the set of
 for-profit--public outcome differences of Table~\ref{tab:health}: early-term
 birth, low birthweight, and low Apgar score. Family D is the long-weekend family
 of Table~\ref{tab:long_weekends}: the three holiday-type interactions and the
-pre-holiday displacement sum. Family E is the pair of organizational-capacity
-interactions of Table~\ref{tab:org_capacity}. Family F is the demand-smoothing
+pre-holiday displacement sum. Family E is the four organizational-capacity
+interactions of Table~\ref{tab:org_capacity}, for obstetric beds and for annual
+deliveries. Family F is the demand-smoothing
 family of Table~\ref{tab:demand_smoothing}: the two forward-demand coefficients
 and the throughput-dispersion coefficient. Families are defined by the
 substantive question a reader would pose, not by the outcome of the test.
 Table~\ref{tab:multiple_testing} reports, within each family, the Holm-Bonferroni
 adjusted $p$-value \citep{holm1979}, which controls the familywise error rate, and
 the Benjamini-Hochberg $q$-value \citep{benjamini1995}, which controls the false
-discovery rate. The adjustments do not change any conclusion the paper draws. The estimates that
-are individually significant at conventional levels remain so, and the tests that
-were insignificant to begin with stay insignificant; the one coefficient that
-loses its marginal significance under the adjustment, the throughput dispersion of
-family F, is one the paper reports as an absence of evidence rather than as a
-finding. The precision comes from sample sizes in the
+discovery rate. Families A to C are unaffected: every estimate significant on its
+own remains significant after the adjustment, and the insignificant cooperative
+contrast stays so. In family D, the four long-weekend coefficients have
+unadjusted $p$-values between 0.049 and 0.072 and Holm $p$-values of 0.198, so
+none is individually significant after the adjustment; the paper reads the
+long-weekend evidence from the equality tests across holiday types, not from these
+levels. None of the four organizational-capacity interactions of family E is
+significant even before the adjustment. In family F, the two coefficients
+significant at five percent on their own, the forward-demand coefficient on the
+cesarean share and the throughput dispersion, are significant only at ten
+percent after it (Holm $p$ 0.100, $q$ 0.053). The precision comes from sample sizes in the
 millions rather than from a fortunate choice among tests.
 
 \input{../analysis/output/tables/tab_multiple_testing.tex}

@@ -7,7 +7,7 @@ BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRbla
 LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
-[1] C
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 time zone: America/Bahia
 tzcode source: internal

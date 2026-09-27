@@ -1,5 +1,16 @@
 # CLAUDE.md — HealthEcon Project Guide
 
+> **2026-09-27 — every number below was re-estimated.** The sector is now the
+> establishment's legal nature in the birth's own year (CNES 2012-2024; 2010-2011
+> take 2012), not "ever for-profit"; the prelabor/in-labor split uses 2012+ in
+> every script; Table 2 col 3 uses 2014+; family E has four tests; a July-10 model
+> cache (`m_tax_slim.rds`) had frozen the long-weekend Panel A. The headline
+> differential fell from −2.3 to −1.8pp (weekend) and −2.9 to −2.5pp (holiday);
+> the capacity interactions are no longer significant with muni×date FE. Full
+> record: `parto_cesareo/REVISION_LOG.md`, entry of 2026-09-27. Where this file
+> and the generated tables disagree, the tables win.
+
+
 ## What the paper is
 
 Empirical paper, *"Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean
@@ -71,9 +82,9 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   are all booked). The maternal-age split is exploratory and NOT in the
   pre-specified families A–E; always pair it with the ceiling caveat (a pp
   differential compresses mechanically as the base rate approaches 1).
-- **Kitagawa decomposition** = accounting; 72% practice style.
-- **~39k excess weekday cesareans/yr** (own-municipality-year benchmark) = mechanical benchmark, not cesareans caused.
-- **early-term +11.7pp** = sector–gestational-age association.
+- **Kitagawa decomposition** = accounting; 73% practice style.
+- **~35k excess weekday cesareans/yr** (own-municipality-year benchmark) = mechanical benchmark, not cesareans caused.
+- **early-term +12.2pp** = sector–gestational-age association.
 - **Parto Adequado** = failure of a causal *design* (pre-trends), not a program
   effect; lives entirely in the Supplemental Appendix, one paragraph in the body.
 
@@ -143,21 +154,21 @@ reintroduce `else → Public`.
    swings move nothing; the 2015 court order never became an actual fee change.
    The claim is calibrated, not an equivalence result: see the taxonomy above.
 3. **A scheduling story** — cesareans cluster on weekdays and dip on weekends
-   (−8.3pp for-profit / −6.7 public) and holidays (−5.6 / −3.5); 8–11am OR spike;
+   (−7.9pp for-profit / −6.7 public) and holidays (−5.3 / −3.5); 8–11am OR spike;
    half of cesareans in weekday business hours vs 29.8% uniform benchmark.
    NB: the holiday coefficient must use `holiday_dates(2010:2024)` — the daily file
    spans 2010–2024, so an earlier `holiday_dates(2015:2024)` in `03_mechanisms.R`
    left 2010–2014 holidays unflagged and diluted the coefficient to −5.3/−3.5.
 4. **Eq. (3), the central estimate** — within the same municipality-day the
-   for-profit differential is **−2.3pp weekend / −2.9pp holiday**, essentially
+   for-profit differential is **−1.8pp weekend / −2.5pp holiday**, essentially
    unchanged (−2.2 / −2.6) after adjusting for predetermined maternal composition.
    (Strengthened from −1.8/−2.4 by the 2026-07-11 nat_jur fix, which removed
    misclassified unmatched clinics from Public; verified by fold-back.)
-5. **The dip lives in prelabor cesareans** — for-profit weekend dip −9.7pp
+5. **The dip lives in prelabor cesareans** — for-profit weekend dip −8.9pp
    prelabor vs +1.7pp in-labor; persists in low-risk Robson 1–2 (−7.4pp) and
    Robson 1 alone (−6.5pp, all intrapartum).
-6. **The cost** — +11.7pp early-term (37–38wk) with maternal controls; 72%
-   practice style (Kitagawa); ~39k excess weekday cesareans/yr against the
+6. **The cost** — +12.2pp early-term (37–38wk) with maternal controls; 73%
+   practice style (Kitagawa); ~35k excess weekday cesareans/yr against the
    OWN-MUNICIPALITY weekend benchmark (10.0% of weekday cesareans); near-parity in
    billed amounts.
 
@@ -198,11 +209,13 @@ both `09_org_capacity.R` and the generated `.tex` until 2026-09-04; it now reads
 "14 percent of for-profit and 27 percent of public maternities register none".
 `09` was not re-run — the change is text only.) Beds
 carry the analysis; obstetrician count is col 5 only. **RESULT is weak/mixed:**
-every interaction is positive (larger = flatter gradient) but only the
-delivery-**scale** interaction is significant (weekend×log deliveries ≈ +0.70pp);
-beds×weekend ≈ +0.45pp n.s. under muni×date FE; terciles flat. Permitted:
-"larger obstetric services attenuate the weekend gradient, consistent with
-organizational coverage." Forbidden: "proves it is the individual physician's
+every interaction is positive (larger = flatter gradient) but, since the
+2026-09-27 re-estimation, NONE is significant under muni×date FE (scale +0.64pp,
+SE 0.41; beds +0.57pp, SE 0.38); the scale term is precise only with date FE
+(col 1, +1.49pp***); terciles flat; family E has four tests, none significant
+even unadjusted. Permitted: "the point estimates suggest a flatter gradient at
+larger services, but none is distinguishable from zero with municipality-by-date
+fixed effects." No longer a 'fingerprint' of the paper. Forbidden: "proves it is the individual physician's
 calendar rather than hospital capacity."
 
 ## The model (`latex/model.tex`, Appendix A)
@@ -408,31 +421,31 @@ from `supplement.aux`, never renumber by hand.
 
 | Fact | Value |
 |---|---|
-| Cesarean (all / for-profit / nonprofit / public) | ~57% / 79% / 60% / 44% |
-| Weekend dip (for-profit / public) | −8.3pp / −6.7pp |
+| Cesarean (all / for-profit / nonprofit / public) | ~56% / 81% / 60% / 43% |
+| Weekend dip (for-profit / public) | −7.9pp / −6.7pp |
 | Holiday dip (for-profit / public) | −5.6pp / −3.5pp (full 2010–2024 holiday range) |
-| **Eq (3) for-profit differential (muni×date FE)** | **weekend −2.3pp / holiday −2.9pp**; +predetermined −2.2 / −2.6; +Robson −1.9 / −2.3 |
-| Weekend dip: prelabor vs in-labor (for-profit) | −9.7pp vs +1.7pp |
+| **Eq (3) for-profit differential (muni×date FE)** | **weekend −1.8pp / holiday −2.5pp**; +predetermined −1.8 / −2.4; +Robson (2014+) −1.5 / −1.7 |
+| Weekend dip: prelabor vs in-labor (for-profit) | −8.9pp vs +1.9pp |
 | Robson 1–2 / Robson 1 weekend dip (for-profit) | −7.4pp / −6.5pp |
 | Robson profile, for-profit vs public weekend dip (Fig 3c) | G1 −6.3/−3.7 · G2 −5.2/−3.8 · G3 −8.0/−3.0 · G4 −9.1/−4.2 · G5 −3.6/−5.8 · G10 **−5.1/−5.2 (identical)** |
 | Eq (3) differential, term vs preterm | −2.5pp vs **+0.8pp**; difference +3.4pp, p<0.001 |
 | Eq (3) differential, mother <35 vs 35+ | −3.0pp vs +1.3pp (diff +4.3, p<0.001); within Robson 1–2, −5.0 vs −1.4 (diff +3.6, p<0.001) |
 | Long-weekend: bridge = isolated test | p≈0.68 (prelabor p≈0.95) — NO larger bridge effect |
 | Pre-holiday prelabor bunching (bridge) | −0.46/day (deficit, NOT bunching) |
-| Org capacity: weekend×log(beds) prelabor | +0.45pp n.s. (muni×date FE); scale +0.70pp* (col 2) |
+| Org capacity: weekend×log(beds) prelabor | +0.57pp n.s. (muni×date FE); scale +0.64pp n.s. (col 2); scale +1.49pp*** only with date FE (col 1) |
 | Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
-| Early-term (37–38wk) for-profit gap, maternal controls | +11.7pp*** |
-| Kitagawa: 35.1pp gap | 28% case-mix / 72% practice style |
+| Early-term (37–38wk) for-profit gap, maternal controls | +12.2pp*** |
+| Kitagawa: 36.2pp gap | 27% case-mix / 73% practice style |
 | Robson-standardized rate by sector (estab-year, births-weighted) | for-profit 72.1 / nonprofit 58.0 / public 47.9 (observed 78.8 / 59.9 / 44.8) |
 | Standardization removes of the 34.0pp for-profit–public gap | 9.8pp = 28.8%, matching the Kitagawa's 28% by another route |
 | Dispersion ACROSS for-profit maternities, standardized | SD 14.4pp; 6.6pp survives muni×year + maternal composition + capacity (46% of raw) |
 | Two for-profit maternities, same municipality-year | 13.4pp mean absolute gap in the standardized rate |
 | SUS share of obstetric beds by nat_jur | public 98.8% / for-profit 22.2% (median 0) / nonprofit 72.0% |
 | Weekend × SUS share of obstetric beds (for-profit) | +2.12pp (SE 1.04, p=0.041); holiday +3.37pp (SE 1.19, p=0.005) |
-| Weekend × log contracted obstetrician hours | −0.10pp (SE 0.17) — a precise zero, while scale stays +1.21pp*** |
+| Weekend × log contracted obstetrician hours | −0.16pp (SE 0.17) — a precise zero, while scale is +1.31pp*** in that column |
 | Excess weekday cesareans (own-municipality benchmark) | 39,135/yr for-profit = 10.0% of weekday cesareans (national sector-year benchmark would give 50,073; do NOT mix them) |
 | Same benchmark, municipality pooled over years (NOT what the code does) | 41,535/yr = 10.6% -- this is the 41.5k of the internal review; the script benchmarks municipality x YEAR, which is tighter and gives 39,135. Both are "own-municipality"; the difference is the year-specific weekend rate. Verified 2026-09-06 |
-| Reconciliation of the two counterfactuals | 8.3pp gross × 482k weekday births = ~40k/yr; Eq. (3) 2.3pp × 482k = ~11k/yr |
+| Reconciliation of the two counterfactuals | 7.9pp gross × 463k weekday births = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
 | GKM benchmark in our units | ~0.72pp per log point of the fee gap (R$1,941 mean cesarean fee) |
 | Demand smoothing, pull-forward δ | −0.21pp (SE 0.29) n.s.; forecast slope 0.065 out of sample; MDE 0.80pp |
 | Demand smoothing, throughput | prelabor share → log VMR of weekly births +0.27 (p=0.065, Holm 0.196) |

@@ -73,8 +73,8 @@ O paper é *evidência descritiva e de mecanismo estruturada em torno de um cont
 - **Pré-parto vs. intraparto** → evidência de mecanismo.
 - **Feriados prolongados** → previsões não confirmadas; o nulo delimita a alegação.
 - **Capacidade organizacional** → "redundância organizacional atenua o gradiente", nunca "o calendário do médico individual vs. o hospital".
-- **Kitagawa** → contabilidade; 72% estilo de prática.
-- **~39 mil cesáreas em excesso/ano** (benchmark do próprio município-ano) → benchmark mecânico, não cesáreas causadas.
+- **Kitagawa** → contabilidade; 73% estilo de prática.
+- **~35 mil cesáreas em excesso/ano** (benchmark do próprio município-ano) → benchmark mecânico, não cesáreas causadas.
 - **Parto Adequado** → falha de desenho causal, não efeito de programa.
 
 **Frase-padrão de escopo:** *"The evidence identifies calendar sorting and a tightly controlled for-profit–public differential; it does not identify the total number of cesareans or neonatal outcomes caused by scheduling."*
@@ -91,13 +91,13 @@ Use-os para checar qualquer alegação. Divergiu, investigue antes de escrever.
 | Nascimentos SINASC 2010–2024 | 42.003.663 |
 | Dip de fim de semana (for-profit / público) | −8,3pp / −6,7pp |
 | Dip de feriado | −5,6pp / −3,5pp |
-| **Eq. (3): fds / feriado** | **−2,3pp / −2,9pp**; +predeterminado −2,2 / −2,6; +Robson −1,9 / −2,3 |
+| **Eq. (3): fds / feriado** | **−1,8pp / −2,5pp**; +predeterminado −1,8 / −2,4; +Robson (2014+) −1,5 / −1,7 |
 | Pré-parto vs. intraparto (for-profit, fds) | −9,7pp vs. +1,7pp |
 | Robson 1–2 / Robson 1 | −7,4pp / −6,5pp |
 | Termo vs. pré-termo (Eq. 3) | −2,5pp vs. +0,8pp; diferença +3,4pp, p<0,001 |
 | Bridge = isolated | p≈0,68 (pré-parto p≈0,95) — sem efeito bridge |
-| Early-term (37–38 sem) | +11,7pp*** |
-| Kitagawa (gap de 35,1pp) | 28% case-mix / 72% estilo de prática |
+| Early-term (37–38 sem) | +12,2pp*** |
+| Kitagawa (gap de 36,2pp) | 27% case-mix / 73% estilo de prática |
 | `log_fee_gap` (EF UF / município) | +0,017 / −0,014 (n.s.) |
 
 ---

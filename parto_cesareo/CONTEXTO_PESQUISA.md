@@ -10,7 +10,7 @@
 
 ## 1. A pergunta
 
-O setor de maternidade com fins lucrativos brasileiro realiza cerca de **80% dos partos por cesárea** — a maior taxa documentada em qualquer sistema de saúde de grande porte, contra a referência da OMS de 10–15%. O excesso não se restringe a gestações complicadas: entre primíparas a termo, com feto único, bem posicionado e **já em trabalho de parto espontâneo** (Robson 1), dois terços dos partos for-profit em dia útil terminam em cesárea, contra cerca de um terço no setor público.
+O setor de maternidade com fins lucrativos brasileiro realiza cerca de **80% dos partos por cesárea** — entre as mais altas registradas em qualquer sistema de saúde de grande porte, contra a referência da OMS de 10–15%. O excesso não se restringe a gestações complicadas: entre primíparas a termo, com feto único, bem posicionado e **já em trabalho de parto espontâneo** (Robson 1), dois terços dos partos for-profit em dia útil terminam em cesárea, contra cerca de um terço no setor público.
 
 O paper pergunta **o que sustenta cirurgia nessa escala** e responde separando dois canais:
 
@@ -114,8 +114,8 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 | Taxonomia de feriado prolongado + event study | As previsões mais afiadas de lazer médico **NÃO se confirmam**. Reportar o nulo honestamente; ele delimita a alegação de "conveniência de quem" |
 | Heterogeneidade de capacidade organizacional | "Redundância organizacional atenua o gradiente", NÃO "o calendário do médico individual vs. o hospital" |
 | Perfil por grupo de Robson + termo/pré-termo + idade materna | **Corroboração, NÃO placebo.** Grupo de Robson e idade gestacional são em parte determinados pelas mesmas decisões sob estudo. Pré-termo ≠ não agendável (pré-eclâmpsia, RCIU, late-preterm eletivo são todos agendados) |
-| Decomposição de Kitagawa | Contabilidade; 72% estilo de prática |
-| ~50 mil cesáreas de dia útil em excesso | Benchmark mecânico, não cesáreas causadas |
+| Decomposição de Kitagawa | Contabilidade; 73% estilo de prática |
+| ~35 mil cesáreas de dia útil em excesso | Benchmark mecânico, não cesáreas causadas |
 | Early-term +11,7pp | Associação setor–idade gestacional |
 | Parto Adequado | Falha de um **desenho** causal (pré-tendências), não efeito de programa |
 
@@ -125,12 +125,12 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 
 ## 5. Resultados centrais
 
-1. **A epidemia é real e extrema** — cesárea for-profit ~82% (TISS) / ~79% (SINASC) vs. ~44% público; ~66% mesmo no Robson 1 em dia útil.
+1. **A epidemia é real e extrema** — cesárea for-profit ~82% (TISS) / ~81% (SINASC) vs. ~43% público; ~66% mesmo no Robson 1 em dia útil.
 2. **Não é uma história de preço positivo** — com o honorário vaginal *econômico*, o gap é **negativo** nos grandes estados e eles rodam ~80% de cesárea; o coeficiente é pequeno e instável (+0,017 EF-UF / −0,014 EF-município, n.s.); oscilações de ±2 pontos log no estado não movem nada; a ordem judicial de 2015 nunca virou mudança de honorário.
 3. **É uma história de agenda** — cesáreas se aglomeram em dias úteis e caem em fins de semana (−8,3pp for-profit / −6,7pp público) e feriados (−5,6 / −3,5); pico de centro cirúrgico às 8–11h; metade das cesáreas em horário comercial de dia útil, contra benchmark uniforme de 29,8%.
 4. **Eq. (3), a estimativa central** — dentro do mesmo município-dia, o differential for-profit é **−2,3pp fim de semana / −2,9pp feriado**, praticamente inalterado (−2,2 / −2,6) após ajustar por composição materna predeterminada.
 5. **O dip vive nas cesáreas pré-parto** — dip de fim de semana for-profit de −9,7pp pré-parto vs. **+1,7pp** intraparto; persiste em Robson 1–2 de baixo risco (−7,4pp) e em Robson 1 sozinho (−6,5pp).
-6. **O custo** — +11,7pp de early-term (37–38 sem) com controles maternos; 72% estilo de prática (Kitagawa); ~50 mil cesáreas de dia útil em excesso por ano; quase paridade nos valores faturados.
+6. **O custo** — +12,2pp de early-term (37–38 sem) com controles maternos; 73% estilo de prática (Kitagawa); ~35 mil cesáreas de dia útil em excesso por ano; quase paridade nos valores faturados.
 
 ### Números de referência (checagem de sanidade; SINASC = 2010–2024)
 
@@ -151,8 +151,8 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 | Capacidade: fds×log(leitos) pré-parto | +0,45pp n.s.; escala +0,70pp* |
 | Maternidades com zero obstetras (CNES-PF, ≥50 partos) | 14% for-profit / 27% público (mediana 3/2) |
 | Early-term (37–38 sem), controles maternos | **+11,7pp*** |
-| Kitagawa: gap de 35,1pp | 28% case-mix / **72% estilo de prática** |
-| Cesáreas de dia útil em excesso | ~50 mil/ano for-profit (~10,5%) |
+| Kitagawa: gap de 36,2pp | 27% case-mix / **73% estilo de prática** |
+| Cesáreas de dia útil em excesso | ~35 mil/ano for-profit (~9,3%) |
 | `log_fee_gap` (EF UF / município) | +0,017 / −0,014 (n.s.) |
 
 ---

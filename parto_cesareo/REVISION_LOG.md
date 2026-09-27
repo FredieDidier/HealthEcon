@@ -759,3 +759,119 @@ above). If the manuscript is revised before or during JHE review, re-run
 `build_wp.sh` and re-post to SSRN as a new version rather than editing the
 posted PDF by hand.
 
+
+## 2026-09-27 — code audit: two open decisions (Claude, nothing changed yet)
+
+Audit for wrong variables and wrong samples, on the same patterns as HeatCrime,
+HealthHeat and WorldCupHealth. **Nothing was edited or re-run here**; both items
+move the paper's numbers and are Fredie's call.
+
+1. **Sector is time-invariant and "ever for-profit" wins.** `.cnes_sector_sets()`
+   in `build/01b_sinasc_cnes.R` puts an establishment in the for-profit set if it
+   EVER appeared with a 2xxx legal nature, and the priority is for-profit >
+   nonprofit > public. 5.9% of births are in establishments whose legal nature
+   changed over 2015-2024. **430,348 births labelled Private (4.8% of the group)
+   took place in a year the CNES listed the establishment as public (267,116) or
+   nonprofit (163,232)**; 387,052 labelled Nonprofit were in public years. Public
+   has no contamination (the priority protects it). Likely effect: a lower
+   for-profit cesarean rate and a slightly attenuated Eq. (3) differential.
+   Fix: sector by establishment AND year, with the ever-set only for years the
+   CNES file does not cover (before 2015, 3.3M Private births have no same-year
+   record).
+2. **Prelabor vs in-labor: the missing field is handled two different ways, both
+   wrong.** `cesarea_antes_parto` is missing for 97.2% of cesareans in 2010,
+   45.6% in 2011 and 1-7% afterwards. `03_mechanisms.R` and `10_supplement.R`
+   build `ces_pre` with `==`, so one missing value makes the whole
+   municipality-day-sector cell NA and fixest drops it: **10.6% of cells and
+   21.4% of births** vanish from Table 8, almost all of 2010-2011 and the largest
+   cells. `07_main_specification.R` sets the NA to 0 but estimates the prelabor and
+   in-labor columns on 2012+ only (lines 114-115), as does `08`; so the 2010-2011
+   concern applies to `03` and `10`, not to the main specification (corrected
+   the same day). Within 2012+ the open question is what to do with the 1-7%
+   missing and 3-7% ignored (code 9), which every script counts as neither
+   prelabor nor in-labor. Fix, one of: drop births
+   with a missing field from the prelabor/in-labor outcomes only (share among
+   cesareans with the field recorded), or restrict the decomposition to 2012+.
+   Either way the three scripts must use the same rule.
+
+Checked and right: cesarean = `tipo_parto == 2` among vaginal/cesarean births,
+Robson codes stored as "01"-"10" (the filters match), no subset `.I`, no
+`cbind` of model output.
+
+## 2026-09-27 — fixes applied (code) and text pending the re-run
+
+Fredie approved: sector by establishment-year; prelabor/in-labor on 2012+ with the
+07 convention (missing or ignored timing counts in neither numerator).
+
+Code changed (not yet run; queued after HealthHeat and WorldCupHealth):
+- `build/01b_sinasc_cnes.R`: `assign_sector_year()` and `reassign_sector_births()`
+  (sector = legal nature at the last competencia of the birth's year; nearest
+  covered year otherwise; caches of 08, 09, 14 removed so they rebuild).
+- `03_mechanisms.R`, `10_supplement.R`: `%in%` and `year >= 2012` for the timing
+  outcomes; Robson-1 decomposition note no longer says "entirely in-labor" (the
+  remainder is missing-timing cesareans); missingness table on 2012+; Table 8 note
+  gives each column's years.
+- `07_main_specification.R`: Table 2 column 3 (Robson shares) on 2014+, the years
+  the classification exists; the sample row says so.
+- `10_supplement.R`: sample-flow row counted every vaginal birth plus the valid-code
+  cesareans (23.6M) under a "cesareans" label; now "cesareans" and "valid code,
+  2012+" as two rows.
+- `09_org_capacity.R`: family E now includes the two delivery-scale interactions.
+
+Text changed now: Section 6.3 (reference category of columns 2-4; the 1.7-point
+weekend-holiday dip is column 1 and not significant, s.e. 1.2); "highest documented
+for any large health system" replaced by the Boerma et al. (2018) fact (only the
+Dominican Republic has a higher national rate among the 85 countries with >95%
+facility births), introduction (the abstract keeps Fredie's original sentence, at his request, 2026-09-27).
+
+Text to rewrite AFTER the re-run (numbers move): Table D.19 paragraph in
+`sup_appendix.tex` (family D: bridge 0.031 -> Holm 0.092, three-day 0.015 -> 0.061,
+isolated and pre-holiday lose 10% significance; and family E now has four tests);
+"delivery-scale margin is estimated precisely/sharply" (pp. 24 and 35; the preferred
+column has 0.0070, s.e. 0.0039, 10% only); Table 2 column 3 sentence; the 80%/79%
+for-profit rate; the ~39k excess weekday cesareans (and CONTEXTO_PESQUISA.md, which
+still says ~50k and "a maior taxa documentada").
+
+## 2026-09-27 — re-run done; numbers and text updated
+
+Run: CNES beds 2012-2014 downloaded state by state (`cnes_beds_2012_2014.parquet`;
+all 27 states x 12 months; NAT_JUR exists from June 2012, so 2010-2011 take 2012);
+`reassign_sector_births()` (1.65M births, 3.9%, changed sector against the "ever"
+rule); `03_workfile`; analysis 01-14 in master order. **A July-10 model cache,
+`analysis/output/m_tax_slim.rds`, had frozen Panel A of the long-weekend table**:
+removed (copy in the session scratch) and 08 and 10 re-run. `03_mechanisms.R` no
+longer types the 8.3 and 2.3 of the counterfactual reconciliation; it reads them.
+
+What moved (old -> new):
+- Eq. (3), for-profit x weekend / holiday: -2.29 / -2.85 -> **-1.78 / -2.49**
+  (col 2: -1.82 / -2.36; col 3, 2014+: -1.49 / -1.68; prelabor -4.74, in-labor +2.88).
+- Own gradients, for-profit weekend / holiday: -8.3 / -5.6 -> -7.9 / -5.3 (public
+  unchanged). Prelabor / in-labor dip: -9.7 / +1.7 -> -8.9 / +1.9.
+- Early-term +11.7 -> +12.2; Kitagawa 35.1pp, 72% -> 36.2pp, 73%; excess weekday
+  cesareans ~39k -> ~35k (9.3% of ~380k); for-profit SINASC rate 79% -> 80.7%.
+- Organizational capacity (preferred col 2): scale 0.0070* -> 0.0064 (n.s.); beds
+  n.s. **No capacity interaction is significant with muni x date FE**; text no
+  longer calls capacity a "fingerprint" (three fingerprints now) and says so in the
+  introduction, Section 6 and the conclusion.
+- Demand smoothing: forward demand on the cesarean share -0.41** (was n.s.); flow
+  dispersion 0.27 (p 0.065) -> 0.32 (p 0.033). Both at 10% after Holm.
+- Long weekends, Panel A (re-estimated): bridge / three-day / isolated, col 2:
+  -0.8 / -1.4 / -1.8; prelabor 3.4-4.0 lower; equality p 0.55, 0.69; weekend holiday
+  -1.8 (1.4). Family D: unadjusted p 0.049-0.072, Holm 0.198.
+- Preterm for-profit weekend differential +0.8 (n.s.) -> +1.5 (p<0.05); mothers 35+
+  +1.3 (n.s.) -> +1.7 (p<0.10). Supplement text rewritten.
+
+Text: paper.tex (abstract, introduction, Sections 5-7, conclusion), sup_appendix.tex
+(subgroups, capacity variants, demand smoothing, D.19 paragraph), highlights.
+Compile: paper 37 pp, supplement 29 pp, 0 undefined. One overfull vbox (46pt) in the
+supplement and one 2.8pt hbox in the paper's AI declaration were already there
+with the old tables and text (checked by compiling the committed version).
+
+RESOLVED (Fredie, 2026-09-27): the abstract now reads "among the highest rates
+recorded in any health system". No comparative footnote: the official Egypt (CAPMAS
+EFHS 2021) and Dominican (EnHogar-MICS 2025) reports could not be retrieved and
+verified, and a footnote on press figures would invite the referee question it is
+meant to prevent. Earlier note, kept for the record: the abstract kept "the highest rate documented for any large
+health system" at his request; Egypt (2021: 72% national, ~80% private, a large
+system) contradicts it even with "large". Proposed: "among the highest rates
+recorded in any health system".

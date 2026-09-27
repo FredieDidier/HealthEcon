@@ -221,9 +221,13 @@ b[, weekend := as.integer(dow %in% c(1, 7))]
 # --- (a) prelabor vs in-labor cesarean, weekend dip in the cesarean SHARE -----
 # outcome: among all births, share delivered by prelabor cesarean vs by in-labor
 # cesarean (the two components of the cesarean rate).
-b[, `:=`(ces_pre = as.integer(cesarean == 1 & cesarea_antes_parto == 1),
-         ces_lab = as.integer(cesarean == 1 & cesarea_antes_parto == 2))]
-cellsum <- b[, .(n = .N, pre = sum(ces_pre), lab = sum(ces_lab)),
+# The timing field is usable from 2012 only (97% missing in 2010, 50% in 2011),
+# and a cesarean with the field missing or ignored stays in the denominator and
+# in neither numerator. With `==` a single missing value used to turn the whole cell NA,
+# and fixest dropped it: 10.6% of cells and 21.4% of births, most of 2010-2011 and the largest cells.
+b[, `:=`(ces_pre = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 1),
+         ces_lab = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 2))]
+cellsum <- b[year >= 2012, .(n = .N, pre = sum(ces_pre), lab = sum(ces_lab)),
              by = .(muni, date, weekend, year, sector)]
 cellsum[, `:=`(rate_pre = pre / n, rate_lab = lab / n)]
 m_pre_priv <- feols(rate_pre ~ weekend | muni + year, cellsum[sector == "Private"], weights = ~n, cluster = ~muni + date)
@@ -254,8 +258,10 @@ etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10,
        title = "The weekend dip by cesarean timing and Robson group",
        label = "tab:mechanism_checks",
        notes = paste("\\footnotesize\\textit{Notes:} Municipality-date cells, weighted",
-         "by births, SINASC 2010--2024. Columns 1--4 split the cesarean rate into its",
-         "prelabor (cesarean performed before labor began) and in-labor components.",
+         "by births. Columns 1--4, SINASC 2012--2024, split the cesarean rate into its",
+         "prelabor (cesarean performed before labor began) and in-labor components;",
+         "a cesarean with a missing timing code counts in neither.",
+         "Columns 5--6 use 2014--2024, the years with the Robson classification.",
          "Columns 5--6 contrast schedulable low-risk births (Robson groups 1--2)",
          "with preterm births (Robson group 10), which cannot be freely scheduled.",
          "Standard errors, two-way clustered by municipality and date, are reported",
@@ -432,8 +438,12 @@ print(exw[, .(mean_per_year = format(round(sum(excess) / n_years), big.mark = ",
 # (8.3pp for-profit); the headline coefficient nets out the weekly scheduling
 # common to both sectors and prices only the 2.3pp for-profit differential.
 wd <- dm[sector == "Private" & weekend == 0, .(births = sum(births))]$births / n_years
-cat(sprintf("for-profit weekday births per year: %s\n  8.3pp of them = %s (gross weekend benchmark)\n  2.3pp of them = %s (Eq. 3 differential)\n",
-            format(round(wd), big.mark = ","), format(round(0.083 * wd), big.mark = ","),
-            format(round(0.023 * wd), big.mark = ",")))
+# The two gradients are read from the estimates, not typed.
+gross <- -coef(r_priv)[["weekend"]]                                   # this script, Block 1
+famA  <- here::here("analysis", "output", "fam_A.rds")                # written by 07
+eq3   <- if (file.exists(famA)) -readRDS(famA)$estimate[1] else NA_real_
+cat(sprintf("for-profit weekday births per year: %s\n  %.1fpp of them = %s (gross weekend benchmark)\n  %.1fpp of them = %s (Eq. 3 differential, from 07)\n",
+            format(round(wd), big.mark = ","), 100 * gross, format(round(gross * wd), big.mark = ","),
+            100 * eq3, format(round(eq3 * wd), big.mark = ",")))
 
 message("03_mechanisms.R: Block 4 (decomposition) done")

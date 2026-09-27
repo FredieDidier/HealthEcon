@@ -370,12 +370,21 @@ print(pay(m10, "log_hours"))
 # fixest may order an interaction either way; look the terms up by name
 kw <- grep("^(weekend:log_beds|log_beds:weekend)$", rownames(coeftable(m2)), value = TRUE)
 kh <- grep("^(holiday:log_beds|log_beds:holiday)$", rownames(coeftable(m2)), value = TRUE)
+# The delivery-scale interactions are in the family too: the paper
+# reads the scale gradient as one of its fingerprints, so it has to face the
+# same adjustment as the bed interactions.
+vw <- grep("^(weekend:log_vol|log_vol:weekend)$", rownames(coeftable(m2)), value = TRUE)
+vh <- grep("^(holiday:log_vol|log_vol:holiday)$", rownames(coeftable(m2)), value = TRUE)
 fam_E <- data.table(
   family = "E. Organizational capacity",
   hypothesis = c("Weekend $\\times$ log(1 + obstetric beds)",
-                 "National holiday $\\times$ log(1 + obstetric beds)"),
-  estimate = c(coeftable(m2)[kw, 1], coeftable(m2)[kh, 1]),
-  p = c(coeftable(m2)[kw, 4], coeftable(m2)[kh, 4]))
+                 "National holiday $\\times$ log(1 + obstetric beds)",
+                 "Weekend $\\times$ log(1 + annual deliveries)",
+                 "National holiday $\\times$ log(1 + annual deliveries)"),
+  estimate = c(coeftable(m2)[kw, 1], coeftable(m2)[kh, 1],
+               coeftable(m2)[vw, 1], coeftable(m2)[vh, 1]),
+  p = c(coeftable(m2)[kw, 4], coeftable(m2)[kh, 4],
+        coeftable(m2)[vw, 4], coeftable(m2)[vh, 4]))
 saveRDS(fam_E, file.path(here::here("analysis", "output"), "fam_E.rds"))
 
 message("09_org_capacity.R done")

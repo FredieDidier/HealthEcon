@@ -49,9 +49,11 @@ cr <- b[cesarean == 1 & tipo_robson %in% sprintf("%02d", 1:10) & cesarea_antes_p
 val <- cr[, .(cesareans = .N, share_prelabor = mean(cesarea_antes_parto == 1)), by = tipo_robson][order(tipo_robson)]
 
 # Robson-1 private weekend dip decomposed (prelabor is 0 there by construction)
-b[, `:=`(ces_pre = as.integer(cesarean == 1 & cesarea_antes_parto == 1),
-         ces_lab = as.integer(cesarean == 1 & cesarea_antes_parto == 2))]
-r1 <- b[tipo_robson == "01" & sector == "Private",
+# Timing usable from 2012; missing/ignored counts in
+# neither numerator (a single NA used to drop the whole cell).
+b[, `:=`(ces_pre = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 1),
+         ces_lab = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 2))]
+r1 <- b[year >= 2012 & tipo_robson == "01" & sector == "Private",
         .(n = .N, rate = mean(cesarean), rate_lab = mean(ces_lab)), by = .(muni, date, weekend, year)]
 d_r1_tot <- coef(feols(rate     ~ weekend | muni + year, r1, weights = ~n, cluster = ~muni + date))["weekend"]
 d_r1_lab <- coef(feols(rate_lab ~ weekend | muni + year, r1, weights = ~n, cluster = ~muni + date))["weekend"]
@@ -74,10 +76,10 @@ tex <- c("\\begin{table}[H]\\centering",
   "Robson group & Cesareans & Share coded prelabor (\\%) \\\\", "\\midrule",
   apply(vtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points is therefore entirely in-labor (in-labor component %.1f percentage points). A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm placebo is weak.} \\\\",
+  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm placebo is weak.} \\\\",
           100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, p_r1r10),
   "\\bottomrule", "\\end{tabular}",
-  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2010--2024, cesareans with a",
+  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (the years with the Robson classification), cesareans with a",
         "valid before/during-labor code. Robson 1 = nulliparous, term, singleton,",
         "cephalic, spontaneous labor; Robson 2 = same but induced or prelabor cesarean."),
   "\\end{table}")
@@ -341,15 +343,19 @@ n_raw <- nrow(b)
 b1 <- b[year <= 2024];                                   n_year   <- nrow(b1)
 b2 <- b1[sector %in% c("Private","Public")];             n_sector <- nrow(b2)
 b3 <- b2[tipo_robson %in% sprintf("%02d", 1:11)];        n_robson <- nrow(b3)
-b4 <- b2[cesarean == 0 | cesarea_antes_parto %in% c(1,2)]; n_timing <- nrow(b4)
+# The last row used to count every vaginal birth PLUS the cesareans with a valid
+# code (23.6M of 26.0M births) under the label "valid code (cesareans)".
+n_ces    <- b2[cesarean == 1, .N]
+n_timing <- b2[cesarean == 1 & year >= 2012 & cesarea_antes_parto %in% c(1, 2), .N]
 
 flow <- data.table(
   Step = c("Raw SINASC birth records",
            "Restrict to 2010--2024",
            "For-profit or public establishment",
            "\\quad of which: valid Robson group (2014+)",
-           "\\quad of which: valid before/during-labor code (cesareans)"),
-  N = format(c(n_raw, n_year, n_sector, n_robson, n_timing), big.mark = ","))
+           "\\quad of which: cesareans",
+           "\\quad\\quad of which: valid before/during-labor code, 2012+"),
+  N = format(c(n_raw, n_year, n_sector, n_robson, n_ces, n_timing), big.mark = ","))
 tex <- c("\\begin{table}[H]\\centering",
   "\\caption{\\textbf{Sample construction, SINASC birth records}}", "\\label{tab:sampleflow}", "\\small",
   "\\begin{tabular}{lr}", "\\toprule", "Step & Records \\\\", "\\midrule",
@@ -364,7 +370,7 @@ write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c12_sampleflow.te
 
 # missingness of the timing indicator among cesareans, by weekend x sector
 b2[, weekend := as.integer(dow %in% c(1, 7))]
-miss <- b2[cesarean == 1, .(missing_pct = 100 * mean(!(cesarea_antes_parto %in% c(1,2))), n = .N),
+miss <- b2[cesarean == 1 & year >= 2012, .(missing_pct = 100 * mean(!(cesarea_antes_parto %in% c(1,2))), n = .N),
            by = .(sector, weekend)][order(sector, weekend)]
 miss[, day := fifelse(weekend == 1, "Weekend", "Weekday")]
 mw <- dcast(miss, sector ~ day, value.var = "missing_pct")
@@ -378,7 +384,7 @@ tex2 <- c("\\begin{table}[H]\\centering",
   apply(mtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} Share of cesareans with a missing",
-        "before/during-labor code, SINASC 2010--2024. The near-identical weekday and",
+        "before/during-labor code, SINASC 2012--2024, the years the timing analyses use. The near-identical weekday and",
         "weekend rates imply the prelabor/in-labor split is not driven by differential",
         "missingness across the week."),
   "\\end{table}")

@@ -67,7 +67,13 @@ UF_LIST <- c("AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
 #   load_hospital_beds(time_period, states = "all", raw_data, language)
 # raw_data = FALSE returns the treated establishment-level table; we bind years.
 # =============================================================================
-download_cnes_beds <- function(years = 2015:2024, ufs = "all") {
+# `out_file`: the 2012-2014 extension goes to its own file so that the main
+# 2015-2024 file, which other steps read, is never overwritten.
+# NAT_JUR exists in the CNES from June 2012; 2010-2011 have only the old NATUREZA
+# code, whose "07" mixes for-profit and nonprofit, so those two years take the
+# nearest covered year in .cnes_sector_year().
+download_cnes_beds <- function(years = 2015:2024, ufs = "all",
+                               out_file = "cnes_beds_muni_year.parquet") {
   out <- vector("list", 0L)
   for (y in years) {
     message("CNES beds ", y)
@@ -81,8 +87,8 @@ download_cnes_beds <- function(years = 2015:2024, ufs = "all") {
     rm(raw, dt); gc()
   }
   res <- rbindlist(out, use.names = TRUE, fill = TRUE)
-  arrow::write_parquet(res, file.path(CNES_INPUT, "cnes_beds_muni_year.parquet"))
-  message("saved cnes_beds_muni_year.parquet (", nrow(res), " rows)")
+  arrow::write_parquet(res, file.path(CNES_INPUT, out_file))
+  message("saved ", out_file, " (", nrow(res), " rows)")
 }
 
 # =============================================================================
@@ -149,6 +155,69 @@ download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST) {
        public    = unique(beds[grepl("^1", nj), cnes7]))
 }
 
+# -----------------------------------------------------------------------------
+# SECTOR BY ESTABLISHMENT AND YEAR. The sets above are "ever" sets
+# with for-profit priority, so an establishment that was for-profit in any
+# competencia was Private in every year: 430,348 births labelled Private (4.8% of
+# the group) took place in a year the CNES listed the establishment as public or
+# nonprofit. The sector is now the legal nature of the establishment in the
+# birth's own year, read at the last competencia of that year; a year the CNES
+# does not cover for that establishment (all of 2010-2014, or a gap) takes the
+# nearest year it does cover. An establishment never in the file stays "Other".
+# -----------------------------------------------------------------------------
+.cnes_sector_year <- function() {
+  rd <- function(f) data.table::as.data.table(arrow::read_parquet(
+    file.path(CNES_INPUT, f), col_select = c("cnes", "nat_jur", "competence", "year")))
+  beds <- rd("cnes_beds_muni_year.parquet")
+  if (file.exists(file.path(CNES_INPUT, "cnes_beds_2012_2014.parquet")))
+    beds <- data.table::rbindlist(list(rd("cnes_beds_2012_2014.parquet"), beds))
+  beds[, `:=`(estab = formatC(as.integer(cnes), width = 7, flag = "0"),
+              d1 = substr(as.character(nat_jur), 1, 1))]
+  beds <- beds[!is.na(d1) & d1 != ""]
+  data.table::setorder(beds, estab, year, competence)
+  ey <- beds[, .(d1 = d1[.N]), by = .(estab, year)]          # last competencia of the year
+  ey[, sector := data.table::fcase(d1 == "2", "Private", d1 == "3", "Nonprofit",
+                                   d1 == "1", "Public", default = "Other")]
+  ey[, .(estab, cnes_year = year, sector)]
+}
+
+#' Sector of each birth from its establishment and year, nearest CNES year when
+#' the birth's own year is not covered. `dt` needs `estab` and `year`.
+assign_sector_year <- function(dt) {
+  ey <- .cnes_sector_year()
+  key <- unique(dt[, .(estab, year)])
+  key[, cnes_year := year]
+  data.table::setkey(ey, estab, cnes_year); data.table::setkey(key, estab, cnes_year)
+  m <- ey[key, roll = "nearest"]                      # nearest covered year, same estab
+  m <- m[, .(estab, year, sector)]
+  dt[m, sector := i.sector, on = .(estab, year)]
+  dt[is.na(sector), sector := "Other"]
+  dt[, private := as.integer(sector == "Private")]
+  invisible(dt)
+}
+
+#' Re-derive the sector of the existing birth file (the raw CSV was deleted after
+#' ingest) and rewrite the files that carry it. The per-cell caches built by 08,
+#' 09 and 14 are removed so the next run rebuilds them on the new sector.
+reassign_sector_births <- function() {
+  dt <- data.table::as.data.table(arrow::read_parquet(BIRTHS_OUT))
+  old <- dt$sector
+  dt[, sector := NULL]
+  assign_sector_year(dt)
+  message(sprintf("sector changed for %s of %s births (%.2f%%)",
+                  format(sum(old != dt$sector), big.mark = ","),
+                  format(nrow(dt), big.mark = ","), 100 * mean(old != dt$sector)))
+  print(data.table::data.table(old = old, new = dt$sector)[, .N, by = .(old, new)][order(old, -N)])
+  arrow::write_parquet(dt, BIRTHS_OUT)
+  daily <- dt[, .(births = .N, cesarean = sum(cesarean)), by = .(muni, date, sector)]
+  arrow::write_parquet(daily, DAILY_OUT)
+  for (f in c("sinasc_daily_timing_muni.parquet", "sinasc_daily_estab.parquet",
+              "sinasc_estab_year_robson.parquet"))
+    if (file.exists(file.path(SINASC_INPUT, f))) {
+      file.remove(file.path(SINASC_INPUT, f)); message("removed cache ", f) }
+  invisible(dt)
+}
+
 ingest_sinasc <- function(delete_csv = TRUE) {
   s <- .cnes_sector_sets()
   dt <- data.table::fread(SINASC_CSV, showProgress = FALSE,
@@ -164,11 +233,8 @@ ingest_sinasc <- function(delete_csv = TRUE) {
                        width = 6, flag = "0"))]
   # Priority: for-profit (2xxx) > nonprofit (3xxx) > public (1xxx); an
   # establishment matching none (unmatched / 4xxx-5xxx) is "Other", not Public.
-  dt[, sector := data.table::fifelse(estab %in% s$forprofit, "Private",
-                 data.table::fifelse(estab %in% s$nonprofit, "Nonprofit",
-                 data.table::fifelse(estab %in% s$public,    "Public", "Other")))]
-  dt[, `:=`(private = as.integer(sector == "Private"),
-            dow = data.table::wday(date), year = data.table::year(date))]
+  dt[, `:=`(dow = data.table::wday(date), year = data.table::year(date))]
+  assign_sector_year(dt)                         # sector in the birth's own year
 
   arrow::write_parquet(dt, BIRTHS_OUT)
   message("saved sinasc_births.parquet — ", nrow(dt), " births, ", ncol(dt), " cols")
@@ -189,3 +255,5 @@ ingest_sinasc <- function(delete_csv = TRUE) {
 # download_cnes_beds(years = 2015:2024)
 # download_cnes_obstetricians(years = 2015:2024)
 # ingest_sinasc()          # after the manual Base-dos-Dados download above
+# download_cnes_beds(2012:2014, out_file = "cnes_beds_2012_2014.parquet")
+# reassign_sector_births(): re-derive sector by establishment-year in place
