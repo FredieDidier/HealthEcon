@@ -240,6 +240,32 @@ dict <- c(pre_share = "Prelabor cesarean share", ces_share = "Cesarean share",
           "terc::T3:holiday" = "National holiday $\\times$ top tercile of beds",
           estab = "Establishment", muni = "Municipality", date = "Date", year = "Year")
 
+# HOW RELATED ARE BEDS AND SCALE? The text used to call the two "too collinear to
+# separate". They are not (external check, 2026-09-28): column 1 separates them,
+# with both entered. What column 2 loses is identifying variation, which the
+# municipality x date fixed effects remove. The note reports the raw correlation,
+# the correlation of the two weekend interactions after each column's fixed
+# effects, how much of each interaction's variation those effects remove, and the
+# joint test of the two weekend interactions in column 2.
+ey_c <- unique(d[, .(estab, year, log_beds, log_vol)])
+cor_raw <- ey_c[, cor(log_beds, log_vol)]
+d[, `:=`(ey_id = paste(estab, year), md_id = paste(muni, date))]
+res_cor <- function(fe) {
+  r  <- demean(X = as.matrix(d[, .(wb = weekend * log_beds, wv = weekend * log_vol)]),
+               f = d[, ..fe], weights = d$births)
+  cv <- cov.wt(r, wt = d$births, cor = TRUE)
+  c(cor = cv$cor[1, 2], sd_b = sqrt(cv$cov[1, 1]), sd_v = sqrt(cv$cov[2, 2]))
+}
+rc1 <- res_cor(c("ey_id", "date")); rc2 <- res_cor(c("ey_id", "md_id"))
+d[, c("ey_id", "md_id") := NULL]
+wald2 <- wald(m2, keep = "^(weekend:log_beds|log_beds:weekend|weekend:log_vol|log_vol:weekend)$",
+              print = FALSE)
+cat(sprintf(paste("\n[3] beds vs scale: corr of logs %.3f (establishment-years); weekend",
+                  "interactions after column-1 FE %.3f, after column-2 FE %.3f; residual SD",
+                  "falls by %.0f%% (beds) and %.0f%% (scale); column-2 joint Wald p = %.3f\n"),
+            cor_raw, rc1[["cor"]], rc2[["cor"]], 100 * (1 - rc2[["sd_b"]] / rc1[["sd_b"]]),
+            100 * (1 - rc2[["sd_v"]] / rc1[["sd_v"]]), wald2$p))
+
 f <- file.path(TABLE, "tab_org_capacity.tex")
 etable(m1, m2, m3, m4, m5, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
@@ -255,7 +281,16 @@ etable(m1, m2, m3, m4, m5, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "measured at the establishment in the previous calendar year, so they are",
          "predetermined with respect to current scheduling. The municipality$\\times$date",
          "fixed effects of columns 2--5 restrict identification to municipality-days on",
-         "which more than one for-profit establishment records a birth. Column 5 replaces",
+         "which more than one for-profit establishment records a birth.",
+         sprintf(paste("Across establishment-years the logs of obstetric beds and annual deliveries",
+           "correlate at %.2f; net of the fixed effects, the two weekend interactions correlate",
+           "at %.2f in column 1 and %.2f in column 2, so the two measures are related but not",
+           "collinear. Relative to column 1, the fixed effects of column 2 cut the residual",
+           "standard deviation of the bed interaction by %.0f percent and of the delivery",
+           "interaction by %.0f percent; in column 2 the two weekend interactions are jointly",
+           "significant (Wald $p=%.3f$) though neither is individually. Column 5 replaces"),
+           cor_raw, rc1[["cor"]], rc2[["cor"]], 100 * (1 - rc2[["sd_b"]] / rc1[["sd_b"]]),
+           100 * (1 - rc2[["sd_v"]] / rc1[["sd_v"]]), wald2$p),
          "obstetric beds with the count of obstetricians registered at the establishment",
          sprintf("in CNES-PF; %.0f percent of for-profit and %.0f percent of public maternities", zfp, zpub),
          "register none, because Brazilian obstetricians hold their bond at their own",

@@ -166,6 +166,11 @@ evs <- rbindlist(lapply(2015:2024, function(y)
   as.data.table(read_parquet(file.path(OUTD, sprintf("delivery_events_%d.parquet", y)),
     col_select = c("type", "uf", "fee_delivery", "fee_vaginal_econ")))))
 big5 <- evs[, .N, by = uf][order(-N)][1:5, uf]
+# The event-level mean cesarean fee that Table D.19 and the text quote (about
+# R$1,940) differs from fee_c, the delivery-weighted mean over the regression
+# sample's municipality-years; the note reconciles the two (external check,
+# 2026-09-28).
+fee_c_ev <- evs[type == "cesarean", mean(fee_delivery, na.rm = TRUE)]
 sgap <- evs[uf %in% big5, .(g = log(mean(fee_delivery[type == "cesarean"], na.rm = TRUE) /
                                      mean(fee_vaginal_econ, na.rm = TRUE))), by = uf]
 neg  <- sort(-sgap$g[sgap$g < 0])
@@ -218,7 +223,10 @@ tex <- c("\\begin{table}[H]\\centering",
     "re-estimating that response on corrected data, \\citet{grant2009} obtains about one",
     "point, which he describes as a quarter of the original. At our delivery-weighted",
     "mean cesarean fee of R\\$%s the two are %.2f and %.2f percentage points per log point",
-    "of the fee gap; the conversion uses US consumer prices between 1990 and 2020 and the",
+    "of the fee gap. That fee is the mean over the municipality-years of",
+    "Table~\\ref{tab:fees}, weighted by deliveries; the mean over delivery events that",
+    "Table~\\ref{tab:fee_per_hour} and the text report, R\\$%s, is %.0f percent lower and",
+    "would put them at %.2f and %.2f. The conversion uses US consumer prices between 1990 and 2020 and the",
     "World Bank purchasing-power factor for Brazil, and is deliberately rough. Two things",
     "follow, and the paper states both. No interval fits inside the equivalence region, so",
     "these data do not establish that the price response is negligible. And the two",
@@ -231,6 +239,8 @@ tex <- c("\\begin{table}[H]\\centering",
     "original, against a for-profit--public gap of %.0f points."),
     formatC(fee_c, format = "d", big.mark = ","),
     100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK,
+    formatC(fee_c_ev, format = "d", big.mark = ","), 100 * (1 - fee_c_ev / fee_c),
+    100 * GRANT_BENCHMARK * fee_c_ev / fee_c, 100 * GKM_BENCHMARK * fee_c_ev / fee_c,
     rows[spec == "State fixed effects", nclust],
     gap_lo, gap_hi, 100 * GRANT_BENCHMARK * gap_hi, 100 * GKM_BENCHMARK * gap_hi,
     100 * fp_pub_gap)),

@@ -992,3 +992,62 @@ Fredie). Approved by Fredie: new abstract, introduction and highlights; title ke
   roadmap, strategy subsection title "relative-fee channel", business hours equal
   across sectors 50.1/50.9, billed amounts "per delivery", "movable holidays").
 - Build: paper 41 pp, supplement 35, WP 74, 0 undefined; abstract 249 words.
+
+## 2026-09-28 (third referee round) — 13 consistency items A–M (Claude, requested by Fredie)
+
+All 13 checked against the code, the generated tables and the compiled PDFs.
+Twelve were right and are fixed. M was a reasonable worry that turned out
+unfounded (explained in the note now).
+
+- **A. Cesarean fee R$1,963 vs R$1,939.** Both right, different bases: 1,963 is
+  the delivery-weighted mean over the fee-regression municipality-years (`10`,
+  `fee_c`), 1,939 the mean over delivery events (`16`, D.19, text). The D.17 note
+  now reconciles them (`fee_c_ev`, computed in `10`): at 1,939 the benchmarks
+  would be 0.72 / 2.87 instead of 0.73 / 2.90.
+- **B.** "This split is not an artifact" is now "At the level of the sector...;
+  within Robson group 1 ... the balance does not hold."
+- **C.** Intro, Parfitt paragraph: "persistent weekly calendar gradient, common
+  to both ownership sectors and stronger in the for-profit one".
+- **D. Economic vaginal fee definition.** Confirmed in `build/02_deliveries.R`:
+  delivery fee + labor-assistance fee, with the assist fee counted as ZERO where
+  none is billed, averaged over all vaginal deliveries with a delivery fee (the
+  "diluted" reading). D.19 now prints the vaginal fee alone (1,893), and
+  splits the economic fee into deliveries billing labor assistance (3,355) and
+  billing none (1,778, BELOW the cesarean's 1,939). The note, Section 5 and the
+  Appendix B definition say it is an EXPECTED fee. Abstract/highlights say "on
+  average per delivery".
+- **E. Price of time vs the public gradient.** The abstract no longer says the common
+  gradient is "priced by the physician time". Now: most of the gradient is
+  common to both sectors and organizational, and the for-profit increment is
+  consistent with a price of physician time. Conclusion: shift-based coverage
+  "should not be expected to remove the weekly gradient itself"; public
+  maternities (on-duty obstetrician) show most of it too. Intro fingerprints
+  sentence softened the same way.
+- **F/H. Collinearity.** It was wrong. Beds and scale correlate at 0.48 across
+  establishment-years. Net of the fixed effects, the weekend interactions
+  correlate at 0.64 (col 1) and 0.56 (col 2), a VIF of about 1.4. Column 1 separates the
+  two (scale 1.49***, beds 0.47 n.s.). Muni×date FE cut the residual SD of
+  the bed interaction by 33% and of the scale interaction by 51%. In col 2 the two are jointly
+  significant (Wald p = 0.021). So there is too little variation left, not
+  collinearity. `09` now computes all of this and prints it in the D.11 note. The
+  text in the intro, Section 6.4 and model P3 is rewritten. `09` re-run: only the
+  D.11 note changed; D.12 and `fam_E.rds` are identical.
+- **G.** "small in every specification" / "consistent with that calibration" is
+  removed from the intro, Section 5 and the supplement text. Now: the estimates
+  disagree and do not discipline the magnitude. The within-municipality intervals
+  exclude both literature responses from below, and state col 1 (4.9 pp per log
+  point) lies above GKM. Even 0.049 × 0.49 = 2.4pp.
+- **I. "Unpriced time".** The schedule pays billed labor hours (R$420/h). What
+  goes unpriced is on-call availability, uncertain onset and unbilled hours. The
+  intro, Section 5 and the conclusion now say so. They also name the hourly
+  labor-assistance fee as the one fee lever on the time margin, which the data do not evaluate.
+- **J.** Dangling "instead" removed from the conclusion.
+- **K.** "Most vaginal deliveries bill none" now reads "62 percent nationally,
+  between 30 and 82 percent in the five largest states" (text and D.19 note).
+- **L.** `placeins` + `\FloatBarrier` after the sideways D.2 and D.17 (both
+  preambles; the WP inherits paper.tex's). Order is now D.1 p11 → D.3 p13 and
+  D.17 p29 → D.18 p30.
+- **M. D.14 density main effect.** Not the education bug. The density measure is one
+  value per municipality (mean over years), so its level is absorbed by the
+  municipality FE. The note and a code comment now say so.
+- Abstract trimmed back to 247 words (limit 250).

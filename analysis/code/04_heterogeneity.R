@@ -39,6 +39,9 @@ b[, weekend := as.integer(dow %in% c(1, 7))]
 w <- as.data.table(read_parquet(WFO))
 dens <- w[!is.na(obstetricians_per_1k_births),
           .(dens = mean(obstetricians_per_1k_births)), by = .(muni = muni6)]
+# ONE value per municipality (mean over years), so low_dens is time-invariant and
+# its level is absorbed by the municipality fixed effect; unlike the education
+# split below, this model needs no separate main effect (checked 2026-09-28).
 dens[, low_dens := as.integer(dens < median(dens))]
 b <- merge(b, dens[, .(muni, low_dens)], by = "muni", all.x = FALSE)
 
@@ -88,7 +91,9 @@ etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
        label = "tab:heterogeneity",
        notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Low obstetrician density =",
-         "below-median obstetricians per 1,000 births (CNES professionals file). Education splits",
+         "below-median obstetricians per 1,000 births (CNES professionals file), averaged over",
+         "the years so that each municipality has one value; its level is therefore absorbed",
+         "by the municipality fixed effects, and only its weekend interaction enters. Education splits",
          "mothers at 8+ years of schooling; the cells are split by education, so the",
          "education level enters alongside its weekend interaction. The two implied rows report each subgroup's own",
          "weekend dip (the reference-group coefficient and that coefficient plus the interaction).",

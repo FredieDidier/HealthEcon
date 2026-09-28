@@ -150,6 +150,9 @@ sex of the newborn, on the left of Equation~\eqref{eq:gradient}.
 
 \input{../analysis/output/tables/tab13_referee_robustness.tex}
 \input{../analysis/output/tables/tab13c_dip_by_region_period.tex}
+% a sidewaystable floats to the next page while [H] tables print in place;
+% the barrier keeps the numbering and the page order the same
+\FloatBarrier
 \input{../analysis/output/tables/tab_ident_sample.tex}
 \input{../analysis/output/tables/tab_balance.tex}
 
@@ -318,9 +321,12 @@ come from prelabor scheduling; the rest is among cesareans with no timing code,
 which the register also leaves in group 1. The group-1 dip is 1.3 percentage points larger than the
 group-10 (preterm) dip ($p=0.006$). Table~\ref{tab:feegap_ci} reports the fee-gap coefficient
 with confidence intervals against a pre-specified economic-equivalence region and
-against the two magnitudes the literature has estimated: the estimate is small
-but not a precise zero, which is why the argument of Section~\ref{sec:notprice}
-rests on the calibration rather than on the regressions.
+against the two magnitudes the literature has estimated. The estimates disagree
+with one another: the within-municipality intervals exclude both magnitudes from
+below, the state-level estimate without controls lies above the larger one, and
+no interval fits inside the equivalence region. The regressions therefore do not
+discipline the magnitude, which is why the argument of
+Section~\ref{sec:notprice} rests on the calibration alone.
 Table~\ref{tab:fee_base_econ} reproduces the first two columns of
 Table~\ref{tab:fees} and re-estimates them with the vaginal fee measured by the
 base delivery fee alone: the coefficient stays small and still changes sign
@@ -339,6 +345,9 @@ ignored, and the table note reports it there.
 
 \input{../analysis/output/tables/tab_ref_c3_robson_validation.tex}
 \input{../analysis/output/tables/tab_ref_c5_feegap_ci.tex}
+% a sidewaystable floats to the next page while [H] tables print in place;
+% the barrier keeps the numbering and the page order the same
+\FloatBarrier
 \input{../analysis/output/tables/tab_ref_c6_fee_base_econ.tex}
 \input{../analysis/output/tables/tab_fee_per_hour.tex}
 \input{../analysis/output/tables/tab_ref_c10_fewcluster.tex}

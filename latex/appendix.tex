@@ -44,8 +44,12 @@ birth; \textbf{for-profit} denotes establishments with legal-entity type 2xxx,
 the headline group.
 \item \textbf{Economic vaginal fee}: the physician fee for a vaginal delivery
 plus the separately billed hourly labor-assistance fee (TUSS 31309038), which
-compensates the time spent attending labor. This is the correct comparison for
-the cesarean fee because it credits the vaginal delivery with the time it pays for.
+compensates the time spent attending labor, counted as zero for the vaginal
+deliveries that bill none. Its mean over vaginal deliveries is therefore the
+expected pay of a vaginal delivery when the mode is chosen; the deliveries that
+bill labor assistance are paid more than that mean and those that bill none less
+(\satab{tab:fee_per_hour}). This is the correct comparison for the cesarean fee
+because it credits the vaginal delivery with the time it pays for.
 \item \textbf{Log fee gap}: the natural logarithm of the ratio of the mean
 cesarean fee to the mean economic vaginal fee in a municipality-year; positive
 values mean cesareans pay more.

@@ -19,12 +19,22 @@
 > **2026-09-28 (referee round 2) — price of time.** The fee argument is now
 > per-delivery vs per-hour: a cesarean pays less per delivery but more per hour
 > once a vaginal delivery takes >~1.25 h (Table `tab_fee_per_hour`). Calibration
-> leads; our regressions are "consistent but less precise"; the sign flip is no
+> leads; our regressions (superseded in round 3: "do not discipline the magnitude"); the sign flip is no
 > longer an argument. Scheduling is common to both sectors, the for-profit
 > differential an increment. New `16_design_checks.R`: fee per hour, balance of
 > predetermined characteristics + newborn sex in Eq. (3), identifying sample (461
 > munis, 74% FP / 56% public births). SINASC rebuilt with SEXO, CONSULTAS,
 > CONSPRENAT, MESPRENAT (old 32 columns byte-identical).
+>
+> **2026-09-28 (referee round 3) — 13 consistency items A–M.** Beds and scale
+> are NOT collinear (corr 0.48; the weekend interactions net of the FE correlate
+> at 0.56; col 1 separates them; muni×date FE remove the variation; joint p 0.021).
+> The economic vaginal fee is an EXPECTED fee (assist = 0 when unbilled); a vaginal
+> delivery billing no labor hours pays R$1,778 < the cesarean's R$1,939. Our fee
+> regressions "do not discipline the magnitude" (never "consistent with the
+> calibration"). The common gradient is organizational, and the price of time speaks to the
+> for-profit increment only. The schedule pays billed labor hours; what goes unpriced is
+> on-call/unbilled time. Abstract ≤250 words (now 245). See REVISION_LOG.
 
 
 ## What the paper is
@@ -68,7 +78,13 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   "there is no relationship" or "fees don't matter." Since 2026-09-28 the
   regressions only "fail to contradict" the calibration; do not lead with the sign
   flip, and never oppose "price" to "scheduling": time is the price the fee
-  schedule omits (per delivery the cesarean pays less, per hour more). The canonical magnitude
+  schedule omits (per delivery the cesarean pays less ON AVERAGE, per hour more). Since
+  round 3 the regressions "disagree and do not discipline the magnitude": muni-FE
+  intervals exclude both literature responses from below, state col 1 (4.9 pp/log
+  point) lies above GKM; never "small in every specification" or "consistent with
+  the calibration". "Time the schedule leaves out" means on-call availability,
+  uncertain onset, unbilled hours: the schedule DOES pay billed labor hours
+  (R$420/h), and that hourly fee is a lever the data do not evaluate. The canonical magnitude
   (\citet{grant2009}, ~1pp per US$1,000 = ~0.73pp per log point at our fee levels;
   \citet{gruber1999physician} four times that) is too small to matter at this
   scale, predicting at most ~0.36pp and ~1.4pp against a 36pp gap. The RAW FACT leads, the regression follows.
@@ -91,11 +107,15 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   null honestly; it bounds the "whose convenience" claim.
 - **organizational-capacity heterogeneity** = "organizational redundancy
   attenuates the gradient," NOT "individual physician's calendar vs hospital."
-  Beds and delivery scale are collinear: together (Table D.9 col 2, family E)
-  neither is significant; each WITHOUT the other is (scale 1.3–1.4pp*** in D.9
-  col 5 and D.10 cols 1, 5; beds 0.80** in D.10 col 4). Never write "neither is
-  distinguishable from zero" without "entered together", and never "only across
-  municipalities".
+  Beds and delivery scale are related but NOT collinear (round 3: corr of logs
+  0.48; weekend interactions net of FE 0.64 col 1 / 0.56 col 2, VIF ~1.4). With
+  date FE and both entered (D.11 col 1) scale is 1.49*** and beds 0.47 n.s.; under
+  muni×date FE (D.11 col 2, family E) the FE cut the residual SD by 33% (beds) /
+  51% (scale) and the two are jointly (Wald p 0.021) but not individually
+  significant; each WITHOUT the other is (scale 1.3–1.4pp***, beds 0.80**).
+  Never write "too collinear"; write "too little variation left within
+  municipality-days". Never "neither is distinguishable from zero" without
+  "entered together", and never "only across municipalities".
 - **Robson-group profile + term/preterm + maternal-age splits** (2026-07-22) =
   *corroboration, NOT a placebo*. Robson group and gestational age at birth are
   partly determined by the same decisions under study, so these are heuristic
@@ -225,7 +245,10 @@ reintroduce `else → Public`.
 | Eq (3), mother <35 vs 35+ | −2.5pp vs +1.7pp*; within Robson 1–2, −4.8 vs −1.4 |
 | Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70); family D Holm 0.202 |
 | Pre-holiday prelabor bunching (bridge) | −0.47/day (deficit, not bunching); window −1.24 |
-| Org capacity, muni×date FE (prelabor) | together: beds +0.58 (0.38), scale +0.64 (0.41), n.s.; scale alone/with non-bed measures +1.30 to +1.43***; beds alone +0.80**; scale with date FE +1.49*** |
+| Org capacity, muni×date FE (prelabor) | together: beds +0.58 (0.38), scale +0.64 (0.41), n.s. individually, joint p 0.021; scale alone/with non-bed measures +1.30 to +1.43***; beds alone +0.80**; date FE together: scale +1.49***, beds +0.47 n.s. |
+| Beds vs scale | corr of logs 0.48 (estab-years); weekend interactions net of FE 0.64 (date) / 0.56 (muni×date) |
+| Fees per delivery (TISS events, D.19) | cesarean 1,939; vaginal fee alone 1,893; economic vaginal 2,417 (expected); billing labor 3,355 / billing none 1,778; 62% bill none (30–82% in big-5) |
+| Cesarean fee for the calibration (D.17) | 1,963 = delivery-weighted over regression muni-years; 1,939 would give 0.72 / 2.87 |
 | Education heterogeneity (D.12, with education main effect) | weekend dip −11.2pp (<8 yrs) / −7.2pp (8+); weekday rates 67% / 85% |
 | Fee gap with the base vaginal fee (D.16, Table 1 sample) | +0.0366* UF / −0.0176** muni; econ columns = Table 1 exactly |
 | Zero-obstetrician maternities (CNES-PF, ≥50 births) | 14% for-profit / 26% public (median 3/2) |

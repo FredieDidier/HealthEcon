@@ -58,7 +58,17 @@ fee_hour <- function(d) {
   va <- v[is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
   fc <- mean(d[type == "cesarean", fee_delivery], na.rm = TRUE)
   fv <- mean(v$fee_vaginal_econ, na.rm = TRUE)
-  data.table(fc = fc, fv = fv, bill = 100 * nrow(va) / nrow(v),
+  # The economic vaginal fee is an EXPECTED fee: delivery fee plus the labor-
+  # assistance fee, counted as zero where none is billed, averaged over every
+  # vaginal delivery with a delivery fee. The split by whether labor assistance
+  # is billed, and the delivery fee alone, are printed so the reader can see
+  # that a vaginal delivery billing no labor hours pays less than a cesarean
+  # (external check, 2026-09-28).
+  ve <- v[is.finite(fee_vaginal_econ)]
+  data.table(fc = fc, fb = mean(ve$fee_delivery), fv = fv,
+             fvb = mean(ve[!is.na(fee_assist), fee_vaginal_econ]),
+             fvn = mean(ve[is.na(fee_assist), fee_vaginal_econ]),
+             bill = 100 * nrow(va) / nrow(v),
              hrs = mean(va$assist_hours), rate = mean(va$fee_assist / va$assist_hours),
              be1 = fv / fc, be2 = 2 * fv / fc)
 }
@@ -79,7 +89,10 @@ tex <- c("\\begin{table}[H]", "\\centering",
   paste0(" & ", paste(fh$uf, collapse = " & "), " \\\\"), "\\midrule",
   "\\multicolumn{7}{l}{\\emph{Panel A. Fees per delivery (R\\$)}} \\\\", "\\addlinespace[2pt]",
   rowm("Cesarean fee", fh$fc),
-  rowm("Economic vaginal fee", fh$fv),
+  rowm("Vaginal delivery fee alone", fh$fb),
+  rowm("Economic vaginal fee, all vaginal deliveries", fh$fv),
+  rowm("\\quad deliveries billing labor assistance", fh$fvb),
+  rowm("\\quad deliveries billing none", fh$fvn),
   "\\midrule",
   "\\multicolumn{7}{l}{\\emph{Panel B. Labor assistance}} \\\\", "\\addlinespace[2pt]",
   rowf("Vaginal deliveries billing labor assistance (\\%)", fh$bill, "%.1f"),
@@ -94,16 +107,25 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
   "\\textit{Notes:} TISS private-insurance deliveries, 2015--2024; the five largest",
   "states by deliveries, as in Section~\\ref{sec:notprice}. Fees are means over the",
-  "deliveries that bill them. The economic vaginal fee adds the separately billed",
-  "hourly labor-assistance fee to the vaginal delivery fee. The fee per billed labor",
-  "hour is the mean, over the deliveries that bill labor assistance, of that fee",
-  "divided by its billed hours. Panel C reports the physician time of a vaginal",
-  "delivery at which the economic vaginal fee per hour equals the cesarean fee per",
-  "hour: the economic vaginal fee divided by the cesarean fee, times the hours of a",
-  "cesarean. A vaginal delivery that occupies the physician for longer pays less",
-  "per hour than a cesarean. Physician time is not observed; billed hours are a",
-  "floor on it, since most vaginal deliveries bill none, so the comparison is",
-  "tilted in favor of the vaginal delivery.",
+  "deliveries that bill them: the cesarean fee over cesareans with a positive",
+  "delivery fee, the vaginal fees over vaginal deliveries with a positive delivery",
+  "fee. The economic vaginal fee is, for each such delivery, the delivery fee plus",
+  "the hourly labor-assistance fee billed with it, counted as zero where none is",
+  "billed, averaged over all of them. It is the expected pay of a vaginal delivery",
+  "when the mode of delivery is chosen, not the pay of a typical one: the two rows",
+  "below it split it by whether labor assistance is billed, and a vaginal delivery",
+  "that bills none pays less than a cesarean in Brazil as a whole. The fee per",
+  "billed labor hour is the mean, over the deliveries that bill labor assistance, of",
+  "that fee divided by its billed hours. Panel C reports the physician time of a",
+  "vaginal delivery at which the economic vaginal fee per hour equals the cesarean",
+  "fee per hour: the economic vaginal fee divided by the cesarean fee, times the",
+  "hours of a cesarean. A vaginal delivery that occupies the physician for longer",
+  "pays less per hour than a cesarean. Physician time is not observed; billed hours",
+  "are a floor on it, since the vaginal deliveries that bill no labor hours still",
+  sprintf("take time (%.0f percent of them nationally, between %.0f and %.0f percent in",
+          100 - fh[uf == "Brazil", bill], 100 - max(fh[uf != "Brazil", bill]),
+          100 - min(fh[uf != "Brazil", bill])),
+  "the five states), so the comparison is tilted in favor of the vaginal delivery.",
   "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_fee_per_hour.tex"))
 
