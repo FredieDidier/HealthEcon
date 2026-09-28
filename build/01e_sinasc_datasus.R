@@ -51,7 +51,12 @@ MAP <- c(DTNASC = "data_nascimento", HORANASC = "hora_nascimento",
          IDADEMAE = "idade_mae", ESCMAE = "escolaridade_mae",
          RACACORMAE = "raca_cor_mae", PARIDADE = "paridade",
          QTDPARTCES = "quantidade_parto_cesareo", QTDPARTNOR = "quantidade_parto_normal",
-         QTDGESTANT = "gestacoes_ant", PESO = "peso", APGAR5 = "apgar5")
+         QTDGESTANT = "gestacoes_ant", PESO = "peso", APGAR5 = "apgar5",
+         # added 2026-09-28 for the balance table (16_design_checks.R): newborn sex
+         # is predetermined and cannot be sorted on by scheduling; prenatal fields
+         # describe care before the delivery date is chosen
+         SEXO = "sexo", CONSULTAS = "consultas_prenatal_cat",
+         CONSPRENAT = "consultas_prenatal", MESPRENAT = "mes_inicio_prenatal")
 
 listing <- function(u) {
   for (a in 1:4) {
@@ -115,7 +120,8 @@ ingest_datasus <- function(years = YEARS) {
   for (v in c("semana_gestacao", "tipo_gravidez", "inducao_parto", "cesarea_antes_parto",
               "idade_mae", "escolaridade_mae", "raca_cor_mae", "paridade",
               "quantidade_parto_cesareo", "quantidade_parto_normal", "gestacoes_ant",
-              "peso", "apgar5", "gestacao_agr", "local_nascimento"))
+              "peso", "apgar5", "gestacao_agr", "local_nascimento",
+              "consultas_prenatal_cat", "consultas_prenatal", "mes_inicio_prenatal"))
     set(dt, j = v, value = ii(dt[[v]]))
   # Robson as the two-digit code the analysis matches ("01".."10"); blank -> NA
   dt[, tipo_robson := fifelse(!is.na(ii(tipo_robson)), sprintf("%02d", ii(tipo_robson)), NA_character_)]

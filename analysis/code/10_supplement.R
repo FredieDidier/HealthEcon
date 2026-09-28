@@ -88,7 +88,7 @@ tex <- c("\\begin{table}[H]\\centering",
   "Robson group & Cesareans & Share coded prelabor (\\%) \\\\", "\\midrule",
   apply(vtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share by construction, since the register assigns every prelabor cesarean of a nulliparous term cephalic singleton to group 2; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. %s} \\\\",
+  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share by construction, since the register assigns every prelabor cesarean of a nulliparous term cephalic singleton to group 2; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing, which the register leaves in group 1 when the prelabor field is blank or ignored, so they may include cesareans performed before labor. %s} \\\\",
           100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, r1r10_txt),
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (the years with the Robson classification), cesareans with a",
@@ -248,9 +248,14 @@ cat("\n[C/C5] fee-gap coefficient CIs:\n"); print(rows)
 # =============================================================================
 # D (C6) — FEE GAP: BASE VAGINAL FEE vs ECONOMIC (BASE + ENDOGENOUS HOURS).
 # The economic vaginal fee adds an endogenous quantity of billed labor-assistance
-# hours. If the not-a-price null survives using the BASE delivery fee alone, it is
-# not driven by that endogenous component. We rebuild both gaps from event-level
-# TISS data and re-run the core regression.
+# hours. If the fee-gap pattern survives using the BASE delivery fee alone, it is
+# not driven by that endogenous component.
+# Columns 3-4 ARE Table 1 columns 1-2 (same main_data panel, sample, outcome and
+# weights), so the exhibit reproduces the body. Until 2026-09-28 this block rebuilt
+# its own cells from the event files (deliveries with a billed fee, a different
+# rate and weight), which printed 0.0467/-0.0146 on 5,183 cells against the body's
+# 0.0488/-0.0141 on 5,198 under the label of the same specification. Columns 1-2
+# keep those municipality-years and change ONLY the vaginal fee in the ratio.
 #   -> tab_ref_c6_fee_base_econ.tex
 # =============================================================================
 
@@ -258,6 +263,7 @@ source(here::here("config", "config.R"))
 pacman::p_load(data.table, arrow, fixest, here)
 source(here::here("analysis", "code", "00_utils.R"))
 OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output"); TABLE <- here::here("analysis","output","tables")
+WFO <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
 
 evf <- file.path(OUT, sprintf("delivery_events_%d.parquet", 2015:2024))
 evf <- evf[file.exists(evf)]
@@ -265,40 +271,44 @@ if (length(evf) == 0) {
   message("10 [D/C6] skipped — delivery_events_<yr>.parquet not found.")
 } else {
   ev <- rbindlist(lapply(evf, function(fp) as.data.table(read_parquet(fp,
-          col_select = c("muni_prestador","uf","year","cesarean","fee_delivery","fee_assist")))))
+          col_select = c("muni_prestador","year","cesarean","fee_delivery")))))
   ev <- ev[year <= 2024 & !is.na(muni_prestador) & is.finite(fee_delivery) & fee_delivery > 0]
-  setnames(ev, "muni_prestador", "muni6")
-  ev[, fee_vag_econ := fee_delivery + fifelse(is.finite(fee_assist), fee_assist, 0)]
-  agg <- ev[, .(n = .N, rate = mean(cesarean),
-                fee_ces      = mean(fee_delivery[cesarean == 1], na.rm = TRUE),
-                fee_vag_base = mean(fee_delivery[cesarean == 0], na.rm = TRUE),
-                fee_vag_econ = mean(fee_vag_econ[cesarean == 0], na.rm = TRUE)), by = .(muni6, uf, year)]
-  agg <- agg[n >= 20 & is.finite(fee_ces) & is.finite(fee_vag_base) & fee_vag_base > 0 & fee_vag_econ > 0]
-  agg[, `:=`(gap_base = log(fee_ces / fee_vag_base), gap_econ = log(fee_ces / fee_vag_econ))]
-  b_uf   <- feols(rate ~ gap_base | uf + year,    agg, weights = ~n, cluster = ~uf)
-  b_muni <- feols(rate ~ gap_base | muni6 + year, agg, weights = ~n, cluster = ~muni6)
-  e_uf   <- feols(rate ~ gap_econ | uf + year,    agg, weights = ~n, cluster = ~uf)
-  e_muni <- feols(rate ~ gap_econ | muni6 + year, agg, weights = ~n, cluster = ~muni6)
-  dict <- c(rate = "Private-insurance cesarean rate", gap_base = "Log fee gap (base vaginal fee)",
-            gap_econ = "Log fee gap (economic vaginal fee)", uf = "State", muni6 = "Municipality", year = "Year")
+  base <- ev[cesarean == 0, .(fee_vag_base = mean(fee_delivery)), by = .(muni6 = muni_prestador, year)]
+  # the Table 1 sample, exactly as 02_regressions.R builds it
+  w <- as.data.table(read_parquet(WFO))
+  w[, state := substr(muni6, 1, 2)]
+  w <- w[year <= 2024 & tiss_deliveries >= 20 & is.finite(log_fee_gap)]
+  base[, muni6 := as.character(muni6)]; w[, muni6 := as.character(muni6)]
+  w <- merge(w, base, by = c("muni6", "year"), all.x = TRUE)
+  w[, `:=`(gap_econ = log_fee_gap, gap_base = log(fee_cesarean / fee_vag_base))]
+  wb <- w[is.finite(gap_base)]
+  b_uf   <- feols(tiss_csection_rate ~ gap_base | state + year, wb, weights = ~tiss_deliveries, cluster = ~state)
+  b_muni <- feols(tiss_csection_rate ~ gap_base | muni6 + year, wb, weights = ~tiss_deliveries, cluster = ~muni6)
+  e_uf   <- feols(tiss_csection_rate ~ gap_econ | state + year, w,  weights = ~tiss_deliveries, cluster = ~state)
+  e_muni <- feols(tiss_csection_rate ~ gap_econ | muni6 + year, w,  weights = ~tiss_deliveries, cluster = ~muni6)
+  dict <- c(tiss_csection_rate = "Private-insurance cesarean rate", gap_base = "Log fee gap (base vaginal fee)",
+            gap_econ = "Log fee gap (economic vaginal fee)", state = "State", muni6 = "Municipality", year = "Year")
   f <- file.path(TABLE, "tab_ref_c6_fee_base_econ.tex")
   etable(b_uf, b_muni, e_uf, e_muni, tex = TRUE, file = f, replace = TRUE, dict = dict,
          signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
          fitstat = ~ n + r2, digits = 4, digits.stats = 3,
          headers = c("Base vaginal fee", "Base vaginal fee", "Economic vaginal fee", "Economic vaginal fee"),
-         title = "The fee-gap null does not depend on the endogenous labor-assistance hours",
+         title = "The fee-gap estimates with and without the labor-assistance hours",
          label = "tab:fee_base_econ",
-         notes = paste("\\footnotesize\\textit{Notes:} Municipality-year cells built",
-           "from event-level TISS claims, weighted by deliveries. The base fee gap uses",
-           "only the delivery procedure fee; the economic fee gap adds the",
-           "separately-billed hourly labor-assistance fee to the vaginal fee. The",
-           "coefficient is small and sign-unstable under both definitions, so the null",
-           "is not an artifact of the endogenous billed hours. Standard errors,",
-           "clustered on the fixed-effect geography, are reported in parentheses.",
+         notes = paste("\\footnotesize\\textit{Notes:} Municipality-years with at least 20",
+           "private deliveries, weighted by deliveries. Columns 3--4 reproduce columns 1--2",
+           "of Table~\\ref{tab:fees}. Columns 1--2 keep the same municipality-years, outcome",
+           "and weights and replace the economic vaginal fee in the ratio with the base",
+           "delivery procedure fee alone, which excludes the separately billed hourly",
+           "labor-assistance fee. Under both definitions the coefficient is small and changes",
+           "sign between state and municipality fixed effects, so that pattern is not an",
+           "artifact of the endogenous billed hours.",
+           "Standard errors, clustered on the fixed-effect geography, are reported in parentheses.",
            SIGNIF_NOTE))
   postprocess_tex(f, fontsize = "\\small", tabcolsep = 4)
-  cat(sprintf("\n[D/C6] base gap: uf %+.4f / muni %+.4f | econ gap: uf %+.4f / muni %+.4f\n",
-              coef(b_uf)["gap_base"], coef(b_muni)["gap_base"], coef(e_uf)["gap_econ"], coef(e_muni)["gap_econ"]))
+  cat(sprintf("\n[D/C6] base gap: uf %+.4f / muni %+.4f (N %d) | econ gap: uf %+.4f / muni %+.4f (N %d)\n",
+              coef(b_uf)["gap_base"], coef(b_muni)["gap_base"], nobs(b_muni),
+              coef(e_uf)["gap_econ"], coef(e_muni)["gap_econ"], nobs(e_muni)))
 }
 
 # =============================================================================
@@ -378,7 +388,11 @@ b2 <- b1[sector %in% c("Private","Public")];             n_sector <- nrow(b2)
 b3 <- b2[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]; n_robson <- nrow(b3)
 # The last row used to count every vaginal birth PLUS the cesareans with a valid
 # code (23.6M of 26.0M births) under the label "valid code (cesareans)".
+# The two "of which" branches below are PARALLEL subsets of the for-profit/public
+# births, not nested: until 2026-09-28 the cesarean row (all years) sat under the
+# 2014-2024 Robson row, implying a 78% cesarean rate in that sub-sample.
 n_ces    <- b2[cesarean == 1, .N]
+n_ces12  <- b2[cesarean == 1 & year >= 2012, .N]
 n_timing <- b2[cesarean == 1 & year >= 2012 & cesarea_antes_parto %in% c(1, 2), .N]
 
 flow <- data.table(
@@ -386,9 +400,10 @@ flow <- data.table(
            "Restrict to 2010--2024",
            "For-profit or public establishment",
            "\\quad of which: 2014--2024 with a valid Robson group",
-           "\\quad of which: cesareans",
-           "\\quad\\quad of which: valid before/during-labor code, 2012+"),
-  N = format(c(n_raw, n_year, n_sector, n_robson, n_ces, n_timing), big.mark = ","))
+           "\\quad of which: cesareans, 2010--2024",
+           "\\quad\\quad of which: 2012--2024",
+           "\\quad\\quad\\quad of which: valid before/during-labor code"),
+  N = format(c(n_raw, n_year, n_sector, n_robson, n_ces, n_ces12, n_timing), big.mark = ","))
 tex <- c("\\begin{table}[H]\\centering",
   "\\caption{\\textbf{Sample construction, SINASC birth records}}", "\\label{tab:sampleflow}", "\\small",
   "\\begin{tabular}{lr}", "\\toprule", "Step & Records \\\\", "\\midrule",
@@ -396,8 +411,9 @@ tex <- c("\\begin{table}[H]\\centering",
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} The Robson classification is",
         "populated from 2014; the before/during-labor timing code is well populated",
-        "from about 2012. Analyses that need each variable use the corresponding",
-        "sub-sample, as noted in each table."),
+        "from about 2012. The Robson row and the cesarean row are separate subsets",
+        "of the for-profit and public births, not nested ones. Analyses that need each",
+        "variable use the corresponding sub-sample, as noted in each table."),
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c12_sampleflow.tex"))
 
@@ -407,6 +423,12 @@ miss <- b2[cesarean == 1 & year >= 2012, .(missing_pct = 100 * mean(!(cesarea_an
            by = .(sector, weekend)][order(sector, weekend)]
 miss[, day := fifelse(weekend == 1, "Weekend", "Weekday")]
 mw <- dcast(miss, sector ~ day, value.var = "missing_pct")
+# The balance holds in the aggregate but NOT inside Robson group 1, where the
+# register leaves every cesarean without a usable timing code (prelabor field blank
+# or ignored); state it rather than let the aggregate stand in for the group.
+m_r1 <- b2[cesarean == 1 & sector == "Private" & year >= 2014 & tipo_robson == "01",
+           .(missing_pct = 100 * mean(!(cesarea_antes_parto %in% c(1, 2)))), by = weekend]
+m_r1_wd <- m_r1[weekend == 0, missing_pct]; m_r1_we <- m_r1[weekend == 1, missing_pct]
 mtab <- mw[, .(Sector = as.character(sector_display(sector, c("Private", "Public"))), `Weekday (\\%)` = sprintf("%.2f", Weekday),
                `Weekend (\\%)` = sprintf("%.2f", Weekend))]
 tex2 <- c("\\begin{table}[H]\\centering",
@@ -418,8 +440,9 @@ tex2 <- c("\\begin{table}[H]\\centering",
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} Share of cesareans with a missing",
         "before/during-labor code, SINASC 2012--2024, the years the timing analyses use. The near-identical weekday and",
-        "weekend rates imply the prelabor/in-labor split is not driven by differential",
-        "missingness across the week."),
+        "weekend rates imply the sector-level prelabor/in-labor split is not driven by differential",
+        sprintf("missingness across the week. The balance does not carry over to Robson group 1, which receives the cesareans whose code is blank or ignored: there %.1f percent of for-profit cesareans lack the code on weekdays and %.1f percent on weekends (2014--2024), so part of that group's weekend dip may be uncoded prelabor cesareans (Table~\\ref{tab:robson_validation}).",
+                m_r1_wd, m_r1_we)),
   "\\end{table}")
 write_table_tex(resize_tabular(tex2), file.path(TABLE, "tab_ref_c12_missingness.tex"))
 cat("\n[F/C12] sample flow:\n"); print(flow); cat("timing-indicator missingness:\n"); print(mw)
@@ -638,7 +661,8 @@ b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
               fifelse(escolaridade_mae %in% 1:3, 0L, NA_integer_))]
 cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
             by = .(muni, date, weekend, educ_hi, year)]
-m_educ <- feols(rate ~ weekend + weekend:educ_hi | muni + year, cell_b,
+# same specification as 04_heterogeneity.R: the education level must enter
+m_educ <- feols(rate ~ weekend + weekend:educ_hi + educ_hi | muni + year, cell_b,
                 weights = ~n, cluster = ~muni + date)
 rm(b, cell_a, cell_b); gc()
 

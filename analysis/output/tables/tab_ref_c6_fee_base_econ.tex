@@ -1,33 +1,33 @@
 
 \begin{table}[H]
-   \caption{\label{tab:fee_base_econ} \textbf{The fee-gap null does not depend on the endogenous labor-assistance hours}}
+   \caption{\label{tab:fee_base_econ} \textbf{The fee-gap estimates with and without the labor-assistance hours}}
    \centering
 \small\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcccc}
       \toprule
- & (1)          & (2)            & (3)          & (4)\\  
+ & (1)          & (2)            & (3)           & (4)\\  
 \addlinespace[2pt]
  & \multicolumn{4}{c}{Private-insurance cesarean rate}\\
        & \multicolumn{2}{c}{Base vaginal fee} & \multicolumn{2}{c}{Economic vaginal fee} \\ 
       \midrule
-      Log fee gap (base vaginal fee)     & 0.0335$^{*}$ & -0.0181$^{**}$ &              &   \\   
-                                         & (0.0196)     & (0.0087)       &              &   \\   
+      Log fee gap (base vaginal fee)     & 0.0366$^{*}$ & -0.0176$^{**}$ &               &   \\   
+                                         & (0.0179)     & (0.0081)       &               &   \\   
 \addlinespace[2pt]
-      Log fee gap (economic vaginal fee) &              &                & 0.0467$^{*}$ & -0.0146$^{*}$\\   
-                                         &              &                & (0.0251)     & (0.0086)\\   
+      Log fee gap (economic vaginal fee) &              &                & 0.0488$^{**}$ & -0.0141$^{*}$\\   
+                                         &              &                & (0.0235)      & (0.0082)\\   
 \addlinespace[2pt]
       \midrule
-      State fixed effects & Yes          &                & Yes          & \\  
-      Year fixed effects & Yes          & Yes            & Yes          & Yes\\  
-      Municipality fixed effects &              & Yes            &              & Yes\\  
+      State fixed effects & Yes          &                & Yes           & \\  
+      Year fixed effects & Yes          & Yes            & Yes           & Yes\\  
+      Municipality fixed effects &              & Yes            &               & Yes\\  
       \midrule
-      Observations                       & 5,183        & 5,183          & 5,183        & 5,183\\  
-      R$^2$                              & 0.328        & 0.855          & 0.349        & 0.854\\  
+      Observations                       & 5,198        & 5,198          & 5,198         & 5,198\\  
+      R$^2$                              & 0.332        & 0.855          & 0.354         & 0.855\\  
 \bottomrule
    \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} Municipality-year cells built from event-level TISS claims, weighted by deliveries. The base fee gap uses only the delivery procedure fee; the economic fee gap adds the separately-billed hourly labor-assistance fee to the vaginal fee. The coefficient is small and sign-unstable under both definitions, so the null is not an artifact of the endogenous billed hours. Standard errors, clustered on the fixed-effect geography, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\textit{Notes:} Municipality-years with at least 20 private deliveries, weighted by deliveries. Columns 3--4 reproduce columns 1--2 of Table~\ref{tab:fees}. Columns 1--2 keep the same municipality-years, outcome and weights and replace the economic vaginal fee in the ratio with the base delivery procedure fee alone, which excludes the separately billed hourly labor-assistance fee. Under both definitions the coefficient is small and changes sign between state and municipality fixed effects, so that pattern is not an artifact of the endogenous billed hours. Standard errors, clustered on the fixed-effect geography, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{minipage}
 \end{table}
 

@@ -52,8 +52,15 @@ b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
               fifelse(escolaridade_mae %in% 1:3, 0L, NA_integer_))]
 cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
             by = .(muni, date, weekend, educ_hi, year)]
-m_educ <- feols(rate ~ weekend + weekend:educ_hi | muni + year,
+# The cells are split by education, so the education LEVEL must enter the model.
+# Without `educ_hi` the ~20pp weekday gap between the two groups' cesarean rates
+# lands in the weekend terms: until 2026-09-28 the low-education dip printed as
+# -20.0pp (and the interaction as +13.6pp) against -11.2pp (+4.0pp) with the level.
+m_educ <- feols(rate ~ weekend + weekend:educ_hi + educ_hi | muni + year,
                 cell_b, weights = ~n, cluster = ~muni + date)
+cat("\n[04] Raw for-profit cesarean rate (%), by schooling and weekend:\n")
+print(dcast(b[!is.na(educ_hi), .(rate = round(100 * mean(cesarean), 1)),
+              by = .(educ_hi, weekend)], educ_hi ~ weekend, value.var = "rate"))
 
 # implied weekend dips by subgroup, reported directly (not only the interaction):
 # density panel -> {high, low} obstetrician density; education panel -> {low, high} schooling.
@@ -69,6 +76,7 @@ implied_lines <- list(
 
 dict <- c(weekend = "Weekend", "weekend:low_dens" = "Weekend $\\times$ low obstetrician density",
           "weekend:educ_hi" = "Weekend $\\times$ mother has 8+ years of schooling",
+          educ_hi = "Mother has 8+ years of schooling",
           muni = "Municipality", year = "Year", rate = "Cesarean share")
 f <- file.path(TABLE, "tab10_heterogeneity.tex")
 etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
@@ -81,7 +89,8 @@ etable(m_dens, m_educ, tex = TRUE, file = f, replace = TRUE, dict = dict,
        notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
          "cells, SINASC 2010--2024, weighted by births. Low obstetrician density =",
          "below-median obstetricians per 1,000 births (CNES professionals file). Education splits",
-         "mothers at 8+ years of schooling. The two implied rows report each subgroup's own",
+         "mothers at 8+ years of schooling; the cells are split by education, so the",
+         "education level enters alongside its weekend interaction. The two implied rows report each subgroup's own",
          "weekend dip (the reference-group coefficient and that coefficient plus the interaction).",
          "Standard errors, two-way clustered by municipality and date, are reported in parentheses.",
          SIGNIF_NOTE))

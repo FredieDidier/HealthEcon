@@ -72,9 +72,12 @@ cells_by <- function(dat, extra = character(0))
 
 # =============================================================================
 # BLOCK A — each sector's weekend gradient, by Robson group.
-# Robson 1-2 (nulliparous term) and 5 (previous cesarean) are the schedulable
-# groups; group 10 is preterm and cannot be freely booked. If the dip tracks
-# schedulability, it should be large in 1-2 and small in 10.
+# Robson 1-4 are term singleton cephalic pregnancies without a previous cesarean,
+# where the labor-or-surgery choice is most open; group 5 (previous cesarean) is
+# bookable but sits near the cesarean ceiling in the for-profit sector (95% on
+# weekdays), so its RATE has little room to dip; group 10 is preterm, less often
+# booked in advance but NOT unschedulable (preeclampsia, IUGR, elective
+# late-preterm). Corroboration, never a placebo.
 # =============================================================================
 rb <- b[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]
 cr <- cells_by(rb, "tipo_robson")
@@ -97,6 +100,18 @@ rg <- rbindlist(lapply(sprintf("%02d", 1:10), function(g) {
 }))
 rg[, `:=`(b = 100 * b, se = 100 * se)]
 saveRDS(rg, file.path(AOUT, "robson_grad.rds"))
+# Weekday cesarean rate and share of births by group and sector, quoted in
+# Section 6.2: group 5 is the largest for-profit group and sits at the ceiling
+# (95% on weekdays against 80% public), which is why its for-profit dip is the
+# smaller one. The body cites these; they are computed here, not typed.
+rq <- b[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]
+cat("[12A] weekday cesarean rate (%) by Robson group and sector:\n")
+print(dcast(rq[weekend == 0, .(r = round(100 * mean(cesarean), 1)), by = .(tipo_robson, sector)],
+            tipo_robson ~ sector, value.var = "r"))
+cat("[12A] share of births (%) by Robson group and sector:\n")
+print(dcast(rq[, .N, by = .(tipo_robson, sector)][, s := round(100 * N / sum(N), 1), by = sector],
+            tipo_robson ~ sector, value.var = "s"))
+rm(rq)
 
 rgp <- copy(rg)[!is.na(b)]
 rgp[, `:=`(sector = sector_display(sector, c("Private", "Public")),

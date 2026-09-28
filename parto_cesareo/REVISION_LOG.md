@@ -914,3 +914,81 @@ Body numbers: Equation (3) −1.8/−2.5 (unchanged), own gradients −7.9/−5.
 - **Framing**: contribution paragraph moved to the 3rd paragraph of the introduction with Spinola & Rocha and Melo & Menezes-Filho; conclusion separates relative price from the structure of pay.
 - Abstract 247 words (trimmed "maternal and newborn survival" to "survival gain" to stay under 250). Build: paper 39 pp, supplement 31, WP 67, 0 undefined, 0 overfull hbox.
 - Independent re-implementation of Table 2 col 1 (own holiday calendar, own aggregation): −1.789 (0.623), −2.549 (0.507), −1.059 (0.336), N 5,038,435 — exact.
+
+## 2026-09-28 — external consistency check: 19 items (Claude, requested by Fredie)
+
+Fredie supplied a list of 19 inconsistencies read off the compiled PDFs. Each was
+checked against the tables, the code and the data. 18 were real; one (item 8)
+was right in the paper and wrong in the `birth-health-econ` skill.
+
+| # | Item | Verdict | Fix |
+|---|---|---|---|
+| 1 | 35k (text) vs 37k (footnote) | real: two different computations, footnote presented 37k as "the benchmark" | footnote now gives both and says why they differ |
+| 2 | 2.9 h vs 2.7 h | real: `model.tex` missed by the 09-27 fix (recomputed: 2.93 h, R$420, 38.3%) | 2.9 |
+| 3 | "group 10 ... cannot" be scheduled | real: Fig 3 note, intro, Sec 6.2, Table C.3 note, a code comment in `12` | rewritten as "less often chosen in advance"; not a placebo |
+| 4 | Fig C.2 "2010–2024" | real: code uses 2014–2024 | note |
+| 5 | capacity "precise" (App A) vs "none significant" (Sec 6.4) | real, and the body was the wrong one: beds and scale are collinear; each alone is significant under muni×date FE (D.9 col 5; D.10 cols 1, 4, 5) | intro, Sec 6.4, P3, family-E sentence |
+| 6 | Robson 1: −1.3 of −6.0 is uncoded | real: missingness inside G1 is 11.2% weekday vs 9.8% weekend (the D.19 balance is sector-level) | body, D.14 note, D.19 note (computed in `10`) |
+| 7 | −20pp low-education dip | **code bug**: cells split by education, no education main effect; the level gap leaked into the weekend terms | `04` and `10` family B: add `educ_hi`; dips −11.2 / −7.2; family B estimate 0.1356 → 0.0401 (p still <0.001) |
+| 8 | Elejalde 8.6 vs 4.6 | paper right: JHE 2021 (v.75) abstract says 8.6pp; 4.6/8.7 are the 2019 IZA DP | skill map corrected |
+| 9 | Robson 5 goes the other way | real: 95.3% vs 79.9% weekday rate (ceiling) | Sec 6.2 and intro name it; printout added to `12` (not re-run; same numbers computed ad hoc) |
+| 10 | sample flow implies 78% | real: the cesarean row (all years) was indented under the 2014+ Robson row, introduced by the 09-27 fix | rows un-nested, 2012+ row added (12,823,213) |
+| 11 | D.16 ≠ Table 1 | real: D.16 rebuilt its own cells from event files | D.16 cols 3–4 now ARE Table 1 (0.0488 / −0.0141, N 5,198); base cols on the same sample: 0.0366* / −0.0176**; title no longer says "null" |
+| 12 | Table 5 N | real: maternal race is missing on the same 2010–11 schedule as gestational age (3% / 58% recorded) | note (computed in `05`) |
+| 13 | court order as evidence | real | intro and P1 no longer use it; App E no longer claims a fee series |
+| 14 | "did not move" vs Melo −1.6pp; "municipal trend seven years" | real | third contribution rewritten |
+| 15 | composition check | real | Sec 4.4: a weaker fourth check, cannot bound selection |
+| 16 | clean-sample cross-ref | real | D.2 |
+| 17 | D.9 2015 vs D.10 2016 | real: lag makes 2015 unlinkable | D.9 note 2016–2024 |
+| 18 | holidays | real: four DATES, three holidays; Carnival and Corpus Christi are federal optional days, Good Friday a municipal religious holiday (Law 9,093/1995) | App B, D.8 note, Sec 6.3, `00_utils.R` comment |
+| 19 | rounding and "aggregate" | real | 81% for-profit in abstract, intro and highlights; TISS 82–86% by year; "at for-profit establishments" |
+
+Re-run: `04_heterogeneity.R` in full; `10_supplement.R` blocks B, D, F and K.
+Tables changed: tab10_heterogeneity, tab_multiple_testing (family B row 2),
+tab_ref_c3, tab_ref_c6, tab_ref_c12_sampleflow, tab_ref_c12_missingness; text-only
+edits applied to both the R source and the generated .tex of tab08, tab09,
+tab_org_capacity and tab_displacement_robust. Build: paper 40 pp, supplement 32,
+WP 70, 0 undefined; the supplement's pre-existing overfull vbox is now 58pt (was 46).
+
+Why the earlier audits missed them: see the "classes that survived" section added
+to the `manuscript-audit` and `code-audit` skills the same day. In short: fixes
+applied to the body but not to every carrier (model appendix, figure notes, table
+notes, code comments); a pending-rewrite list (09-27, "pp. 24 and 35") closed only
+in part; exhibits that claim to reproduce each other never diffed; stated sample
+windows never compared with the estimation sample; nested accounting rows never
+tested as subsets; an implausible implied magnitude (−20pp against a −7.9pp mean)
+never compared with the raw contrast; figures never read group by group against
+the claim they support; and CLAUDE.md itself carrying stale numbers (39,135;
+"scale only with date FE") that steered the audit.
+
+## 2026-09-28 (second referee round) — price of time, balance, identifying sample
+
+Referee points 1, 3, 4 and 6 (point 5's non-obstetric surgery placebo deferred by
+Fredie). Approved by Fredie: new abstract, introduction and highlights; title kept.
+
+- **Fees per hour** (`16_design_checks.R` block A, new Table D.19
+  `tab_fee_per_hour`): cesarean R$1,939 per procedure; labor hour R$420; a vaginal
+  delivery pays less per hour than a one-hour cesarean beyond 1.25 h (1.22–1.62 in
+  the five largest states; 2.5 h if the cesarean takes two). Section 5 rewritten:
+  per delivery vs per hour, calibration first, regressions "consistent but less
+  precise", measurement-error attenuation stated, sign flip demoted.
+- **Balance** (block B, `tab_balance`): 10 predetermined characteristics plus
+  newborn sex on the left of Eq. (3), in SD units. All |b| <= 0.040 SD (multiple
+  pregnancy); previous cesarean −0.022, first birth +0.023, i.e. the direction
+  scheduling predicts; male newborn +0.0055 SD (0.3 pp), significant only through
+  5M cells. Cesarean benchmark −0.036 SD. Sentence in Section 4.4.
+- **Identifying sample** (block C, `tab_ident_sample`): 461 of 733 municipalities
+  with a for-profit birth; 74.1% of for-profit and 56.4% of public births; own
+  gradients there −7.1 / −5.3 vs −7.9 / −6.7 on all days; Eq. (3) on those days
+  reproduces Table 2 col 1 exactly (asserted). Paragraph in Section 4.3; the
+  supplement's "339 municipalities" sentence now says it is the ≥50-birth
+  establishment panel.
+- **SINASC rebuild** (`build/01e`): SEXO, CONSULTAS, CONSPRENAT, MESPRENAT added;
+  42,006,849 rows, the 32 existing columns and `sinasc_daily_muni` byte-identical
+  to the backup in `build/SINASC/input/_backup_2026-09-28`.
+- **Full read of paper.tex and sup_appendix.tex** after the reframing: 17 sentences
+  aligned (ownership-specific → common to both sectors with a for-profit increment;
+  "lumpier/lumpiest flow" → "no smoother flow", per the guardrail; conclusion,
+  roadmap, strategy subsection title "relative-fee channel", business hours equal
+  across sectors 50.1/50.9, billed amounts "per delivery", "movable holidays").
+- Build: paper 41 pp, supplement 35, WP 74, 0 undefined; abstract 249 words.

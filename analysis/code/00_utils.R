@@ -309,8 +309,10 @@ resize_tabular <- function(tx, resize = TRUE, fontsize = "\\small", tabcolsep = 
 
 # ---------------------------------------------------------------------------
 # NATIONAL HOLIDAY CALENDAR, one definition for every script.
-# Eight fixed-date national holidays, four Easter-based ones (Carnival Monday and
-# Tuesday, Good Friday, Corpus Christi), and 20 November (Consciencia Negra),
+# Eight fixed-date national holidays, four Easter-based DATES for three movable
+# holidays (Carnival Monday and Tuesday, Good Friday, Corpus Christi; Carnival and
+# Corpus Christi are federal optional rest days and Good Friday a religious holiday
+# under municipal law, not national holidays under federal law), and 20 November (Consciencia Negra),
 # a national holiday from 2024 (Law 14,759 of 2023). Each script used to carry its
 # own copy, and none had 20 November 2024. 08_long_weekends.R keeps its own
 # named table because it classifies holidays one by one; it excludes that date.

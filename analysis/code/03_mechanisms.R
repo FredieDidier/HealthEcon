@@ -249,8 +249,10 @@ etable(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, m_r10,
          "prelabor (cesarean performed before labor began) and in-labor components;",
          "a cesarean with a missing timing code counts in neither.",
          "Columns 5--6 use 2014--2024, the years with the Robson classification.",
-         "Columns 5--6 contrast schedulable low-risk births (Robson groups 1--2)",
-         "with preterm births (Robson group 10), which cannot be freely scheduled.",
+         "Columns 5--6 contrast low-risk births (Robson groups 1--2) with preterm births",
+         "(Robson group 10), whose delivery date is less often chosen in advance; preterm",
+         "delivery is not synonymous with unschedulable delivery, so this is a comparison,",
+         "not a placebo.",
          "Standard errors, two-way clustered by municipality and date, are reported",
          "in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 4, resize = TRUE)

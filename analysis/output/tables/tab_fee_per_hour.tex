@@ -1,0 +1,42 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{Physician fees per delivery and per hour of physician time}}
+\label{tab:fee_per_hour}
+\small\setlength{\tabcolsep}{5pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+ & Brazil & SP & MG & RJ & PR & SC \\
+\midrule
+\multicolumn{7}{l}{\emph{Panel A. Fees per delivery (R\$)}} \\
+\addlinespace[2pt]
+Cesarean fee & 1,939 & 1,894 & 1,928 & 2,244 & 1,690 & 1,878 \\
+Economic vaginal fee & 2,417 & 2,399 & 3,133 & 2,845 & 2,060 & 2,319 \\
+\midrule
+\multicolumn{7}{l}{\emph{Panel B. Labor assistance}} \\
+\addlinespace[2pt]
+Vaginal deliveries billing labor assistance (\%) & 38.3 & 18.4 & 70.4 & 21.8 & 64.4 & 64.3 \\
+Billed hours, when billed & 2.9 & 2.7 & 3.3 & 2.4 & 3.0 & 3.2 \\
+Fee per billed labor hour (R\$) & 420 & 405 & 496 & 480 & 315 & 429 \\
+\midrule
+\multicolumn{7}{l}{\emph{Panel C. Break-even physician time of a vaginal delivery (hours)}} \\
+\addlinespace[2pt]
+If a cesarean takes one hour & 1.25 & 1.27 & 1.62 & 1.27 & 1.22 & 1.23 \\
+If a cesarean takes two hours & 2.49 & 2.53 & 3.25 & 2.54 & 2.44 & 2.47 \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} TISS private-insurance deliveries, 2015--2024; the five largest
+states by deliveries, as in Section~\ref{sec:notprice}. Fees are means over the
+deliveries that bill them. The economic vaginal fee adds the separately billed
+hourly labor-assistance fee to the vaginal delivery fee. The fee per billed labor
+hour is the mean, over the deliveries that bill labor assistance, of that fee
+divided by its billed hours. Panel C reports the physician time of a vaginal
+delivery at which the economic vaginal fee per hour equals the cesarean fee per
+hour: the economic vaginal fee divided by the cesarean fee, times the hours of a
+cesarean. A vaginal delivery that occupies the physician for longer pays less
+per hour than a cesarean. Physician time is not observed; billed hours are a
+floor on it, since most vaginal deliveries bill none, so the comparison is
+tilted in favor of the vaginal delivery.
+\end{minipage}
+\end{table}

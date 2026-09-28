@@ -7,6 +7,24 @@
 > runs (p 0.32); demand-smoothing weeks include zeros. Headline: −1.8pp weekend /
 > −2.5pp holiday. Full record: `parto_cesareo/REVISION_LOG.md`. Where this file
 > and the generated tables disagree, the tables win.
+>
+> **2026-09-28 — external consistency check (19 items).** 18 confirmed and fixed,
+> one (Elejalde 8.6pp) was right in the paper and wrong in a skill. Code: the
+> education heterogeneity model had no education main effect (low-education dip
+> −20.0 → −11.2pp); D.16 now reproduces Table 1 exactly; sample-flow rows
+> un-nested; notes on years (Fig C.2 2014+, D.9 2016+, Table 5 race 2011+).
+> Text: preterm/group-5 framing, capacity collinearity, court order and policy
+> record, composition check, 35k/37k footnote. See REVISION_LOG.
+>
+> **2026-09-28 (referee round 2) — price of time.** The fee argument is now
+> per-delivery vs per-hour: a cesarean pays less per delivery but more per hour
+> once a vaginal delivery takes >~1.25 h (Table `tab_fee_per_hour`). Calibration
+> leads; our regressions are "consistent but less precise"; the sign flip is no
+> longer an argument. Scheduling is common to both sectors, the for-profit
+> differential an increment. New `16_design_checks.R`: fee per hour, balance of
+> predetermined characteristics + newborn sex in Eq. (3), identifying sample (461
+> munis, 74% FP / 56% public births). SINASC rebuilt with SEXO, CONSULTAS,
+> CONSPRENAT, MESPRENAT (old 32 columns byte-identical).
 
 
 ## What the paper is
@@ -47,8 +65,10 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
 - **fee regressions** = conditional associations, sign-unstable, and NOT an
   equivalence result (fixed 2026-09-05; see "The 2026-09-05 revision" in `parto_cesareo/REVISION_LOG.md`). The
   intervals do not fit inside the pre-registered negligible region, so never say
-  "there is no relationship" or "fees don't matter." Say: the sign is unstable
-  across fixed-effect schemes, and the canonical magnitude
+  "there is no relationship" or "fees don't matter." Since 2026-09-28 the
+  regressions only "fail to contradict" the calibration; do not lead with the sign
+  flip, and never oppose "price" to "scheduling": time is the price the fee
+  schedule omits (per delivery the cesarean pays less, per hour more). The canonical magnitude
   (\citet{grant2009}, ~1pp per US$1,000 = ~0.73pp per log point at our fee levels;
   \citet{gruber1999physician} four times that) is too small to matter at this
   scale, predicting at most ~0.36pp and ~1.4pp against a 36pp gap. The RAW FACT leads, the regression follows.
@@ -71,13 +91,23 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   null honestly; it bounds the "whose convenience" claim.
 - **organizational-capacity heterogeneity** = "organizational redundancy
   attenuates the gradient," NOT "individual physician's calendar vs hospital."
+  Beds and delivery scale are collinear: together (Table D.9 col 2, family E)
+  neither is significant; each WITHOUT the other is (scale 1.3–1.4pp*** in D.9
+  col 5 and D.10 cols 1, 5; beds 0.80** in D.10 col 4). Never write "neither is
+  distinguishable from zero" without "entered together", and never "only across
+  municipalities".
 - **Robson-group profile + term/preterm + maternal-age splits** (2026-07-22) =
   *corroboration, NOT a placebo*. Robson group and gestational age at birth are
   partly determined by the same decisions under study, so these are heuristic
   falsifications. Say "the excess for-profit gradient is concentrated where the
-  delivery date can be chosen in advance"; never "preterm births are a clean
-  control." Preterm ≠ unschedulable (preeclampsia, IUGR, elective late-preterm
-  are all booked). The maternal-age split is exploratory and NOT in the
+  choice between labor and surgery is still open" (groups 1–4); never "preterm
+  births are a clean control", never "group 10 cannot be scheduled / whose date is
+  not / cannot be freely scheduled" (figure notes and table notes included).
+  Preterm ≠ unschedulable (preeclampsia, IUGR, elective late-preterm are all
+  booked). Group 5 (previous cesarean, 28.6% of for-profit births) goes the OTHER
+  way (for-profit −3.3 vs public −5.8) because it sits at the ceiling (95.3% vs
+  79.9% on weekdays); the text must name it, not list it among the bookable groups
+  that carry the excess. The maternal-age split is exploratory and NOT in the
   pre-specified families A–E; always pair it with the ceiling caveat (a pp
   differential compresses mechanically as the base rate approaches 1).
 - **Kitagawa decomposition** = accounting; 73% practice style.
@@ -163,8 +193,11 @@ reintroduce `else → Public`.
    moving across establishments (any-birth −8.7pp, prelabor count −34 lp,
    vaginal −6 lp). Never write the 1.8 as a within-hospital change of practice.
 5. **The dip lives in prelabor cesareans** — −8.9pp prelabor vs +1.9pp in-labor
-   (2012+); Robson 1–2 −7.0pp, Robson 1 −6.0pp (2014+; Robson 1 has no prelabor
-   component, the rest of its dip is cesareans without a timing code).
+   (2012+); Robson 1–2 −7.0pp, Robson 1 −6.0pp (2014+; of the −6.0, −4.7 is coded
+   in-labor and −1.3 is cesareans without a timing code, which DATASUS leaves in
+   group 1 by default and which are MORE often uncoded on weekdays, 11.2% vs 9.8%;
+   so only the −4.7 is intrapartum by construction, and D.19's balance holds for
+   the sector split, not inside group 1).
 6. **The cost** — +12.2pp early-term with maternal controls; 73% practice style
    (Kitagawa, 36.2pp gap); ~35k excess weekday cesareans/yr (9.3% of ~380k)
    against the own-municipality-year weekend benchmark; billed amounts near parity
@@ -192,7 +225,9 @@ reintroduce `else → Public`.
 | Eq (3), mother <35 vs 35+ | −2.5pp vs +1.7pp*; within Robson 1–2, −4.8 vs −1.4 |
 | Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70); family D Holm 0.202 |
 | Pre-holiday prelabor bunching (bridge) | −0.47/day (deficit, not bunching); window −1.24 |
-| Org capacity, muni×date FE (prelabor) | beds +0.58 (0.38), scale +0.64 (0.41), n.s.; scale +1.49*** only with date FE |
+| Org capacity, muni×date FE (prelabor) | together: beds +0.58 (0.38), scale +0.64 (0.41), n.s.; scale alone/with non-bed measures +1.30 to +1.43***; beds alone +0.80**; scale with date FE +1.49*** |
+| Education heterogeneity (D.12, with education main effect) | weekend dip −11.2pp (<8 yrs) / −7.2pp (8+); weekday rates 67% / 85% |
+| Fee gap with the base vaginal fee (D.16, Table 1 sample) | +0.0366* UF / −0.0176** muni; econ columns = Table 1 exactly |
 | Zero-obstetrician maternities (CNES-PF, ≥50 births) | 14% for-profit / 26% public (median 3/2) |
 | Weekend × SUS share of obstetric beds | +2.58pp**; holiday +2.85pp*** |
 | Weekend × log contracted obstetrician hours | −0.16pp (0.17); scale +1.31pp*** in that column |
@@ -372,8 +407,10 @@ sections above are not repeated here.
 - In `14_estab_practice_style.R`, Panel B's outcome is the Robson-STANDARDIZED rate.
   Regressing the observed rate on the ten Robson shares is an upper bound on case-mix
   and belongs in the note, never as a row. [2026-09-07]
-- The excess-weekday count uses the own-municipality-year benchmark (39,135/yr), the
-  one the text describes. Do not swap in the national sector-year benchmark. [2026-09-05]
+- The excess-weekday count uses the own-municipality-year benchmark (35,330/yr since
+  the 2026-09-27 re-run; 39,135 before), the one the text describes. The footnote's
+  37k is the 7.9pp regression gradient x 463k and must be presented as a second,
+  similar number, not as the benchmark itself. Do not swap in the national sector-year benchmark. [2026-09-05]
 - The state fee gap is `log(mean fee_cesarean / mean fee_vaginal_econ)` within the
   state, never the delivery-weighted mean of municipality log gaps (Jensen-biased
   toward zero). [2026-09-07 audit]
@@ -438,6 +475,25 @@ sections above are not repeated here.
   the 2015 court order (none is plotted) or a six-hour cap on labor assistance (the
   data do not show one). "Costs" is out of the abstract only (billed amounts are near
   parity); the intro keeps it, cited. [2026-09-09]
+
+**Added 2026-09-28 (external consistency check)**
+- Any model whose cells are split by a subgroup (education, age band) must include
+  the subgroup's level (main effect or muni×group FE) next to its weekend
+  interaction; `04` and the family-B copy in `10` must stay identical.
+- An exhibit described as reproducing another ("columns 3–4 reproduce Table 1")
+  is built from the same sample object and must match to the last digit and N.
+- The 2015 court order is never evidence ("changed nothing", "produced no
+  movement"); it never became a rule. The policy record is: Melo & Menezes-Filho
+  −1.6pp for the national package; Parto Adequado a hospital-level pre-trend. Never
+  "the cesarean rate did not move", never "municipal trend seven years earlier".
+- The weekend-newborn composition check is mechanical under scheduling; it cannot
+  bound selection and may not be listed as one of the design's defenses.
+- Holidays: eight fixed-date national + 20 Nov from 2024 + three Easter-based
+  movable holidays on four dates (Carnival Mon/Tue, Good Friday, Corpus Christi),
+  which are not national holidays under federal law. The long-weekend design uses
+  the eight fixed-date holidays only.
+- Level numbers print at one rounding everywhere: for-profit 81%, private
+  insurance 84% (82–86% by year).
 
 **Settled; do not "fix" or re-audit**
 - "twenty-two states" (Panel B) and "twenty-seven clusters" (Panel A) are both right:

@@ -113,6 +113,11 @@ m_ap2 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year"))
 # fixed-effects / Observations rows.
 HEALTH <- list(m_et0, m_et1, m_lb1, m_ap1, m_lb2, m_ap2)
 ga_cov <- b[, .(p = 100 * mean(!is.na(semana_gestacao))), by = year][, setNames(p, year)]
+# Maternal race arrives with the same 2011 form change as gestational age, so the
+# columns with maternal controls lose 2010-2011 through race even without a
+# gestational-age restriction; the note has to say so (columns 3-4 looked
+# unrestricted until 2026-09-28).
+race_cov <- b[, .(p = 100 * mean(!is.na(raca_cor_mae))), by = year][, setNames(p, year)]
 tex <- c(
   "\\begin{table}[H]", "\\centering",
   "\\caption{\\textbf{For-profit--public differences in early-term birth and newborn outcomes}}",
@@ -139,7 +144,11 @@ tex <- c(
           ga_cov[["2010"]], ga_cov[["2011"]]),
   sprintf("births, and at least %.0f percent in every year from 2012. Maternal controls:",
           floor(min(ga_cov[as.character(2012:2024)]))),
-  "age, age$^2$, education, race. Mothers differ across sectors, so the",
+  "age, age$^2$, education, race. Maternal race is recorded on the same schedule",
+  sprintf("(%.0f percent of 2010 births, %.0f percent of 2011 births), so columns 2--6, which",
+          race_cov[["2010"]], race_cov[["2011"]]),
+  "include it, also drop nearly all 2010 births and a large part of 2011 births.",
+  "Mothers differ across sectors, so the",
   "early-term coefficient is an associational difference between establishment",
   "sectors and is not interpreted as the causal effect of prelabor scheduling.",
   "Columns 5--6 restrict to Robson groups 1--2 (nulliparous, term, singleton,",

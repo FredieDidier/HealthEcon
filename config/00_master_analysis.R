@@ -21,6 +21,8 @@
 #   14_estab_practice_style.R → Establishment-level practice-style dispersion.
 #   13_demand_smoothing.R   →  The de Elejalde-Giolito demand-smoothing channel (null).
 #   15_estab_gradient.R     →  Equation (3) at the establishment; early-term share in Eq. (3).
+#   16_design_checks.R      →  Fees per hour of physician time; balance of predetermined
+#                              characteristics in Eq. (3); the identifying sample.
 #   10_supplement.R         →  Supplemental Appendix exhibits + multiple testing.
 #   12_subgroups.R          →  Robson / gestational-age / maternal-age subgroups.
 #   11_body_figures.R       →  Merged multi-panel body figures (needs 08 + 12).
@@ -55,6 +57,7 @@ source(here("analysis", "code", "09_org_capacity.R"))       # organizational-cap
 source(here("analysis", "code", "14_estab_practice_style.R"))  # establishment-level practice-style dispersion
 source(here("analysis", "code", "13_demand_smoothing.R"))   # demand-smoothing channel (family F)
 source(here("analysis", "code", "15_estab_gradient.R"))     # Eq. (3) within the establishment; early-term in Eq. (3)
+source(here("analysis", "code", "16_design_checks.R"))      # fees per hour; Eq. (3) balance; identifying sample
 source(here("analysis", "code", "10_supplement.R"))         # supplemental exhibits + multiple testing
 source(here("analysis", "code", "12_subgroups.R"))          # Robson / gestational-age / maternal-age subgroups
 source(here("analysis", "code", "11_body_figures.R"))       # merged body figures (needs 12)

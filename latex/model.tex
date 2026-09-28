@@ -25,7 +25,7 @@ the largest states.
 
 \paragraph{Time.} A cesarean takes a fixed block $\tau_c$ ($\approx$1 hour) at
 the chosen time $t$. A vaginal delivery requires attending labor for a random
-duration $\tau_v$ (billed mean $\approx$2.7 hours, with $E[\tau_v] > \tau_c$) at
+duration $\tau_v$ (billed mean $\approx$2.9 hours, with $E[\tau_v] > \tau_c$) at
 the random time $\tilde{t}$. The opportunity cost of physician time is
 \[
 w(t) \;=\;
@@ -77,7 +77,9 @@ in a low-density region of the clinical-benefit distribution ($f(\theta^{*})\app
 0$). The empirical fee regressions assess this local responsiveness over the
 observed support.
 \hfill [\emph{Tested:} fee-gap regressions and fee-swing falsification, Table
-\ref{tab:fees}; even a court order to triple vaginal pay changed nothing.]
+\ref{tab:fees}, and the fees per hour of physician time that price $\Pi$,
+\satab{tab:fee_per_hour}. The 2015 court order is not a test: no rule was ever
+issued.]
 \item[\textbf{P2.}] \emph{The scheduling fingerprint.} Prelabor cesareans bunch
 at $\arg\min_t w(t)$ (weekday business hours) and fall on weekends and
 holidays; in-labor cesareans inherit $\tilde{t}$'s uniform timing and weakly
@@ -90,9 +92,11 @@ Figure \ref{fig:calendar} and Tables \ref{tab:main_gradient} and
 capacity is scarce (fewer substitutes to cover on-call time), so weekend dips are
 larger there. \hfill [\emph{Tested:} organizational-capacity interactions
 (Section~\ref{sec:capacity}) and municipality obstetrician density
-(\satab{tab:heterogeneity}). Supported for obstetrician density, only weakly for
-establishment capacity, where the delivery-scale interaction is the one estimated
-precisely and contracted obstetrician hours give a precise zero.]
+(\satab{tab:heterogeneity}). Supported for obstetrician density. For
+establishment capacity the gradient is flatter at larger services, but bed count
+and delivery volume are too collinear to separate: neither is significant beside
+the other, each is significant without it, and contracted obstetrician hours give
+a precise zero.]
 \item[\textbf{P4.}] \emph{The early-term cost.} Guaranteeing $t < \tilde{t}$
 requires booking before the week-39 hazard spike, shifting prelabor cesareans
 earlier than spontaneous labor would deliver and producing excess early-term
