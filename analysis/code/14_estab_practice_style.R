@@ -75,13 +75,15 @@ ESTAB_PANEL <- file.path(CNES, "cnes_estab_year.parquet")
 # multiplicity, presentation and preterm status are Robson's own inputs, so
 # adding them would double-count the composition block rather than test it.
 # =============================================================================
-if (!file.exists(CELL_CACHE)) {
+if (!cache_fresh(CELL_CACHE, file.path(SIN, "sinasc_births.parquet"))) {
   message("building ", basename(CELL_CACHE), " from sinasc_births.parquet ...")
   cells <- open_dataset(file.path(SIN, "sinasc_births.parquet")) %>%
     filter(year >= YEAR_MIN, year <= YEAR_MAX,
            sector %in% c("Private", "Nonprofit", "Public"),
            tipo_robson %in% ROBSON) %>%
-    mutate(ces      = if_else(cesarean == 1L, 1L, 0L),
+    # mother's age 99 means ignored: treat it as missing, like NA
+    mutate(idade_mae = if_else(idade_mae >= 10L & idade_mae <= 60L, idade_mae, NA_integer_),
+           ces      = if_else(cesarean == 1L, 1L, 0L),
            i_teen   = if_else(!is.na(idade_mae) & idade_mae < 20L, 1L, 0L),
            i_age35  = if_else(!is.na(idade_mae) & idade_mae >= 35L, 1L, 0L),
            i_loweduc = if_else(!is.na(escolaridade_mae) & escolaridade_mae <= 3L, 1L, 0L),

@@ -1,33 +1,15 @@
 # =============================================================================
-# 01b_sinasc_cnes.R
-# One-time download / ingestion of the SINASC and CNES data:
+# 01b_cnes.R
+# One-time download of the CNES data, and the sector rule for the births:
 #   * CNES hospital beds (establishment level, carries natureza jurídica —
 #     the private/nonprofit/public sector classifier) ... datazoom.saude
 #   * CNES-PF obstetrician counts (CBO occupation file) .. microdatasus
-#   * SINASC all-births micro-data 2010-2024 ............ Base dos Dados (manual)
+#   * the sector of each birth by establishment and year, assign_sector_year(),
+#     used by build/01e_sinasc_datasus.R, which downloads and assembles SINASC
 #
 # Outputs (Dropbox):
 #   build/CNES/input/cnes_beds_muni_year.parquet
 #   build/CNES/input/cnes_obstetricians_muni_year.parquet
-#   build/SINASC/input/sinasc_births.parquet      (one row per birth)
-#   build/SINASC/input/sinasc_daily_muni.parquet  (muni × date × sector)
-#
-# --- SINASC download (manual, run once, via Base dos Dados / BigQuery) -------
-# microdatasus/datazoom proved unreliable for SINASC (datazoom truncates the
-# establishment CNES). Pull a TARGETED column set (not SELECT *):
-#
-#   library(basedosdados); set_billing_id("<your-gcp-project>")
-#   query <- "SELECT ano, sigla_uf, id_municipio_nascimento, data_nascimento,
-#     hora_nascimento, codigo_estabelecimento, local_nascimento, tipo_parto,
-#     tipo_robson, semana_gestacao, gestacao_agr, tipo_gravidez, tipo_apresentacao,
-#     inducao_parto, cesarea_antes_parto, idade_mae, escolaridade_mae,
-#     raca_cor_mae, paridade, quantidade_parto_cesareo, quantidade_parto_normal,
-#     gestacoes_ant, peso, apgar5
-#     FROM basedosdados.br_ms_sinasc.microdados WHERE ano BETWEEN 2010 AND 2024"
-#   download(query, path = file.path(DROPBOX_ROOT,
-#            "build/SINASC/input/sinasc_births.csv"))
-#   # dataset: https://basedosdados.org/dataset/48ccef51-8207-40ee-af5b-134c8ac3fb8c
-# then run ingest_sinasc() below (aggregates + deletes the raw CSV).
 #
 # --- SECTOR of the birth establishment ---------------------------------------
 # From its natureza jurídica (nat_jur, CNES beds): 2xxx (empresarial) →
@@ -36,8 +18,7 @@
 # "Public". `private` = 1 iff sector == "Private". Do NOT lump 3xxx into private
 # — it is SUS-heavy and inflates the private share to ~56%.
 #
-# MEMORY: sources pulled one UF/year at a time and aggregated immediately; the
-# SINASC CSV is read with a column subset and deleted after the parquets exist.
+# MEMORY: sources pulled one UF/year at a time and aggregated immediately.
 #
 # PATHS: DROPBOX_ROOT from config/config.R.
 # =============================================================================
@@ -55,7 +36,6 @@ SINASC_INPUT <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 dir.create(CNES_INPUT,   recursive = TRUE, showWarnings = FALSE)
 dir.create(SINASC_INPUT, recursive = TRUE, showWarnings = FALSE)
 
-SINASC_CSV <- file.path(SINASC_INPUT, "sinasc_births.csv")
 BIRTHS_OUT <- file.path(SINASC_INPUT, "sinasc_births.parquet")
 DAILY_OUT  <- file.path(SINASC_INPUT, "sinasc_daily_muni.parquet")
 
@@ -143,7 +123,7 @@ download_cnes_obstetricians <- function(years = 2015:2024, ufs = UF_LIST) {
 # Each of the three sectors is built as an EXPLICIT establishment set (an estab
 # that has appeared under a given first digit in any competência). A SINASC
 # birth whose establishment matches none of them (unmatched, or a 4xxx/5xxx
-# establishment) is labeled "Other" in ingest_sinasc(), NOT Public — the former
+# establishment) is labeled "Other", NOT Public — the former
 # code sent every unmatched establishment to Public, contaminating it.
 .cnes_sector_sets <- function() {
   beds <- data.table::as.data.table(
@@ -208,6 +188,7 @@ reassign_sector_births <- function() {
                   format(sum(old != dt$sector), big.mark = ","),
                   format(nrow(dt), big.mark = ","), 100 * mean(old != dt$sector)))
   print(data.table::data.table(old = old, new = dt$sector)[, .N, by = .(old, new)][order(old, -N)])
+  data.table::setindex(dt, NULL)             # see 01e: an index in the footer breaks the file
   arrow::write_parquet(dt, BIRTHS_OUT)
   daily <- dt[, .(births = .N, cesarean = sum(cesarean)), by = .(muni, date, sector)]
   arrow::write_parquet(daily, DAILY_OUT)
@@ -218,42 +199,11 @@ reassign_sector_births <- function() {
   invisible(dt)
 }
 
-ingest_sinasc <- function(delete_csv = TRUE) {
-  s <- .cnes_sector_sets()
-  dt <- data.table::fread(SINASC_CSV, showProgress = FALSE,
-    colClasses = list(character = c("tipo_parto", "codigo_estabelecimento",
-                                    "tipo_robson", "tipo_apresentacao")))
-
-  dt <- dt[tipo_parto %in% c("1", "2")]
-  dt[, `:=`(
-    estab    = formatC(as.integer(codigo_estabelecimento), width = 7, flag = "0"),
-    date     = as.IDate(data_nascimento),
-    cesarean = as.integer(tipo_parto == "2"),
-    muni     = formatC(as.integer(substr(as.character(id_municipio_nascimento), 1, 6)),
-                       width = 6, flag = "0"))]
-  # Priority: for-profit (2xxx) > nonprofit (3xxx) > public (1xxx); an
-  # establishment matching none (unmatched / 4xxx-5xxx) is "Other", not Public.
-  dt[, `:=`(dow = data.table::wday(date), year = data.table::year(date))]
-  assign_sector_year(dt)                         # sector in the birth's own year
-
-  arrow::write_parquet(dt, BIRTHS_OUT)
-  message("saved sinasc_births.parquet — ", nrow(dt), " births, ", ncol(dt), " cols")
-
-  daily <- dt[, .(births = .N, cesarean = sum(cesarean)), by = .(muni, date, sector)]
-  arrow::write_parquet(daily, DAILY_OUT)
-  message("saved sinasc_daily_muni.parquet — ", nrow(daily), " muni-date-sector rows")
-
-  ok <- nrow(dt) > 1e6 && abs(sum(dt$cesarean) / nrow(dt) - 0.57) < 0.05
-  if (isTRUE(delete_csv) && ok) { file.remove(SINASC_CSV); message("deleted raw CSV") }
-  else if (!ok) warning("sanity check failed — CSV kept")
-  invisible(dt)
-}
 
 # -----------------------------------------------------------------------------
 # Run ONCE to populate Dropbox (already done):
 # -----------------------------------------------------------------------------
 # download_cnes_beds(years = 2015:2024)
 # download_cnes_obstetricians(years = 2015:2024)
-# ingest_sinasc()          # after the manual Base-dos-Dados download above
 # download_cnes_beds(2012:2014, out_file = "cnes_beds_2012_2014.parquet")
 # reassign_sector_births(): re-derive sector by establishment-year in place

@@ -7,23 +7,19 @@
 #       in-labor). Feeds fig_gestation_panels, merged by 11_body_figures.R and now
 #       shown in the Supplementary Appendix (Figure C.4), not the body.
 #       READ THE PANELS CORRECTLY. BOTH sectors peak at week 39; the for-profit
-#       distribution is shifted earlier, not massed at 37-38. For-profit puts 40.1
-#       percent of births at 37-38 against 26.2 percent for public, and 17.3
-#       percent at 40-41 against 32.5 percent. Panel (b) is a three-way ORDERING,
-#       not a prelabor-versus-rest split: at 37-38 weeks, prelabor cesarean 44.6
-#       percent, in-labor cesarean 39.6, vaginal 30.4, all three peaking at week
-#       39. In-labor sits much closer to prelabor than to vaginal, so do not group
-#       it with vaginal births. (The body sentence and the figure note said
-#       "for-profit births mass at 37-38" and "in-labor cesareans and vaginal
-#       births mass at 39-40" until 2026-09-07; both were wrong and are fixed.)
+#       distribution is shifted earlier, not massed at 37-38. Panel (b) is a
+#       three-way ORDERING, not a prelabor-versus-rest split: prelabor cesarean,
+#       in-labor cesarean, vaginal, all three peaking at week 39. In-labor sits
+#       much closer to prelabor than to vaginal, so do not group it with vaginal
+#       births. The shares quoted in the text are printed below.
 #   (b) Sector gaps in early-term birth, low birthweight, and low Apgar, with and
 #       without maternal controls (age, education, race) + muni+year FE.
 #       -> tab09_health (body, Table 5).
 #   (c) Billed cost per delivery, cesarean vs vaginal (TISS). -> tab12_cost
 #       (Supplement).
 #
-# LABELING. The early-term result is a SECTOR-gestational-age ASSOCIATION (+10.9pp
-# with maternal controls), not a causal effect of scheduling: mothers differ
+# LABELING. The early-term result is a SECTOR-gestational-age ASSOCIATION, not a
+# causal effect of scheduling: mothers differ
 # across sectors. We do NOT build new empirical programs on neonatal morbidity
 # (selection dominates; for-profit shows LOWER LBW/low-Apgar; power is inadequate).
 # =============================================================================
@@ -41,6 +37,8 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
                       "peso", "apgar5", "idade_mae", "escolaridade_mae", "raca_cor_mae",
                       "muni", "year")))
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
+# SINASC codes "ignored" as 99 (Apgar, age) and 9999 (weight); see 00_utils.R
+b[, `:=`(apgar5 = valid_apgar(apgar5), peso = valid_peso(peso), idade_mae = valid_idade(idade_mae))]
 
 # --- (a) gestational-age distribution by sector (-> Supplementary Appendix Fig C.4a) ---------------
 g <- b[semana_gestacao %between% c(32, 43)]
@@ -62,7 +60,8 @@ fig9a <- ggplot(ga, aes(week, 100 * share, colour = sector, linetype = sector)) 
 save_fig(fig9a, "fig09_gestation")
 
 # same distribution, for-profit only, by cesarean timing (the channel; -> Supplementary Appendix Fig C.4b)
-gp <- g[sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
+# the timing split uses 2012+, the years the timing indicator is recorded
+gp <- g[year >= 2012 & sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
 gp[, group := fcase(cesarean == 0, "Vaginal",
                     cesarea_antes_parto == 1, "Prelabor cesarean",
                     cesarea_antes_parto == 2, "In-labor cesarean")]
@@ -79,6 +78,12 @@ fig9b <- ggplot(gd, aes(week, 100 * share, colour = group, linetype = group)) +
   labs(x = "Gestational age at birth (weeks)", y = "Share of births (%)") +
   theme_paper()
 save_fig(fig9b, "fig09b_gestation_by_timing")
+cat("\n[05] Gestational-age shares quoted in the text (%):\n")
+print(dcast(ga[, .(sector, band = fcase(week %between% c(37, 38), "37-38",
+                                        week %between% c(40, 41), "40-41", default = "other"),
+                   share)][, .(share = round(100 * sum(share), 1)), by = .(sector, band)],
+            sector ~ band, value.var = "share"))
+print(gd[week %between% c(37, 38), .(share_37_38 = round(100 * sum(share), 1)), by = group])
 
 # --- (b) tab09_health (body Table 5): sector gaps in newborn-health margins ---
 b[, `:=`(
@@ -100,6 +105,7 @@ m_ap1 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year"))
 # header, coefficient rows in percentage points, then Maternal controls /
 # fixed-effects / Observations rows.
 HEALTH <- list(m_et0, m_et1, m_lb1, m_ap1)
+ga_cov <- b[, .(p = 100 * mean(!is.na(semana_gestacao))), by = year][, setNames(p, year)]
 tex <- c(
   "\\begin{table}[H]", "\\centering",
   "\\caption{\\textbf{For-profit--public differences in early-term birth and newborn outcomes}}",
@@ -120,7 +126,11 @@ tex <- c(
   "\\bottomrule", "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
   "\\textit{Notes:} Birth-level regressions, SINASC 2010--2024, for-profit vs",
-  "public establishments; coefficients in percentage points. Maternal controls:",
+  "public establishments; coefficients in percentage points. Columns 1--2 use the",
+  sprintf("births with a recorded gestational age: %.0f percent of 2010 births, %.0f percent of 2011",
+          ga_cov[["2010"]], ga_cov[["2011"]]),
+  sprintf("births, and at least %.0f percent in every year from 2012. Maternal controls:",
+          floor(min(ga_cov[as.character(2012:2024)]))),
   "age, age$^2$, education, race. Mothers differ across sectors, so the",
   "early-term coefficient is an associational difference between establishment",
   "sectors and is not interpreted as the causal effect of prelabor scheduling.",

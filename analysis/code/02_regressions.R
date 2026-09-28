@@ -78,9 +78,10 @@ p <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parque
 p <- p[!is.na(muni) & year <= 2024 & is.finite(fee_cesarean) & is.finite(fee_vaginal_econ)]
 
 # state-year fee gap and cesarean rate (delivery-weighted)
+# each fee mean weighted by the deliveries it averages (n_fee_ces / n_fee_vag)
 uf <- p[, .(csec = weighted.mean(csection_rate, n_deliveries, na.rm = TRUE),
-            fee_ces = weighted.mean(fee_cesarean, n_deliveries, na.rm = TRUE),
-            fee_vag = weighted.mean(fee_vaginal_econ, n_deliveries, na.rm = TRUE),
+            fee_ces = weighted.mean(fee_cesarean, n_fee_ces, na.rm = TRUE),
+            fee_vag = weighted.mean(fee_vaginal_econ, n_fee_vag, na.rm = TRUE),
             n = sum(n_deliveries)), by = .(uf, year)]
 uf[, fee_gap := log(fee_ces / fee_vag)]
 setorder(uf, uf, year)
@@ -92,24 +93,27 @@ uf <- uf[n > 2000]
 # The first-difference has only ~22 state clusters, so we cluster on the state and
 # report a wild-cluster (Webb) bootstrap p-value: with few clusters, analytic stars
 # overstate significance (referee C3).
-m_fd  <- feols(d_csec ~ d_fee_gap, uf[!is.na(d_fee_gap)], weights = ~n, cluster = ~uf)
+# boottest() refits the model from its data expression, so the sample must be an
+# object, not `uf[!is.na(d_fee_gap)]`: with the inline subset the refit failed,
+# the tryCatch returned NULL, and the table printed a typed fallback of 0.210.
+d_fd  <- uf[!is.na(d_fee_gap)]
+m_fd  <- feols(d_csec ~ d_fee_gap, d_fd, weights = ~n, cluster = ~uf)
 m_lvl <- feols(csec ~ fee_gap | uf + year, uf, weights = ~n, cluster = ~uf)
-n_state <- uniqueN(uf[!is.na(d_fee_gap), uf])
+n_state <- uniqueN(d_fd$uf)
 wild_p <- NA_real_; wild_p_lvl <- NA_real_
-if (requireNamespace("fwildclusterboot", quietly = TRUE)) {
+if (!requireNamespace("fwildclusterboot", quietly = TRUE))
+  stop("install fwildclusterboot: Table 1 reports the wild-cluster bootstrap p-values")
+{
   suppressMessages(library(fwildclusterboot)); set.seed(1)
   if (requireNamespace("dqrng", quietly = TRUE)) dqrng::dqset.seed(1)
-  bt <- tryCatch(boottest(m_fd, clustid = "uf", param = "d_fee_gap", B = 9999, type = "webb"),
-                 error = function(e) NULL)
-  if (!is.null(bt)) wild_p <- bt$p_val
+  bt <- boottest(m_fd, clustid = "uf", param = "d_fee_gap", B = 9999, type = "webb")
+  wild_p <- bt$p_val
   # boottest() cannot handle a weighted fixest model with a fixed-effects slot;
   # refit the identical levels model with the FE as formula dummies.
   m_lvl_dum <- feols(csec ~ fee_gap + factor(uf) + factor(year), uf,
                      weights = ~n, cluster = ~uf)
-  bt_lvl <- tryCatch(boottest(m_lvl_dum, clustid = "uf", param = "fee_gap",
-                              B = 9999, type = "webb"),
-                     error = function(e) NULL)
-  if (!is.null(bt_lvl)) wild_p_lvl <- bt_lvl$p_val
+  bt_lvl <- boottest(m_lvl_dum, clustid = "uf", param = "fee_gap", B = 9999, type = "webb")
+  wild_p_lvl <- bt_lvl$p_val
 }
 dict <- c(d_csec = "$\\Delta$ Cesarean rate", d_fee_gap = "$\\Delta$ Log fee gap",
           csec = "Cesarean rate", fee_gap = "Log fee gap", uf = "State", year = "Year")
@@ -162,7 +166,7 @@ tex <- c(tex,
   paste0(" & \\multicolumn{2}{c}{} & \\multicolumn{2}{c}{", lvc[2], "} \\\\"),
   "\\addlinespace[2pt]",
   paste0("Wild-cluster bootstrap $p$-value & \\multicolumn{2}{c}{",
-         ifelse(is.na(wild_p), "0.210", sprintf("%.3f", wild_p)),
+         sprintf("%.3f", wild_p),
          "} & \\multicolumn{2}{c}{",
          ifelse(is.na(wild_p_lvl), "", sprintf("%.3f", wild_p_lvl)), "} \\\\"),
   "\\midrule",
@@ -183,9 +187,36 @@ tex <- c(tex,
   "births; standard errors are clustered on the fixed-effect geography. Panel B",
   "aggregates to state-years with more than 2,000 private deliveries and asks whether",
   "year-to-year swings in the state fee gap move the cesarean rate; the levels column",
-  "adds state and year fixed effects. Because there are only twenty-two state clusters,",
+  sprintf("adds state and year fixed effects. Because there are only %s state clusters,",
+          c("zero","one","two","three","four","five","six","seven","eight","nine","ten",
+            "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen",
+            "eighteen","nineteen","twenty","twenty-one","twenty-two","twenty-three",
+            "twenty-four","twenty-five","twenty-six","twenty-seven")[n_state + 1]),
   "inference in both columns is complemented by a 9,999-draw Webb-weight wild-cluster",
   "bootstrap. Standard errors, clustered by state, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_fees.tex"))
 message("tab_fees.tex written")
+
+# =============================================================================
+# FACTS QUOTED IN SECTION 5 (printed, not tabulated): the hours of labor
+# assistance billed with a vaginal delivery and the price of an hour; the
+# economic fee gap of the largest states; the largest year-to-year swing in a
+# state fee gap. Computed here so the text never carries a typed number.
+# =============================================================================
+ev <- rbindlist(lapply(2015:2024, function(y)
+  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
+    col_select = c("type", "uf", "year", "fee_delivery", "fee_assist", "assist_hours",
+                   "fee_vaginal_econ")))))
+va <- ev[type == "vaginal" & is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
+cat(sprintf("\n[02] vaginal deliveries billing labor assistance: %.1f%%; mean hours %.2f; mean R$ per hour %.0f (total assist fee / total hours %.0f)\n",
+            100 * nrow(va) / ev[type == "vaginal", .N], mean(va$assist_hours),
+            mean(va$fee_assist / va$assist_hours), sum(va$fee_assist) / sum(va$assist_hours)))
+big <- ev[, .N, by = uf][order(-N)][1:5, uf]
+sg <- ev[uf %in% big, .(fee_ces = mean(fee_delivery[type == "cesarean"], na.rm = TRUE),
+                       fee_vag = mean(fee_vaginal_econ, na.rm = TRUE),
+                       csec = mean(type == "cesarean"), n = .N), by = uf]
+sg[, `:=`(log_gap = log(fee_ces / fee_vag), pct = 100 * (fee_ces / fee_vag - 1))]
+cat("[02] economic fee gap, five largest states, 2015-2024:\n"); print(sg[order(-n)])
+cat(sprintf("[02] largest absolute year-to-year change in a state log fee gap: %.2f\n",
+            max(abs(uf$d_fee_gap), na.rm = TRUE)))

@@ -5,32 +5,32 @@
 \footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccccc}
       \toprule
- & (1)                                & (2)                        & (3)                      & (4)                  & (5)\\  
+ & (1)                                   & (2)                        & (3)                      & (4)                  & (5)\\  
 \addlinespace[2pt]
  & \multicolumn{3}{c}{Cesarean rate} & \multicolumn{2}{c}{Newborn outcome}\\
       \cmidrule(lr){2-4}\cmidrule(lr){5-6}
-                                    & Cesarean rate, time-varying sector & Cesarean rate, Sunday only & Cesarean rate, rest days & Low Apgar (5-minute) & Low birthweight \\   
+                                    & Cesarean rate, for-profit in any year & Cesarean rate, Sunday only & Cesarean rate, rest days & Low Apgar (5-minute) & Low birthweight \\   
 \addlinespace[2pt]
       \midrule
-      Weekend                       & -0.0769$^{***}$                    &                            &                          & 0.0018$^{***}$       & 0.0133$^{***}$\\   
-                                    & (0.0046)                           &                            &                          & (0.0002)             & (0.0012)\\   
+      Weekend                       & -0.0821$^{***}$                       &                            &                          & 0.0018$^{***}$       & 0.0133$^{***}$\\   
+                                    & (0.0050)                              &                            &                          & (0.0002)             & (0.0012)\\   
 \addlinespace[2pt]
-      Sunday                        &                                    & -0.1037$^{***}$            &                          &                      &   \\   
-                                    &                                    & (0.0067)                   &                          &                      &   \\   
+      Sunday                        &                                       & -0.1038$^{***}$            &                          &                      &   \\   
+                                    &                                       & (0.0067)                   &                          &                      &   \\   
 \addlinespace[2pt]
-      Rest day (weekend or holiday) &                                    &                            & -0.0771$^{***}$          &                      &   \\   
-                                    &                                    &                            & (0.0045)                 &                      &   \\   
+      Rest day (weekend or holiday) &                                       &                            & -0.0771$^{***}$          &                      &   \\   
+                                    &                                       &                            & (0.0045)                 &                      &   \\   
 \addlinespace[2pt]
       \midrule
-      Municipality fixed effects & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
-      Year fixed effects & Yes                                & Yes                        & Yes                      & Yes                  & Yes\\  
+      Municipality fixed effects & Yes                                   & Yes                        & Yes                      & Yes                  & Yes\\  
+      Year fixed effects & Yes                                   & Yes                        & Yes                      & Yes                  & Yes\\  
       \midrule
-      Observations                  & 1,380,183                          & 1,426,518                  & 1,426,518                & 1,418,727            & 1,426,518\\  
+      Observations                  & 1,522,581                             & 1,426,542                  & 1,426,542                & 1,418,730            & 1,426,541\\  
 \bottomrule
    \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} For-profit municipality-date cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each birth's establishment with the legal-entity type recorded for its own year (2015--2024; earlier births use 2015). Columns 4--5 are composition checks: weekend (unscheduled) for-profit births include fewer healthy scheduled term pregnancies, so newborn risk indicators shift mechanically. Standard errors, two-way clustered by municipality and date, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\textit{Notes:} For-profit municipality-date cells, SINASC 2010--2024, weighted by births. Column 1 classifies an establishment as for-profit if the registry lists it as for-profit in any month of 2012--2024, rather than in the birth's own year. Columns 4--5 are composition checks: weekend (unscheduled) for-profit births include fewer healthy scheduled term pregnancies, so newborn risk indicators shift mechanically. Standard errors, two-way clustered by municipality and date, are reported in parentheses. \footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
 \end{minipage}
 \end{sidewaystable}
 

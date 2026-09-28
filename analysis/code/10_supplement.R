@@ -41,7 +41,8 @@ SIN <- file.path(DROPBOX_ROOT, "build", "SINASC", "input"); TABLE <- here::here(
 
 b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("sector","cesarean","cesarea_antes_parto","tipo_robson","muni","date","dow","year")))
-b <- b[year <= 2024 & sector %in% c("Private","Public")]
+# Robson from 2014 (the file also carries early values for 2011-2012; see 03)
+b <- b[year %between% c(2014, 2024) & sector %in% c("Private","Public")]
 b[, weekend := as.integer(dow %in% c(1, 7))]
 
 # validation crosstab: among cesareans with a valid timing code, share prelabor by Robson group
@@ -53,7 +54,7 @@ val <- cr[, .(cesareans = .N, share_prelabor = mean(cesarea_antes_parto == 1)), 
 # neither numerator (a single NA used to drop the whole cell).
 b[, `:=`(ces_pre = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 1),
          ces_lab = as.integer(cesarean %in% 1 & cesarea_antes_parto %in% 2))]
-r1 <- b[year >= 2012 & tipo_robson == "01" & sector == "Private",
+r1 <- b[tipo_robson == "01" & sector == "Private",
         .(n = .N, rate = mean(cesarean), rate_lab = mean(ces_lab)), by = .(muni, date, weekend, year)]
 d_r1_tot <- coef(feols(rate     ~ weekend | muni + year, r1, weights = ~n, cluster = ~muni + date))["weekend"]
 d_r1_lab <- coef(feols(rate_lab ~ weekend | muni + year, r1, weights = ~n, cluster = ~muni + date))["weekend"]
@@ -64,6 +65,14 @@ mk <- function(g) b[tipo_robson %in% g & sector == "Private",
 dd <- rbind(cbind(mk("01"), grp = "R1"), cbind(mk("10"), grp = "R10"))
 m_test <- feols(rate ~ weekend * i(grp, ref = "R10") | muni^grp + year, dd, weights = ~n, cluster = ~muni + date)
 p_r1r10 <- coeftable(m_test)["weekend:grp::R1", "Pr(>|t|)"]
+b_r1r10 <- coef(m_test)[["weekend:grp::R1"]]
+# the sentence follows the test instead of asserting its outcome
+r1r10_txt <- if (p_r1r10 >= 0.10) {
+  sprintf("A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm comparison is weak.", p_r1r10)
+} else {
+  sprintf("The group-1 dip is %s than the group-10 (preterm) dip by %.1f percentage points ($p=%.3f$).",
+          if (b_r1r10 < 0) "larger" else "smaller", abs(100 * b_r1r10), p_r1r10)
+}
 
 # build the validation table by hand (booktabs, house style)
 vtab <- val[, .(`Robson group` = tipo_robson,
@@ -76,8 +85,8 @@ tex <- c("\\begin{table}[H]\\centering",
   "Robson group & Cesareans & Share coded prelabor (\\%) \\\\", "\\midrule",
   apply(vtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. A formal test cannot distinguish the group-1 dip from the group-10 (preterm) dip ($p=%.2f$), so the preterm placebo is weak.} \\\\",
-          100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, p_r1r10),
+  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. %s} \\\\",
+          100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, r1r10_txt),
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (the years with the Robson classification), cesareans with a",
         "valid before/during-labor code. Robson 1 = nulliparous, term, singleton,",
@@ -147,6 +156,23 @@ EQ <- 0.02
 # fee_cesarean x (e - 1). The conversion is rough and is labeled as such in the
 # note; the point does not turn on its second digit.
 fee_c   <- w[, weighted.mean(fee_cesarean, tiss_deliveries, na.rm = TRUE)]
+# The largest states' negative fee gap and the for-profit-public gap, computed
+# here rather than typed into the note.
+OUTD <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
+evs <- rbindlist(lapply(2015:2024, function(y)
+  as.data.table(read_parquet(file.path(OUTD, sprintf("delivery_events_%d.parquet", y)),
+    col_select = c("type", "uf", "fee_delivery", "fee_vaginal_econ")))))
+big5 <- evs[, .N, by = uf][order(-N)][1:5, uf]
+sgap <- evs[uf %in% big5, .(g = log(mean(fee_delivery[type == "cesarean"], na.rm = TRUE) /
+                                     mean(fee_vaginal_econ, na.rm = TRUE))), by = uf]
+neg  <- sort(-sgap$g[sgap$g < 0])
+gap_lo <- min(neg); gap_hi <- max(neg)
+rm(evs); gc()
+# the for-profit-public gap of the Kitagawa decomposition (03), the figure the
+# text quotes, so the note and the text cannot disagree
+fp_pub_gap <- readRDS(here::here("analysis", "output", "kitagawa_gap.rds"))$gap
+cat(sprintf("[C/C5] five largest states: %s; negative gaps %.2f to %.2f; for-profit-public gap %.1fpp\n",
+            paste(big5, collapse = ","), gap_lo, gap_hi, 100 * fp_pub_gap))
 GKM_BRL <- 4650
 per_1000  <- function(pp) 0.01 * pp * fee_c * (exp(1) - 1) / GKM_BRL
 GRANT_BENCHMARK <- per_1000(1)   # Grant (2009), the corrected magnitude
@@ -194,14 +220,17 @@ tex <- c("\\begin{table}[H]\\centering",
     "follow, and the paper states both. No interval fits inside the equivalence region, so",
     "these data do not establish that the price response is negligible. And the two",
     "fixed-effect schemes disagree about both magnitudes: the within-municipality",
-    "intervals exclude them, the state-level intervals, estimated on twenty-seven",
+    "intervals exclude them, the state-level intervals, estimated on %d",
     "clusters, are too wide to. The sign itself is unstable across the two schemes. The",
     "economic argument of Section~\\ref{sec:notprice} does not rest on this table: the",
-    "0.10 to 0.35 log point negative fee gap of the largest states would move the cesarean",
-    "rate by about a quarter of a percentage point at Grant's magnitude and about one",
-    "point at the original, against a for-profit--public gap of 35 points."),
+    "%.2f to %.2f log point negative fee gap of the largest states would move the cesarean",
+    "rate by at most about %.2f percentage points at Grant's magnitude and %.1f at the",
+    "original, against a for-profit--public gap of %.0f points."),
     formatC(fee_c, format = "d", big.mark = ","),
-    100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK)),
+    100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK,
+    rows[spec == "State fixed effects", nclust],
+    gap_lo, gap_hi, 100 * GRANT_BENCHMARK * gap_hi, 100 * GKM_BENCHMARK * gap_hi,
+    100 * fp_pub_gap)),
   "\\end{table}")
 .fci <- file.path(TABLE, "tab_ref_c5_feegap_ci.tex")
 write_table_tex(resize_tabular(tex), .fci)
@@ -227,7 +256,8 @@ pacman::p_load(data.table, arrow, fixest, here)
 source(here::here("analysis", "code", "00_utils.R"))
 OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output"); TABLE <- here::here("analysis","output","tables")
 
-evf <- list.files(OUT, pattern = "delivery_events_20[0-9]{2}\\.parquet$", full.names = TRUE)
+evf <- file.path(OUT, sprintf("delivery_events_%d.parquet", 2015:2024))
+evf <- evf[file.exists(evf)]
 if (length(evf) == 0) {
   message("10 [D/C6] skipped — delivery_events_<yr>.parquet not found.")
 } else {
@@ -284,8 +314,8 @@ OUT <- file.path(DROPBOX_ROOT, "build", "TISS", "output"); TABLE <- here::here("
 p <- as.data.table(read_parquet(file.path(OUT, "delivery_panel_muni_month.parquet")))
 p <- p[!is.na(muni) & year <= 2024 & is.finite(fee_cesarean) & is.finite(fee_vaginal_econ)]
 uf <- p[, .(csec = weighted.mean(csection_rate, n_deliveries, na.rm = TRUE),
-            fee_ces = weighted.mean(fee_cesarean, n_deliveries, na.rm = TRUE),
-            fee_vag = weighted.mean(fee_vaginal_econ, n_deliveries, na.rm = TRUE),
+            fee_ces = weighted.mean(fee_cesarean, n_fee_ces, na.rm = TRUE),
+            fee_vag = weighted.mean(fee_vaginal_econ, n_fee_vag, na.rm = TRUE),
             n = sum(n_deliveries)), by = .(uf, year)]
 uf[, fee_gap := log(fee_ces / fee_vag)]; setorder(uf, uf, year)
 uf[, `:=`(d_fee_gap = fee_gap - shift(fee_gap), d_csec = csec - shift(csec)), by = uf]
@@ -342,7 +372,7 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
 n_raw <- nrow(b)
 b1 <- b[year <= 2024];                                   n_year   <- nrow(b1)
 b2 <- b1[sector %in% c("Private","Public")];             n_sector <- nrow(b2)
-b3 <- b2[tipo_robson %in% sprintf("%02d", 1:11)];        n_robson <- nrow(b3)
+b3 <- b2[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]; n_robson <- nrow(b3)
 # The last row used to count every vaginal birth PLUS the cesareans with a valid
 # code (23.6M of 26.0M births) under the label "valid code (cesareans)".
 n_ces    <- b2[cesarean == 1, .N]
@@ -352,7 +382,7 @@ flow <- data.table(
   Step = c("Raw SINASC birth records",
            "Restrict to 2010--2024",
            "For-profit or public establishment",
-           "\\quad of which: valid Robson group (2014+)",
+           "\\quad of which: 2014--2024 with a valid Robson group",
            "\\quad of which: cesareans",
            "\\quad\\quad of which: valid before/during-labor code, 2012+"),
   N = format(c(n_raw, n_year, n_sector, n_robson, n_ces, n_timing), big.mark = ","))
@@ -462,11 +492,13 @@ if (!file.exists(PA)) {
     message("10 [H/C11] skipped — no CNES column in the Parto Adequado list; columns: ",
             paste(names(palist), collapse = ", "))
   } else {
-    treated_cnes <- unique(as.character(palist[[cnes_col[1]]]))
+    # both sides as 7-digit zero-padded codes: the raw codes dropped the three
+    # listed hospitals whose CNES starts with a zero
+    treated_cnes <- unique(formatC(as.integer(palist[[cnes_col[1]]]), width = 7, flag = "0"))
     bh <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
-            col_select = c("codigo_estabelecimento","sector","cesarean","year")))
-    bh <- bh[sector == "Private" & year <= 2024 & !is.na(codigo_estabelecimento)]
-    bh[, cnes := as.character(codigo_estabelecimento)]
+            col_select = c("estab","sector","cesarean","year")))
+    bh <- bh[sector == "Private" & year <= 2024 & !is.na(estab)]
+    bh[, cnes := estab]
     hy <- bh[, .(rate = mean(cesarean), n = .N), by = .(cnes, year)][n >= 20]
     hy[, treated := as.integer(cnes %in% treated_cnes)]
     hy[, ry := ifelse(treated == 1, year - 2017, NA_integer_)]     # relative year; NA = never-treated
@@ -514,7 +546,7 @@ readme <- c(
   "# Replication package — Born on Schedule",
   "",
   "## Data provenance",
-  "- SINASC births 2010-2024: Base dos Dados (BigQuery), query in build/01b_sinasc_cnes.R. Download date: <FILL>.",
+  "- SINASC births 2010-2024: DATASUS FTP (SINASC/1996_/Dados/DNRES), downloaded by build/01e_sinasc_datasus.R. Download date: 2026-09-27.",
   "- TISS claims 2015-2025: ANS PDA FTP (https://dadosabertos.ans.gov.br/FTP/PDA/TISS/). Download date: <FILL>.",
   "- CNES beds/obstetricians: datazoom.saude / microdatasus. Download date: <FILL>.",
   "- IEPS muni-year covariates: https://iepsdata.org.br (manual export). Download date: <FILL>.",
@@ -524,14 +556,13 @@ readme <- c(
   "1. Edit config/config.R (set DROPBOX_ROOT).",
   "2. Rscript config/00_master_build.R    # builds main_data.parquet and panels",
   "3. Rscript config/00_master_analysis.R # regenerates every table and figure",
-  "4. Rscript analysis/code/07_referee_response.R  # referee-response exhibits",
   "",
   "## Program-to-output inventory",
   "| Script | Outputs |",
   "|---|---|",
-  "| analysis/code/01_descriptives.R | fig01, fig02, map01, map02, tab01 |",
+  "| analysis/code/01_descriptives.R | fig01, fig07, map01, map02, tab01, tab07 |",
   "| analysis/code/02_regressions.R  | tab_fees |",
-  "| analysis/code/03_mechanisms.R   | fig03, fig07, fig08, tab07, tab08, tab11, tab_prelabor_lowrisk |",
+  "| analysis/code/03_mechanisms.R   | fig02, fig03, fig08, tab08, tab11, tab_prelabor_lowrisk |",
   "| analysis/code/04_heterogeneity.R| tab10, tab10b |",
   "| analysis/code/05_cost.R         | fig09, fig09b, tab09, tab12 |",
   "| analysis/code/06_robustness.R   | fig05, tab13, tab13c, tab14, tab15* |",
@@ -539,14 +570,17 @@ readme <- c(
   "| analysis/code/08_long_weekends.R | tab_long_weekends, tab_displacement_robust |",
   "| analysis/code/09_org_capacity.R | tab_org_capacity, tab_org_capacity_valid |",
   "| analysis/code/10_supplement.R   | tab_multiple_testing, tab_ref_*, fig_ref_c11_pa_hospital_es |",
-  "| analysis/code/11_body_figures.R | fig_calendar_fingerprints, fig_gestation_panels |",
+  "| analysis/code/11_body_figures.R | fig_two_margins, fig_calendar_fingerprints, fig_gestation_panels |",
+  "| analysis/code/12_subgroups.R    | tab_subgroup_gradients, robson_grad.rds |",
+  "| analysis/code/13_demand_smoothing.R | tab_demand_smoothing |",
+  "| analysis/code/14_estab_practice_style.R | tab_estab_practice_style |",
   "",
   "## Environment and runtime",
   "- R version and packages: see sessionInfo.txt and renv.lock.",
   "- Random seeds: set.seed(1) in every script that bootstraps or permutes.",
   "- Expected runtime on a 2023 MacBook Pro (M2 Pro, 16 GB): build ~3 h (dominated",
-  "  by the TISS download); full analysis ~90 min; 07_referee_response.R ~40 min,",
-  "  of which the composition-adjusted municipality-by-date regression is ~25 min.",
+  "  by the TISS download); full analysis several hours, dominated by the",
+  "  municipality-by-date regressions of 07 and 08.",
   "- Peak memory ~12 GB (the birth-level regressions on 24M records).",
   "",
   "## AI-use disclosure",
@@ -630,6 +664,7 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("sector", "semana_gestacao", "peso", "apgar5", "idade_mae",
                       "escolaridade_mae", "raca_cor_mae", "muni", "year")))
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
+b[, `:=`(apgar5 = valid_apgar(apgar5), peso = valid_peso(peso), idade_mae = valid_idade(idade_mae))]
 b[, `:=`(early_term = as.integer(semana_gestacao %between% c(37, 38)),
          lbw = as.integer(peso < 2500), low_apgar = as.integer(apgar5 < 7),
          private = as.integer(sector == "Private"), age2 = idade_mae^2)]
@@ -685,4 +720,4 @@ tex <- c("\\begin{table}[H]",
 write_table_tex(tex, file.path(TABLE, "tab_multiple_testing.tex"))
 cat("\n[K] Multiple-testing families:\n"); print(mt)
 
-message("\n07_referee_response.R done")
+message("\n10_supplement.R done")

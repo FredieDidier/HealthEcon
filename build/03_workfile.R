@@ -37,8 +37,9 @@ build_workfile <- function() {
   tiss <- p[, .(
     tiss_deliveries = sum(n_deliveries),
     tiss_cesarean   = sum(n_cesarean),
-    fee_cesarean     = weighted.mean(fee_cesarean,     n_deliveries, na.rm = TRUE),
-    fee_vaginal_econ = weighted.mean(fee_vaginal_econ, n_deliveries, na.rm = TRUE),
+    # each monthly fee mean is weighted by the deliveries it averages
+    fee_cesarean     = weighted.mean(fee_cesarean,     n_fee_ces, na.rm = TRUE),
+    fee_vaginal_econ = weighted.mean(fee_vaginal_econ, n_fee_vag, na.rm = TRUE),
     mean_los         = weighted.mean(mean_los,         n_deliveries, na.rm = TRUE),
     any_uti_share    = weighted.mean(any_uti_share,    n_deliveries, na.rm = TRUE)
   ), by = .(muni6 = m6(muni), year)]

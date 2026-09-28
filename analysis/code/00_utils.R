@@ -306,3 +306,52 @@ resize_tabular <- function(tx, resize = TRUE, fontsize = "\\small", tabcolsep = 
   if (resize) tx <- append(tx, "}", after = jj)   # close \resizebox after \end{tabular}
   tx
 }
+
+# ---------------------------------------------------------------------------
+# NATIONAL HOLIDAY CALENDAR, one definition for every script.
+# Eight fixed-date national holidays, four Easter-based ones (Carnival Monday and
+# Tuesday, Good Friday, Corpus Christi), and 20 November (Consciencia Negra),
+# a national holiday from 2024 (Law 14,759 of 2023). Each script used to carry its
+# own copy, and none had 20 November 2024. 08_long_weekends.R keeps its own
+# named table because it classifies holidays one by one; it excludes that date.
+# ---------------------------------------------------------------------------
+easter_sunday <- function(y) {            # anonymous Gregorian algorithm
+  a <- y %% 19; b <- y %/% 100; c <- y %% 100
+  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
+  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
+  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
+  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
+  data.table::as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
+}
+holiday_dates <- function(years) {
+  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
+  out <- data.table::as.IDate(character(0))
+  for (y in years) {
+    out <- c(out, data.table::as.IDate(paste0(y, "-", fixed)))
+    e <- easter_sunday(y)
+    out <- c(out, e - 2, e - 47, e - 48, e + 60)   # Good Friday, Carnival Tue+Mon, Corpus Christi
+    if (y >= 2024) out <- c(out, data.table::as.IDate(paste0(y, "-11-20")))
+  }
+  sort(unique(out))
+}
+
+# ---------------------------------------------------------------------------
+# SINASC CODES FOR "IGNORED", as the DATASUS files carry them. Apgar is 0-10 and
+# 99 means ignored (22,771 births in 2010-2024); weight 9999 means ignored (66)
+# and 0 is impossible (5); mother's age 99 means ignored (449), and ages under 10
+# or over 60 (245) are treated as keying errors. Read as numbers they would pass
+# as a normal Apgar, a normal weight and a mother over 35, so every script goes
+# through these.
+# ---------------------------------------------------------------------------
+valid_apgar <- function(x) data.table::fifelse(x >= 0 & x <= 10, x, NA_integer_)
+valid_peso  <- function(x) data.table::fifelse(x > 0 & x < 9999, x, NA_integer_)
+valid_idade <- function(x) data.table::fifelse(x >= 10 & x <= 60, x, NA_integer_)
+
+# ---------------------------------------------------------------------------
+# CACHE FRESHNESS. A skip-if-exists cache is rebuilt when any input is newer
+# than it. A July model cache once froze a table for two months after its
+# inputs had changed.
+# ---------------------------------------------------------------------------
+cache_fresh <- function(cache, inputs) {
+  file.exists(cache) && all(file.mtime(inputs) <= file.mtime(cache))
+}

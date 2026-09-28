@@ -37,24 +37,7 @@ SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 
 # --- Brazilian national holidays (fixed + Easter-based movable) ----------------
-easter_sunday <- function(y) {            # Anonymous Gregorian algorithm
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y)
-    out <- c(out, e - 2, e - 47, e - 48, e + 60)   # Good Friday, Carnival Tue+Mon, Corpus Christi
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 
 # --- Load SINASC daily and classify each date ---------------------------------
 sd <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_muni.parquet")))
@@ -128,7 +111,7 @@ message("03_mechanisms.R: Block 1 (calendar sorting) done")
 #   tab_prelabor_lowrisk (Table 3), assembled at the end of Block 3.
 #
 # REQUIRES the birth-level SINASC file sinasc_births.parquet (run the SINASC pull
-# + ingest_sinasc() in build/01b_sinasc_cnes.R). Skips gracefully if not built.
+# in build/01e_sinasc_datasus.R). Skips gracefully if not built.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -142,12 +125,16 @@ BIRTHS <- file.path(SIN, "sinasc_births.parquet")
 
 if (!file.exists(BIRTHS)) {
   message("04_robson.R skipped — sinasc_births.parquet not built yet ",
-          "(run the SINASC pull + ingest_sinasc() in build/01b_sinasc_cnes.R).")
+          "(run build/01e_sinasc_datasus.R with RUN_01E=1).")
 } else {
   # column subset: the extended file has ~42M rows × 31 cols — read only what we use
   b <- as.data.table(read_parquet(BIRTHS,
          col_select = c("tipo_robson", "sector", "cesarean", "muni", "date", "dow", "year")))
-  b <- b[year <= 2024]
+  # Robson from 2014. The birth file also carries a Robson group for part of
+  # 2011-2012 (51 and 89 percent of births) and none for 2013; those early values
+  # put 14 percent of for-profit births in group 10 against 8 percent from 2014,
+  # so every Robson analysis keeps 2014-2024.
+  b <- b[year %between% c(2014, 2024)]
   b[, `:=`(weekend = as.integer(dow %in% c(1, 7)),
            robson  = as.character(tipo_robson))]
   low <- b[robson %in% c("01", "02")]     # nulliparous, term, singleton, cephalic
@@ -239,9 +226,9 @@ m_lab_pub  <- feols(rate_lab ~ weekend | muni + year, cellsum[sector == "Public"
 cell_r <- function(dat) dat[, .(rate = mean(cesarean), n = .N),
                             by = .(muni, date, weekend, year)]
 m_r10  <- feols(rate ~ weekend | muni + year,
-                cell_r(b[tipo_robson == "10" & sector == "Private"]), weights = ~n, cluster = ~muni + date)
+                cell_r(b[year >= 2014 & tipo_robson == "10" & sector == "Private"]), weights = ~n, cluster = ~muni + date)
 m_r12  <- feols(rate ~ weekend | muni + year,
-                cell_r(b[tipo_robson %in% c("01", "02") & sector == "Private"]), weights = ~n, cluster = ~muni + date)
+                cell_r(b[year >= 2014 & tipo_robson %in% c("01", "02") & sector == "Private"]), weights = ~n, cluster = ~muni + date)
 
 dict <- c(weekend = "Weekend", muni = "Municipality", year = "Year",
           rate_pre = "Prelabor cesarean share", rate_lab = "In-labor cesarean share",
@@ -321,10 +308,12 @@ if (exists("r1_priv")) {
     "\\bottomrule", "\\end{tabular}}",
     "\\begin{minipage}{\\linewidth}\\footnotesize",
     "\\textit{Notes:} Estimates of Equation~\\eqref{eq:scheduling}, restricted to the",
-    "weekend indicator. Municipality-date cells, SINASC 2010--2024, weighted by births;",
+    "weekend indicator. Municipality-date cells, SINASC, weighted by births;",
     "coefficients in percentage points. Columns 1--4 split the cesarean share of births",
-    "into cesareans performed before labor began and cesareans performed during labor.",
-    "Columns 5--6 restrict to Robson groups 1--2 (nulliparous, term, singleton,",
+    "into cesareans performed before labor began and cesareans performed during labor,",
+    "on 2012--2024, the years in which the timing indicator is recorded; a cesarean",
+    "without it counts in neither component. Columns 5--6 use 2014--2024, the years with",
+    "the Robson classification, and restrict to Robson groups 1--2 (nulliparous, term, singleton,",
     "cephalic) and to Robson group 1 alone, which requires spontaneous labor, so that",
     "its cesareans are intrapartum by construction. Standard errors, two-way clustered",
     "by municipality and date, are reported in parentheses.",
@@ -338,14 +327,12 @@ message("03_mechanisms.R: Block 3 (mechanism checks) done")
 # =============================================================================
 # BLOCK 4 — quantification (accounting, not causal counts).
 #   (a) KITAGAWA decomposition: how much of the for-profit-public cesarean gap is
-#       Robson CASE-MIX (composition) vs WITHIN-GROUP practice style? 71% is
-#       practice style -> the epidemic is about how medicine is practiced, not
-#       who gives birth where. Report as accounting, not caused cesareans.
+#       Robson CASE-MIX (composition) vs WITHIN-GROUP practice style? Report as
+#       accounting, not caused cesareans. The numbers are printed below.
 #   (b) EXCESS WEEKDAY CESAREANS: a transparent scheduling benchmark — hold each
 #       MUNICIPALITY's own weekend cesarean propensity as the "unscheduled" rate
-#       and count weekday cesareans above it (~39k/yr for-profit, one in ten
-#       weekday cesareans). A MECHANICAL benchmark, not the number of cesareans
-#       caused by scheduling.
+#       and count weekday cesareans above it. A MECHANICAL benchmark, not the
+#       number of cesareans caused by scheduling.
 #   -> tab11_decomposition (body, Table 6) + headline numbers printed for the text.
 # =============================================================================
 
@@ -363,7 +350,7 @@ b <- b[year <= 2024 & sector %in% c("Private", "Public")]
 
 # --- (a) Kitagawa decomposition over Robson groups (2014+, when Robson exists) -
 # Symmetric weights: composition uses the average within-group rate, practice
-# style the average group share; the two terms sum to the raw 35.4pp gap.
+# style the average group share; the two terms sum to the raw gap.
 r <- b[year >= 2014 & tipo_robson %in% sprintf("%02d", 1:10)]
 tab <- r[, .(n = .N, rate = mean(cesarean)), by = .(sector, g = tipo_robson)]
 tab[, share := n / sum(n), by = sector]
@@ -376,6 +363,10 @@ composition <- wide[, sum((share_Private - share_Public) * rate_bar)]
 practice    <- wide[, sum(share_bar * (rate_Private - rate_Public))]
 cat(sprintf("\nKitagawa: gap %.1fpp = composition %.1fpp (%.0f%%) + practice %.1fpp (%.0f%%)\n",
             100*gap, 100*composition, 100*composition/gap, 100*practice, 100*practice/gap))
+
+# the gap quoted wherever the paper states the for-profit-public difference
+saveRDS(list(gap = gap, composition = composition, practice = practice),
+        here::here("analysis", "output", "kitagawa_gap.rds"))
 
 kt <- wide[order(g), .(
   `Robson group` = g,
@@ -412,8 +403,8 @@ write_table_tex(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex")
 # its weekend rate), summed. The own-municipality version is the one the paper
 # describes and the more defensible one, because it absorbs the geographic
 # composition of births; benchmarking instead against the NATIONAL sector-year
-# weekend rate gives a larger count (50,073 for-profit) by letting high-cesarean
-# municipalities be scored against the weekend rate of the whole country.
+# weekend rate gives a larger count by letting high-cesarean municipalities be
+# scored against the weekend rate of the whole country.
 # The count is expressed as a share of WEEKDAY cesareans, which is the
 # denominator the sentence in the body refers to.
 # A MECHANICAL benchmark, not the number of cesareans caused by scheduling.
@@ -433,17 +424,8 @@ print(exw[, .(mean_per_year = format(round(sum(excess) / n_years), big.mark = ",
               share_of_weekday_cesareans = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0)),
               share_of_all_cesareans     = sprintf("%.1f%%", 100 * sum(excess) / sum(ces_0 + ces_1))),
           by = sector])
-# Reconciliation with the headline differential of Equation (3). The benchmark
-# above uses the sector's OWN weekend rate, so it prices the full gross gradient
-# (8.3pp for-profit); the headline coefficient nets out the weekly scheduling
-# common to both sectors and prices only the 2.3pp for-profit differential.
-wd <- dm[sector == "Private" & weekend == 0, .(births = sum(births))]$births / n_years
-# The two gradients are read from the estimates, not typed.
-gross <- -coef(r_priv)[["weekend"]]                                   # this script, Block 1
-famA  <- here::here("analysis", "output", "fam_A.rds")                # written by 07
-eq3   <- if (file.exists(famA)) -readRDS(famA)$estimate[1] else NA_real_
-cat(sprintf("for-profit weekday births per year: %s\n  %.1fpp of them = %s (gross weekend benchmark)\n  %.1fpp of them = %s (Eq. 3 differential, from 07)\n",
-            format(round(wd), big.mark = ","), 100 * gross, format(round(gross * wd), big.mark = ","),
-            100 * eq3, format(round(eq3 * wd), big.mark = ",")))
+# The reconciliation of this benchmark with the headline differential (the
+# footnote in Section 6) is printed by 07_main_specification.R, which estimates
+# both gradients; reading 07's output from here would read the previous run.
 
 message("03_mechanisms.R: Block 4 (decomposition) done")

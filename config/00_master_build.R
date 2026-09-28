@@ -9,9 +9,11 @@
 #   01a_tiss.R          →  One-time ANS TISS Hospitalar downloader (CONS + DET,
 #                          2015-2025) → Dropbox build/TISS/input. Already run;
 #                          the download calls are commented out.
-#   01b_sinasc_cnes.R   →  One-time SINASC (Base dos Dados, 2010-2024) + CNES
-#                          beds/obstetricians downloads & ingestion → Dropbox
-#                          build/SINASC/input and build/CNES/input. Already run.
+#   01e_sinasc_datasus.R → One-time SINASC 2010-2024 from the DATASUS FTP
+#                          (RUN_01E=1), assembled with 01b's sector rule.
+#   01b_cnes.R   →  One-time CNES beds/obstetricians downloads → Dropbox
+#                          build/CNES/input, and the sector-by-year rule that
+#                          01e applies to the births. Already run.
 #   01c_ieps.R          →  Prepares the IEPS municipality-year covariates
 #                          (manual export) → Dropbox build/IEPS/output.
 #   02_deliveries.R     →  Builds the TISS delivery event workfiles + the
@@ -30,7 +32,8 @@ pacman::p_load(here, arrow, data.table, dplyr, readr, stringr)
 
 source(here("build", "00_utils.R"))
 # source(here("build", "01a_tiss.R"))        # one-time raw TISS download
-# source(here("build", "01b_sinasc_cnes.R")) # one-time SINASC + CNES download/ingest
+# source(here("build", "01b_cnes.R")) # one-time CNES download; sector rule
+# Sys.setenv(RUN_01E = "1"); source(here("build", "01e_sinasc_datasus.R"))  # one-time SINASC (DATASUS FTP)
 # source(here("build", "01c_ieps.R"))        # prepare IEPS muni-year covariates
 source(here("build", "02_deliveries.R"))     # build delivery event + panel files
 source(here("build", "03_workfile.R"))       # assemble main_data.parquet

@@ -25,7 +25,9 @@
 #   (4) prelabor cesarean share
 #   (5) in-labor cesarean share
 # Columns 4-5 use 2012-2024, the years in which the before/during-labor indicator
-# is recorded for more than 85 percent of cesareans.
+# is recorded for about 85 percent of cesareans or more (84.9 percent in 2012,
+# 88.1 percent or more from 2013); in 2010 and 2011 it is missing for 98 and 53
+# percent (DATASUS files).
 #
 #   -> tab_main_gradient.tex  (BODY, Table 2)
 # =============================================================================
@@ -38,23 +40,7 @@ source(here::here("analysis", "code", "00_utils.R"))
 SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 
-easter_sunday <- function(y) {
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y); out <- c(out, e - 2, e - 47, e - 48, e + 60)
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 
 b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("muni", "date", "sector", "cesarean", "cesarea_antes_parto",
@@ -66,6 +52,7 @@ hol <- holiday_dates(2010:2024)
 b[, `:=`(weekend = as.integer(dow %in% c(1, 7)), holiday = as.integer(date %in% hol))]
 b[, eve := as.integer((date + 1L) %in% hol | dow == 6L)]
 b[, private := as.integer(sector == "Private")]
+b[, idade_mae := valid_idade(idade_mae)]                 # 99 = ignored
 b[, `:=`(ces_pre = as.integer(cesarean == 1L & cesarea_antes_parto == 1L),
          ces_lab = as.integer(cesarean == 1L & cesarea_antes_parto == 2L))]
 b[is.na(ces_pre), ces_pre := 0L]; b[is.na(ces_lab), ces_lab := 0L]
@@ -181,8 +168,9 @@ tex <- c(tex,
   "parity category. Robson-group shares standardize clinically but may respond to",
   "scheduling, since the classification encodes labor onset and gestational age.",
   "Columns 4--5 split the cesarean share into cesareans performed before and during",
-  "labor, on the years in which the timing indicator is recorded for more than 85",
-  "percent of cesareans. Panel B reports each sector's own gradient from",
+  "labor, on 2012--2024, the years in which the timing indicator is recorded for about",
+  "85 percent of cesareans or more; a cesarean without it counts in neither",
+  "component. Panel B reports each sector's own gradient from",
   "Equation~\\eqref{eq:scheduling}, with municipality and year fixed effects.",
   "Standard errors, two-way clustered by municipality and date, are reported in",
   "parentheses.",
@@ -195,6 +183,15 @@ print(round(100 * rbind(baseline = coef(m1)[KG], predetermined = coef(m2)[KG],
                         inlabor = coef(m5)[KG]), 3))
 cat("\n[07] Sector gradients (pp): public\n"); print(round(100 * coef(m_pub), 3))
 cat("[07] Sector gradients (pp): for-profit\n"); print(round(100 * coef(m_priv), 3))
+
+# Footnote of Section 6: the own-municipality weekend benchmark prices the gross
+# for-profit weekend gradient; Equation (3) prices only the differential. Both
+# applied to the for-profit weekday births of an average year.
+wd_births <- cells[private == 1 & weekend == 0, sum(births)] / uniqueN(cells$year)
+gross <- -coef(m_priv)[["weekend"]]; eq3 <- -coef(m1)[[KG[["wk"]]]]
+cat(sprintf("\n[07] footnote: for-profit weekday births per year %s; gross %.1fpp -> %s; Eq.3 %.1fpp -> %s\n",
+            format(round(wd_births), big.mark = ","), 100 * gross, format(round(gross * wd_births), big.mark = ","),
+            100 * eq3, format(round(eq3 * wd_births), big.mark = ",")))
 
 fam_A <- data.table(
   family = "A. For-profit calendar gradient",

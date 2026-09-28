@@ -39,7 +39,10 @@ dir.create(TISS_OUT, recursive = TRUE, showWarnings = FALSE)
 ASSIST_CODE <- "31309038"
 GEO_COL     <- "CD_MUNICIPIO_PRESTADOR"
 RN368_YM    <- 201507L          # RN 368/2015 in force ≈ July 2015
-YEARS       <- 2015:2025
+# The paper covers 2015-2024. The 2025 DET file stores the event id as text
+# (every earlier year as a number), which breaks the id join, and 2025 enters no
+# exhibit.
+YEARS       <- 2015:2024
 
 # CONS covariates we want (selected defensively — schema varies across years).
 CONS_WANT <- c("ID_EVENTO_ATENCAO_SAUDE", GEO_COL, "CD_MUNICIPIO_BENEFICIARIO",
@@ -57,26 +60,38 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
     det <- arrow::open_dataset(file.path(HOSP_IN, "DET", sprintf("Hosp_%d_DET.parquet", y))) |>
       dplyr::filter(CD_TABELA_REFERENCIA == "22",
                     CD_PROCEDIMENTO %in% c(DELIV_ALL, ASSIST_CODE)) |>
-      dplyr::select(ID_EVENTO_ATENCAO_SAUDE, CD_PROCEDIMENTO, VL_ITEM_EVENTO_INFORMADO) |>
+      dplyr::select(ID_EVENTO_ATENCAO_SAUDE, CD_PROCEDIMENTO, VL_ITEM_EVENTO_INFORMADO,
+                    QT_ITEM_EVENTO_INFORMADO) |>
       dplyr::collect() |>
       data.table::as.data.table()
     det[, ID_EVENTO_ATENCAO_SAUDE := as.numeric(ID_EVENTO_ATENCAO_SAUDE)]
-    det[, vl := as.numeric(VL_ITEM_EVENTO_INFORMADO)]
+    det[, `:=`(vl = as.numeric(VL_ITEM_EVENTO_INFORMADO),
+               qt = as.numeric(QT_ITEM_EVENTO_INFORMADO))]
     det[, cat := data.table::fifelse(CD_PROCEDIMENTO %in% DELIV_CESAREAN, "ces",
                  data.table::fifelse(CD_PROCEDIMENTO %in% DELIV_VAGINAL,  "vag", "assist"))]
 
-    ev <- data.table::dcast(det, ID_EVENTO_ATENCAO_SAUDE ~ cat,
-                            value.var = "vl", fun.aggregate = sum, fill = 0)
-    for (col in c("ces", "vag", "assist")) if (!col %in% names(ev)) ev[[col]] <- 0
-    ev[, type := data.table::fifelse(ces > 0, "cesarean",
-                 data.table::fifelse(vag > 0, "vaginal", NA_character_))]
-    ev <- ev[!is.na(type)]
+    # The delivery TYPE comes from the procedure code, the FEE from the billed
+    # value. Typing by the value (ces > 0) used to drop every delivery billed at
+    # zero or with the value missing: about 15 percent of delivery events (49,215
+    # of 325,418 in 2016, 52,949 of 367,869 in 2023), which left the cesarean
+    # rate computed on priced deliveries only. A delivery with no positive fee
+    # now stays in the counts and has a missing fee.
+    pos <- function(x) { x <- x[is.finite(x) & x > 0]; if (length(x)) sum(x) else NA_real_ }
+    ev <- det[, .(has_ces = any(cat == "ces"), has_vag = any(cat == "vag"),
+                  ces = pos(vl[cat == "ces"]), vag = pos(vl[cat == "vag"]),
+                  assist = pos(vl[cat == "assist"]),
+                  assist_hours = pos(qt[cat == "assist"])),
+              by = ID_EVENTO_ATENCAO_SAUDE]
+    ev <- ev[has_ces | has_vag]
+    ev[, type := data.table::fifelse(has_ces, "cesarean", "vaginal")]
     ev[, `:=`(
       fee_delivery     = data.table::fifelse(type == "cesarean", ces, vag),
       fee_assist       = assist,
-      fee_vaginal_econ = data.table::fifelse(type == "vaginal", vag + assist, NA_real_)
+      fee_vaginal_econ = data.table::fifelse(type == "vaginal",
+                           vag + data.table::fifelse(is.na(assist), 0, assist), NA_real_)
     )]
-    ev[, c("ces", "vag", "assist") := NULL]
+    ev[type == "cesarean", assist_hours := NA_real_]
+    ev[, c("has_ces", "has_vag", "ces", "vag", "assist") := NULL]
     rm(det); gc()
 
     # --- DET (2nd pass): TOTAL billed cost of the delivery hospitalization -----
@@ -128,7 +143,7 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
     keep <- c("ID_EVENTO_ATENCAO_SAUDE", "year", "month", "ano_mes",
               "muni_prestador", "uf", "muni_beneficiario", "modalidade",
               "faixa_etaria", "cid_1", "carater", "type", "cesarean",
-              "fee_delivery", "fee_assist", "fee_vaginal_econ", "total_billed",
+              "fee_delivery", "fee_assist", "fee_vaginal_econ", "assist_hours", "total_billed",
               "los", "uti_days", "post_rn368")
     d <- d[, intersect(keep, names(d)), with = FALSE]
 
@@ -136,10 +151,15 @@ build_deliveries <- function(years = YEARS, geo_col = GEO_COL) {
     arrow::write_parquet(d, file.path(TISS_OUT, sprintf("delivery_events_%d.parquet", y)))
 
     # --- OUTPUT 2: municipality × month aggregate ----------------------------
+    # Fee means are over the deliveries that carry a positive fee; n_fee_ces and
+    # n_fee_vag count them, so that later aggregation weights each mean by the
+    # deliveries it averages rather than by all deliveries.
     mm <- d[, .(
       n_deliveries = .N,
       n_cesarean   = sum(cesarean),
       csection_rate = mean(cesarean),
+      n_fee_ces         = sum(type == "cesarean" & !is.na(fee_delivery)),
+      n_fee_vag         = sum(type == "vaginal"  & !is.na(fee_vaginal_econ)),
       fee_cesarean      = mean(fee_delivery[type == "cesarean"], na.rm = TRUE),
       fee_vaginal_econ  = mean(fee_vaginal_econ, na.rm = TRUE),
       cost_cesarean     = mean(total_billed[type == "cesarean"], na.rm = TRUE),

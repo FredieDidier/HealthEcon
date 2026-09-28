@@ -35,12 +35,10 @@
 # errors two-way clustered by establishment and date. Primary outcome: the share
 # of births delivered by prelabor cesarean.
 #
-# RESULT (weak/mixed, reported honestly). Every interaction is positive (larger =
-# flatter gradient) but only the delivery-SCALE interaction is significant
-# (weekend x log deliveries ~ +0.70pp); beds x weekend ~ +0.45pp n.s. under
-# muni x date FE; terciles are flat. This exhibit was MOVED to the Supplement in
-# review round 2 (it came back weak, so featuring it in the body invited "why is
-# this here"); Section 6D now carries a one-paragraph summary pointing to it.
+# RESULT (weak, reported honestly). The interactions are positive (larger =
+# flatter gradient) and none is significant under municipality x date fixed
+# effects. The exhibit lives in the Supplement; Section 5 carries a one-paragraph
+# summary pointing to it.
 #
 # Exhibits (BOTH in the Supplemental Appendix):
 #   tab_org_capacity.tex        continuous + tercile heterogeneity
@@ -65,29 +63,13 @@ if (!file.exists(ESTAB_PANEL)) {
 
 YEARS <- 2015:2024
 
-easter_sunday <- function(y) {
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y); out <- c(out, e - 2, e - 47, e - 48, e + 60)
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 
 # =============================================================================
 # 1. Establishment x date cells of for-profit births (cached)
 # =============================================================================
 CELL_CACHE <- file.path(SIN, "sinasc_daily_estab.parquet")
-if (!file.exists(CELL_CACHE)) {
+if (!cache_fresh(CELL_CACHE, file.path(SIN, "sinasc_births.parquet"))) {
   message("building ", basename(CELL_CACHE), " from sinasc_births.parquet ...")
   ec <- open_dataset(file.path(SIN, "sinasc_births.parquet")) %>%
     filter(year >= 2015, year <= 2024, sector == "Private") %>%
@@ -129,6 +111,21 @@ birth_link <- d[, sum(births[!is.na(lag_beds_obstetric)]) / sum(births)]
 cat(sprintf("\n[2] CNES link: %.1f%% of establishment-days, %.1f%% of for-profit births\n",
             100 * link_rate, 100 * birth_link))
 
+# VALIDATION of the registered-obstetrician count, both sectors, one definition:
+# establishment-years with at least fifty births in the year whose CNES-PF record
+# lists no obstetrician. Quoted in the notes and in Section 5.
+vv <- open_dataset(file.path(SIN, "sinasc_births.parquet")) %>%
+  filter(year >= 2015, year <= 2024, sector %in% c("Private", "Public")) %>%
+  count(estab, year, sector) %>% collect() %>% as.data.table()
+vv <- vv[, .(n = sum(n), sector = sector[which.max(n)]), by = .(estab, year)][n >= 50]
+pf <- as.data.table(read_parquet(ESTAB_PANEL))[, .(estab = cnes, year, n_obstetricians)]
+vv <- merge(vv, pf, by = c("estab", "year"))
+zero_obst_sector <- vv[, .(zero = 100 * mean(n_obstetricians == 0),
+                           med = as.numeric(median(n_obstetricians))), by = sector]
+cat("[2] Maternity-years (>= 50 births) registering no obstetrician:\n"); print(zero_obst_sector)
+zfp  <- zero_obst_sector[sector == "Private", zero]
+zpub <- zero_obst_sector[sector == "Public",  zero]
+
 d <- d[!is.na(lag_beds_obstetric) & lag_vol >= 50]   # maternities with a prior year
 zero_obst <- unique(d[, .(estab, year, lag_n_obstetricians)])[, mean(lag_n_obstetricians == 0)]
 cat(sprintf("[2] Establishment-years registering zero obstetricians in CNES-PF: %.1f%%\n",
@@ -159,6 +156,14 @@ setnames(sus_desc, "sus_obst", "sus_share")
 cat(sprintf("[2] For-profit maternity-years: SUS obstetric-bed share mean %.3f, median %.3f, share above 0.5: %.3f\n",
             mean(sus_desc$sus_share), median(sus_desc$sus_share),
             mean(sus_desc$sus_share > 0.5)))
+# Section 3 of the paper: the share of each sector's obstetric beds made
+# available to the SUS, pooled over establishment-years (bed-weighted), and the
+# median for-profit establishment's share.
+bed_sus <- as.data.table(read_parquet(ESTAB_PANEL))[beds_obstetric > 0,
+  .(pct = 100 * sum(beds_obstetric_sus) / sum(beds_obstetric),
+    med = median(sus_share_obstetric)), by = sector]
+cat("[2] SUS share of obstetric beds by sector (bed-weighted %, median establishment):\n")
+print(bed_sus)
 cat(sprintf("[2] Coverage: obstetric-bed share defined for %.1f%% of establishment-days, all-bed share for %.1f%%\n",
             100 * d[, mean(!is.na(sus_obst))], 100 * d[, mean(!is.na(sus_all))]))
 cat(sprintf("[2] Contracted obstetrician hours per week: median %.0f, mean %.0f, share zero %.3f\n",
@@ -240,7 +245,7 @@ etable(m1, m2, m3, m4, m5, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "fixed effects of columns 2--5 restrict identification to municipality-days on",
          "which more than one for-profit establishment records a birth. Column 5 replaces",
          "obstetric beds with the count of obstetricians registered at the establishment",
-         "in CNES-PF; 14 percent of for-profit and 27 percent of public maternities",
+         sprintf("in CNES-PF; %.0f percent of for-profit and %.0f percent of public maternities", zfp, zpub),
          "register none, because Brazilian obstetricians hold their bond at their own",
          "practice, so this is a weak proxy for the obstetric team and is",
          "reported for completeness only. Establishment size does not separate the",
@@ -299,6 +304,8 @@ m12 <- feols(pre_share ~ weekend:sus_all + holiday:sus_all + weekend:log_beds +
                estab^year + muni^date, d[!is.na(sus_all)],
              weights = ~births, cluster = ~estab + date)
 
+k12w <- grep("^(weekend:sus_all|sus_all:weekend)$", rownames(coeftable(m12)), value = TRUE)
+k12h <- grep("^(holiday:sus_all|sus_all:holiday)$", rownames(coeftable(m12)), value = TRUE)
 dict2 <- c(dict, "weekend:beds_per100" = "Weekend $\\times$ obstetric beds per 100 deliveries",
            "beds_per100:weekend" = "Weekend $\\times$ obstetric beds per 100 deliveries",
            "holiday:beds_per100" = "National holiday $\\times$ obstetric beds per 100 deliveries",
@@ -335,9 +342,11 @@ etable(m6, m7, m8, m9, m10, m11, tex = TRUE, file = f2, replace = TRUE, dict = d
          "place more than half of their obstetric beds with the SUS, so legal-entity",
          "type 2xxx identifies a predominantly private-payer population. Column 6 drops",
          "the establishments that register no obstetric bed, for which the share is",
-         "undefined; measuring payer exposure by the SUS share of all beds keeps them,",
-         "leaves the weekend interaction unchanged at 2.08 percentage points and returns a",
-         "smaller but still significant holiday interaction of 2.59. All capacity",
+         "undefined; measuring payer exposure by the SUS share of all beds keeps them",
+         sprintf("and returns a weekend interaction of %.2f percentage points (standard error %.2f)",
+                 100 * coeftable(m12)[k12w, 1], 100 * coeftable(m12)[k12w, 2]),
+         sprintf("and a holiday interaction of %.2f (%.2f). All capacity",
+                 100 * coeftable(m12)[k12h, 1], 100 * coeftable(m12)[k12h, 2]),
          "measures are lagged one year and their levels are absorbed by the",
          "establishment$\\times$year fixed effects. The CNES establishment code links",
          sprintf("%.1f percent of for-profit births in 2015--2024, and", 100 * birth_link),

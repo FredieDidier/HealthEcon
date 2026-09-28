@@ -19,7 +19,8 @@ config/
 build/
   00_utils.R            # admission-count proxies, TUSS delivery codes
   01a_tiss.R            # one-time ANS TISS Hospitalar download (CONS + DET)
-  01b_sinasc_cnes.R     # one-time SINASC (Base dos Dados) + CNES downloads
+  01e_sinasc_datasus.R  # one-time SINASC download from the DATASUS FTP (RUN_01E=1)
+  01b_cnes.R     # one-time CNES downloads; sector-by-year rule for SINASC
   01c_ieps.R            # IEPS municipality-year covariates
   01d_cnes_estab.R      # establishment-year CNES capacity panel (beds, SUS bed shares, obstetricians)
   02_deliveries.R       # TISS delivery events + municipality-month panel
@@ -61,8 +62,7 @@ extracts cover 2010–2024 (~42M births).
 
 All data used in this paper are **public** and were obtained from open government
 and open-data sources. None are proprietary or subject to a restricted-use
-agreement; access requires only a (free) Google Cloud account for the SINASC
-BigQuery query. The raw microdata are redistributed by their original providers,
+agreement, and none requires an account. The raw microdata are redistributed by their original providers,
 not by us, so we do not host them in this repository; the build scripts download
 them programmatically from the URLs below. The intermediate and final workfiles
 live in the Dropbox tree above and are regenerated end-to-end by the build.
@@ -71,11 +71,11 @@ live in the Dropbox tree above and are regenerated end-to-end by the build.
 
 - **ANS TISS Hospitalar** — open data, downloaded by `build/01a_tiss.R` from
   `https://dadosabertos.ans.gov.br/FTP/PDA/TISS/HOSPITALAR/`.
-- **SINASC** — via [Base dos Dados](https://basedosdados.org/dataset/48ccef51-8207-40ee-af5b-134c8ac3fb8c)
-  (BigQuery; the targeted 24-column query is documented in `build/01b_sinasc_cnes.R`;
-  requires a Google Cloud billing project), then ingested by `ingest_sinasc()`.
+- **SINASC** — the 27 state files `DN<UF><YYYY>.DBC` of the DATASUS FTP
+  (`ftp://ftp.datasus.gov.br/dissemin/publicos/SINASC/1996_/Dados/DNRES/`),
+  downloaded and assembled by `build/01e_sinasc_datasus.R` (run with `RUN_01E=1`).
 - **CNES** (beds via `datazoom.saude`; professionals via `microdatasus`) —
-  downloaded by `build/01b_sinasc_cnes.R`. The establishment-year capacity panel
+  downloaded by `build/01b_cnes.R`. The establishment-year capacity panel
   used by the organizational-capacity analysis is built by `build/01d_cnes_estab.R`
   (run once with the environment variable `RUN_01D=1`).
 - **IEPS Data** — manual export from `https://iepsdata.org.br`, placed in
@@ -86,7 +86,7 @@ live in the Dropbox tree above and are regenerated end-to-end by the build.
 
 ### Data citations
 
-The same six sources are mirrored as BibTeX entries in `latex/refs.bib`
+The same five sources are mirrored as BibTeX entries in `latex/refs.bib`
 (`\cite` keys in brackets) so they appear in the paper's reference list.
 
 - Agência Nacional de Saúde Suplementar (ANS). *Padrão TISS — Troca de Informação
@@ -94,11 +94,9 @@ The same six sources are mirrored as BibTeX entries in `latex/refs.bib`
   ANS. https://dadosabertos.ans.gov.br/FTP/PDA/TISS/HOSPITALAR/ (accessed July
   2026). `[data_ans_tiss]`
 - Ministério da Saúde (Brasil), DATASUS. *Sistema de Informações sobre Nascidos
-  Vivos (SINASC), 2010–2024.* Accessed via Base dos Dados (dataset
-  `br_ms_sinasc`). https://basedosdados.org/dataset/48ccef51-8207-40ee-af5b-134c8ac3fb8c
-  (accessed July 2026). `[data_sinasc]`
-- Base dos Dados. *Mecanismo de acesso a dados públicos brasileiros (BigQuery).*
-  https://basedosdados.org (accessed July 2026). `[data_basedosdados]`
+  Vivos (SINASC), 2010–2024.* DATASUS FTP, files DNRES.
+  ftp://ftp.datasus.gov.br/dissemin/publicos/SINASC/1996_/Dados/DNRES/
+  (accessed September 2026). `[data_sinasc]`
 - Ministério da Saúde (Brasil). *Cadastro Nacional de Estabelecimentos de Saúde
   (CNES): leitos e profissionais, 2010–2024.* Accessed via the `datazoom.saude`
   and `microdatasus` R packages (accessed July 2026). `[data_cnes]`
@@ -141,7 +139,7 @@ Then:
    The two master scripts install any missing R packages automatically (via
    `pacman::p_load()`) before `source()`-ing the individual `build/` and
    `analysis/code/*.R` files, so there is no need to run `install.packages()` by
-   hand. The one-time raw downloads (`01a_tiss.R`, `01b_sinasc_cnes.R`,
+   hand. The one-time raw downloads (`01a_tiss.R`, `01b_cnes.R`,
    `01c_ieps.R`, `01d_cnes_estab.R`) are commented out (or gated behind
    `RUN_01D=1`) in the master script; uncomment them only to (re-)download the
    raw data.

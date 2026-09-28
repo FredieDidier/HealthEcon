@@ -276,7 +276,7 @@ Use-os para checar qualquer alegação. Divergiu, investigue antes de escrever.
 ## 6. Pipeline
 
 ```
-config/00_master_build.R    → build/ 00_utils · 01a_tiss · 01b_sinasc_cnes ·
+config/00_master_build.R    → build/ 00_utils · 01a_tiss · 01b_cnes ·
                               01c_ieps · 01d_cnes_estab (RUN_01D=1) ·
                               02_deliveries · 03_workfile
 config/00_master_analysis.R → analysis/code/ 00_utils · 01_descriptives ·
@@ -1345,7 +1345,7 @@ com SINASC no dado público** — limita análise de heterogeneidade em mortalid
 & Menezes-Filho reconhecem essa limitação explicitamente.
 
 ### Outras
-IEPS Data (indicadores municipais consolidados); Base dos Dados (acesso via BigQuery);
+IEPS Data (indicadores municipais consolidados); SINASC direto do FTP do DATASUS (desde 27/09/2026; antes via Base dos Dados, que não traz a hora do nascimento em 2022);
 lista de hospitais do Projeto Parto Adequado (ANS).
 
 ---
@@ -1484,7 +1484,7 @@ Divergência real entre eles **é para ser apontada, não resolvida em silêncio
 ```
 config/     config.R              ← O ÚNICO ARQUIVO A EDITAR POR MÁQUINA (DROPBOX_ROOT)
             00_master_build.R · 00_master_analysis.R
-build/      00_utils.R · 01a_tiss.R · 01b_sinasc_cnes.R · 01c_ieps.R
+build/      00_utils.R · 01a_tiss.R · 01b_cnes.R · 01c_ieps.R
             01d_cnes_estab.R (RUN_01D=1) · 02_deliveries.R · 03_workfile.R
 analysis/   code/   00_utils · 01_descriptives · 02_regressions (preço) ·
                     03_mechanisms · 04_heterogeneity · 05_cost · 06_robustness ·

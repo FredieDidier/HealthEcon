@@ -50,23 +50,7 @@ WFO  <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parque
 AOUT <- here::here("analysis", "output")
 
 # movable-holiday calendar, matching 07_main_specification.R / 08_long_weekends.R
-easter_sunday <- function(y) {
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y); out <- c(out, e - 2, e - 47, e - 48, e + 60)
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 # weighted quantiles (type-7-style), used to build equal-mass binscatter bins
 wq <- function(x, w, p) {
   o <- order(x); x <- x[o]; w <- w[o]
@@ -287,7 +271,8 @@ qa <- ggplot(ga, aes(week, 100 * share, colour = sector, linetype = sector)) +
   theme(plot.subtitle = element_text(size = 10.5, face = "bold",
                                      margin = ggplot2::margin(b = 6)))
 
-gp <- g[sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
+# the timing split uses 2012+, the years the timing indicator is recorded
+gp <- g[year >= 2012 & sector == "Private" & !(cesarean == 1 & !cesarea_antes_parto %in% c(1, 2))]
 gp[, group := fcase(cesarean == 0, "Vaginal", cesarea_antes_parto == 1, "Prelabor cesarean",
                     cesarea_antes_parto == 2, "In-labor cesarean")]
 gd2 <- gp[!is.na(group), .N, by = .(group, week = semana_gestacao)]
@@ -308,6 +293,10 @@ qb <- ggplot(gd2, aes(week, 100 * share, colour = group, linetype = group)) +
   theme(plot.subtitle = element_text(size = 10.5, face = "bold",
                                      margin = ggplot2::margin(b = 6)))
 
+cat("\n[11] Gestational-age shares for the figure note (%):\n")
+print(ga[, .(p37_38 = round(100 * sum(share[week %between% c(37, 38)]), 1),
+             p40_41 = round(100 * sum(share[week %between% c(40, 41)]), 1)), by = sector])
+print(gd2[, .(p37_38 = round(100 * sum(share[week %between% c(37, 38)]), 1)), by = group])
 fig_gest <- qa | qb
 ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.pdf"), fig_gest, width = FIG_WIDTH, height = 4.0)
 ggsave(file.path(AOUT, "graphs", "fig_gestation_panels.png"), fig_gest, width = FIG_WIDTH, height = 4.0, dpi = 300)

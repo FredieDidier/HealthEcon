@@ -1,13 +1,11 @@
 # CLAUDE.md — HealthEcon Project Guide
 
-> **2026-09-27 — every number below was re-estimated.** The sector is now the
-> establishment's legal nature in the birth's own year (CNES 2012-2024; 2010-2011
-> take 2012), not "ever for-profit"; the prelabor/in-labor split uses 2012+ in
-> every script; Table 2 col 3 uses 2014+; family E has four tests; a July-10 model
-> cache (`m_tax_slim.rds`) had frozen the long-weekend Panel A. The headline
-> differential fell from −2.3 to −1.8pp (weekend) and −2.9 to −2.5pp (holiday);
-> the capacity interactions are no longer significant with muni×date FE. Full
-> record: `parto_cesareo/REVISION_LOG.md`, entry of 2026-09-27. Where this file
+> **2026-09-27 — full code audit; SINASC now from the DATASUS FTP.** The sector
+> is the establishment's legal nature in the birth's own year; TISS deliveries
+> are typed by the TUSS code (15% had been dropped); timing analyses 2012+,
+> Robson 2014+; SINASC "ignored" codes handled; Table 1's bootstrap actually
+> runs (p 0.32); demand-smoothing weeks include zeros. Headline: −1.8pp weekend /
+> −2.5pp holiday. Full record: `parto_cesareo/REVISION_LOG.md`. Where this file
 > and the generated tables disagree, the tables win.
 
 
@@ -15,7 +13,7 @@
 
 Empirical paper, *"Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean
 Delivery in Brazil."* It asks why Brazil's **for-profit maternity sector** runs
-the highest cesarean rate documented for any large health system (~80% of
+one of the highest cesarean rates recorded in any health system (~80% of
 deliveries, vs a WHO reference of 10–15%), and answers by separating a **price
 channel** (do relative fees drive it? no) from a **scheduling channel** (do
 cesareans cluster on weekdays and dip on weekends and holidays? yes). Target
@@ -51,9 +49,9 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   intervals do not fit inside the pre-registered negligible region, so never say
   "there is no relationship" or "fees don't matter." Say: the sign is unstable
   across fixed-effect schemes, and the canonical magnitude
-  (\citet{gruber1999physician}, ~1pp per US$1,000 = ~0.72pp per log point at our
-  fee levels) is too small to matter at this scale, predicting ~0.25pp against a
-  35pp gap. The RAW FACT leads, the regression follows.
+  (\citet{grant2009}, ~1pp per US$1,000 = ~0.73pp per log point at our fee levels;
+  \citet{gruber1999physician} four times that) is too small to matter at this
+  scale, predicting at most ~0.36pp and ~1.4pp against a 36pp gap. The RAW FACT leads, the regression follows.
 - **demand smoothing** (Eq. de Elejalde-Giolito) = tested and NOT supported. The
   pull-forward null is weak (say so); the throughput result points the other way
   but is only marginally significant and dies under the family adjustment, so
@@ -94,7 +92,7 @@ of cesareans or neonatal outcomes caused by scheduling."*
 
 ## Naming: the two "private" populations (KEEP DISTINCT)
 
-They overlap (~79–82%) but are not the same population, and SINASC has no payer
+They overlap (~81–84%) but are not the same population, and SINASC has no payer
 flag. Enforced in code via `sector_display()` / `SECTOR_DISPLAY` in
 `analysis/code/00_utils.R`:
 
@@ -104,7 +102,7 @@ flag. Enforced in code via `sector_display()` / `SECTOR_DISPLAY` in
   regressions subset on them; relabel only display/plot objects with
   `sector_display()`.
 - **TISS** → claims financed by **private insurance**, private by construction.
-  Call it the **"private-insurance sector"**. ~82% cesarean.
+  Call it the **"private-insurance sector"**. ~84% cesarean.
 
 Never write bare "private" as the SINASC group name, and never "private
 for-profit" (conflates payer and ownership). The rule binds figure legends too:
@@ -144,312 +142,59 @@ reintroduce `else → Public`.
 
 ## Core results
 
-1. **The epidemic is real and extreme** — for-profit cesarean ~82% (TISS) / ~79%
-   (SINASC) vs ~44% public; ~66% even in Robson 1 (spontaneous labor) on weekdays.
-2. **Not a positive price story** — with the *economic* vaginal fee (delivery fee
-   + separately billed hourly labor assistance, TUSS 31309038), the fee gap is
-   negative in the big states yet they are ~80% cesarean; the coefficient is
-   sign-unstable (+0.017 UF FE / −0.014 muni FE, n.s.; +0.047 UF FE without
-   controls, marginally significant — do NOT call it "small"); ±2 log-point state
-   swings move nothing; the 2015 court order never became an actual fee change.
-   The claim is calibrated, not an equivalence result: see the taxonomy above.
-3. **A scheduling story** — cesareans cluster on weekdays and dip on weekends
-   (−7.9pp for-profit / −6.7 public) and holidays (−5.3 / −3.5); 8–11am OR spike;
-   half of cesareans in weekday business hours vs 29.8% uniform benchmark.
-   NB: the holiday coefficient must use `holiday_dates(2010:2024)` — the daily file
-   spans 2010–2024, so an earlier `holiday_dates(2015:2024)` in `03_mechanisms.R`
-   left 2010–2014 holidays unflagged and diluted the coefficient to −5.3/−3.5.
+1. **The epidemic is real and extreme** — cesarean ~84% in the private-insurance
+   sector (TISS) / ~81% for-profit (SINASC) vs ~43% public; 68% even in Robson 1
+   (spontaneous labor) on weekdays, against 36% public.
+2. **Not a positive price story** — with the *economic* vaginal fee (labor
+   assistance billed on 38% of vaginal deliveries, 2.9 h at ~R$420/h), a cesarean
+   pays 18–38% less in each of the five largest states, which run ~80% cesarean.
+   The coefficient is sign-unstable: +0.049** UF FE / −0.014* muni FE without
+   controls, +0.019 / −0.013 (n.s.) with them; state swings of up to 1.4 log
+   points move nothing (wild bootstrap p 0.32); the 2015 court order never became
+   a fee change. Calibrated, not an equivalence result.
+3. **A scheduling story** — weekend dips −7.9pp for-profit / −6.7 public, holidays
+   −5.3 / −3.5; half of cesareans in weekday business hours vs 29.8% uniform.
 4. **Eq. (3), the central estimate** — within the same municipality-day the
-   for-profit differential is **−1.8pp weekend / −2.5pp holiday**, essentially
-   unchanged (−2.2 / −2.6) after adjusting for predetermined maternal composition.
-   (Strengthened from −1.8/−2.4 by the 2026-07-11 nat_jur fix, which removed
-   misclassified unmatched clinics from Public; verified by fold-back.)
-5. **The dip lives in prelabor cesareans** — for-profit weekend dip −8.9pp
-   prelabor vs +1.7pp in-labor; persists in low-risk Robson 1–2 (−7.4pp) and
-   Robson 1 alone (−6.5pp, all intrapartum).
-6. **The cost** — +12.2pp early-term (37–38wk) with maternal controls; 73%
-   practice style (Kitagawa); ~35k excess weekday cesareans/yr against the
-   OWN-MUNICIPALITY weekend benchmark (10.0% of weekday cesareans); near-parity in
-   billed amounts.
+   for-profit differential is **−1.8pp weekend / −2.5pp holiday**; −1.8 / −2.4
+   with predetermined composition; −1.5 / −1.7 with Robson shares (2014+).
+5. **The dip lives in prelabor cesareans** — −8.9pp prelabor vs +1.9pp in-labor
+   (2012+); Robson 1–2 −7.0pp, Robson 1 −6.0pp (2014+; Robson 1 has no prelabor
+   component, the rest of its dip is cesareans without a timing code).
+6. **The cost** — +12.2pp early-term with maternal controls; 73% practice style
+   (Kitagawa, 36.2pp gap); ~35k excess weekday cesareans/yr (9.3% of ~380k)
+   against the own-municipality-year weekend benchmark; billed amounts near parity
+   (mean cesarean 1% lower, median 4% higher).
 
-## The two new extensions (2026-07-10) and their honest results
-
-**Long weekends + displacement (`08_long_weekends.R`, Table 4 = `tab_long_weekends`).**
-A single pre-specified exercise (primary outcome = prelabor cesarean share,
-window [−3,+3], sample = 8 fixed-date national holidays 2012–2024). Holiday
-taxonomy by day of week: **Isolated = Wednesday** (the truly isolated case, per
-referee — a Mon/Fri holiday auto-creates a 3-day weekend), **ThreeDay = Mon/Fri**,
-**Bridge = Tue/Thu**, weekend-falling = placebo. Eq. (`eq:blocks`) adds
-ForProfit×DOW and ForProfit×HolidayName controls; event study (`eq:event`) on
-counts (prelabor/in-labor/vaginal/total), differencing for-profit minus public
-within municipality-day (algebraically = the muni×date FE), two-way clustered.
-**RESULT = NULL in the predicted direction, reported honestly:** bridge dip is NOT
-larger than isolated (γ_B=γ_I p≈0.68, prelabor p≈0.95); NO pre-holiday bunching
-(pre-window prelabor sum −0.46/day, a deficit); vaginal births also fall around
-holidays → some of it is a contraction of institutional activity, not diary
-rearrangement. This **bounds** the "whose convenience" claim: the calendar
-evidence identifies supply-side scheduling but not that it is the individual
-physician's leisure. (`tab_displacement_robust` = supplement.)
-
-**Organizational capacity (`09_org_capacity.R`, supplement Table D.8 = `tab_org_capacity`).**
-Establishment-date panel of for-profit births, capacity = **obstetric beds**
-(lagged one year, predetermined) + annual delivery volume as scale control,
-`estab^year + muni^date` FE, clustered estab+date, primary outcome prelabor
-cesarean share. **VALIDATION FINDING (revised 2026-07-11 after the CBO/CNES-PF
-rebuild):** the CNES-PF obstetrician count is a WEAK proxy — among maternities
-with ≥50 deliveries, **14% (for-profit) / 27% (public) register ZERO
-obstetricians** (median 3/2), because Brazilian obstetricians hold their CNES bond
-at their own practice, not the delivery hospital, so the count reflects
-registration not the on-call roster. (The earlier "46%, equally, median 1" was an
-artifact of the wrong CBO set — only 225250, no 223132 — plus a 17-of-27-UF
-download; both fixed. Prose softened, do NOT reintroduce "half"/"equally".
-⚠️ That softening had reached the paper body and `tab_org_capacity_valid` but NOT
-the note of `tab_org_capacity` itself, which still said "about half … equally" in
-both `09_org_capacity.R` and the generated `.tex` until 2026-09-04; it now reads
-"14 percent of for-profit and 27 percent of public maternities register none".
-`09` was not re-run — the change is text only.) Beds
-carry the analysis; obstetrician count is col 5 only. **RESULT is weak/mixed:**
-every interaction is positive (larger = flatter gradient) but, since the
-2026-09-27 re-estimation, NONE is significant under muni×date FE (scale +0.64pp,
-SE 0.41; beds +0.57pp, SE 0.38); the scale term is precise only with date FE
-(col 1, +1.49pp***); terciles flat; family E has four tests, none significant
-even unadjusted. Permitted: "the point estimates suggest a flatter gradient at
-larger services, but none is distinguishable from zero with municipality-by-date
-fixed effects." No longer a 'fingerprint' of the paper. Forbidden: "proves it is the individual physician's
-calendar rather than hospital capacity."
-
-## The model (`latex/model.tex`, Appendix A)
-
-Physician weighs fee gap $f_c-f_v$ against a convenience premium $\Pi$ (value of
-converting an unschedulable, long, calendar-blocking event into a ~1h scheduled
-procedure). Sections iff $(f_c-f_v)+\Pi > \alpha\theta$. $\Pi>0$ even when the
-fee gap is negative — exactly what the data show. Predictions: P1 fees not
-operative (Table 1 nulls); P2 prelabor bunch weekday business hours, in-labor
-inherit random onset (Table 2 cols 4–5); P3 dip larger where obstetric time
-scarce (now the org-capacity extension, weaker than hoped); P4 booking before the
-wk-39 hazard → early-term excess (Table 5, `tab09_health`).
-
-## Repository layout
-
-```
-config/   config.R (DROPBOX_ROOT — the only per-machine edit)
-          00_master_build.R · 00_master_analysis.R (ordered 01→11)
-build/    00_utils.R          admission proxies + TUSS delivery codes
-          01a_tiss.R          one-time ANS TISS downloader (CONS+DET)
-          01b_sinasc_cnes.R   one-time SINASC (Base dos Dados) + CNES beds/PF
-          01c_ieps.R          IEPS muni-year covariates
-          01d_cnes_estab.R    establishment-year CNES capacity panel (RUN_01D=1)
-          02_deliveries.R     TISS delivery events + muni-month panel
-          03_workfile.R       → main_data.parquet
-analysis/ code/  00_utils.R (theme_paper, PAL, sector_display, tex_row/tex_coef/
-                 tex_nobs, postprocess_tex, standardize_notes, write_table_tex,
-                 unescape_refs) · 01_descriptives.R ·
-                 02_regressions.R (price channel → tab_fees) · 03_mechanisms.R
-                 (scheduling/Robson/prelabor → tab_prelabor_lowrisk; decomposition) ·
-                 04_heterogeneity.R (supp) · 05_cost.R · 06_robustness.R (policy
-                 nulls, permutation, neonatal) · 07_main_specification.R (Eq 3 →
-                 tab_main_gradient) · 08_long_weekends.R · 09_org_capacity.R ·
-                 10_supplement.R · 12_subgroups.R (Robson/gestation/age splits →
-                 tab_subgroup_gradients + robson_grad.rds) ·
-                 13_demand_smoothing.R (de Elejalde-Giolito channel →
-                 tab_demand_smoothing + fam_F.rds; RUN BEFORE 10) ·
-                 14_estab_practice_style.R (Robson-standardized dispersion across
-                 maternities → tab_estab_practice_style) ·
-                 11_body_figures.R (merged panels; RUN AFTER 12)
-          output/ {graphs, tables, maps}      committed to git
-latex/    paper.tex · model.tex (App A) · appendix.tex (A+B) · supplement.tex
-          (standalone) · sup_appendix.tex (shared C+D body) · refs.bib
-dictionary/ ANS TISS dictionaries · build_dictionary.R · variable_dictionary.xlsx
-```
-
-Scripts are self-contained (each re-sources config + utils + its own data).
-**Order matters at the tail:** 07/08/09/13 each save a hypothesis family
-(`analysis/output/fam_{A,D,E,F}.rds`) that `10_supplement.R` reads for the
-multiple-testing table; 08 also builds `fig_long_weekend_event`, the displacement
-event study now shown in the supplement. **`12_subgroups.R` runs BEFORE `11`**
-despite its number: it saves `robson_grad.rds`, the coefficients `11` draws as
-Figure 3 panel (c) (`11` falls back to the old two-panel layout if the file is
-absent). `11_body_figures.R` is otherwise self-contained (it reads
-`sinasc_daily_muni` + `main_data`, no longer `evt_coefs.rds`).
-`13_demand_smoothing.R` is cheap (~1 min, reads only the cached
-`sinasc_daily_estab.parquet`), so it is outside the memory constraint below.
-**Do NOT run two 42M-row scripts (07, 08, 09, 03, 05, 06, 12, 14) concurrently** —
-each loads `sinasc_births.parquet` and two together exhaust memory (12 alone peaks
-around 14GB of R vector cells). Run sequentially.
-
-## Data (Dropbox, not git)
-
-```
-<DROPBOX_ROOT>/build/
-  TISS/input/Hospitalar/{CONS,DET}/...              raw ANS claims 2015–2025
-  TISS/output/delivery_events_<yr>.parquet · delivery_panel_muni_month.parquet
-  SINASC/input/sinasc_births.parquet (~42M, 2010–2024) · sinasc_daily_muni.parquet
-         (muni×date×sector) · sinasc_daily_timing_muni.parquet (adds prelabor/
-         in-labor/vaginal counts, cached by 08) · sinasc_daily_estab.parquet
-         (establishment×date for-profit cells, cached by 09) ·
-         sinasc_estab_year_robson.parquet (establishment-year × Robson cells with
-         case-mix sums, all three sectors, cached by 14)
-  CNES/input/cnes_beds_muni_year.parquet (MONTHLY — 12 competências/yr; take
-         December only when aggregating) · cnes_obstetricians_muni_year.parquet ·
-         cnes_obstetricians_estab_year.parquet · cnes_estab_year.parquet (the
-         establishment capacity panel from 01d; carries beds_sus /
-         beds_obstetric_sus / sus_share / sus_share_obstetric since 2026-09-07)
-  IEPS/output/ieps_muni_year.parquet
-  covariates/input/parto_adequado_fase2_hospitais.csv
-  workfile/output/main_data.parquet                 THE muni-year analytical file
-```
-
-Sources: ANS TISS PDA; SINASC via Base dos Dados (24-col query in
-`01b_sinasc_cnes.R`, needs a GCP billing project); CNES beds via `datazoom.saude`,
-CNES-PF via `microdatasus`; IEPS manual export; Parto Adequado Fase-2 PDF.
-
-## Key variables
-
-| Variable | Description | Source |
-|---|---|---|
-| `cesarean` | =1 if cesarean. TISS: TUSS 31309054/31309208 vs vaginal 31309127. SINASC: `tipo_parto==2`. | TISS/SINASC |
-| `sector`/`private` | Establishment sector by `nat_jur` first digit: 1→Public, 2→Private (for-profit), 3→Nonprofit, else (4/5/unmatched)→Other. `private`=1 iff for-profit (2xxx). See the nat_jur table above. | SINASC×CNES |
-| `cesarea_antes_parto` | 1=prelabor, 2=in-labor. **Usable from 2012** (98% missing 2010, 53% 2011, <15% from 2012). | SINASC |
-| `fee_vaginal_econ` | Economic vaginal fee = delivery fee + hourly labor-assist (31309038). | TISS DET |
-| `log_fee_gap` | log(fee_cesarean/fee_vaginal_econ). Negative in big states. | TISS |
-| `tipo_robson` | Robson "01".."11" (01=spontaneous labor). Populated from ~2014. | SINASC |
-| `weekend`,`holiday`,`eve` | Easter-based movable holidays via the anonymous Gregorian algorithm (Good Friday, Carnival Mon+Tue, Corpus Christi). | derived |
-| establishment capacity | `beds_obstetric` (tipo_leito==4, December competência), `beds_total`, `n_obstetricians` (CBO via `is_obstetra`, WEAK — see above), `n_physicians` (CBO via `is_medico`), `vol` (own deliveries), one-year-lagged. | CNES via 01d |
-
-**CBO (occupation) classifiers** — canonical definitions live in `build/00_utils.R`
-(`is_medico` / `is_obstetra` / `is_enfermeiro` / `is_enfermeiro_obstetra`); the
-CNES-PF field mixes 4-digit CBO-94 and 6-digit CBO-2002 codes, so they coerce to
-numeric for range tests and string-match the alphanumeric residuals. Used in
-`01b` (muni-year obstetrician count) and `01d` (establishment obstetrician +
-physician counts). **Obstetra = exactly {225250 gineco-obstetra, 223132 obstetra,
-6149, 6145}** (the old `225250`+`225270` set was wrong — `225270` is
-family-strategy, not obstetrics). **Médico (all)** = CBO-94 6105–6190, CBO-2002
-223101–223157 and 225103–225350, plus 2231A1–2231G1. **Enfermeiro (all)** =
-7110–7165, 223505–223565, 2235C1–2235C3; **enfermeiro obstetra = 7145** (nurses
-are not used in the current paper — kept for a possible midwife-supply revision).
-
-## Exhibit map (current body: 3 figures + 6 tables)
-
-**The numbers below are the ones LaTeX actually prints** (verified against
-`paper.aux`, 2026-07-22). Summary statistics used to be body Table 1 and moved to
-the supplement, which shifted every body table down by one; the map had never been
-renumbered. **If you move an exhibit, re-derive this map from `paper.aux`**
-(`grep -o "newlabel{tab:[^}]*}{{[^}]*}" paper.aux`), do not renumber by hand.
-
-| Exhibit | Label | Script | Content |
-|---|---|---|---|
-| Figure 1 `fig01_csection_trend` | `fig:trend` | 01 | Cesarean rate by sector over time |
-| Figure 2 `fig_two_margins` | `fig:two_margins` | 11 | (a) price-margin binscatter (cesarean rate on log fee gap, muni+year FE removed); (b) scheduling margin: weekend/holiday/eve gradients for public + for-profit + the for-profit differential. The one exhibit showing both channels side by side. |
-| Figure 3 `fig_calendar_fingerprints` | `fig:calendar` | 11 (+12) | (a) DOW × sector, (b) hour of birth, (c) weekend gradient by Robson group (coefficients from `12`; added 2026-07-22). Bridge-holiday event study MOVED to supplement. |
-| Table 1 `tab_fees` | `tab:fees` | 02 | Fee evidence: Panel A levels (Eq 1) + Panel B state-year first-diff |
-| Table 2 `tab_main_gradient` | `tab:main_gradient` | 07 | **Eq (3)**: Panel A for-profit differential (baseline / +predetermined / +Robson / prelabor / in-labor); Panel B each sector's own gradient |
-| Table 3 `tab_prelabor_lowrisk` | `tab:prelabor_lowrisk` | 03 | Weekend dip by prelabor/in-labor × Robson 1–2 / Robson 1 |
-| Table 4 `tab_long_weekends` | `tab:long_weekends` | 08 | Holiday taxonomy (Panel A) + displacement sums (Panel B) |
-| Table 5 `tab09_health` | `tab:health` | 05 | Early-term / LBW / low-Apgar sector differences |
-| Table 6 `tab11_decomposition` | `tab:decomposition` | 03 | Kitagawa + excess weekday cesareans |
-
-**Body is exactly 6 tables + 3 figures**: figures = trend (Fig 1),
-`fig_two_margins` (Fig 2, price binscatter + scheduling gradients — the summary
-exhibit, added 2026-07-12 per the ECON-GPT suggestion; built in `11`), and
-`fig_calendar_fingerprints` (Fig 3, 3 panels since 2026-07-22). The gestational-age
-figure and the bridge-holiday displacement event study (former Fig-3 panel c) BOTH
-moved to the supplement (2026-07-12); the body cites them via `\safig{fig:gestation}`
-(now Figure C.4) / `\safig{fig:displacement_event}` (now Figure D.1, the standalone
-`fig_long_weekend_event.pdf` from `08`). `tab_org_capacity` (the
-organizational-capacity result, Section 6D) was **moved to the supplement**
-(2026-07-10, review round 2), where it is Table D.8: it came back weak/null, so
-featuring it in the body invited "why is this here"; Section 6D now carries a
-one-paragraph summary that points to the supplement. The summary statistics
-(`tab01_descriptives`, once body Table 1) live in the supplement as Table C.1; the
-body just cites them. JHE publishes papers of any length and encourages short ones,
-so the trimmed body is fine; do not re-inflate it.
-
-**All table and figure captions are bold** (`\caption{\textbf{...}}`), matching
-the house style. `postprocess_tex()` bolds the caption of every etable table on
-re-run; hand-built `writeLines` tables include `\textbf` in source. If you add a
-new table, keep the bold. The **figure** captions in `paper.tex` and
-`sup_appendix.tex` were the exception until 2026-09-04 (they were plain while all
-29 tables were bold) and are now bold too, so the rule finally holds literally.
-Note that in an etable table the `\label` comes *first*
-(`\caption{\label{tab:x} \textbf{Title}}`), so a grep for `caption{\textbf`
-misses ten of them and will tell you they are unbolded — they are not.
-
-**Body subsections carry no letter** (since 2026-09-04, user request): write
-`\subsection{The price channel}`, not `\subsection{A. The price channel}`, so the
-heading prints as "4.1", not "4.1 A". The organizational-capacity subsection
-carries `\label{sec:capacity}` because two cross-references used to point at it
-as `Section~\ref{sec:mechanism}\,D`; reference subsections by label, never by
-letter.
-
-**Supplement** (`sup_appendix.tex`, built by 10_supplement + 06_robustness + moved
-body exhibits). **Reorganized 2026-07-16 into three appendices so a reader can
-tell robustness from description** (user request): **C = additional descriptive
-figures/tables** (summary stats, map, business hours, Robson-DOW, daily counts,
-mechanism-checks table, gestation panels, billed cost); **D = robustness,
-validation, and inference** (D.1 weekend-dip alternatives/placebos incl.
-neonatal-suggestive and `tab_subgroup_gradients` = Table D.3, the
-term/preterm + maternal-age splits added 2026-07-22; D.2 long
-weekends/displacement, D.3 org capacity, D.4
-heterogeneity + demand-side alternatives, D.5 measurement validation +
-few-cluster inference + sample flow, D.6 multiple testing); **E = the policy
-record** (Parto Adequado Sun–Abraham event study + RN 368 timeline). Old labels
-`app:robustness`/`app:referee` → now `app:descriptive`/`app:robustness`/
-`app:policy`. Contents in detail: summary stats, for-profit-cesarean map, business-hours table,
-Robson-DOW figure, daily-counts figure, gestational-age panels
-(`fig_gestation_panels`, moved from body 2026-07-12), bridge-holiday displacement
-event study (`fig_long_weekend_event`, the former Fig-2 panel c), full
-mechanism-checks table (incl.
-Robson-10, which is NOT a clean placebo — interaction p=0.18), billed-cost table,
-`tab_displacement_robust`, `tab_org_capacity_valid`, municipality heterogeneity
-(`tab10_heterogeneity` — obstetrician density, education), `tab10b_modality`
-(cooperativas), referee robustness, region/period
-stability, permutation ranking, no-indication share, neonatal (null, underpowered
-— do NOT feature), fee CI/equivalence, base-vs-economic fee, few-cluster
-bootstrap, sample flow, timing missingness, Robson validation, **the Parto
-Adequado hospital-level Sun–Abraham event study only** (`fig_ref_c11`, from
-`10_supplement.R` H/C11, styled: x-axis in years, dashed line at the 2017 onset,
-y = "For-profit cesarean rate") **plus the RN 368 timeline `fig05`**. `tab_multiple_testing`
-(6 families A–F, incl. long weekends D, capacity E and demand smoothing F).
-**`tab_estab_practice_style` (added 2026-09-07) is Table C.4**, which pushed
-`tab12_cost` from C.4 to C.5; appendix D is unchanged. Re-derive from
-`supplement.aux`, never renumber by hand.
-D.10 is `tab_demand_smoothing` (added 2026-09-05, inside the organizational-capacity
-block); it pushed heterogeneity to D.11 and everything after down one — re-derive
-from `supplement.aux`, never renumber by hand.
-
-## Key numbers (sanity checks; SINASC = 2010–2024)
+## Key numbers (sanity checks; SINASC = 2010–2024 from DATASUS)
 
 | Fact | Value |
 |---|---|
-| Cesarean (all / for-profit / nonprofit / public) | ~56% / 81% / 60% / 43% |
+| Cesarean (all / for-profit / nonprofit / public) | 56.4% / 80.7% / 59.9% / 43.0% |
 | Weekend dip (for-profit / public) | −7.9pp / −6.7pp |
-| Holiday dip (for-profit / public) | −5.6pp / −3.5pp (full 2010–2024 holiday range) |
+| Holiday dip (for-profit / public) | −5.3pp / −3.5pp |
 | **Eq (3) for-profit differential (muni×date FE)** | **weekend −1.8pp / holiday −2.5pp**; +predetermined −1.8 / −2.4; +Robson (2014+) −1.5 / −1.7 |
-| Weekend dip: prelabor vs in-labor (for-profit) | −8.9pp vs +1.9pp |
-| Robson 1–2 / Robson 1 weekend dip (for-profit) | −7.4pp / −6.5pp |
-| Robson profile, for-profit vs public weekend dip (Fig 3c) | G1 −6.3/−3.7 · G2 −5.2/−3.8 · G3 −8.0/−3.0 · G4 −9.1/−4.2 · G5 −3.6/−5.8 · G10 **−5.1/−5.2 (identical)** |
-| Eq (3) differential, term vs preterm | −2.5pp vs **+0.8pp**; difference +3.4pp, p<0.001 |
-| Eq (3) differential, mother <35 vs 35+ | −3.0pp vs +1.3pp (diff +4.3, p<0.001); within Robson 1–2, −5.0 vs −1.4 (diff +3.6, p<0.001) |
-| Long-weekend: bridge = isolated test | p≈0.68 (prelabor p≈0.95) — NO larger bridge effect |
-| Pre-holiday prelabor bunching (bridge) | −0.46/day (deficit, NOT bunching) |
-| Org capacity: weekend×log(beds) prelabor | +0.57pp n.s. (muni×date FE); scale +0.64pp n.s. (col 2); scale +1.49pp*** only with date FE (col 1) |
-| Zero-obstetrician maternities (CNES-PF, ≥50 deliv.) | 14% for-profit / 27% public (median 3/2), corrected CBO + full 27-UF download |
-| Early-term (37–38wk) for-profit gap, maternal controls | +12.2pp*** |
-| Kitagawa: 36.2pp gap | 27% case-mix / 73% practice style |
-| Robson-standardized rate by sector (estab-year, births-weighted) | for-profit 72.1 / nonprofit 58.0 / public 47.9 (observed 78.8 / 59.9 / 44.8) |
-| Standardization removes of the 34.0pp for-profit–public gap | 9.8pp = 28.8%, matching the Kitagawa's 28% by another route |
-| Dispersion ACROSS for-profit maternities, standardized | SD 14.4pp; 6.6pp survives muni×year + maternal composition + capacity (46% of raw) |
-| Two for-profit maternities, same municipality-year | 13.4pp mean absolute gap in the standardized rate |
+| Weekend dip: prelabor vs in-labor (for-profit, 2012+) | −8.9pp vs +1.9pp |
+| Robson 1–2 / Robson 1 weekend dip (for-profit, 2014+) | −7.0pp / −6.0pp |
+| Robson profile, for-profit vs public (Fig 3c) | G1 −6.2/−3.6 · G2 −5.0/−3.7 · G3 −7.9/−3.0 · G4 −8.9/−4.2 · G5 −3.3/−5.8 · G10 −4.8/−5.3 |
+| Robson 1 vs 10 (for-profit) | G1 dip 1.3pp larger, p = 0.006; still not a placebo |
+| Eq (3), term vs preterm | −2.1pp vs +1.5pp; difference +3.6pp |
+| Eq (3), mother <35 vs 35+ | −2.5pp vs +1.7pp*; within Robson 1–2, −4.8 vs −1.4 |
+| Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70); family D Holm 0.202 |
+| Pre-holiday prelabor bunching (bridge) | −0.47/day (deficit, not bunching); window −1.24 |
+| Org capacity, muni×date FE (prelabor) | beds +0.58 (0.38), scale +0.64 (0.41), n.s.; scale +1.49*** only with date FE |
+| Zero-obstetrician maternities (CNES-PF, ≥50 births) | 14% for-profit / 26% public (median 3/2) |
+| Weekend × SUS share of obstetric beds | +2.58pp**; holiday +2.85pp*** |
+| Weekend × log contracted obstetrician hours | −0.16pp (0.17); scale +1.31pp*** in that column |
+| Early-term (37–38wk) gap, maternal controls | +12.2pp*** |
+| Kitagawa, 36.2pp gap | 27% case-mix / 73% practice style |
+| Robson-standardized dispersion across for-profit maternities | SD 14.1pp; 6.3pp survives muni×year + composition + capacity (44%); same-municipality pairs differ by 11.9pp |
 | SUS share of obstetric beds by nat_jur | public 98.8% / for-profit 22.2% (median 0) / nonprofit 72.0% |
-| Weekend × SUS share of obstetric beds (for-profit) | +2.12pp (SE 1.04, p=0.041); holiday +3.37pp (SE 1.19, p=0.005) |
-| Weekend × log contracted obstetrician hours | −0.16pp (SE 0.17) — a precise zero, while scale is +1.31pp*** in that column |
-| Excess weekday cesareans (own-municipality benchmark) | 39,135/yr for-profit = 10.0% of weekday cesareans (national sector-year benchmark would give 50,073; do NOT mix them) |
-| Same benchmark, municipality pooled over years (NOT what the code does) | 41,535/yr = 10.6% -- this is the 41.5k of the internal review; the script benchmarks municipality x YEAR, which is tighter and gives 39,135. Both are "own-municipality"; the difference is the year-specific weekend rate. Verified 2026-09-06 |
-| Reconciliation of the two counterfactuals | 7.9pp gross × 463k weekday births = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
-| GKM benchmark in our units | ~0.72pp per log point of the fee gap (R$1,941 mean cesarean fee) |
-| Demand smoothing, pull-forward δ | −0.21pp (SE 0.29) n.s.; forecast slope 0.065 out of sample; MDE 0.80pp |
-| Demand smoothing, throughput | prelabor share → log VMR of weekly births +0.27 (p=0.065, Holm 0.196) |
-| `log_fee_gap` coef (UF / muni FE) | +0.017 / −0.014 (n.s.) |
+| Excess weekday cesareans (own-municipality-year) | 35,330/yr for-profit = 9.3% of weekday cesareans |
+| Footnote reconciliation | 7.9pp × 463k = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
+| Price benchmarks in our units | Grant 0.73 / GKM 2.90 pp per log point (R$1,963 mean cesarean fee) |
+| Demand smoothing | next-week coefficients small, either sign, none significant; forecast slope 0.050; MDE 0.63pp; dispersion +0.31 (0.16), Holm 0.173 |
+| Private-insurance cesareans with no recorded indication | 77–81% a year (blank or O80–O84 only) |
+| `log_fee_gap` (UF / muni FE, no controls) | +0.049** / −0.014* |
 
 ## Compile
 

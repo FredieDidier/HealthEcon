@@ -4,7 +4,7 @@
 **Alvo:** Journal of Health Economics (Elsevier) · submissão prevista **março/2027**
 **Autores:** Fredie Didier (IDP, correspondente) · Vinicius Mendes (UFBA) · Pablo Castro (UFBA) · Lucas Emanuel (UFBA)
 **Repositório:** `scripts_github/` · **Dados:** `dataset/` · **Documento vivo do projeto:** `scripts_github/CLAUDE.md`
-*Atualizado em 20/08/2026.*
+*Atualizado em 27/09/2026 (auditoria de código; SINASC passou a vir do FTP do DATASUS).*
 
 ---
 
@@ -50,17 +50,18 @@ Prioridade quando o estabelecimento aparece sob vários códigos: for-profit > n
 
 | Fonte | Arquivo | Conteúdo |
 |---|---|---|
-| **SINASC** | `SINASC/input/sinasc_births.parquet` | **42.003.663 nascimentos**, 2010-01-01 a 2024-12-31, 32 colunas |
-| | `sinasc_daily_muni.parquet` | 8.805.014 células muni × data × setor |
-| | `sinasc_daily_timing_muni.parquet` | 4.217.907 células, com contagens pré-parto/intraparto/vaginal |
-| | `sinasc_daily_estab.parquet` | 1.534.506 células estabelecimento × data (for-profit) |
+| **SINASC** | `SINASC/input/sinasc_births.parquet` | **42.006.849 nascimentos**, 2010-01-01 a 2024-12-31, dos 27 arquivos estaduais DNRES do FTP do DATASUS (`build/01e_sinasc_datasus.R`) |
+| | `SINASC/input/datasus/dn_<ano>.parquet` | um arquivo enxuto por ano, todos os campos como texto |
+| | `sinasc_daily_muni.parquet` | 8.793.434 células muni × data × setor |
+| | `sinasc_daily_timing_muni.parquet` | 4.301.117 células, com contagens pré-parto/intraparto/vaginal |
+| | `sinasc_daily_estab.parquet` | 1.454.580 células estabelecimento × data (for-profit) |
 | **TISS** | `TISS/input/Hospitalar/{CONS,DET}/Hosp_{2015..2025}_*.parquet` | 22 arquivos, 5,1 GB brutos |
-| | `TISS/output/delivery_events_{2015..2025}.parquet` | eventos de parto com honorários |
-| | `TISS/output/delivery_panel_muni_month.parquet` | 88.116 município-meses |
+| | `TISS/output/delivery_events_{2015..2024}.parquet` | todos os partos (tipo pelo código TUSS; honorário ausente = NA) |
+| | `TISS/output/delivery_panel_muni_month.parquet` | 85.214 município-meses |
 | **CNES** | `cnes_estab_year.parquet` | 84.213 estabelecimento-anos (leitos, obstetras, nat_jur) |
 | | `cnes_beds_muni_year.parquet` | leitos por competência **MENSAL** — usar só dezembro ao agregar |
 | **IEPS** | `ieps_muni_year.parquet` | covariáveis municipais |
-| **workfile** | `workfile/output/main_data.parquet` | **11.567 município-anos, 26 colunas** — o arquivo analítico final |
+| **workfile** | `workfile/output/main_data.parquet` | **11.029 município-anos** — o arquivo analítico final |
 | Auxiliares | 16 tabelas de terminologia TISS, `PLANOS.csv`, Parto Adequado Fase 2 | |
 
 **Descompasso de caminho a resolver:** o código monta `file.path(DROPBOX_ROOT, "build", "TISS", ...)`, mas a pasta local é `dataset/TISS/...` — falta o nível `build/`. Ver `ROADMAP.md`, item R1.
@@ -125,35 +126,36 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 
 ## 5. Resultados centrais
 
-1. **A epidemia é real e extrema** — cesárea for-profit ~82% (TISS) / ~81% (SINASC) vs. ~43% público; ~66% mesmo no Robson 1 em dia útil.
-2. **Não é uma história de preço positivo** — com o honorário vaginal *econômico*, o gap é **negativo** nos grandes estados e eles rodam ~80% de cesárea; o coeficiente é pequeno e instável (+0,017 EF-UF / −0,014 EF-município, n.s.); oscilações de ±2 pontos log no estado não movem nada; a ordem judicial de 2015 nunca virou mudança de honorário.
-3. **É uma história de agenda** — cesáreas se aglomeram em dias úteis e caem em fins de semana (−8,3pp for-profit / −6,7pp público) e feriados (−5,6 / −3,5); pico de centro cirúrgico às 8–11h; metade das cesáreas em horário comercial de dia útil, contra benchmark uniforme de 29,8%.
-4. **Eq. (3), a estimativa central** — dentro do mesmo município-dia, o differential for-profit é **−2,3pp fim de semana / −2,9pp feriado**, praticamente inalterado (−2,2 / −2,6) após ajustar por composição materna predeterminada.
-5. **O dip vive nas cesáreas pré-parto** — dip de fim de semana for-profit de −9,7pp pré-parto vs. **+1,7pp** intraparto; persiste em Robson 1–2 de baixo risco (−7,4pp) e em Robson 1 sozinho (−6,5pp).
-6. **O custo** — +12,2pp de early-term (37–38 sem) com controles maternos; 73% estilo de prática (Kitagawa); ~35 mil cesáreas de dia útil em excesso por ano; quase paridade nos valores faturados.
+1. **A epidemia é real e extrema** — cesárea ~84% no setor de planos (TISS) / ~81% for-profit (SINASC) vs. ~43% público; 68% mesmo no Robson 1 em dia útil (público 36%).
+2. **Não é uma história de preço positivo** — com o honorário vaginal *econômico* (assistência cobrada em 38% dos partos vaginais, 2,9h a ~R$420/h), a cesárea paga 18–38% menos nos cinco maiores estados, que rodam ~80% de cesárea; o coeficiente troca de sinal entre esquemas de EF (+0,049** EF-UF / −0,014* EF-município sem controles; +0,019 / −0,013 com controles, n.s.); oscilações de até 1,4 ponto log no estado não movem nada (bootstrap p=0,32); a ordem judicial de 2015 nunca virou mudança de honorário.
+3. **É uma história de agenda** — cesáreas caem em fins de semana (−7,9pp for-profit / −6,7pp público) e feriados (−5,3 / −3,5); metade das cesáreas em horário comercial de dia útil, contra benchmark uniforme de 29,8%.
+4. **Eq. (3), a estimativa central** — dentro do mesmo município-dia, o diferencial for-profit é **−1,8pp fim de semana / −2,5pp feriado**; −1,8 / −2,4 com composição materna predeterminada; −1,5 / −1,7 com Robson (2014+).
+5. **O dip vive nas cesáreas pré-parto** — −8,9pp pré-parto vs. **+1,9pp** intraparto (2012+); persiste em Robson 1–2 (−7,0pp) e em Robson 1 sozinho (−6,0pp), ambos 2014+.
+6. **O custo** — +12,2pp de early-term (37–38 sem) com controles maternos; 73% estilo de prática (Kitagawa, gap de 36,2pp); ~35 mil cesáreas de dia útil em excesso por ano (9,3% de ~380 mil); valores faturados quase iguais (média da cesárea 1% menor, mediana 4% maior).
 
-### Números de referência (checagem de sanidade; SINASC = 2010–2024)
+### Números de referência (checagem de sanidade; SINASC = 2010–2024, DATASUS)
 
 | Fato | Valor |
 |---|---|
-| Cesárea (todos / for-profit / nonprofit / público) | ~57% / **79,46%** / 59,24% / **42,74%** |
-| Nascimentos totais SINASC | 42.003.663 |
-| Dip de fim de semana (for-profit / público) | −8,3pp / −6,7pp |
-| Dip de feriado (for-profit / público) | −5,6pp / −3,5pp |
-| **Eq. (3) differential (EF muni×data)** | **fds −2,3pp / feriado −2,9pp**; +predeterminado −2,2 / −2,6; +Robson −1,9 / −2,3 |
-| Dip de fds: pré-parto vs. intraparto (for-profit) | −9,7pp vs. +1,7pp |
-| Robson 1–2 / Robson 1 (for-profit) | −7,4pp / −6,5pp |
-| Perfil Robson, for-profit vs. público (Fig 3c) | G1 −6,3/−3,7 · G2 −5,2/−3,8 · G3 −8,0/−3,0 · G4 −9,1/−4,2 · G5 −3,6/−5,8 · G10 **−5,1/−5,2 (idêntico)** |
-| Eq. (3), termo vs. pré-termo | −2,5pp vs. **+0,8pp**; diferença +3,4pp, p<0,001 |
-| Eq. (3), mãe <35 vs. 35+ | −3,0pp vs. +1,3pp (dif +4,3, p<0,001); dentro de Robson 1–2, −5,0 vs. −1,4 |
-| Feriado prolongado: teste bridge = isolated | p≈0,68 (pré-parto p≈0,95) — **sem** efeito bridge maior |
-| Bunching pré-feriado (bridge) | −0,46/dia (**déficit**, não bunching) |
-| Capacidade: fds×log(leitos) pré-parto | +0,45pp n.s.; escala +0,70pp* |
-| Maternidades com zero obstetras (CNES-PF, ≥50 partos) | 14% for-profit / 27% público (mediana 3/2) |
-| Early-term (37–38 sem), controles maternos | **+11,7pp*** |
-| Kitagawa: gap de 36,2pp | 27% case-mix / **73% estilo de prática** |
-| Cesáreas de dia útil em excesso | ~35 mil/ano for-profit (~9,3%) |
-| `log_fee_gap` (EF UF / município) | +0,017 / −0,014 (n.s.) |
+| Cesárea (todos / for-profit / nonprofit / público) | 56,4% / **80,7%** / 59,9% / **43,0%** |
+| Nascimentos totais SINASC | 42.006.849 |
+| Dip de fim de semana (for-profit / público) | −7,9pp / −6,7pp |
+| Dip de feriado (for-profit / público) | −5,3pp / −3,5pp |
+| **Eq. (3) diferencial (EF muni×data)** | **fds −1,8pp / feriado −2,5pp**; +predeterminado −1,8 / −2,4; +Robson −1,5 / −1,7 |
+| Dip de fds: pré-parto vs. intraparto (for-profit) | −8,9pp vs. +1,9pp |
+| Robson 1–2 / Robson 1 (for-profit) | −7,0pp / −6,0pp |
+| Perfil Robson, for-profit vs. público (Fig 3c) | G1 −6,2/−3,6 · G2 −5,0/−3,7 · G3 −7,9/−3,0 · G4 −8,9/−4,2 · G5 −3,3/−5,8 · G10 −4,8/−5,3 |
+| Robson 1 vs. 10 (for-profit) | dip do G1 1,3pp maior (p=0,006); não é placebo |
+| Eq. (3), termo vs. pré-termo | −2,1pp vs. **+1,5pp**; diferença +3,6pp |
+| Eq. (3), mãe <35 vs. 35+ | −2,5pp vs. +1,7pp*; dentro de Robson 1–2, −4,8 vs. −1,4 |
+| Feriado prolongado: bridge = isolated | p=0,55 (pré-parto p=0,70) — **sem** efeito bridge maior; Holm da família D 0,202 |
+| Bunching pré-feriado (bridge) | −0,47/dia (**déficit**, não bunching) |
+| Capacidade, EF muni×data (pré-parto) | leitos +0,58 (0,38), escala +0,64 (0,41), ambos n.s. |
+| Maternidades com zero obstetras (CNES-PF, ≥50 partos) | 14% for-profit / 26% público (mediana 3/2) |
+| Suavização de demanda | nenhum coeficiente de demanda esperada significativo; dispersão 0,31 (0,16), só a 10%, some com Holm |
+| Early-term (37–38 sem), controles maternos | **+12,2pp*** |
+| Cesáreas de plano sem indicação registrada | 77–81% por ano (diagnóstico em branco ou O80–O84) |
+| `log_fee_gap` (EF UF / município, sem controles) | +0,049** / −0,014* |
 
 ---
 
@@ -182,7 +184,7 @@ Previsões: **P1** honorários não operativos (nulos da Tabela 1); **P2** pré-
 ```
 config/   config.R (DROPBOX_ROOT — a única edição por máquina)
           00_master_build.R · 00_master_analysis.R
-build/    00_utils.R · 01a_tiss.R · 01b_sinasc_cnes.R · 01c_ieps.R
+build/    00_utils.R · 01a_tiss.R · 01b_cnes.R · 01c_ieps.R
           01d_cnes_estab.R (RUN_01D=1) · 02_deliveries.R · 03_workfile.R
 analysis/ code/ 00_utils.R · 01_descriptives · 02_regressions (preço) ·
                 03_mechanisms · 04_heterogeneity · 05_cost · 06_robustness ·
@@ -255,6 +257,15 @@ Verificar com `grep -c "Reference .* undefined" paper.log` → tem de dar **0**.
 | DF codificado por região administrativa no CNES | `fix_muni_df()` em `build/00_utils.R`, aplicado em `01b` | Brasília: 451→857 obstetras em 2015. **Recodificar ANTES do `uniqueN()`, nunca depois** |
 | Figura 3 salva com 15in e impressa em 6,5in | `FIG_WIDTH = 6.5` | Rótulos de 10pt renderizados a 4,3pt |
 | `i(x, ...)` sem `ref=0` no script 08 | `ref=0` | Termo colinear com o EF, estimativa explodia |
+| TISS: tipo do parto pelo valor cobrado (`ces > 0`) | Tipo pelo código TUSS; honorário ausente = NA | ~15% dos partos sumiam (49 mil em 2016); taxa do TISS 82% → 84% |
+| Setor "alguma vez for-profit" | Setor pela natureza jurídica no ano do parto (CNES 2012–2024) | 1,65 milhão de nascimentos mudaram de setor; Eq (3) −2,3 → −1,8 |
+| `==` no momento da cesárea; timing em 2010–2011 | `%in%`; 2012+ em toda análise de timing | 21% dos nascimentos caíam em silêncio |
+| Robson usado em 2011–2012 (o campo existe na fonte, parcial) | Toda análise de Robson em 2014–2024 | Robson 1–2 −7,1 → −7,0; Robson 1 −6,4 → −6,0 |
+| Apgar 99, peso 9999, idade 99 lidos como valores | `valid_apgar/peso/idade()` em `00_utils.R` | 22.771 / 66 / 449 nascimentos |
+| p-valor do bootstrap da Tabela 1 digitado (0,210) | `boottest` sobre objeto; sem fallback | p real 0,32 |
+| Semanas sem parto ausentes na suavização de demanda | Zeros dentro do ano de cada estabelecimento | resultado "−0,41**" some; dispersão só a 10% |
+| Base dos Dados sem hora de nascimento em 2022 | SINASC do FTP do DATASUS | 2022 volta à tabela de horário |
+| Cache de modelos de julho (`m_tax_slim.rds`) | Cache invalida por data de modificação | Painel A de feriados congelado por 2,5 meses |
 
 **Projetos irmãos atingidos pelo bug do DF:** HealthHeat (SIH `MUNIC_RES` perde 86/92/93% das internações do DF em 2015/16/17) e WorldCupHealth (SIH quebrado 2008–2017). SIH se resolve em 2018, CNES em 2017 — não inferir um do outro.
 
@@ -302,6 +313,7 @@ Verificar com `grep -c "Reference .* undefined" paper.log` → tem de dar **0**.
 | **24/07/2026** | Bibliografia antes dos apêndices, layout Elsevier |
 | **27/07/2026** | `FIG_WIDTH = 6.5` |
 | **10/08/2026** | Correção do DF por região administrativa (`fix_muni_df()`); correções de linguagem e tipografia |
+| **27/09/2026** | Auditoria completa de código: setor por ano, TISS pelo código TUSS, timing 2012+, Robson 2014+, códigos de "ignorado", bootstrap real, semanas zero, feriado de 20/11/2024, notas calculadas; SINASC trocado para o FTP do DATASUS. Detalhe em `REVISION_LOG.md` |
 
 ---
 

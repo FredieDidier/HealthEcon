@@ -34,21 +34,8 @@
 #     which equals one under a purely Poisson arrival process, and regress its
 #     log on the establishment-year prelabor cesarean share.
 #
-# RESULT (reported honestly, and it does not support the channel).
-#   (A) delta is a small negative and never distinguishable from zero. But the
-#       forecast is WEAK: out of sample a log point of forecast demand predicts
-#       only 0.06 log points of realized relative demand, because an individual
-#       maternity's week-to-week volume is close to unforecastable from its own
-#       seasonal history. The exercise therefore bounds only large responses, and
-#       we say so rather than reading the null as a rejection. This is the same
-#       discipline we apply to the fee null in Section 5.
-#   (B) is well powered and runs the OTHER way: within an establishment, a
-#       higher prelabor cesarean share goes with a LUMPIER weekly flow, not a
-#       smoother one.
-# Together the two say the Brazilian pattern is not the Chilean capacity margin
-# re-appearing: it is weekly and ownership-specific, not seasonal and
-# throughput-levelling. That distinction is the reason to run this at all.
-#
+# RESULT. Reported whatever it shows; the numbers are in the table and the text
+# of Supplementary Appendix D reads them. Neither test supports the channel.
 # LABELING. Both estimates are associations. (A) relates a predetermined seasonal
 # demand forecast to prelabor timing; (B) relates two choices of the same
 # establishment-year and cannot be read as the causal effect of scheduling on
@@ -68,24 +55,7 @@ TABLE <- here::here("analysis", "output", "tables")
 OUT   <- here::here("analysis", "output")
 YEARS <- 2015:2024
 
-easter_sunday <- function(y) {
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y)
-    out <- c(out, e - 2, e - 47, e - 48, e + 60)
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 
 # =============================================================================
 # 1. Establishment x week panel of for-profit births
@@ -93,25 +63,45 @@ holiday_dates <- function(years) {
 ec <- as.data.table(read_parquet(file.path(SIN, "sinasc_daily_estab.parquet")))
 ec[, date := as.IDate(date)]
 ec <- ec[year(date) %in% YEARS]
-ec[, is_hol := as.integer(date %in% holiday_dates(YEARS))]
 
 ORIGIN <- as.IDate("2015-01-05")                       # a Monday
 ec[, widx := as.integer(floor(as.integer(date - ORIGIN) / 7))]
 ec <- ec[widx >= 0]
-ec[, `:=`(year = year(date), woy = as.integer(strftime(date, "%V")))]
 
 wk <- ec[, .(births = sum(births), n_ces = sum(n_ces), n_pre = sum(n_pre),
-             n_lab = sum(n_lab), n_hol = sum(is_hol),
-             year = year[1L], woy = woy[1L], muni = muni[1L]),
-         by = .(estab, widx)]
-wk <- wk[widx > min(widx) & widx < max(widx)]          # drop the truncated ends
+             n_lab = sum(n_lab)), by = .(estab, widx)]
+emuni <- ec[, .(b = sum(births)), by = .(estab, muni)][order(estab, -b)][, .(muni = muni[1L]), by = estab]
+
+# calendar of each week: ISO year and ISO week of the Monday, and the number of
+# national holidays in the week from the calendar (not from the days that had births)
+cal <- data.table(widx = seq(0L, max(wk$widx)))
+cal[, monday := ORIGIN + 7L * widx]
+cal[, `:=`(year = year(monday + 3L), woy = as.integer(strftime(monday, "%V")))]
+hd <- holiday_dates(YEARS)
+cal[, n_hol := vapply(monday, function(m) sum(hd >= m & hd <= m + 6L), integer(1))]
+wk <- merge(wk, cal[, .(widx, year)], by = "widx")
+
+# ZERO WEEKS ARE DATA. The cell file only has days with at least one birth, so a
+# week in which an establishment delivered nobody used to be missing rather than
+# zero.
+# Establishment-year now carries every week between its first and last birth of
+# that year. The span stops at the year because the sector is dated by year: an
+# establishment that was public in a year is absent from this for-profit file
+# then, and filling that year with zeros would invent empty weeks.
+span <- wk[, .(lo = min(widx), hi = max(widx)), by = .(estab, year)]
+grid <- span[, .(widx = seq(lo, hi)), by = .(estab, year)]
+wk <- merge(grid, wk, by = c("estab", "year", "widx"), all.x = TRUE)
+for (v in c("births", "n_ces", "n_pre", "n_lab")) set(wk, which(is.na(wk[[v]])), v, 0L)
+wk <- merge(wk, emuni, by = "estab")
+wk <- merge(wk, cal[, .(widx, woy, n_hol)], by = "widx")
+wk <- wk[widx > min(cal$widx) & widx < max(cal$widx)]  # drop the truncated ends
 
 sz <- wk[, .(births_y = sum(births)), by = .(estab, year)]
 sz <- sz[, .(mean_births = mean(births_y), n_years = uniqueN(year)), by = estab]
 wk <- wk[estab %chin% sz[mean_births >= 100 & n_years >= 5, estab]]
-cat(sprintf("sample: %s establishments, %s establishment-weeks\n",
+cat(sprintf("sample: %s establishments, %s establishment-weeks (%.1f%% with no birth)\n",
             format(uniqueN(wk$estab), big.mark = ","),
-            format(nrow(wk), big.mark = ",")))
+            format(nrow(wk), big.mark = ","), 100 * mean(wk$births == 0)))
 
 # =============================================================================
 # 2. (A) Expected demand and the pull-forward test
@@ -132,8 +122,8 @@ wk[, `:=`(exp_next = key[.(estab, widx + 1L), exp_dem],
 wk[, `:=`(pre_share = n_pre / births, ces_share = n_ces / births,
           lab_share = n_lab / births)]
 
-est <- wk[!is.na(exp_dem) & !is.na(exp_next) & !is.na(exp_prev) &
-            !is.na(rel_next) & births > 0 & rel_next > 0]
+est <- wk[!is.na(exp_dem) & !is.na(exp_next) & !is.na(exp_prev) & !is.na(hol_next) &
+            births > 0]
 
 fitA <- function(y, fe) feols(as.formula(sprintf(
   "%s ~ exp_next + exp_dem + exp_prev + n_hol + hol_next | %s", y, fe)),
@@ -151,7 +141,8 @@ for (m in modsA) print(coeftable(m)[c("exp_next", "exp_dem", "exp_prev"), , drop
 # sample: a leave-one-out mean is mechanically related to the value it omits, so
 # only the omitted realization is a fair target.
 m_val  <- feols(log(rel_next) ~ exp_next + hol_next | estab^year + woy,
-                data = est, weights = ~births, cluster = ~estab + widx)
+                data = est[!is.na(rel_next) & rel_next > 0], weights = ~births,
+                cluster = ~estab + widx)
 val_b  <- coeftable(m_val)["exp_next", 1]
 val_se <- coeftable(m_val)["exp_next", 2]
 mde    <- 2.802 * coeftable(m_pre2)["exp_next", 2]     # 80% power, 5% size
@@ -164,7 +155,7 @@ cat(sprintf("\nforecast slope out of sample: %.3f (%.3f)\nMDE on delta: %.2f pp 
 ey <- wk[, .(nw = .N, mean_w = mean(births), var_w = var(births),
              tot = sum(births), ces = sum(n_ces), pre = sum(n_pre),
              muni = muni[1L]), by = .(estab, year)]
-ey <- ey[nw >= 45 & mean_w >= 2]
+ey <- ey[nw >= 45 & mean_w >= 2 & var_w > 0]
 ey[, `:=`(vmr = var_w / mean_w, pre_share = pre / tot,
           ces_share = ces / tot, lb = log(tot))]
 

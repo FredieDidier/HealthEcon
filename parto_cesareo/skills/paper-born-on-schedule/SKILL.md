@@ -105,7 +105,7 @@ Use-os para checar qualquer alegação. Divergiu, investigue antes de escrever.
 ## 6. Pipeline
 
 ```
-config/00_master_build.R    → build/ 00_utils · 01a_tiss · 01b_sinasc_cnes ·
+config/00_master_build.R    → build/ 00_utils · 01a_tiss · 01b_cnes ·
                               01c_ieps · 01d_cnes_estab (RUN_01D=1) ·
                               02_deliveries · 03_workfile
 config/00_master_analysis.R → analysis/code/ 00_utils · 01_descriptives ·

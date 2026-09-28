@@ -23,8 +23,10 @@ their procedure codes in the Unified Health Supplementary Terminology
 nomenclature that private plans use to bill (cesarean 31309054 and 31309208;
 vaginal 31309127); the economic vaginal fee adds the separately billed hourly
 labor-assistance code (31309038). In SINASC, the sector of a birth is the
-legal-entity type of its establishment in the CNES registry: for-profit (codes
-2xxx), nonprofit (3xxx), and public (1xxx); the headline contrast
+legal-entity type of its establishment in the CNES registry in the year of the
+birth, read at the last month of that year (the registry records it from June
+2012, so 2010 and 2011 take 2012): for-profit (codes 2xxx), nonprofit (3xxx),
+and public (1xxx); the headline contrast
 compares for-profit with public establishments. All files are
 built at the municipality level on the six-digit municipality code of the
 Brazilian Institute of Geography and Statistics (Instituto Brasileiro de
@@ -37,8 +39,9 @@ follows. Indicators equal one when the stated condition holds and zero otherwise
 the presence of a cesarean procedure code; in SINASC it is the registry's
 delivery-type field.
 \item \textbf{Sector (for-profit / nonprofit / public)}: the sector of the birth
-establishment, from the legal-entity type of its CNES record; \textbf{for-profit}
-denotes establishments with legal-entity type 2xxx, the headline group.
+establishment, from the legal-entity type of its CNES record in the year of the
+birth; \textbf{for-profit} denotes establishments with legal-entity type 2xxx,
+the headline group.
 \item \textbf{Economic vaginal fee}: the physician fee for a vaginal delivery
 plus the separately billed hourly labor-assistance fee (TUSS 31309038), which
 compensates the time spent attending labor. This is the correct comparison for
@@ -49,8 +52,9 @@ values mean cesareans pay more.
 \item \textbf{Cesarean share}: the share of births delivered by cesarean in a
 municipality-date-sector cell.
 \item \textbf{Weekend, holiday, eve}: indicators for Saturdays and Sundays, the
-eight fixed and four Easter-based movable national holidays, and the eve of a rest
-day (a Friday or the day before a holiday), respectively.
+eight fixed and four Easter-based movable national holidays and, from 2024,
+20 November, and the eve of a rest day (a Friday or the day before a holiday),
+respectively.
 \item \textbf{Robson group}: the World Health Organization's ten-group
 classification of deliveries; groups 1 and 2 are the low-risk first births used in
 the mechanism tests.
@@ -58,8 +62,9 @@ the mechanism tests.
 began, as opposed to an in-labor cesarean.
 \item \textbf{Early-term birth}: a birth at 37 or 38 completed weeks of
 gestation.
-\item \textbf{Treated (Parto Adequado)}: the municipality contains a private
-hospital that joined the program's 2017--2021 dissemination phase.
+\item \textbf{Parto Adequado hospital}: an establishment on the regulator's list
+of hospitals in the program's 2017--2021 dissemination phase, matched to the birth
+records by its CNES code.
 \item \textbf{Obstetricians per 1,000 births}: the count of obstetricians in
 the CNES professionals file per 1,000 births in the municipality-year.
 \end{itemize}

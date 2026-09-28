@@ -10,7 +10,8 @@
 #   * primary outcome  : share of births delivered by PRELABOR cesarean
 #   * primary window   : [-3, +3] days around the holiday
 #   * primary sample   : FIXED-DATE national holidays, 2012-2024
-#                        (the prelabor indicator is < 15% missing only from 2012)
+#                        (the prelabor indicator is recorded for about 85% of
+#                        cesareans or more only from 2012)
 #   * primary parameters: the long-block effect and the sum of the pre-holiday
 #                        event-time coefficients
 #   * secondary outcomes: counts of prelabor cesareans, in-labor cesareans,
@@ -95,7 +96,7 @@ print(hol_fixed[, .N, by = block][order(-N)])
 #    (cached: the birth-level file is 42M rows)
 # =============================================================================
 CELL_CACHE <- file.path(SIN, "sinasc_daily_timing_muni.parquet")
-if (!file.exists(CELL_CACHE)) {
+if (!cache_fresh(CELL_CACHE, file.path(SIN, "sinasc_births.parquet"))) {
   message("building ", basename(CELL_CACHE), " from sinasc_births.parquet ...")
   cells <- open_dataset(file.path(SIN, "sinasc_births.parquet")) %>%
     filter(year >= 2012, year <= 2024, sector %in% c("Private", "Public")) %>%
@@ -159,7 +160,8 @@ fml_holfe  <- function(y) as.formula(paste0(
 # 4.5m-row design and run to gigabytes on disk.
 slim <- function(m) list(ct = fixest::coeftable(m), V = stats::vcov(m), n = stats::nobs(m))
 TAX_CACHE <- here::here("analysis", "output", "m_tax_slim.rds")
-if (file.exists(TAX_CACHE)) {
+# rebuilt whenever the cell file or this script is newer than the cache
+if (cache_fresh(TAX_CACHE, c(CELL_CACHE, here::here("analysis", "code", "08_long_weekends.R")))) {
   m_tax <- readRDS(TAX_CACHE)
 } else {
   m_tax <- list(
@@ -422,7 +424,7 @@ lines <- c(lines,
   "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
   "\\textit{Notes:} SINASC 2012--2024, the years in which the prelabor indicator is",
-  "recorded for more than 85 percent of cesareans. Panel A: municipality-date-sector",
+  "recorded for about 85 percent of cesareans or more. Panel A: municipality-date-sector",
   "cells with at least one birth, weighted by births; movable holidays are excluded.",
   "Each fixed-date national holiday is classified by the day of week on which it falls.",
   "Columns 2--4 add for-profit $\\times$ holiday-identity indicators, so the weekend-",

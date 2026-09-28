@@ -875,3 +875,29 @@ meant to prevent. Earlier note, kept for the record: the abstract kept "the high
 health system" at his request; Egypt (2021: 72% national, ~80% private, a large
 system) contradicts it even with "large". Proposed: "among the highest rates
 recorded in any health system".
+
+## 2026-09-27 (second pass) — full code audit, SINASC from DATASUS
+
+A line-by-line read of every build and analysis script, tests against the data,
+and a number-by-number reconciliation of the text. Everything below is fixed in
+code and rerun.
+
+| Finding | Size | Fix |
+|---|---|---|
+| TISS deliveries typed by fee > 0 | ~15% of delivery events dropped (49,215 in 2016); TISS cesarean rate 82% → 84% | type from the TUSS code (`build/02`), fee NA when absent; fee means weighted by the deliveries they average |
+| Wild bootstrap of Table 1 never ran (inline subset in `boottest`); table printed a typed 0.210 | p is 0.32 | sample as an object; no fallback |
+| Robson used in 2011–2012 (the field is partly filled there in the source) | Robson 1–2 dip 7.1 → 7.0, Robson 1 6.4 → 6.0 | every Robson analysis 2014+ |
+| Apgar 99, weight 9999, mother's age 99 read as values | 22,771 / 66 / 449 births | `valid_*()` in `00_utils.R` |
+| Base dos Dados has no time of birth in 2022 | whole year absent from the hour exhibits | SINASC now from the DATASUS FTP (`build/01e_sinasc_datasus.R`); every other field agrees with the old extract to the second decimal |
+| Demand smoothing: weeks with no birth missing | 6% of establishment-weeks | zeros within each establishment-year; Panel A's −0.41** on the cesarean share disappears; dispersion 0.31 (0.16), 10% only, not after Holm |
+| Holiday calendar copied into 7 scripts, none with 20 Nov 2024 | one day | one `holiday_dates()` in `00_utils.R` |
+| Notes and text with numbers no code computed | "2.7 hours at R$409" (2.9 h at R$420), "10–30% less" (18–38%), "two log points" (1.4), "unchanged at 2.08" (2.83), "cannot distinguish" next to p = 0.04 (now p = 0.006), "87–91% no indication" (77–81% under the stated rule) | computed in the scripts, text updated |
+| Robustness column "time-varying sector" redundant once the sector is by year | — | now the "for-profit in any year" rule |
+| Map C.2 captioned as SINASC for-profit, drawn from TISS | — | caption and text say private-insurance |
+| Parto Adequado hospitals with a leading zero unmatched | 3 of 112 | match on the 7-digit code |
+| Caches without invalidation (08, 09, 14) | — | rebuilt when the birth file is newer |
+
+Body numbers: Equation (3) −1.8/−2.5 (unchanged), own gradients −7.9/−5.3 vs
+−6.7/−3.5, prelabor −8.9 vs in-labor +1.9, early-term +12.2, Kitagawa 73% of 36.2pp,
+~35,000 excess weekday cesareans. Table 1: +0.049** / −0.014* without controls,
++0.019 / −0.013 with them; bootstrap p 0.32 and 0.17.

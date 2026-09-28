@@ -16,7 +16,7 @@
 # of the five multiple-testing families (A-E). Two further cautions:
 #
 #   - GESTATIONAL AGE AT BIRTH IS PARTLY AN OUTCOME of the behaviour we study
-#     (Table 5 shows a +11.7pp for-profit early-term gap), so the term/preterm
+#     (Table 5 shows a for-profit early-term gap), so the term/preterm
 #     split conditions on a partly post-treatment variable. It is a HEURISTIC
 #     FALSIFICATION in the same class as the Robson-10 check, NOT a clean
 #     placebo. Preterm delivery is also not synonymous with unschedulable:
@@ -26,8 +26,8 @@
 #     unlike gestational age it is a legitimate conditioning variable. Note that
 #     the LEVEL concern (older mothers have more cesareans) is already answered
 #     by column 2 of Table 2, where maternal age bands enter as predetermined
-#     composition and move the differential only from -2.3 to -2.2pp. What is
-#     new here is whether the GRADIENT itself differs by age.
+#     composition and barely move the differential. What is new here is
+#     whether the GRADIENT itself differs by age.
 #
 # NOTE ON ROBSON x PRETERM. There is no term/preterm split to be had inside
 # Robson groups 1-2: those groups are DEFINED as >=37 weeks, and Robson 10 is
@@ -49,29 +49,14 @@ SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
 TABLE <- here::here("analysis", "output", "tables")
 AOUT  <- here::here("analysis", "output")
 
-easter_sunday <- function(y) {
-  a <- y %% 19; b <- y %/% 100; c <- y %% 100
-  d <- b %/% 4; e <- b %% 4; f <- (b + 8) %/% 25; g <- (b - f + 1) %/% 3
-  h <- (19*a + b - d - g + 15) %% 30; i <- c %/% 4; k <- c %% 4
-  l <- (32 + 2*e + 2*i - h - k) %% 7; m <- (a + 11*h + 22*l) %/% 451
-  mo <- (h + l - 7*m + 114) %/% 31; da <- ((h + l - 7*m + 114) %% 31) + 1
-  as.IDate(sprintf("%d-%02d-%02d", y, mo, da))
-}
-holiday_dates <- function(years) {
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in years) {
-    out <- c(out, as.IDate(paste0(y, "-", fixed)))
-    e <- easter_sunday(y); out <- c(out, e - 2, e - 47, e - 48, e + 60)
-  }
-  sort(unique(out))
-}
+# easter_sunday() and holiday_dates() come from 00_utils.R (one calendar for every script)
 
 # --- one read of the birth file, all three blocks aggregate from it -----------
 b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("muni", "date", "sector", "cesarean", "tipo_robson",
                       "semana_gestacao", "idade_mae", "dow", "year")))
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
+b[, idade_mae := valid_idade(idade_mae)]                 # 99 = ignored
 b[, date := as.IDate(date)]
 hol <- holiday_dates(2010:2024)
 b[, `:=`(weekend = as.integer(dow %in% c(1, 7)),
@@ -253,7 +238,9 @@ tex <- c(
   "\\bottomrule", "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
   "\\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;",
-  "coefficients in percentage points. Every column estimates the for-profit",
+  "coefficients in percentage points. Columns 2--4 of Panel A use the births with a",
+  "recorded gestational age, which the registry carries for few births before 2012.",
+  "Every column estimates the for-profit",
   "differential of Equation~\\eqref{eq:gradient}. Columns 2--3 fit it separately",
   "within each subgroup; column 4 reports the interaction of each term with the",
   "subgroup indicator, estimated jointly with municipality$\\times$date$\\times$subgroup",

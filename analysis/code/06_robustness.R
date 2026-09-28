@@ -62,11 +62,11 @@ message("06_robustness.R: Block (a) policy done")
 
 # =============================================================================
 # BLOCK (b) — referee-stage robustness for the scheduling result.
-#   (1) TIME-VARYING sector classification: the baseline private flag uses the
-#       pooled CNES natureza jurídica; here each birth's establishment is
-#       classified with the nat_jur of its own year (2015-2024; births 2010-2014
-#       use the earliest available, 2015), so privatizations/reclassifications
-#       do not contaminate the sector split.
+#   (1) ALTERNATIVE sector classification. The baseline sector is the
+#       establishment's legal nature in the birth's own year (build/01b). Column 1
+#       instead calls an establishment for-profit if the CNES lists it as
+#       for-profit in ANY month of 2012-2024, so a result that depended on how a
+#       reclassified establishment is dated would show up here.
 #   (2) ALTERNATIVE rest-day definitions: Sunday only; and a single "rest day"
 #       dummy pooling weekends and national holidays.
 #   (3) NEWBORN COMPOSITION by day: among private births, weekend babies are the
@@ -96,33 +96,23 @@ b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
                       "quantidade_parto_cesareo", "muni", "date", "dow", "year")))
 b <- b[year <= 2024]
 b[, weekend := as.integer(dow %in% c(1, 7))]
+b[, `:=`(apgar5 = valid_apgar(apgar5), peso = valid_peso(peso))]   # 99 / 9999 = ignored
 
-# --- (1) time-varying sector flag ----------------------------------------------
-beds <- as.data.table(read_parquet(file.path(CNES, "cnes_beds_muni_year.parquet")))
-beds[, `:=`(cnes7 = formatC(as.integer(cnes), width = 7, flag = "0"),
-            nj1 = substr(as.character(nat_jur), 1, 1))]
-xw <- unique(beds[!is.na(nj1), .(estab = cnes7, byear = year, nj1)], by = c("estab", "byear"))
-b[, byear := pmax(year, 2015L)]                      # births 2010-14 → 2015 classification
-b <- merge(b, xw, by = c("estab", "byear"), all.x = TRUE)
-b[, private_tv := as.integer(nj1 == "2")]
-b[is.na(private_tv), private_tv := 0L]
+# --- (1) ever-for-profit sector flag -------------------------------------------
+rd_nj <- function(f) as.data.table(read_parquet(file.path(CNES, f), col_select = c("cnes", "nat_jur")))
+beds <- rbindlist(lapply(intersect(c("cnes_beds_2012_2014.parquet", "cnes_beds_muni_year.parquet"),
+                                   list.files(CNES)), rd_nj))
+fp_ever <- unique(beds[grepl("^2", as.character(nat_jur)),
+                       formatC(as.integer(cnes), width = 7, flag = "0")])
+rm(beds); gc()
+b[, private_ever := as.integer(estab %chin% fp_ever)]
 
-cell_tv <- b[private_tv == 1, .(rate = mean(cesarean), n = .N),
+cell_tv <- b[private_ever == 1, .(rate = mean(cesarean), n = .N),
              by = .(muni, date, weekend, year)]
 m_tv <- feols(rate ~ weekend | muni + year, cell_tv, weights = ~n, cluster = ~muni + date)
 
 # --- (2) alternative rest-day definitions (baseline pooled sector, private) ----
-hol_dates <- {  # same holiday set as 03_scheduling.R
-  easter <- function(y) { a<-y%%19; bq<-y%/%100; c<-y%%100; d<-bq%/%4; e<-bq%%4
-    f<-(bq+8)%/%25; g<-(bq-f+1)%/%3; h<-(19*a+bq-d-g+15)%%30; i<-c%/%4; k<-c%%4
-    l<-(32+2*e+2*i-h-k)%%7; m<-(a+11*h+22*l)%/%451; mo<-(h+l-7*m+114)%/%31
-    da<-((h+l-7*m+114)%%31)+1; as.IDate(sprintf("%d-%02d-%02d",y,mo,da)) }
-  fixed <- c("01-01","04-21","05-01","09-07","10-12","11-02","11-15","12-25")
-  out <- as.IDate(character(0))
-  for (y in 2010:2024) { e <- easter(y)
-    out <- c(out, as.IDate(paste0(y, "-", fixed)), e - 2, e - 47, e - 48, e + 60) }
-  sort(unique(out))
-}
+hol_dates <- holiday_dates(2010:2024)   # 00_utils.R, the calendar every script uses
 bp <- b[sector == "Private"]
 bp[, `:=`(sunday   = as.integer(dow == 1),
           rest_day = as.integer(weekend == 1 | date %in% hol_dates))]
@@ -144,14 +134,14 @@ f <- file.path(TABLE, "tab13_referee_robustness.tex")
 etable(m_tv, m_sun, m_rest, m_ap, m_lb, tex = TRUE, file = f, replace = TRUE, dict = dict,
        signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10),
        fitstat = ~ n, digits = 4, digits.stats = 3,
-       headers = c("Cesarean rate, time-varying sector", "Cesarean rate, Sunday only",
+       headers = c("Cesarean rate, for-profit in any year", "Cesarean rate, Sunday only",
                    "Cesarean rate, rest days", "Low Apgar (5-minute)", "Low birthweight"),
        title = "Robustness of the weekend dip: sector classification, rest-day definitions, and newborn composition",
        label = "tab:referee_robustness",
        notes = paste("\\footnotesize\\textit{Notes:} For-profit municipality-date",
-         "cells, SINASC 2010--2024, weighted by births. Column 1 reclassifies each",
-         "birth's establishment with the legal-entity type recorded for its own year",
-         "(2015--2024; earlier births use 2015). Columns 4--5 are composition checks:",
+         "cells, SINASC 2010--2024, weighted by births. Column 1 classifies an",
+         "establishment as for-profit if the registry lists it as for-profit in any month",
+         "of 2012--2024, rather than in the birth's own year. Columns 4--5 are composition checks:",
          "weekend (unscheduled) for-profit births include fewer healthy scheduled",
          "term pregnancies, so newborn risk indicators shift mechanically.",
          "Standard errors, two-way clustered by municipality and date, are reported in parentheses.", SIGNIF_NOTE))
@@ -225,9 +215,9 @@ message("06_robustness.R: Block (b) referee robustness done")
 #        for-profit cesarean dip for each. The true weekend (Sat+Sun) should be the
 #        most negative; the exact permutation p-value is its rank among the 21.
 #   (c2) DESCRIPTIVE: share of private-insurance cesareans with NO recorded
-#        clinical indication (primary diagnosis is a delivery-outcome ICD-10 code
-#        O80-O84, or blank, rather than a recognized cesarean indication). Coding
-#        is imperfect, so this is descriptive, not a clean "avoidable" count.
+#        clinical indication (primary diagnosis blank or a delivery-outcome ICD-10
+#        code O80-O84). Coding is imperfect, so this is descriptive, not a clean
+#        "avoidable" count.
 #   -> tab15_permutation ; tab15b_no_indication (Supplement).
 # =============================================================================
 
@@ -269,23 +259,23 @@ tex <- c("\\begin{table}[H]\\centering",
   "Pseudo rest-day pair & For-profit cesarean dip (pp) \\\\", "\\midrule",
   res[, sprintf("%s%s & %.2f \\\\", days, ifelse(days == "Sun+Sat", " (true weekend)", ""), coef)],
   "\\bottomrule", "\\end{tabular}",
-  "\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the for-profit cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) is the most negative of all 21 placebos (rank 1 of 21). Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.",
+  sprintf("\\\\[2pt]\\footnotesize\\textit{Notes:} Each row re-estimates the for-profit cesarean dip treating a different pair of weekdays as the ``rest days'' (SINASC 2010--2024, municipality-date cells, municipality and year fixed effects, weighted by births). The true weekend (Sun+Sat) ranks %d of 21, counting from the most negative. Because the days of the week are not exchangeable under a known assignment mechanism, this is a descriptive ranking, not an exact randomization-inference $p$-value.", which(res$days == "Sun+Sat")),
   "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab15_permutation.tex"))
 
-# --- (b) private cesareans with no recorded clinical indication ---------------
-# ICD-10 3-char prefixes that RECORD a cesarean-relevant indication:
-IND <- c("O30","O31","O32","O33","O34","O35","O36","O40","O41","O42","O43","O44",
-         "O45","O46","O47","O48","O60","O61","O62","O63","O64","O65","O66","O67",
-         "O68","O69","O71","O75","P01","P02","P03","P05","P07","P20","P95")
+# --- (b) private-insurance cesareans with no recorded clinical indication ------
+# A cesarean counts as "no indication" when its primary diagnosis is blank or a
+# delivery-outcome code (O80-O84) and nothing else. The rule used to be "not in a
+# list of recognized indications", which also counted the 10 percent of
+# cesareans coded with another diagnosis (preeclampsia O14, gestational diabetes
+# O24, Z-codes) while the text and the note described only blank or O80-O84.
 ev <- rbindlist(lapply(2015:2024, function(y)
   as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
     col_select = c("type", "cid_1", "year")))))
 ces <- ev[type == "cesarean"]
 ces[, cid3 := toupper(substr(cid_1, 1, 3))]
-ces[, no_indication := as.integer(is.na(cid_1) | cid_1 == "" |
-                                  cid3 %in% c("O80","O81","O82","O83","O84") |
-                                  !(cid3 %in% IND))]
+ces[, no_indication := as.integer(is.na(cid_1) | trimws(cid_1) == "" |
+                                  cid3 %in% c("O80","O81","O82","O83","O84"))]
 byyr <- ces[, .(no_indication_pct = round(100 * mean(no_indication), 1), n = .N), by = year][order(year)]
 cat("\nPrivate-insurance cesareans with NO recorded clinical indication (primary CID), by year:\n")
 print(byyr)
@@ -297,7 +287,7 @@ tex2 <- c("\\begin{table}[H]\\centering",
   "Year & Share with no indication ICD-10 code (\\%) \\\\", "\\midrule",
   byyr[, sprintf("%d & %.1f \\\\", year, no_indication_pct)],
   "\\bottomrule", "\\end{tabular}",
-  "\\\\[2pt]\\footnotesize\\textit{Notes:} TISS private cesarean deliveries, 2015--2024. A delivery is coded ``no indication'' when the primary diagnosis (ICD-10 code) is a delivery-outcome code (O80--O84) or blank, rather than an ICD-10 code recording a recognized cesarean indication (malpresentation, disproportion, placental or fetal complications, obstructed labor, etc.). Diagnosis coding in claims is incomplete, so this describes recorded indications, not clinical necessity.",
+  "\\\\[2pt]\\footnotesize\\textit{Notes:} TISS private cesarean deliveries, 2015--2024. A delivery is coded ``no indication'' when its primary diagnosis (ICD-10 code) is blank or a delivery-outcome code (O80--O84); any other primary diagnosis, including hypertensive disorders, diabetes and fetal or placental complications, counts as a recorded indication. Diagnosis coding in claims is incomplete, so this describes recorded diagnoses, not clinical necessity.",
   "\\end{table}")
 write_table_tex(tex2, file.path(TABLE, "tab15b_no_indication.tex"))
 

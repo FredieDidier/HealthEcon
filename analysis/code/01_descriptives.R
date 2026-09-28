@@ -248,7 +248,7 @@ mp1 <- merge(mu, m1[, .(muni6 = muni, rate)], by = "muni6", all.x = TRUE)
 
 map1 <- ggplot(mp1) +
   geom_sf(aes(fill = 100 * rate), colour = NA) +
-  scale_fill_gradientn(colours = GRAD, limits = c(15, 100),
+  scale_fill_gradientn(colours = GRAD, limits = c(15, 100), oob = scales::squish,
                        na.value = "grey92",
                        name = "Cesarean rate (%), all births") +
   theme_map()
@@ -264,7 +264,7 @@ mp2 <- merge(mu, m2[, .(muni6, rate)], by = "muni6", all.x = TRUE)
 
 map2 <- ggplot(mp2) +
   geom_sf(aes(fill = 100 * rate), colour = NA) +
-  scale_fill_gradientn(colours = GRAD, limits = c(15, 100),
+  scale_fill_gradientn(colours = GRAD, limits = c(15, 100), oob = scales::squish,
                        na.value = "grey92",
                        name = "Cesarean rate (%), private deliveries") +
   theme_map()
