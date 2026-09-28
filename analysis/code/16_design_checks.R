@@ -70,7 +70,11 @@ fee_hour <- function(d) {
              fvn = mean(ve[is.na(fee_assist), fee_vaginal_econ]),
              bill = 100 * nrow(va) / nrow(v),
              hrs = mean(va$assist_hours), rate = mean(va$fee_assist / va$assist_hours),
-             be1 = fv / fc, be2 = 2 * fv / fc)
+             be1 = fv / fc, be2 = 2 * fv / fc,
+             # break-even by type of vaginal delivery, one-hour cesarean: the 1.25 h
+             # holds for the expected fee only (external check, 2026-09-28)
+             be1b = mean(ve[!is.na(fee_assist), fee_vaginal_econ]) / fc,
+             be1n = mean(ve[is.na(fee_assist), fee_vaginal_econ]) / fc)
 }
 fh <- rbind(cbind(uf = "Brazil", fee_hour(ev)),
             rbindlist(lapply(big, function(u) cbind(uf = u, fee_hour(ev[uf == u])))))
@@ -102,6 +106,8 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "\\multicolumn{7}{l}{\\emph{Panel C. Break-even physician time of a vaginal delivery (hours)}} \\\\",
   "\\addlinespace[2pt]",
   rowf("If a cesarean takes one hour", fh$be1, "%.2f"),
+  rowf("\\quad deliveries billing labor assistance", fh$be1b, "%.2f"),
+  rowf("\\quad deliveries billing none", fh$be1n, "%.2f"),
   rowf("If a cesarean takes two hours", fh$be2, "%.2f"),
   "\\bottomrule", "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
@@ -119,7 +125,9 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "that fee divided by its billed hours. Panel C reports the physician time of a",
   "vaginal delivery at which the economic vaginal fee per hour equals the cesarean",
   "fee per hour: the economic vaginal fee divided by the cesarean fee, times the",
-  "hours of a cesarean. A vaginal delivery that occupies the physician for longer",
+  "hours of a cesarean; the two indented rows apply the same ratio to the two",
+  "kinds of vaginal delivery, so the first row holds for the expected fee only. A",
+  "vaginal delivery that occupies the physician for longer than its threshold",
   "pays less per hour than a cesarean. Physician time is not observed; billed hours",
   "are a floor on it, since the vaginal deliveries that bill no labor hours still",
   sprintf("take time (%.0f percent of them nationally, between %.0f and %.0f percent in",

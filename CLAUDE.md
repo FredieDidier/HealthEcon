@@ -17,7 +17,7 @@
 > record, composition check, 35k/37k footnote. See REVISION_LOG.
 >
 > **2026-09-28 (referee round 2) — price of time.** The fee argument is now
-> per-delivery vs per-hour: a cesarean pays less per delivery but more per hour
+> per-delivery vs per-hour: a cesarean pays less per delivery (on average) but more per hour
 > once a vaginal delivery takes >~1.25 h (Table `tab_fee_per_hour`). Calibration
 > leads; our regressions (superseded in round 3: "do not discipline the magnitude"); the sign flip is no
 > longer an argument. Scheduling is common to both sectors, the for-profit
@@ -34,7 +34,14 @@
 > regressions "do not discipline the magnitude" (never "consistent with the
 > calibration"). The common gradient is organizational, and the price of time speaks to the
 > for-profit increment only. The schedule pays billed labor hours; what goes unpriced is
-> on-call/unbilled time. Abstract ≤250 words (now 245). See REVISION_LOG.
+> on-call/unbilled time. Abstract ≤250 words (now 247). See REVISION_LOG.
+> Round 4 (same day): the 1.25 h break-even holds for the EXPECTED fee only (1.73 h
+> if labor is billed, 0.92 h if not; D.19 Panel C). The comparison is ex ante. The
+> billing share (18% SP to 70% MG) is partly contractual: where labor is billed
+> often, the base fee is lower. Say "which we read as organizational", never
+> "is organizational". SUS continuity is cited to `domingues2014` (same professional
+> for prenatal care and delivery: ~9% public vs ~77% private payment); never "typically whoever is on
+> duty" without it.
 
 
 ## What the paper is

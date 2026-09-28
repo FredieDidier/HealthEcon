@@ -1051,3 +1051,28 @@ unfounded (explained in the note now).
   value per municipality (mean over years), so its level is absorbed by the
   municipality FE. The note and a code comment now say so.
 - Abstract trimmed back to 247 words (limit 250).
+
+## 2026-09-28 (fourth referee round) — abstract wording, ex ante fee, SUS source
+
+- **Break-even per type of vaginal delivery.** The 1.25 h holds for the expected
+  fee only. D.19 Panel C gains two rows, computed in `16` block A: 1.73 h
+  (billing labor assistance) and 0.92 h (billing none), matching the referee's
+  arithmetic. The abstract says "pays more, on average, than a vaginal delivery
+  lasting over about 1.25 hours". The intro, Section 5 and the conclusion say
+  "average" or "on average" at every per-delivery claim.
+- **Ex ante argument + billing norms (Section 5).** The expected fee is the price
+  because the mode is chosen before the length of labor is known. The billing
+  share runs from 18% (SP) to 70% (MG), and where labor is billed often the base
+  vaginal fee is lower. In SP and RJ the base fee exceeds the cesarean's; it is
+  about equal in MG and below it in PR and SC. So the expected fee reflects
+  billing norms as well as the length of labor, and the paper now says so.
+- **Abstract:** "common to both ownership sectors, which we read as
+  organizational". The abstract is 247 words. "or protocols" is dropped from the last sentence, and
+  "rates recorded" became "recorded".
+- **SUS sentence.** "Typically whoever is on duty" is replaced by
+  `domingues2014` (CSP 30 Suppl 1: S101–S116, Nascer no Brasil 2011–12), checked in
+  the article's PDF. The same professional did prenatal care and the delivery in
+  9.1% (primiparas, Table 1) and 9.4% (multiparas, Table 2) of publicly paid births,
+  against 77.6% and 76.8% of privately paid ones. The introduction says SUS maternities work with teams "em regime de
+  plantão". Cited in the institutional background and the conclusion. Its sectors
+  are PAYER (delivery payment source), and the text says "publicly/privately paid".
