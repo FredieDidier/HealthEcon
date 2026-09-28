@@ -76,6 +76,18 @@ save_fig(fig1, "fig01_csection_trend", height = 4.2)
 # Supplemental Appendix. Fees, rates, obstetrician density, covariates.
 # =============================================================================
 w <- as.data.table(read_parquet(WFO))
+# The table describes the sample the fee regressions use: municipality-years with
+# at least 20 private deliveries and a defined fee gap, weighted by deliveries,
+# as the regressions are. Unweighted, small municipalities dominate the count of
+# municipality-years and the fee gap looks positive (+0.21 on this sample), while
+# the typical DELIVERY sits where the cesarean pays less; the note gives both.
+w <- w[year <= 2024 & tiss_deliveries >= 20 & is.finite(log_fee_gap)]
+wq <- function(x, wt, p) {                      # weighted quantile (step)
+  o <- order(x); x <- x[o]; wt <- wt[o]; cw <- cumsum(wt) / sum(wt)
+  x[which(cw >= p)[1]]
+}
+gap_unw <- w[, mean(log_fee_gap)]
+gap_share_neg <- w[, sum(tiss_deliveries[log_fee_gap < 0]) / sum(tiss_deliveries)]
 vars <- c(
   tiss_csection_rate           = "Cesarean rate, private (TISS)",
   sinasc_private_csection_rate = "Cesarean rate, for-profit (SINASC)",
@@ -86,13 +98,14 @@ vars <- c(
   prenatal                     = "Adequate prenatal care (\\%)")
 
 desc <- rbindlist(lapply(names(vars), function(v) {
-  x <- w[[v]]
+  ok <- !is.na(w[[v]]); x <- w[[v]][ok]; wt <- w$tiss_deliveries[ok]
+  m <- weighted.mean(x, wt)
   data.table(Variable = vars[[v]],
-             Mean   = mean(x, na.rm = TRUE),  `Std. dev.` = sd(x, na.rm = TRUE),
-             `10th pct.` = quantile(x, .10, na.rm = TRUE),
-             Median = median(x, na.rm = TRUE),
-             `90th pct.` = quantile(x, .90, na.rm = TRUE),
-             `N` = sum(!is.na(x)))
+             Mean   = m,  `Std. dev.` = sqrt(sum(wt * (x - m)^2) / sum(wt)),
+             `10th pct.` = wq(x, wt, .10),
+             Median = wq(x, wt, .50),
+             `90th pct.` = wq(x, wt, .90),
+             `N` = length(x))
 }))
 num <- setdiff(names(desc), c("Variable", "N"))
 desc[, (num) := lapply(.SD, function(x) formatC(x, format = "f", digits = 2, big.mark = ",")), .SDcols = num]
@@ -112,12 +125,35 @@ tex <- c(
   paste0(body, " \\\\"),
   "\\bottomrule",
   "\\end{tabular}",
-  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} One observation per municipality-year",
-        "(2015--2024). TISS variables from ANS private-insurance claims; SINASC and",
-        "covariates as described in the text."),
+  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} Municipality-years 2015--2024 with at least",
+        "20 private deliveries and a defined fee gap, the sample of the fee regressions,",
+        "weighted by private deliveries as the regressions are; percentiles are weighted.",
+        "TISS variables from ANS private-insurance claims; SINASC and covariates as described",
+        sprintf("in the text. Unweighted, the mean log fee gap is %+.2f: the gap is positive in", gap_unw),
+        sprintf("most small municipalities, while %.0f percent of deliveries take place where the", 100 * gap_share_neg),
+        "cesarean pays less."),
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab01_descriptives.tex"))
 print(desc)
+
+# Deliveries in the claims with no physician delivery fee billed to the plan.
+# Under CFM Parecer 39/2012 a delivery attended by the prenatal obstetrician under
+# a private "availability" agreement is paid by the patient and not by the plan,
+# so it enters the claims without a delivery fee (the ANS holds such charges
+# improper for covered beneficiaries). This share is therefore an UPPER BOUND on
+# the deliveries that the fee means cannot see for that reason; quoted in
+# Sections 2 and 5.
+evf <- rbindlist(lapply(2015:2024, function(y)
+  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
+                             col_select = c("year", "type", "fee_delivery")))))
+nofee <- evf[, .(share_nofee = mean(is.na(fee_delivery) | fee_delivery <= 0)), by = type]
+nofee_yr <- evf[, .(share_nofee = round(100 * mean(is.na(fee_delivery) | fee_delivery <= 0), 1)), by = year][order(year)]
+NOFEE_ALL <- evf[, 100 * mean(is.na(fee_delivery) | fee_delivery <= 0)]
+cat(sprintf("\n[01] Deliveries with no physician delivery fee billed to the plan, 2015-2024: %.1f%% (cesarean %.1f%%, vaginal %.1f%%); by year %.1f%% to %.1f%%\n",
+            NOFEE_ALL, 100 * nofee[type == "cesarean", share_nofee], 100 * nofee[type == "vaginal", share_nofee],
+            min(nofee_yr$share_nofee), max(nofee_yr$share_nofee)))
+print(nofee_yr)
+rm(evf); gc()
 
 message("01_descriptives.R done")
 

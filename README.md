@@ -31,6 +31,7 @@ analysis/code/          # 00_utils.R, 01_descriptives.R … 06_robustness.R,
                         #   09_org_capacity.R        (establishment-capacity heterogeneity)
                         #   14_estab_practice_style.R (establishment-level dispersion)
                         #   13_demand_smoothing.R    (the de Elejalde-Giolito channel)
+                        #   15_estab_gradient.R      (Eq. 3 within the establishment; early-term in Eq. 3)
                         #   10_supplement.R          (Supplemental Appendix exhibits)
                         #   12_subgroups.R           (Robson / gestational-age / maternal-age splits)
                         #   11_body_figures.R        (merged multi-panel body figures; needs 12)
@@ -202,6 +203,7 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
 | `14_estab_practice_style.R` | (supplement) | `tables/tab_estab_practice_style.tex` (Robson-standardized dispersion across maternities); caches `sinasc_estab_year_robson.parquet` |
 | `13_demand_smoothing.R` | (supplement) | `tables/tab_demand_smoothing.tex`; `fam_F.rds` |
+| `15_estab_gradient.R` | (supplement) | `tables/tab_estab_gradient.tex` (Eq. 3 on establishment-date cells with establishment×year FE, fixed weights, extensive margin, PPML counts; early-term share in Eq. 3) |
 | `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
 | `12_subgroups.R` | (supplement) | `tables/tab_subgroup_gradients.tex` (gestational-age + maternal-age splits of Equation 3), `graphs/fig_robson_gradient`, `robson_grad.rds` (feeds **Figure 3** panel c) |
 | `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth + Robson gradient), `graphs/fig_gestation_panels` (Supplementary Appendix) |

@@ -901,3 +901,16 @@ Body numbers: Equation (3) −1.8/−2.5 (unchanged), own gradients −7.9/−5.
 −6.7/−3.5, prelabor −8.9 vs in-labor +1.9, early-term +12.2, Kitagawa 73% of 36.2pp,
 ~35,000 excess weekday cesareans. Table 1: +0.049** / −0.014* without controls,
 +0.019 / −0.013 with them; bootstrap p 0.32 and 0.17.
+
+## 2026-09-28 — external referee comments on the old draft; new analyses (Claude, approved by Fredie)
+
+- **Robson timing table** (`tab:robson_validation`): the 0% prelabor share in groups 1 and 3 is by construction (DATASUS derives the Robson group from the labor-onset and prelabor fields; 2020 crosstab: exactly zero prelabor cesareans and zero inductions in G1/G3). Caption, in-table sentence, note (`10`), supplement paragraph and the body pointer no longer call it a validation.
+- **Table C.1**: now the fee-regression sample (≥20 private deliveries, defined gap), weighted by deliveries, weighted percentiles; note gives the unweighted mean (+0.21) and that 57% of deliveries sit where the cesarean pays less. No filter error: the old +0.23/0.24 was the unweighted mean over all muni-years. Sentence added in Section 5.
+- **CNES link**: the 84% was all of 2015 (lagged capacity, panel opens 2015); 2016–2024 95.4%, weekdays 95.3 / weekends 95.4. Note in `09` now says so.
+- **Eq. (3) within the establishment** (`15_estab_gradient.R`, new supplement table `tab:estab_gradient`): −0.95 / −1.26 weekend (birth / fixed weights) vs −1.79 on the same births in cells; about half is reallocation across establishments (any birth −8.7pp; prelabor count −34 lp; vaginal −6 lp). Intro sentence, body paragraph in 5.1, supplement subsection, and the abstract ("about half of it within establishments").
+- **Early-term share inside Eq. (3)**: −1.35pp (Robson 1–2 −0.69, 10%). Section 7.
+- **LBW / low Apgar within Robson 1–2 at term** (Table 5 cols 5–6): −1.06 / −0.39 against −3.47 / −0.63. Section 7.
+- **Availability fee** (CFM Parecer 39/2012; ANS 407th board meeting, 7/10/2014, item 5, and the ANS consumer page): paragraph in Section 2, two sentences in Section 5 with the 4.5% of TISS deliveries carrying no physician fee (new block in `01`), three new references.
+- **Framing**: contribution paragraph moved to the 3rd paragraph of the introduction with Spinola & Rocha and Melo & Menezes-Filho; conclusion separates relative price from the structure of pay.
+- Abstract 247 words (trimmed "maternal and newborn survival" to "survival gain" to stay under 250). Build: paper 39 pp, supplement 31, WP 67, 0 undefined, 0 overfull hbox.
+- Independent re-implementation of Table 2 col 1 (own holiday calendar, own aggregation): −1.789 (0.623), −2.549 (0.507), −1.059 (0.336), N 5,038,435 — exact.

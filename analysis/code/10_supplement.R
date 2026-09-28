@@ -27,9 +27,12 @@
 # =============================================================================
 # B (C3) — ROBSON x PRELABOR VALIDATION + Robson-1 vs Robson-10 formal test.
 # Robson group 1 is SPONTANEOUS labor by definition, so its cesareans must be
-# in-labor; a prelabor cesarean there would be a logical/coding contradiction. We
-# verify the data are internally consistent (prelabor share in group 1 = 0), which
-# means the group-1 weekend dip cannot be prelabor scheduling. We also test
+# in-labor. The zero prelabor share in groups 1 and 3 is MECHANICAL, not a
+# validation: the register derives the Robson group from the same labor-onset and
+# prelabor fields (a 2020 crosstab of DATASUS TPROBSON x STCESPARTO and
+# STTRABPART has exactly zero prelabor cesareans and zero inductions in groups 1
+# and 3). The table documents the definition, and what it licenses is that the
+# group-1 weekend dip cannot be prelabor scheduling. We also test
 # formally whether the group-10 (preterm) dip really is "far less" than group 1.
 #   -> tab_ref_c3_robson_validation.tex
 # =============================================================================
@@ -79,18 +82,18 @@ vtab <- val[, .(`Robson group` = tipo_robson,
                 `Cesareans` = format(cesareans, big.mark = ","),
                 `Share prelabor (\\%)` = sprintf("%.1f", 100 * share_prelabor))]
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{Internal consistency of the cesarean-timing indicator across Robson groups}}",
+  "\\caption{\\textbf{The cesarean-timing indicator across Robson groups}}",
   "\\label{tab:robson_validation}", "\\small",
   "\\begin{tabular}{lrr}", "\\toprule",
   "Robson group & Cesareans & Share coded prelabor (\\%) \\\\", "\\midrule",
   apply(vtab, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share, as it must; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. %s} \\\\",
+  sprintf("\\multicolumn{3}{p{0.9\\linewidth}}{\\footnotesize Group 1 (spontaneous labor) has a %.1f\\%% prelabor share by construction, since the register assigns every prelabor cesarean of a nulliparous term cephalic singleton to group 2; its for-profit weekend dip of %.1f percentage points therefore has no prelabor component: the in-labor component is %.1f percentage points and the remainder is cesareans whose timing code is missing. %s} \\\\",
           100*val[tipo_robson=="01", share_prelabor], 100*d_r1_tot, 100*d_r1_lab, r1r10_txt),
   "\\bottomrule", "\\end{tabular}",
   paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (the years with the Robson classification), cesareans with a",
         "valid before/during-labor code. Robson 1 = nulliparous, term, singleton,",
-        "cephalic, spontaneous labor; Robson 2 = same but induced or prelabor cesarean."),
+        "cephalic, spontaneous labor; Robson 2 = same but induced or prelabor cesarean. The register derives the group from the labor-onset and prelabor fields, so the zero shares in groups 1 and 3 follow from the definition and are not a test of the timing indicator."),
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab_ref_c3_robson_validation.tex"))
 cat(sprintf("\n[B/C3] Robson-1 prelabor share = %.3f (must be ~0). R1 dip %.1fpp (in-labor %.1fpp). R1-vs-R10 test p=%.3f\n",

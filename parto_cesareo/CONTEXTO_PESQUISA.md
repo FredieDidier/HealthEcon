@@ -129,7 +129,7 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 1. **A epidemia é real e extrema** — cesárea ~84% no setor de planos (TISS) / ~81% for-profit (SINASC) vs. ~43% público; 68% mesmo no Robson 1 em dia útil (público 36%).
 2. **Não é uma história de preço positivo** — com o honorário vaginal *econômico* (assistência cobrada em 38% dos partos vaginais, 2,9h a ~R$420/h), a cesárea paga 18–38% menos nos cinco maiores estados, que rodam ~80% de cesárea; o coeficiente troca de sinal entre esquemas de EF (+0,049** EF-UF / −0,014* EF-município sem controles; +0,019 / −0,013 com controles, n.s.); oscilações de até 1,4 ponto log no estado não movem nada (bootstrap p=0,32); a ordem judicial de 2015 nunca virou mudança de honorário.
 3. **É uma história de agenda** — cesáreas caem em fins de semana (−7,9pp for-profit / −6,7pp público) e feriados (−5,3 / −3,5); metade das cesáreas em horário comercial de dia útil, contra benchmark uniforme de 29,8%.
-4. **Eq. (3), a estimativa central** — dentro do mesmo município-dia, o diferencial for-profit é **−1,8pp fim de semana / −2,5pp feriado**; −1,8 / −2,4 com composição materna predeterminada; −1,5 / −1,7 com Robson (2014+).
+4. **Eq. (3), a estimativa central** — dentro do mesmo município-dia, o diferencial for-profit é **−1,8pp fim de semana / −2,5pp feriado**; −1,8 / −2,4 com composição materna predeterminada; −1,5 / −1,7 com Robson (2014+). **Cerca de metade é dentro do estabelecimento** (células estabelecimento-dia com EF estabelecimento×ano, `15_estab_gradient.R`): −0,9 / −1,3 no fds (peso nascimentos / peso fixo), −1,3 / −1,8 no feriado; a outra metade é realocação de partos entre estabelecimentos no fds (probabilidade de algum parto −8,7pp; contagem de cesáreas pré-parto −34 pontos log; partos vaginais −6). Nunca escrever o 1,8 como mudança de conduta dentro do hospital.
 5. **O dip vive nas cesáreas pré-parto** — −8,9pp pré-parto vs. **+1,9pp** intraparto (2012+); persiste em Robson 1–2 (−7,0pp) e em Robson 1 sozinho (−6,0pp), ambos 2014+.
 6. **O custo** — +12,2pp de early-term (37–38 sem) com controles maternos; 73% estilo de prática (Kitagawa, gap de 36,2pp); ~35 mil cesáreas de dia útil em excesso por ano (9,3% de ~380 mil); valores faturados quase iguais (média da cesárea 1% menor, mediana 4% maior).
 
@@ -142,10 +142,16 @@ Vale para abstract, introdução, seção de estratégia, notas de tabela e conc
 | Dip de fim de semana (for-profit / público) | −7,9pp / −6,7pp |
 | Dip de feriado (for-profit / público) | −5,3pp / −3,5pp |
 | **Eq. (3) diferencial (EF muni×data)** | **fds −1,8pp / feriado −2,5pp**; +predeterminado −1,8 / −2,4; +Robson −1,5 / −1,7 |
+| Eq. (3) dentro do estabelecimento (EF estab×ano) | fds −0,95 (peso nasc.) / −1,26 (peso fixo); feriado −1,31 / −1,75; algum parto −8,7pp; pré-parto −34 pl; vaginal −6 pl |
+| Early-term dentro da Eq. (3) | −1,35pp*** (2012+); Robson 1–2 −0,69pp* (2014+) |
+| Baixo peso / Apgar baixo, Robson 1–2 a termo | −1,06pp / −0,39pp (amostra toda −3,47 / −0,63) |
+| Partos TISS sem honorário médico faturado ao plano | 4,5% (1,6–7,3% por ano); limite superior dos partos com taxa de disponibilidade |
+| Log fee gap na Tabela C.1 (ponderada, ≥20 partos) | ponderado −0,04; não ponderado +0,21; 57% dos partos onde a cesárea paga menos |
+| Ligação CNES (capacidade) | 2016–2024 95,4% (dia útil 95,3 / fds 95,4); 2015 não liga (defasagem, painel começa em 2015) |
 | Dip de fds: pré-parto vs. intraparto (for-profit) | −8,9pp vs. +1,9pp |
 | Robson 1–2 / Robson 1 (for-profit) | −7,0pp / −6,0pp |
 | Perfil Robson, for-profit vs. público (Fig 3c) | G1 −6,2/−3,6 · G2 −5,0/−3,7 · G3 −7,9/−3,0 · G4 −8,9/−4,2 · G5 −3,3/−5,8 · G10 −4,8/−5,3 |
-| Robson 1 vs. 10 (for-profit) | dip do G1 1,3pp maior (p=0,006); não é placebo |
+| Robson 1 vs. 10 (for-profit) | dip do G1 1,3pp maior (p=0,006); não é placebo. G1/G3 têm 0 cesárea pré-parto POR CONSTRUÇÃO (o DATASUS deriva o Robson dos campos de início do trabalho de parto e de cesárea pré-parto): a tabela é definição, não validação |
 | Eq. (3), termo vs. pré-termo | −2,1pp vs. **+1,5pp**; diferença +3,6pp |
 | Eq. (3), mãe <35 vs. 35+ | −2,5pp vs. +1,7pp*; dentro de Robson 1–2, −4,8 vs. −1,4 |
 | Feriado prolongado: bridge = isolated | p=0,55 (pré-parto p=0,70) — **sem** efeito bridge maior; Holm da família D 0,202 |

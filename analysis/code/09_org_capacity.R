@@ -110,6 +110,17 @@ link_rate  <- d[, mean(!is.na(lag_beds_obstetric))]
 birth_link <- d[, sum(births[!is.na(lag_beds_obstetric)]) / sum(births)]
 cat(sprintf("\n[2] CNES link: %.1f%% of establishment-days, %.1f%% of for-profit births\n",
             100 * link_rate, 100 * birth_link))
+# The capacity measures are LAGGED and the CNES panel opens in 2015, so no 2015
+# birth can link: that year is the whole of the gap. From 2016 the link is
+# reported overall and separately for weekdays and weekends, the comparison a
+# weekend design needs (a link that failed more on weekends would bias it).
+d16 <- d[year >= 2016L]
+d16[, wkend := wday(date) %in% c(1L, 7L)]
+link16    <- d16[, sum(births[!is.na(lag_beds_obstetric)]) / sum(births)]
+link16_wd <- d16[wkend == FALSE, sum(births[!is.na(lag_beds_obstetric)]) / sum(births)]
+link16_we <- d16[wkend == TRUE,  sum(births[!is.na(lag_beds_obstetric)]) / sum(births)]
+cat(sprintf("[2] CNES link 2016-2024: %.1f%% of for-profit births (weekdays %.1f%%, weekends %.1f%%)\n",
+            100 * link16, 100 * link16_wd, 100 * link16_we))
 
 # VALIDATION of the registered-obstetrician count, both sectors, one definition:
 # establishment-years with at least fifty births in the year whose CNES-PF record
@@ -348,8 +359,11 @@ etable(m6, m7, m8, m9, m10, m11, tex = TRUE, file = f2, replace = TRUE, dict = d
          sprintf("and a holiday interaction of %.2f (%.2f). All capacity",
                  100 * coeftable(m12)[k12h, 1], 100 * coeftable(m12)[k12h, 2]),
          "measures are lagged one year and their levels are absorbed by the",
-         "establishment$\\times$year fixed effects. The CNES establishment code links",
-         sprintf("%.1f percent of for-profit births in 2015--2024, and", 100 * birth_link),
+         "establishment$\\times$year fixed effects. Because the measures are lagged and the",
+         "facility panel opens in 2015, the sample starts in 2016; from then the CNES",
+         sprintf("establishment code links %.1f percent of for-profit births (%.1f on weekdays,",
+                 100 * link16, 100 * link16_wd),
+         sprintf("%.1f on weekends), and", 100 * link16_we),
          sprintf("%.1f percent of the for-profit maternity-years in the estimation sample", 100 * zero_obst),
          "register no obstetrician in CNES-PF, which is why obstetric beds rather than",
          "registered obstetricians measure capacity. Standard errors, two-way clustered by",

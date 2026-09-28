@@ -1,0 +1,73 @@
+\begin{table}[H]
+\centering
+\caption{\textbf{The for-profit calendar gradient within the establishment, and the early-term share}}
+\label{tab:estab_gradient}
+\small\setlength{\tabcolsep}{3pt}
+\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\multicolumn{7}{l}{\emph{Panel A. Cesarean delivery, municipality-day cells against establishment-day cells}} \\
+\addlinespace[2pt]
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+ & Cesarean & Cesarean & Cesarean & Any birth & Prelabor & Vaginal \\
+ & share & share & share & that day & cesareans & births \\
+\midrule
+For-profit $\times$ Weekend & -1.789$^{***}$ & -0.948$^{***}$ & -1.256$^{***}$ & -8.729$^{***}$ & -34.322$^{***}$ & -5.997$^{***}$ \\
+ & (0.623) & (0.287) & (0.323) & (0.611) & (2.600) & (0.790) \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -2.548$^{***}$ & -1.309$^{***}$ & -1.754$^{***}$ & -7.506$^{***}$ & -33.246$^{***}$ & -7.820$^{***}$ \\
+ & (0.507) & (0.259) & (0.314) & (0.587) & (2.575) & (1.026) \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -1.059$^{***}$ & -0.764$^{***}$ & -0.850$^{***}$ & -1.283$^{***}$ & -9.564$^{***}$ & -0.229 \\
+ & (0.336) & (0.151) & (0.165) & (0.172) & (1.325) & (0.688) \\
+\addlinespace[2pt]
+\midrule
+Unit & Municipality-sector & Establishment & Establishment & Establishment & Establishment & Establishment \\
+Estimator & OLS & OLS & OLS & OLS & Poisson & Poisson \\
+Weights & Births & Births & Fixed & Fixed & -- & -- \\
+Municipality $\times$ date fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\
+Municipality $\times$ sector fixed effects & Yes & No & No & No & No & No \\
+Establishment $\times$ year fixed effects & No & Yes & Yes & Yes & Yes & Yes \\
+Sample & 2010--2024 & 2010--2024 & 2010--2024 & 2010--2024 & 2012--2024 & 2010--2024 \\
+Observations & 5,038,423 & 6,673,631 & 6,673,631 & 4,635,564 & 2,906,852 & 3,786,176 \\
+\midrule
+\multicolumn{7}{l}{\emph{Panel B. Share of births at 37--38 weeks, municipality-day cells}} \\
+\addlinespace[2pt]
+ & (7) & (8) & & & & \\
+ & All births & Robson 1--2 & & & & \\
+\midrule
+For-profit $\times$ Weekend & -1.345$^{***}$ & -0.689$^{*}$ & & & & \\
+ & (0.376) & (0.390) & & & & \\
+\addlinespace[2pt]
+For-profit $\times$ National holiday & -0.828$^{**}$ & 0.183 & & & & \\
+ & (0.392) & (0.434) & & & & \\
+\addlinespace[2pt]
+For-profit $\times$ Eve of rest day & -0.407 & -0.350 & & & & \\
+ & (0.264) & (0.283) & & & & \\
+\addlinespace[2pt]
+\midrule
+Sample & 2012--2024 & 2014--2024 & & & & \\
+Observations & 4,212,319 & 2,014,187 & & & & \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{\linewidth}\footnotesize
+\textit{Notes:} SINASC, for-profit and public establishments; coefficients in
+percentage points, and in log points $\times$ 100 in the Poisson columns. Column 1
+estimates Equation~\eqref{eq:gradient} on municipality-date-sector cells built from
+the births that carry an establishment code. Columns 2--6 use establishment-date
+cells with establishment$\times$year fixed effects, so the differential is
+identified from each establishment's own weekday-weekend variation against the
+other sector in the same municipality-day. Column 2 weights by the cell's births,
+as the paper does; columns 3--4 hold each establishment's weight fixed at its mean
+daily births in the year. Columns 4--6 use a panel with every day of each
+establishment-year with at least 50 births, in the municipality-years with
+both sectors, the only ones that identify the differential; days with no birth
+enter as zeros. Column 4 is the probability that the establishment records any
+birth that day; columns 5--6 are counts. Panel B uses births with a recorded
+gestational age, and column 8 Robson groups 1--2 (nulliparous, term, singleton,
+cephalic). Standard errors are two-way clustered by municipality and date in
+columns 1, 7 and 8 and by establishment and date in columns 2--6.
+\newline
+\footnotesize Significance levels: *** p$<$0.01, ** p$<$0.05, * p$<$0.10.
+\end{minipage}
+\end{table}

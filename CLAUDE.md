@@ -157,6 +157,11 @@ reintroduce `else → Public`.
 4. **Eq. (3), the central estimate** — within the same municipality-day the
    for-profit differential is **−1.8pp weekend / −2.5pp holiday**; −1.8 / −2.4
    with predetermined composition; −1.5 / −1.7 with Robson shares (2014+).
+   **About half is within the establishment** (establishment-day cells,
+   establishment×year FE, `15_estab_gradient.R`): −0.9 / −1.3 (birth / fixed
+   weights) on weekends, −1.3 / −1.8 on holidays; the other half is weekend births
+   moving across establishments (any-birth −8.7pp, prelabor count −34 lp,
+   vaginal −6 lp). Never write the 1.8 as a within-hospital change of practice.
 5. **The dip lives in prelabor cesareans** — −8.9pp prelabor vs +1.9pp in-labor
    (2012+); Robson 1–2 −7.0pp, Robson 1 −6.0pp (2014+; Robson 1 has no prelabor
    component, the rest of its dip is cesareans without a timing code).
@@ -173,10 +178,16 @@ reintroduce `else → Public`.
 | Weekend dip (for-profit / public) | −7.9pp / −6.7pp |
 | Holiday dip (for-profit / public) | −5.3pp / −3.5pp |
 | **Eq (3) for-profit differential (muni×date FE)** | **weekend −1.8pp / holiday −2.5pp**; +predetermined −1.8 / −2.4; +Robson (2014+) −1.5 / −1.7 |
+| Eq (3) within establishment (estab×year FE) | weekend −0.95 (births) / −1.26 (fixed wts); holiday −1.31 / −1.75; any birth −8.7pp; prelabor count −34 lp; vaginal −6 lp; zero-filled panel 339 munis |
+| Early-term share inside Eq (3) | −1.35pp*** (2012+); Robson 1–2 −0.69pp* (2014+) |
+| LBW / low Apgar, Robson 1–2 at term (Table 5 cols 5–6) | −1.06pp / −0.39pp (full sample −3.47 / −0.63) |
+| Deliveries with no physician fee billed to the plan (TISS) | 4.5% (1.6–7.3% by year); upper bound on availability-fee deliveries |
+| Log fee gap, Table C.1 (delivery-weighted, ≥20 deliveries) | weighted −0.04; unweighted +0.21; 57% of deliveries where cesarean pays less |
+| CNES link (capacity analysis) | 2016–2024 95.4% (weekdays 95.3 / weekends 95.4); 2015 cannot link (lagged, panel opens 2015) |
 | Weekend dip: prelabor vs in-labor (for-profit, 2012+) | −8.9pp vs +1.9pp |
 | Robson 1–2 / Robson 1 weekend dip (for-profit, 2014+) | −7.0pp / −6.0pp |
 | Robson profile, for-profit vs public (Fig 3c) | G1 −6.2/−3.6 · G2 −5.0/−3.7 · G3 −7.9/−3.0 · G4 −8.9/−4.2 · G5 −3.3/−5.8 · G10 −4.8/−5.3 |
-| Robson 1 vs 10 (for-profit) | G1 dip 1.3pp larger, p = 0.006; still not a placebo |
+| Robson 1 vs 10 (for-profit) | G1 dip 1.3pp larger, p = 0.006; still not a placebo. G1/G3 have 0 prelabor cesareans BY CONSTRUCTION (DATASUS derives Robson from the labor-onset and prelabor fields): the timing table is a definition, never a validation |
 | Eq (3), term vs preterm | −2.1pp vs +1.5pp; difference +3.6pp |
 | Eq (3), mother <35 vs 35+ | −2.5pp vs +1.7pp*; within Robson 1–2, −4.8 vs −1.4 |
 | Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70); family D Holm 0.202 |

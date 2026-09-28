@@ -35,7 +35,7 @@ TABLE <- here::here("analysis", "output", "tables")
 b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
        col_select = c("sector", "cesarean", "cesarea_antes_parto", "semana_gestacao",
                       "peso", "apgar5", "idade_mae", "escolaridade_mae", "raca_cor_mae",
-                      "muni", "year")))
+                      "tipo_robson", "muni", "year")))
 b <- b[year <= 2024 & sector %in% c("Private", "Public")]
 # SINASC codes "ignored" as 99 (Apgar, age) and 9999 (weight); see 00_utils.R
 b[, `:=`(apgar5 = valid_apgar(apgar5), peso = valid_peso(peso), idade_mae = valid_idade(idade_mae))]
@@ -100,11 +100,18 @@ m_et0 <- feols(early_term ~ private | muni + year, b, cluster = ~muni)
 m_et1 <- feols(as.formula(paste("early_term ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 m_lb1 <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
 m_ap1 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
+# The same two newborn margins where selection is smallest: Robson groups 1-2
+# (nulliparous, term, singleton, cephalic; recorded from 2014) and 37+ weeks.
+# The for-profit advantage on the full sample reflects healthier mothers and
+# better resources; this shows how much of it survives among comparable pregnancies.
+b12 <- b[year >= 2014 & tipo_robson %in% c("01", "02") & semana_gestacao >= 37]
+m_lb2 <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b12, cluster = ~muni)
+m_ap2 <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b12, cluster = ~muni)
 
 # Hand-built in the layout of tab_prelabor_lowrisk (body Table 3): clean column
 # header, coefficient rows in percentage points, then Maternal controls /
 # fixed-effects / Observations rows.
-HEALTH <- list(m_et0, m_et1, m_lb1, m_ap1)
+HEALTH <- list(m_et0, m_et1, m_lb1, m_ap1, m_lb2, m_ap2)
 ga_cov <- b[, .(p = 100 * mean(!is.na(semana_gestacao))), by = year][, setNames(p, year)]
 tex <- c(
   "\\begin{table}[H]", "\\centering",
@@ -112,16 +119,17 @@ tex <- c(
   "\\label{tab:health}",
   "\\small\\setlength{\\tabcolsep}{5pt}",
   "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
-  "\\begin{tabular}{lcccc}", "\\toprule",
-  " & (1) & (2) & (3) & (4) \\\\",
-  " & \\multicolumn{2}{c}{Early-term birth} & Low birthweight & Five-minute \\\\",
-  " & \\multicolumn{2}{c}{(37--38 weeks)} & ($<$2500g) & Apgar $<$ 7 \\\\",
-  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-4}\\cmidrule(lr){5-5}",
+  "\\begin{tabular}{lcccccc}", "\\toprule",
+  " & (1) & (2) & (3) & (4) & (5) & (6) \\\\",
+  " & \\multicolumn{2}{c}{Early-term birth} & Low birthweight & Five-minute & Low birthweight & Five-minute \\\\",
+  " & \\multicolumn{2}{c}{(37--38 weeks)} & ($<$2500g) & Apgar $<$ 7 & ($<$2500g) & Apgar $<$ 7 \\\\",
+  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-4}\\cmidrule(lr){5-5}\\cmidrule(lr){6-6}\\cmidrule(lr){7-7}",
   tex_row("For-profit establishment", HEALTH, "private", mult = 100, dig = 2),
   "\\midrule",
-  "Maternal controls & No & Yes & Yes & Yes \\\\",
-  "Municipality fixed effects & Yes & Yes & Yes & Yes \\\\",
-  "Year fixed effects & Yes & Yes & Yes & Yes \\\\",
+  "Maternal controls & No & Yes & Yes & Yes & Yes & Yes \\\\",
+  "Sample & All & All & All & All & Robson 1--2, term & Robson 1--2, term \\\\",
+  "Municipality fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\\\",
+  "Year fixed effects & Yes & Yes & Yes & Yes & Yes & Yes \\\\",
   tex_nobs(HEALTH),
   "\\bottomrule", "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
@@ -134,10 +142,13 @@ tex <- c(
   "age, age$^2$, education, race. Mothers differ across sectors, so the",
   "early-term coefficient is an associational difference between establishment",
   "sectors and is not interpreted as the causal effect of prelabor scheduling.",
+  "Columns 5--6 restrict to Robson groups 1--2 (nulliparous, term, singleton,",
+  "cephalic; recorded from 2014) at 37 or more weeks, where selection across",
+  "sectors is smallest.",
   "Standard errors, clustered by municipality, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab09_health.tex"))
-etable(m_et0, m_et1, m_lb1, m_ap1, keep = "%private", fitstat = ~ n, digits = 4)
+etable(m_et0, m_et1, m_lb1, m_ap1, m_lb2, m_ap2, keep = "%private", fitstat = ~ n, digits = 4)
 
 message("05_cost.R: gestation + health block done")
 
