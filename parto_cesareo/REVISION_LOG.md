@@ -1076,3 +1076,250 @@ unfounded (explained in the note now).
   against 77.6% and 76.8% of privately paid ones. The introduction says SUS maternities work with teams "em regime de
   plantão". Cited in the institutional background and the conclusion. Its sectors
   are PAYER (delivery payment source), and the text says "publicly/privately paid".
+
+## 2026-10-02 — the abstract, an editor's pass over both documents, and two misfiled citations (Claude, requested by Fredie)
+
+Fredie asked for the pass the WorldCupHealth project ran on 2026-10-01 (its
+`HISTORY.md`), read as a Journal of Health Economics editor: a verdict on the
+abstract, the rewrite, then a full pass over the paper, Appendices A and B, the
+supplement and the working paper with the writing and razor skills. Text only: no
+estimate moved and nothing was refitted. Four numbers were re-read from the data
+with read-only queries (Figure 1 series, day-of-week rates, Robson 1–2 weekday
+rates, the five states' private-insurance cesarean rates).
+
+**The abstract.** Each 09-28 round added a correct hedge and the sum read as
+written for the last referee: 48 of 249 words of setting came before the
+question, the last 58 were interpretation and limitation, and the paper's raw
+facts (the 7.9 and 6.7 weekend dips) and its decomposition (73 percent) were
+absent. Two defects: the second sentence stated causally ("scheduled cesareans
+also shift births to riskier early-term weeks") what the paper estimates as an
+association, and the sentence carrying Eq. (3) also carried the 12.2-point
+early-term gap, which is a birth-level estimate with municipality and year fixed
+effects, not a within-municipality-day one. The new abstract (246 words) opens on
+the tension (81 percent cesarean although, under private insurance, a cesarean
+pays the physician less on average), gives each result its number, marks the
+early-term gap "after maternal controls", keeps every 09-28 correction ("on
+average", "which we read as organizational", "pays only for billed labor
+hours") and ends on the conclusion's sentence (the organization of obstetric
+time as a policy margin). Moved out of the abstract, still in the body: the WHO
+benchmark, the early-term sentence, "Physician convenience and hospital staffing
+remain empirically inseparable" (intro and conclusion carry it).
+
+**Two misfiled citations.** The introduction filed Alexander (2020) under "the
+financial channel is not universal, however, even in childbirth" as showing that
+paying physicians to economize "can move treatment in unintended ways". Its
+abstract: physicians paid to cut the hospital costs of Medicare patients changed
+which patients they admitted and, conditional on patient health, did not change
+procedure use; it is not about childbirth. It now carries that finding, outside
+the childbirth clause. The conclusion cited `clemens2014` and `alexander2020` for
+"relative-price reforms act on one whose documented magnitude is too small to
+matter here"; Clemens and Gottlieb find LARGE responses to Medicare fee changes.
+The clause now cites `gruber1999physician` and `grant2009`, the magnitudes
+Section 5 uses. A per-work content check passes both papers; only reading each
+list's predicate fails them.
+
+**Claims about the literature.** "Brazilian studies of birth-timing manipulation
+commonly motivate scheduled cesareans by ... compensation and time" had no
+citation; Melo and Menezes-Filho (2024) say exactly this (pay higher, time
+shorter, schedule convenient) and are now cited, without "commonly". "...and the
+incentive literature has largely left implicit" was cut: the same introduction
+cites Brown (1996) on physician demand for leisure. Appendix E's "short-window
+evaluations that have credited it" now cites Borem et al. (2020, Obstet Gynecol
+135(2):415–425), verified against Crossref and Europe PMC (new bib entry; the pilot
+collaborative, vaginal delivery 21.5 to 34.8 percent, "associated with").
+Bachner et al. (2024) now carries its finding (empty beds raise the cesarean
+probability) instead of only its question.
+
+**Claims stronger than their exhibits or than the paper's own framing**, fixed
+where they appeared: "First, the relative procedure fee cannot account for the
+epidemic, while the price of the physician's time can" (round 3 says the common
+gradient is organizational; now "favors the cesarean"); "The price of time leaves
+its mark on the calendar" (Section 6 opener, cut); "surgery booked around the
+physician's calendar" (now "booked in advance"); "Three calendar fingerprints ...
+show supply-side scheduling at work" (now "point to"); "the operative practice
+pattern is a scheduling choice ... within identical clinical groups" (now practice
+style within the same clinical groups, and that the practice follows the working
+week); "the same women managed differently" (women in the same clinical group);
+"Convenience is also associated with earlier births" and "the convenience is
+associated with earlier births" (a sector association: for-profit births are
+more often early-term); "it locates the cost of the convenience margin" (the
+health cost of the for-profit delivery pattern); "The differential is therefore
+not a case-mix artifact" (of observed case-mix); "Cesarean use bears every
+fingerprint of that logic" one paragraph before the leisure predictions go
+unconfirmed (the calendar fingerprints); "strongly support a time-and-organization
+margin" (point to); "the only ones scheduling can move" (directly move, as in
+Section 6); "Whatever the Brazilian for-profit calendar is doing, it is not
+levelling throughput" (cut; the sentence before states the absence of
+levelling); supplement "is stable across regions and periods" (present in every
+region and period, 6.5 to 9.4 points); "absent among older ones" for an estimate of
+-1.4 (SE 0.94) (not detectable); "the coefficient stays small" / "is small and
+changes sign" (supplement text and the D.18 note; the round-3 ban); "in first
+differences the coefficient is small" (now its value, -0.87 points per log point);
+"which would bias every coefficient" (the coefficient, in every specification).
+
+**Sentences that contradicted their neighbours.** The introduction said the model
+"explains why levers that change the relative procedure fee should have little
+traction", while Appendix A, P1, says the model does not imply a small response by
+itself; the introduction now says the conclusion rests on the calibration. The
+conclusion called the relative-fee response "small" while Section 5 says the
+regressions do not establish that it is small (now "the limited role we find for
+the relative fee"). Section 6.2 said the excess gradient is small in groups 6–9
+"where the cesarean rate is close to its ceiling in both sectors", but the public
+dips there run to 4.2 points; the paragraph now names them as a second exception
+with group 5 (for-profit 94–98 percent cesarean; the for-profit dip 0.5–2.4, smaller
+than the public one in groups 6–8; values from `robson_grad.rds`), and the
+introduction says the excess "reverses where surgery is already close to
+universal". Appendix E motivated Sun–Abraham by staggered adoption and then imposed
+a common onset under which it equals TWFE; the paragraph now states the common
+onset first. The introduction told the policy-record story twice (a standalone
+paragraph and the third contribution); merged into the third contribution, which
+keeps "motivate, but do not identify" and the pointer to Figures E.1–E.2. A
+paragraph that said "We additionally combine ..." repeated the sentence two lines
+above it; cut.
+
+**Notes.** Figure 2's note gave standard-error clustering for panel (a), which draws
+no interval; the dashed line is now identified as Table 1, column 4 (checked in
+`11`). Table 3's note said the Robson group 1 cesareans "are intrapartum by
+construction" while the text puts 1.3 of the 6.0 points among uncoded cesareans
+that may be prelabor; the D.16 in-table sentence said "has no prelabor component"
+and then that the remainder may include prelabor cesareans (now "no coded
+prelabor component", with math minus signs); D.9's note called a null "a
+corroboration of the early-term margin" (cut; the body and supplement now say its
+early-term coefficients are not distinguishable from zero instead of
+"suggestive"); C.5 printed "charged/informed value", rows named "billed cost" in a
+table the text calls billed amounts, and a causal clause ("so the epidemic is not
+explained by higher cesarean billing", cut); D.6 lacked "reported" in the house
+standard-error sentence; D.14 "CNES professionals file". Each generated-note edit
+was applied as the identical string to the R source (`03`, `04`, `05`, `06`, `10`,
+`12`) and to the `.tex`, and checked by evaluating the string; no script re-run.
+
+**Numbers.** Section 6.3 called a sum of three per-municipality-day coefficients
+"-0.47 prelabor cesareans per municipality-day" (now per municipality, over those
+three days; the event-study axis is per municipality-day) and printed the window
+total of births as -2.00 where Table 4 prints -2.0053 (now -2.01). Section 2's
+public rate "to about 51 percent" is 51.53 in 2024 (now 52); "Both are far above"
+followed three series (All three). "Flat at about 80 percent from Monday through
+Friday" is 81.6–84.2 (now 82 to 84). The Robson 1–2 for-profit weekday rate "still
+exceeds 70 percent" is 80.5–83.5 on every weekday (now exceeds 80, Figure C.2).
+"Two thirds" of Robson 1 weekday deliveries is 68.1 percent (now 68, beside the
+36). The five largest states "run cesarean rates near 80 percent": their
+private-insurance rates are 77.7 (MG) to 89.7 (RJ), now "78 to 90 percent"
+(computed from `delivery_panel_muni_month`, 2015–2024; no exhibit prints them).
+"The for-profit rate remains near 80 percent" after the 2015 package is 78.2 in
+2024 (now "was still about 78 percent in 2024"); the calibration paragraph's "near
+80" is the pooled rate (now "about 81", the canonical form). Two paragraphs gained
+the cross-reference their numbers come from (Table 3 columns 5–6; Table 4 Panel B).
+
+**Language.** "Diary" three times (schedule; the same calque WCH removed),
+"insignificant" three times, "CNES professionals file" (register of
+professionals), pronouns ("once it occupies the physician", where it was the
+vaginal delivery; "We use it from 2012" after "the balance"), two pseudo-clefts,
+meta voice ("this is the comparison that matters for the argument", "and both
+numbers are right", "We deliberately do not convert", "and the table says why",
+"The precision comes from sample sizes in the millions rather than from a
+fortunate choice among tests"), "line up", "pin down", "the WHO's ... directs",
+"Private obstetricians" and "Brazil's private maternity sector" (bare private),
+"labor onset ... and the mode of labor onset" (one concept twice), emphasis italics
+in Appendix A prose, "separately-billed". Percent: the body mixed "%" (17) and
+"percent" (88) inside the same paragraphs; now "percent" throughout the prose
+(highlights keep "%", which their 85-character limit needs). The supplement named
+the body "the main text" once against "the paper" five times; now "the paper".
+
+**Considered and kept, with the reason.** "About half" of the differential within
+the establishment: the same-weight comparison is 0.95 of 1.79; the fixed-weight
+1.26 has no same-weight cell analogue, so "half or more" would compare different
+weightings (decision returned to Fredie below). "Maternities" as a count noun (12
+uses). "Brazilian practice is to take it" for bridge days (the prediction does not
+need it; harmless). Figure 2(a) "essentially flat" (now "the within-municipality
+relationship", the specification the panel draws). Newborn sex "distinguishable
+from zero only because the design has five million cells" (round 2). "A precise
+zero" for contracted hours (settled 09-07). The sample-flow row "Restrict to
+2010--2024" that removes nothing.
+
+**Checks.** New `parto_cesareo/audit/` (README there): `abstract.py`, `claims.py` (21
+claims with the wording each may not take, from the CLAUDE.md taxonomy and this
+round), `numcheck.py` (per-paragraph numbers against the cited tables, with
+allowlists that give a reason for each exception), `sweep.py`. On the pre-edit copy
+`claims.py` returns 28 hits; now 0. The first `numcheck.py` run listed 18 numbers
+absent from the tables their paragraph cites: six were fixed (five by naming the
+table the paragraph quotes, one the misrounded -2.00), twelve are legitimate and
+now listed with their reason (Figure 3(c) values, derived arithmetic, console
+counts); now 0 unlisted.
+Probed: 16 banned forms injected one at a time each exit 1; an orphan number exits
+1; an abstract four words over exits 1. Limit: a paragraph citing no table is
+checked only for orphans.
+
+Sweep (paper): median 26.0 → 26.0, sentences over 55 words 31 → 29, long and
+chained 9 → 5, pseudo-clefts 2 → 1 (the one left is a false positive, "Where it is
+charged"), "rather than" 36 → 35. Supplement: median 24 → 25, chained 1 → 0,
+pseudo-clefts 1 → 0. Build: paper 42 → 42 pages, supplement 37 → 37, working paper
+77 → 76 (rebuilt, dated October 2026; `build_wp.sh` default updated); 0 undefined
+references or citations, 0 overfull hbox, 0 float too large in all three; the
+supplement's one overfull vbox is the pre-existing one. Abstract 249 → 246 words
+(cap 250).
+
+### Decisions returned to Fredie
+
+- The abstract no longer carries the WHO benchmark, the early-term sentence or the
+  "empirically inseparable" sentence; all three stay in the body. Restoring any is
+  a one-line revert, at the cost of the 250-word cap.
+- The JHE abstract cap (250) could not be re-read from the guide: ScienceDirect
+  blocked automated and in-app access on 2026-10-02. Confirm it in the submission
+  system.
+- "About half within the establishment" or "half or more" (0.95 or 1.26 of 1.79,
+  by weighting): the choice is which within-establishment estimate is preferred.
+- Two citations entered: `melo2024` at a new site (the compensation-and-time
+  motivation) and `borem2020` (new entry, supplement only).
+- "Maternities" (12 uses) reads as a calque of "maternidades" to an American
+  editor; "maternity hospitals" is the standard form. Not changed.
+- No levels number was put in the abstract: the 35,000 is a mechanical benchmark
+  that needs a qualifier the cap cannot afford.
+- The Notion task could not be updated from this session (no connector).
+
+### Same day, second part: the decisions Fredie handed back
+
+- **"About half" → "half or more".** Fredie asked for the option best for the
+  paper. The fixed-weight column of Table D.5 is the better within-establishment
+  estimate (birth weights fall on exactly the weekend days being compared and so
+  give the heaviest schedulers the least weight), while the 1.8 it is compared
+  with is birth-weighted, so 0.95/1.79 is the same-weight ratio. Both point
+  estimates exceed half (53 and 70 percent on weekends, 51 and 69 on holidays), so
+  the introduction, Section 6.1 and Appendix D now say "half or more ...,
+  depending on how establishments are weighted" and "the rest" instead of "the
+  other half". A reader who divides 1.3 by 1.8 now finds the sentence agrees with
+  the table. New rule in `claims.py`.
+- **"Maternities" → "hospitals" / "establishments".** Fredie: "tem que escrever do
+  jeito que for melhor pensando no padrão do journal e nos leitores". The word is
+  not wrong in medical English (Borem et al. write "Brazil's approximately 5,500
+  active maternities"), but the paper used three names for one object. Prose now
+  says "hospital", which it already used for the same object; tables say
+  "establishment", which their fixed-effect rows already said; "maternity"
+  survives only as an adjective. 14 prose sites, and 11 strings in four generated
+  tables (C.4 from `14`, D.11 and D.12 from `09`, D.13 from `13`), each applied to
+  the R source and the `.tex`. The abstract now reads "for-profit hospitals deliver about 81
+  percent of their births by cesarean"; the old wording could be read as 81
+  percent of all births. The C.4 note's "guidance directs" became "recommends", as
+  in the body. Abstract 247 words.
+- **The two new citations, confirmed.** `borem2020`: metadata from Crossref; the
+  full text is open in PubMed Central (PMC7012340) and names the "Project Parto
+  Adequado Collaborative", May 2015 to December 2016, run with the ANS and the
+  Sociedade Beneficente Israelita (Albert Einstein); its abstract concludes that
+  the interventions "were associated with increased vaginal delivery". The
+  sentence citing it holds. `melo2024`: metadata from Crossref (Health Economics
+  33(9):2013–2058, online June 2024) and PubMed 38823033; the motivating sentence
+  ("When obstetricians are paid per procedure ... the pay is higher, time demanded
+  is shorter, and they can more conveniently plan a work schedule") is in the
+  authors' June 2023 working paper, the local copy, which is also what the
+  2026-08-20 verification of this reference used. The published full text is
+  paywalled and behind a bot check (Wiley, Cloudflare) and was not read; one
+  residual check is to search the published PDF for "time demanded".
+- **The 250-word cap, confirmed.** The JHE guide page blocks automated reading
+  (ScienceDirect error page in WebFetch and in the in-app browser; not bypassed).
+  Two independent searches restricted to sciencedirect.com and elsevier.com return
+  the guide's text: "a concise and factual abstract which does not exceed 250
+  words", and "avoid non-standard or uncommon abbreviations" (the abstract has
+  none).
+
+Build: paper 42, supplement 37, working paper 76; 0 undefined references or
+citations, 0 overfull hbox, 0 float too large. `claims.py` 0 (55 on the pre-edit
+copy with the two new rules), `numcheck.py` 0, abstract 247 of 250.

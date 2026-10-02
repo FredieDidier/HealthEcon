@@ -12,7 +12,7 @@
 \section{Additional descriptive figures and tables}\label{app:descriptive}
 % =============================================================================
 
-This appendix collects the descriptive exhibits that complement the main text.
+This appendix collects the descriptive exhibits that complement the paper.
 They document the setting and the raw patterns behind the body figures and
 tables; none of them is a robustness test, and the sensitivity of the paper's
 estimates is examined in Appendix~\ref{app:robustness}.
@@ -23,17 +23,17 @@ private-insurance cesarean rate across municipalities. Table~\ref{tab:business_h
 share of births occurring in weekday business hours, the quantity behind panel (b)
 of Figure~\ref{fig:calendar}. Figure~\ref{fig:robson_dow} shows the day-of-week
 profile within low-risk Robson groups 1--2, and Figure~\ref{fig:daily_counts}
-plots mean daily births by day of week, which shows cesarean counts collapsing on
-weekends while vaginal counts barely move. Table~\ref{tab:mechanism_checks}
+plots mean daily births by day of week, in which cesarean counts fall sharply on
+weekends while vaginal counts change little. Table~\ref{tab:mechanism_checks}
 reports the full timing split together with the Robson group 10 (preterm)
-comparison. The group-10 dip is smaller than the group-1 dip, but we do not treat
+comparison. The group-10 dip is smaller than the dip in groups 1--2, but we do not treat
 preterm births as a placebo, since preterm delivery is not synonymous with
 unschedulable delivery. Figure~\ref{fig:gestation} plots the
 distribution of gestational age at birth, by sector and, within the for-profit
 sector, by delivery timing; it is the descriptive counterpart to the early-term
 result of Table~\ref{tab:health}. Table~\ref{tab:estab_practice_style} moves
 the body's Kitagawa decomposition from the sector to the establishment, reporting
-how much of the dispersion in cesarean intensity across maternities survives the
+how much of the dispersion in cesarean intensity across hospitals survives the
 local market, the Robson case-mix, predetermined maternal composition and
 obstetric capacity. Table~\ref{tab:cost} sums every item
 billed under each delivery hospitalization and finds that a cesarean and a vaginal
@@ -95,13 +95,14 @@ Table~\ref{tab:referee_robustness} re-estimates the weekend dip under an
 alternative sector classification, which calls an establishment for-profit if it
 was for-profit in any year rather than in the birth's own year, alternative
 rest-day definitions, and the composition of weekend newborns. Table~\ref{tab:dip_region_period} shows that the
-dip survives a clinically clean low-risk sample and is stable across regions and
-periods.
+dip survives a clinically clean low-risk sample and is present in every region
+and period, at 6.5 to 9.4 percentage points.
 Table~\ref{tab:permutation} reports a descriptive ranking of the weekend dip
 across all twenty-one two-day placebos, and Table~\ref{tab:no_indication} the
 share of private-insurance cesareans with no recorded clinical indication.
-Table~\ref{tab:neonatal_suggestive} reports the suggestive, and statistically
-weak, association between early-term shifting and neonatal hospital use.
+Table~\ref{tab:neonatal_suggestive} reports an ecological check relating
+early-term shifting to neonatal hospital use; its early-term coefficients are not
+distinguishable from zero.
 
 Table~\ref{tab:subgroup_gradients} splits the for-profit differential by
 gestational age at birth and by maternal age. Panel A separates term from preterm
@@ -121,16 +122,16 @@ age bands enter as predetermined composition; these panels ask whether the
 calendar gradient itself differs by age, overall and among the low-risk Robson
 1--2 births.
 
-The results line up with the Robson profile. In Panel A the for-profit weekend
+The results agree with the Robson profile. In Panel A the for-profit weekend
 differential is $-2.1$ percentage points among term births, while among preterm
 births it is positive, $1.5$ points (standard error 0.7); the difference of $3.6$
 points is precisely estimated. The ownership-specific weekend decline is a
 term-birth phenomenon. In Panel B the differential is
 $-2.5$ points for mothers under 35 and a positive $1.7$ points, significant only
 at the 10 percent level, for mothers aged 35 or older; within the low-risk Robson
-1--2 sample of Panel C it is $-4.8$ points under 35 and an insignificant $-1.4$
-points at 35 or older. The weekend decline is therefore concentrated among
-younger mothers and absent among older ones. Two readings are consistent with this, and
+1--2 sample of Panel C it is $-4.8$ points under 35 and $-1.4$ points, not
+distinguishable from zero, at 35 or older. The weekend decline is therefore
+concentrated among younger mothers and not detectable among older ones. Two readings are consistent with this, and
 our design does not separate them. Older mothers are already close to the ceiling
 of the for-profit cesarean distribution, and a differential expressed in
 percentage points is mechanically compressed as the underlying rate approaches
@@ -168,8 +169,9 @@ Column 1 is the paper's specification on the births that carry an establishment
 code, $-1.8$ percentage points on weekends. Within the establishment the
 differential is $-0.9$ with birth weights and $-1.3$ with each hospital's weight
 fixed at its mean daily births, which removes the concern that a hospital's weight
-falls on exactly the days being compared. About half of the headline differential
-is therefore a change of practice inside the hospital. The other half is
+falls on exactly the days being compared. Half or more of the headline
+differential is therefore a change of practice inside the hospital: about half
+with birth weights and seven tenths with fixed weights. The rest is
 reallocation, and columns 4--6 show it on a panel in which every day of an
 establishment-year enters and days with no birth count as zeros: a for-profit
 establishment is 8.7 percentage points less likely than a public one to record any
@@ -217,19 +219,19 @@ Table~\ref{tab:org_capacity_valid} reports them under alternative capacity
 measures and samples. Two of those columns bear on the reading of the exercise.
 Column 5 measures obstetric capacity by the hours contracted at the establishment
 rather than by a headcount of registered obstetricians, which distinguishes a
-four-hour registration from a forty-hour one; the interaction is close to zero
+four-hour registration from a forty-hour one. The interaction is close to zero
 ($-$0.16 percentage points, standard error 0.17), while the delivery-scale
 interaction is positive and significant in that column (1.31 points, standard
 error 0.45), so what attenuation the point estimates suggest tracks the size of
 the service rather than measured obstetric time. Column 6 adds the SUS share of the
 establishment's obstetric beds, the one establishment-level measure of payer as
 distinct from ownership in our data. It is zero at the median for-profit
-maternity-year, which is what licenses reading legal-entity type 2xxx as a
+establishment-year, which is what licenses reading legal-entity type 2xxx as a
 predominantly private-payer population, and its interactions are positive: a
-for-profit maternity that places all of its obstetric beds with the SUS has a
+for-profit hospital that places all of its obstetric beds with the SUS has a
 weekend gradient 2.6 percentage points flatter and a holiday gradient 2.9 points
 flatter than one that places none. Payer exposure is not assigned, and
-for-profit maternities serving the SUS differ from those that do not in ways the
+for-profit hospitals serving the SUS differ from those that do not in ways the
 establishment-by-year fixed effects hold fixed only in levels, so we read this as
 an association rather than as the causal effect of a payer mix. It does say that
 the calendar pattern varies with payer within a single ownership type, which
@@ -256,15 +258,15 @@ across all other years, with each week first expressed relative to the
 establishment's own average week in its own year. The normalization matters: a
 raw leave-one-out mean is mechanically negatively related to the value it omits
 whenever the establishment is growing, since the early years of an expanding
-maternity fall below and the later years above the mean of the other years. If
+hospital fall below and the later years above the mean of the other years. If
 deliveries are moved off anticipated crowding, the coefficient on expected demand
 in the following week is positive. The coefficients are small, of either sign,
 and none is distinguishable from zero in any column. The null on the prelabor share
-carries limited weight, and the table says why. Out of sample the forecast
+carries limited weight. Out of sample the forecast
 recovers only 0.050 log points of realized relative demand per log point, because
-an individual maternity's week-to-week volume is close to unforecastable from its
+an individual hospital's week-to-week volume is close to unforecastable from its
 own seasonal history, and the design would reject only responses above 0.63
-percentage points per log point. Weeks in which a maternity delivered no baby
+percentage points per log point. Weeks in which a hospital delivered no baby
 enter as zeros between its first and last birth of each year.
 
 Panel B tests the primitive of the same model, that scheduling levels the flow of
@@ -315,10 +317,10 @@ Table~\ref{tab:robson_validation} reports the cesarean-timing indicator across
 Robson groups. Group 1 (spontaneous labor) carries no prelabor cesareans, but by
 construction rather than as a check on the data: the register derives the Robson
 group from the same labor-onset and prelabor fields, so a prelabor cesarean of a
-nulliparous term cephalic singleton is assigned to group 2. What the table licenses
-is that the part of the group-1 weekend dip among cesareans coded in labor cannot
-come from prelabor scheduling; the rest is among cesareans with no timing code,
-which the register also leaves in group 1. The group-1 dip is 1.3 percentage points larger than the
+nulliparous term cephalic singleton is assigned to group 2. The table licenses a
+narrower statement: the part of the group-1 weekend dip among cesareans coded in
+labor cannot come from prelabor scheduling, and the rest is among cesareans with
+no timing code, which the register also leaves in group 1. The group-1 dip is 1.3 percentage points larger than the
 group-10 (preterm) dip ($p=0.006$). Table~\ref{tab:feegap_ci} reports the fee-gap coefficient
 with confidence intervals against a pre-specified economic-equivalence region and
 against the two magnitudes the literature has estimated. The estimates disagree
@@ -329,7 +331,7 @@ discipline the magnitude, which is why the argument of
 Section~\ref{sec:notprice} rests on the calibration alone.
 Table~\ref{tab:fee_base_econ} reproduces the first two columns of
 Table~\ref{tab:fees} and re-estimates them with the vaginal fee measured by the
-base delivery fee alone: the coefficient stays small and still changes sign
+base delivery fee alone: the coefficient still changes sign
 between state and municipality fixed effects, so the sign instability does not
 depend on the endogenous billed labor-assistance hours.
 Table~\ref{tab:fee_per_hour} sets the fees per delivery beside the price of a
@@ -378,8 +380,8 @@ Table~\ref{tab:multiple_testing} reports, within each family, the Holm-Bonferron
 adjusted $p$-value \citep{holm1979}, which controls the familywise error rate, and
 the Benjamini-Hochberg $q$-value \citep{benjamini1995}, which controls the false
 discovery rate. Families A to C are unaffected: every estimate significant on its
-own remains significant after the adjustment, and the insignificant cooperative
-contrast stays so. In family D, the four long-weekend coefficients have
+own remains significant after the adjustment, and the cooperative contrast, not
+significant on its own, stays so. In family D, the four long-weekend coefficients have
 unadjusted $p$-values between 0.051 and 0.070 and Holm $p$-values of 0.202, so
 none is individually significant after the adjustment; the paper reads the
 long-weekend evidence from the equality tests across holiday types, not from these
@@ -389,8 +391,7 @@ adjustment; each measure entered without the other is
 (Table~\ref{tab:org_capacity_valid}). In family F none of the three
 coefficients is significant at five percent even on its own, and the throughput
 dispersion, significant at ten percent alone, is not after the adjustment (Holm
-$p$ 0.173). The precision comes from sample sizes in the
-millions rather than from a fortunate choice among tests.
+$p$ 0.173).
 
 \input{../analysis/output/tables/tab_multiple_testing.tex}
 
@@ -404,25 +405,24 @@ operative margin is not the relative procedure fee; we report them here because 
 causal program evaluation. First, the December 2015 court order directing the
 national regulator to make plans pay at least three times more for vaginal delivery
 never became an actual fee change: the regulator appealed and no rule was issued
-(Section~\ref{sec:notprice}). Second, Parto Adequado, the flagship
-quality-improvement program, invites a cleaner test, because hospitals joined it on
-a staggered schedule between 2017 and 2021. We estimate an event study at the
-hospital (establishment) level, comparing for-profit hospitals that participated
-with those that did not, over the long pre-period the birth records afford
-(Figure~\ref{fig:pa_hospital}). Because adoption is staggered and the dynamic
-effects may be heterogeneous across cohorts and event time, a two-way
-fixed-effects event study can be biased; we therefore use the interaction-weighted
-estimator of \citet{sun2021}. The ANS list does not record each hospital's exact
-entry date, so we impose a common 2017 onset. With a single onset there is a single
-adoption cohort, and the estimator then coincides with a two-way fixed-effects event
-study against never-participating hospitals; it does not correct for staggered timing. The estimates show a
+(Section~\ref{sec:notprice}). Second, hospitals joined Parto Adequado, the flagship
+quality-improvement program, between 2017 and 2021, but the ANS list does not
+record each hospital's exact entry date. We therefore impose a common 2017 onset
+and estimate an event study at the hospital (establishment) level, comparing
+for-profit hospitals that participated with those that did not, over the long
+pre-period the birth records afford (Figure~\ref{fig:pa_hospital}). The estimator
+is the interaction-weighted one of \citet{sun2021}; with a single onset there is a
+single adoption cohort, and the estimator then coincides with a two-way
+fixed-effects event study against never-participating hospitals, so it does not
+correct for staggered timing. The estimates show a
 pre-existing differential downward trend that begins well before 2017 and
 continues without a break at adoption, so the movement is a continuation of that
 trend rather than a treatment effect. We therefore do not
 read this comparison as an estimate of the program's effect; the available
 observational design does not identify it. The decline is real; its attribution to
-the program is not supported by the data, a caution for the short-window evaluations
-that have credited it. Figure~\ref{fig:rn368} places the national monthly series in
+the program is not supported by the data, a caution for short-window evaluations
+that associate the program with more vaginal deliveries \citep[e.g.,][]{borem2020}.
+Figure~\ref{fig:rn368} places the national monthly series in
 its policy timeline for reference.
 
 \begin{figure}[H]\centering

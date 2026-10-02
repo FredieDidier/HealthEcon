@@ -42,6 +42,17 @@
 > "is organizational". SUS continuity is cited to `domingues2014` (same professional
 > for prenatal care and delivery: ~9% public vs ~77% private payment); never "typically whoever is on
 > duty" without it.
+>
+> **2026-10-02 — JHE editor's pass (text only, nothing refitted).** New abstract
+> (246 words): opens on the tension, gives each result its number, marks the 12.2pp
+> early-term gap "after maternal controls" (it is NOT a within-municipality-day
+> estimate), ends on the conclusion's policy sentence. Two misfiled citations fixed
+> (Alexander 2020 = patient selection, no change in procedure use; Clemens–Gottlieb
+> = LARGE fee responses, never cited for "too small"). Claims aligned with round 3
+> (the price of time speaks to the for-profit increment only), contradictions with
+> Appendix A P1 and Section 5 removed, six generated notes fixed in R and .tex. New
+> checks in `parto_cesareo/audit/` (abstract, claims inventory, numcheck, sweep):
+> run them after any text edit. See REVISION_LOG.
 
 
 ## What the paper is
@@ -214,16 +225,20 @@ reintroduce `else → Public`.
 4. **Eq. (3), the central estimate** — within the same municipality-day the
    for-profit differential is **−1.8pp weekend / −2.5pp holiday**; −1.8 / −2.4
    with predetermined composition; −1.5 / −1.7 with Robson shares (2014+).
-   **About half is within the establishment** (establishment-day cells,
+   **Half or more is within the establishment** (establishment-day cells,
    establishment×year FE, `15_estab_gradient.R`): −0.9 / −1.3 (birth / fixed
-   weights) on weekends, −1.3 / −1.8 on holidays; the other half is weekend births
-   moving across establishments (any-birth −8.7pp, prelabor count −34 lp,
-   vaginal −6 lp). Never write the 1.8 as a within-hospital change of practice.
+   weights) on weekends, −1.3 / −1.8 on holidays, i.e. 53% / 70% of the 1.8; the
+   rest is weekend births moving across establishments (any-birth −8.7pp, prelabor
+   count −34 lp, vaginal −6 lp). Write "half or more ..., depending on how
+   establishments are weighted" (decided 2026-10-02: the fixed-weight column is
+   the better within estimate, the birth-weight one the same-weight ratio), never
+   "about half" with "the other half". Never write the 1.8 as a within-hospital
+   change of practice.
 5. **The dip lives in prelabor cesareans** — −8.9pp prelabor vs +1.9pp in-labor
    (2012+); Robson 1–2 −7.0pp, Robson 1 −6.0pp (2014+; of the −6.0, −4.7 is coded
    in-labor and −1.3 is cesareans without a timing code, which DATASUS leaves in
    group 1 by default and which are MORE often uncoded on weekdays, 11.2% vs 9.8%;
-   so only the −4.7 is intrapartum by construction, and D.19's balance holds for
+   so only the −4.7 is intrapartum by construction, and D.22's balance holds for
    the sector split, not inside group 1).
 6. **The cost** — +12.2pp early-term with maternal controls; 73% practice style
    (Kitagawa, 36.2pp gap); ~35k excess weekday cesareans/yr (9.3% of ~380k)
@@ -256,20 +271,22 @@ reintroduce `else → Public`.
 | Beds vs scale | corr of logs 0.48 (estab-years); weekend interactions net of FE 0.64 (date) / 0.56 (muni×date) |
 | Fees per delivery (TISS events, D.19) | cesarean 1,939; vaginal fee alone 1,893; economic vaginal 2,417 (expected); billing labor 3,355 / billing none 1,778; 62% bill none (30–82% in big-5) |
 | Cesarean fee for the calibration (D.17) | 1,963 = delivery-weighted over regression muni-years; 1,939 would give 0.72 / 2.87 |
-| Education heterogeneity (D.12, with education main effect) | weekend dip −11.2pp (<8 yrs) / −7.2pp (8+); weekday rates 67% / 85% |
-| Fee gap with the base vaginal fee (D.16, Table 1 sample) | +0.0366* UF / −0.0176** muni; econ columns = Table 1 exactly |
-| Zero-obstetrician maternities (CNES-PF, ≥50 births) | 14% for-profit / 26% public (median 3/2) |
+| Education heterogeneity (D.14, with education main effect) | weekend dip −11.2pp (<8 yrs) / −7.2pp (8+); weekday rates 67% / 85% |
+| Fee gap with the base vaginal fee (D.18, Table 1 sample) | +0.0366* UF / −0.0176** muni; econ columns = Table 1 exactly |
+| Zero-obstetrician hospitals (CNES-PF, ≥50 births) | 14% for-profit / 26% public (median 3/2) |
 | Weekend × SUS share of obstetric beds | +2.58pp**; holiday +2.85pp*** |
 | Weekend × log contracted obstetrician hours | −0.16pp (0.17); scale +1.31pp*** in that column |
 | Early-term (37–38wk) gap, maternal controls | +12.2pp*** |
 | Kitagawa, 36.2pp gap | 27% case-mix / 73% practice style |
-| Robson-standardized dispersion across for-profit maternities | SD 14.1pp; 6.3pp survives muni×year + composition + capacity (44%); same-municipality pairs differ by 11.9pp |
+| Robson-standardized dispersion across for-profit hospitals | SD 14.1pp; 6.3pp survives muni×year + composition + capacity (44%); same-municipality pairs differ by 11.9pp |
 | SUS share of obstetric beds by nat_jur | public 98.8% / for-profit 22.2% (median 0) / nonprofit 72.0% |
 | Excess weekday cesareans (own-municipality-year) | 35,330/yr for-profit = 9.3% of weekday cesareans |
 | Footnote reconciliation | 7.9pp × 463k = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
 | Price benchmarks in our units | Grant 0.73 / GKM 2.90 pp per log point (R$1,963 mean cesarean fee) |
 | Demand smoothing | next-week coefficients small, either sign, none significant; forecast slope 0.050; MDE 0.63pp; dispersion +0.31 (0.16), Holm 0.173 |
 | Private-insurance cesareans with no recorded indication | 77–81% a year (blank or O80–O84 only) |
+| Rates quoted in the text from the data (no exhibit prints them; recomputed 2026-10-02) | public 37.2% (2010) → 51.5% (2024); for-profit 78.2% in 2024; for-profit Mon–Fri 81.6–84.2%; Robson 1–2 for-profit weekdays 80.5–83.5%; Robson 1 weekdays 68.1% FP / 36.4% public; private-insurance rate in the five largest states 77.7% (MG) to 89.7% (RJ) |
+| Robson-group weekend gradients, groups 6–9 (Fig 3c, `robson_grad.rds`) | FP −1.6 / −2.2 / −2.4 / −0.5 vs public −2.7 / −3.7 / −4.2 / −1.1; the for-profit excess reverses in 6–8 (ceiling: FP 94–98% cesarean) |
 | `log_fee_gap` (UF / muni FE, no controls) | +0.049** / −0.014* |
 
 ## Compile
@@ -341,9 +358,9 @@ Supplemental Appendix is a separate document.
   exactly as an over-wide figure is (see the `FIG_WIDTH` note above). Measured on
   2026-09-09, the six landscape tables are `tab08_mechanism_checks` (C.3),
   `tab13_referee_robustness` (D.1), `tab13c_dip_by_region_period` (D.2),
-  `tab_org_capacity` (D.8), `tab_org_capacity_valid` (D.9) and
-  `tab_ref_c5_feegap_ci` (D.14); every other table prints at 9.9-10.9pt, and the
-  only upright exception is `tab14_neonatal_suggestive` (D.6) at 8.1pt, whose
+  `tab_org_capacity` (D.11), `tab_org_capacity_valid` (D.12) and
+  `tab_ref_c5_feegap_ci` (D.17); every other table prints at 9.9-10.9pt, and the
+  only upright exception is `tab14_neonatal_suggestive` (D.9) at 8.1pt, whose
   width comes from three long `dict` outcome labels and which is left alone.
   Rotation is applied as a `gsub` on the generated `.tex` right after
   `postprocess_tex()`; never convert a regression table into a figure.
@@ -524,6 +541,35 @@ sections above are not repeated here.
   the eight fixed-date holidays only.
 - Level numbers print at one rounding everywhere: for-profit 81%, private
   insurance 84% (82–86% by year).
+
+**Added 2026-10-02 (JHE editor's pass)**
+- The claim inventory is `parto_cesareo/audit/claims.py`. A claim that changes is
+  edited there first, with the form it may no longer take, and the four checks in
+  that folder are run after any text edit (exit status read directly, not through
+  a pipe).
+- Read every multi-citation list by its shared predicate, not work by work:
+  Alexander (2020) found patient selection and no change in procedure use;
+  Clemens–Gottlieb (2014) found large fee responses. Neither supports "the
+  documented fee response is too small"; that clause cites `gruber1999physician`
+  and `grant2009`.
+- The 12.2pp early-term gap has municipality and year fixed effects and maternal
+  controls; never attach "within the same municipality and day" to it.
+- The price of physician time speaks to the for-profit increment only: never "can
+  account for the epidemic", "leaves its mark on the calendar", or calendar
+  surgery "booked around the physician's calendar".
+- Robson group 1 is not "intrapartum by construction": 1.3 of its 6.0-point dip is
+  among uncoded cesareans (Table 3 note and D.16 now say so).
+- Event-time sums of per-municipality-day coefficients are counts per
+  municipality over the window, never "per municipality-day".
+- Prose writes "percent" (the highlights keep "%"); "schedule", never "diary";
+  "not distinguishable from zero", never "insignificant".
+- The birth establishment is a "hospital" in prose and an "establishment" in
+  tables (their fixed-effect rows already say so); never "maternities" or
+  "maternity-years" (a calque of "maternidades"). "Maternity" survives only as an
+  adjective (maternity sector, maternity ward).
+- The JHE abstract cap is 250 words (guide for authors, re-confirmed 2026-10-02
+  through the indexed text of the official page; the page itself blocks automated
+  access).
 
 **Settled; do not "fix" or re-audit**
 - "twenty-two states" (Panel B) and "twenty-seven clusters" (Panel A) are both right:

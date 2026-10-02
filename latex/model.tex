@@ -12,15 +12,15 @@
 A physician attends a pregnancy whose labor, absent intervention, begins at a
 random time $\tilde{t}$ distributed (approximately) uniformly over the days and
 hours of the week. Clinically, the onset of spontaneous labor does not respect
-the calendar, which is the identifying assumption behind our timing tests. The
+the calendar, which is the premise of our timing tests. The
 physician chooses between attending a vaginal delivery ($v$) and performing a
-\emph{prelabor scheduled} cesarean ($c$) at a time $t$ of her choosing; if labor
+prelabor scheduled cesarean ($c$) at a time $t$ of her choosing; if labor
 starts before a cesarean is performed, the delivery may still convert to an
-\emph{in-labor} cesarean for clinical reasons.
+in-labor cesarean for clinical reasons.
 
 \paragraph{Fees.} The physician receives $f_c$ for a cesarean and $f_v$ for a
-vaginal delivery, where $f_v$ includes the separately-billed hourly labor
-assistance, the \emph{economic} vaginal fee. In our data $f_c - f_v \le 0$ in
+vaginal delivery, where $f_v$ includes the separately billed hourly labor
+assistance, the economic vaginal fee. In our data $f_c - f_v \le 0$, on average, in
 the largest states.
 
 \paragraph{Time.} A cesarean takes a fixed block $\tau_c$ ($\approx$1 hour) at
@@ -77,13 +77,13 @@ in a low-density region of the clinical-benefit distribution ($f(\theta^{*})\app
 0$). The empirical fee regressions assess this local responsiveness over the
 observed support.
 \hfill [\emph{Tested:} fee-gap regressions and fee-swing falsification, Table
-\ref{tab:fees}, and the fees per hour of physician time that price $\Pi$,
+\ref{tab:fees}, and the fees per hour of physician time,
 \satab{tab:fee_per_hour}. The 2015 court order is not a test: no rule was ever
 issued.]
 \item[\textbf{P2.}] \emph{The scheduling fingerprint.} Prelabor cesareans bunch
 at $\arg\min_t w(t)$ (weekday business hours) and fall on weekends and
 holidays; in-labor cesareans inherit $\tilde{t}$'s uniform timing and weakly
-\emph{rise} on weekends (marginal-$\theta$ women who labor before being
+rise on weekends (marginal-$\theta$ women who labor before being
 scheduled convert). \hfill [\emph{Tested:} day-of-week, holiday and
 hour-of-birth clustering, and the prelabor/in-labor split:
 Figure \ref{fig:calendar} and Tables \ref{tab:main_gradient} and

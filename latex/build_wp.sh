@@ -61,7 +61,7 @@ TEX
 # --- WP_EDITS: the two differences between the working paper and the submission
 # 1. a dated title page (the journal version carries no date)
 # 2. a data-availability sentence addressed to readers, not to editors and referees
-export WP_VERSION="${WP_VERSION:-September 2026}"
+export WP_VERSION="${WP_VERSION:-October 2026}"
 perl -0777 -i -pe '
   BEGIN { $v = $ENV{WP_VERSION} }
   $n = 0;

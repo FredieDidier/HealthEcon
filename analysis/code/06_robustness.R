@@ -366,7 +366,7 @@ etable(m1, m2, m3, tex = TRUE, file = f, replace = TRUE, dict = dict,
          "births. Infant admissions are TISS hospital events of beneficiaries in the",
          "$<$1 age band, at the provider municipality; perinatal conditions are",
          "primary diagnoses of conditions originating in the perinatal period.",
-         "Ecological and correlational, a corroboration of the early-term margin,",
+         "Ecological and correlational,",
          "not a causal estimate. Standard errors, clustered by municipality, are",
          "reported in parentheses.", SIGNIF_NOTE))
 postprocess_tex(f, fontsize = "\\small", tabcolsep = 5)

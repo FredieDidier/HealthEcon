@@ -269,7 +269,7 @@ tex <- c(
   "require surgery; Robson groups are recorded from 2014. These are exploratory",
   "subgroup splits and are not among the pre-specified hypothesis families of",
   "Table~\\ref{tab:multiple_testing}. Standard errors, two-way clustered by",
-  "municipality and date, are in parentheses.",
+  "municipality and date, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_subgroup_gradients.tex"))
 unescape_refs(file.path(TABLE, "tab_subgroup_gradients.tex"))

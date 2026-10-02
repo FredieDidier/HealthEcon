@@ -317,7 +317,8 @@ if (exists("r1_priv")) {
     "without it counts in neither component. Columns 5--6 use 2014--2024, the years with",
     "the Robson classification, and restrict to Robson groups 1--2 (nulliparous, term, singleton,",
     "cephalic) and to Robson group 1 alone, which requires spontaneous labor, so that",
-    "its cesareans are intrapartum by construction. Standard errors, two-way clustered",
+    "none of its cesareans is coded as prelabor, although the register also assigns",
+    "to it the cesareans whose timing code is missing. Standard errors, two-way clustered",
     "by municipality and date, are reported in parentheses.",
     "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
   write_table_tex(tex, file.path(TABLE, "tab_prelabor_lowrisk.tex"))

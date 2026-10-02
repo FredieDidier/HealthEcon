@@ -122,6 +122,15 @@ continuando a passada de 04/09/2026.
   aparecia (abstract, introdução, Seção 5, conclusão) e no `highlights.txt`.
 - **Abstract:** 246 palavras (limite JHE 250).
 
+**02/10/2026 — passada de editor (JHE), só texto.** Abstract reescrito (246
+palavras; abre na tensão, cada resultado com seu número, o gap de early-term
+marcado como "after maternal controls"); duas citações mal arquivadas corrigidas
+(Alexander 2020 na introdução; Clemens–Gottlieb e Alexander na conclusão);
+alegações alinhadas à rodada 3; seis notas geradas corrigidas no R e no .tex;
+checagens novas em `parto_cesareo/audit/`. Paper 42 pp, suplemento 37, WP 76.
+Detalhes e decisões devolvidas ao Fredie no `REVISION_LOG.md`. Para o **T1**:
+incluir o abstract novo no roteiro de leitura dos coautores.
+
 ---
 
 ## Parte IV — O que falta
