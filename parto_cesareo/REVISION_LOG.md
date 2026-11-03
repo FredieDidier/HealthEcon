@@ -1323,3 +1323,57 @@ supplement's one overfull vbox is the pre-existing one. Abstract 249 → 246 wor
 Build: paper 42, supplement 37, working paper 76; 0 undefined references or
 citations, 0 overfull hbox, 0 float too large. `claims.py` 0 (55 on the pre-edit
 copy with the two new rules), `numcheck.py` 0, abstract 247 of 250.
+
+## 2026-11-03 — writing skill, then the razor (Claude, requested by Fredie)
+
+Fredie asked for the pass he ran on DaylightSaving (2026-11-02) and
+WorldCupHealth (2026-11-03): the updated `applied-micro-paper-writing` skill
+over the paper, Appendices A and B and the supplement, then `occam-razor` on the
+finished text. **Language and repetition only: no estimate, table, note, number
+or order of exposition moved, and nothing was refitted.**
+
+**Writing.** "Against" between two numbers (a calque of *contra*) became
+"compared with" or "relative to" wherever it compared two quantities, in the
+paper and the supplement. Metaphors replaced by the plain claim: "calendar
+fingerprints" (caption of Figure 3 included) and "signature" became "patterns",
+the relative fee "cannot carry the epidemic" became "cannot account for", "the
+laboratory of choice" and "workhorse" became a standard setting, "siblings"
+became related, "Brazil is the frontier case" an extreme case, "how far these
+conclusions travel" where they apply. Personified methods and exhibits rewritten
+("the calendar carries a pattern", "the components of the rate locate the
+mechanism", "the table licenses", "the model carries it", "the calendar reaches
+gestational age"). Two "not X but Y" constructions and one "it is ... that"
+cleft rewritten, keeping the price-of-time framing ("a price rather than a
+non-price margin"). Enumerations with supporting sentences now open First,
+Second, Third (the three design features in 4.4, the two features limiting the
+fee regressions, the two weaker predictions in the introduction, the two
+readings of the maternal-age split). "Retimed" became "rescheduled"; "A ceiling
+operates there" became "the for-profit rate is close to its ceiling". The
+subsection "Where the dip lives" is now "Prelabor cesareans and low-risk
+births". The replacements were varied rather than mapped onto one verb
+(two new "depends on" became "is identified from" and "requires no").
+
+**Razor (prose only; no exhibit, specification or hedge cut).**
+
+| cut | why |
+|---|---|
+| Opening paragraph of Section 6 ("The natural onset of spontaneous labor does not respect the week...") | Third statement of the observed-date caveat; the introduction and Section 4.2 carry it. |
+| Scope sentence at the end of 6.3 ("The calendar evidence in this paper documents a supply-side pattern...") | Third statement; the introduction and the conclusion keep the softened scope wording. |
+| Early-term harm sentence in Section 7 citing Tita, Costa-Ramón and Borra | The next paragraph states the same with the same citations. |
+| Closing clause of the billed-amount paragraph ("the epidemic's margin lies in earlier, riskier births...") | Restated the previous paragraph's last sentence. |
+| Second description of Currie--MacLeod, Johnson--Rehavi and Card et al. in the literature paragraph | The introduction's second paragraph describes all three; Epstein--Nicholson survives as the one new citation there. |
+| "a margin the fee schedule prices only in part" after "reframes supplier-induced demand around the price of time" | Repeated the clause two lines above. |
+
+**Kept, so the next pass does not re-litigate:** the four statements that the
+data cannot separate the physician's own time from staffing and capacity
+(introduction, 6.1, 6.4, conclusion), because each sits beside a different
+result and the hedge protects a fragile reading; the long parallel sentence
+listing the childbirth papers (one spine); the *Panel (a) / Panel (b)* openers.
+
+Diff-read of every changed line done; it caught "logic predicts" (an agent that
+cannot predict) and two "compared with" in one sentence, both fixed.
+
+Build: paper 42, supplement 37, working paper 76; 0 undefined references or
+citations, 0 overfull hbox in the paper. `abstract.py` 247 of 250 (abstract not
+touched), `claims.py` 0, `numcheck.py` 0; sweep median 27, long-and-chained 5
+(unchanged), pseudo-clefts 1 (the pre-existing "Where it is charged").

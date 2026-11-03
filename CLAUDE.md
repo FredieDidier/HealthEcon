@@ -53,7 +53,13 @@
 > Appendix A P1 and Section 5 removed, six generated notes fixed in R and .tex. New
 > checks in `parto_cesareo/audit/` (abstract, claims inventory, numcheck, sweep):
 > run them after any text edit. See REVISION_LOG.
-
+>
+> **2026-11-03 — writing skill, then the razor (text only).** "Against" between
+> numbers became "compared with"; "fingerprints", "carry the epidemic" and other
+> metaphors replaced; six repeated sentences cut (the onset caveat opening
+> Section 6, the scope line closing 6.3, a duplicated Tita citation sentence, a
+> restated billed-amount clause, a second description of three childbirth
+> papers). Table in REVISION_LOG.
 
 ## What the paper is
 
