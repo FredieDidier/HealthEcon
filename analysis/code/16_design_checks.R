@@ -133,7 +133,7 @@ tex <- c("\\begin{table}[H]", "\\centering",
   sprintf("take time (%.0f percent of them nationally, between %.0f and %.0f percent in",
           100 - fh[uf == "Brazil", bill], 100 - max(fh[uf != "Brazil", bill]),
           100 - min(fh[uf != "Brazil", bill])),
-  "the five states), so the comparison is tilted in favor of the vaginal delivery.",
+  "the five states), so the comparison is tilted in favor of the vaginal delivery. Reais convert to US dollars at about R\\$4.37 per dollar, the mean official exchange rate of 2015--2024.",
   "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_fee_per_hour.tex"))
 

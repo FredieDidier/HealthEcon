@@ -35,6 +35,8 @@ ALLOW_A = {
 # Numbers that match no exhibit at all, each with its reason. A stale number that
 # matches nothing is otherwise only printed, so an unlisted orphan fails the check.
 ALLOW_B = {
+    ("paper.tex", "4.37"): "mean official exchange rate 2015-2024, World Bank PA.NUS.FCRF, computed from the ten annual values",
+    ("paper.tex", "2.28"): "mean PPP factor 2015-2024, World Bank PA.NUS.PPP, computed from the ten annual values",
     ("appendix.tex", "14,759"): "Law 14,759 of 2023 (20 November holiday)",
     ("paper.tex", "1,940"): "the cesarean fee R$1,939 of Table D.19, rounded in prose",
     ("paper.tex", "35,000"): "console: excess weekday cesareans, own-municipality-year benchmark (35,330)",

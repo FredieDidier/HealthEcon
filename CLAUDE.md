@@ -61,6 +61,13 @@
 > restated billed-amount clause, a second description of three childbirth
 > papers). Table in REVISION_LOG.
 
+> **2026-11-04 — Michael Challis's lessons, from his review of DaylightSaving (text
+> only).** Paragraphs open on the finding, with the exhibit in parentheses. The
+> introduction does not use "Equation (3)". The regressions "do not settle the magnitude"
+> (the same claim as "do not discipline", in plainer words; "consistent with the
+> calibration" stays banned). Fees carry US dollars beside reais at R$4.37, with the
+> basis in the introduction's footnote. New check `audit/reader.py`. See REVISION_LOG.
+
 ## What the paper is
 
 Empirical paper, *"Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean
@@ -109,9 +116,9 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   the calibration". "Time the schedule leaves out" means on-call availability,
   uncertain onset, unbilled hours: the schedule DOES pay billed labor hours
   (R$420/h), and that hourly fee is a lever the data do not evaluate. The canonical magnitude
-  (\citet{grant2009}, ~1pp per US$1,000 = ~0.73pp per log point at our fee levels;
+  (\citet{grant2009}, ~1pp per US$1,000 = ~0.75pp per log point at our fee levels;
   \citet{gruber1999physician} four times that) is too small to matter at this
-  scale, predicting at most ~0.36pp and ~1.4pp against a 36pp gap. The RAW FACT leads, the regression follows.
+  scale, predicting at most ~0.37pp and ~1.5pp against a 36pp gap. The RAW FACT leads, the regression follows.
 - **demand smoothing** (Eq. de Elejalde-Giolito) = tested and NOT supported. The
   pull-forward null is weak (say so); the throughput result points the other way
   but is only marginally significant and dies under the family adjustment, so
@@ -288,7 +295,7 @@ reintroduce `else → Public`.
 | SUS share of obstetric beds by nat_jur | public 98.8% / for-profit 22.2% (median 0) / nonprofit 72.0% |
 | Excess weekday cesareans (own-municipality-year) | 35,330/yr for-profit = 9.3% of weekday cesareans |
 | Footnote reconciliation | 7.9pp × 463k = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
-| Price benchmarks in our units | Grant 0.73 / GKM 2.90 pp per log point (R$1,963 mean cesarean fee) |
+| Price benchmarks in our units | Grant 0.75 / GKM 3.01 pp per log point (R$1,963 mean cesarean fee) |
 | Demand smoothing | next-week coefficients small, either sign, none significant; forecast slope 0.050; MDE 0.63pp; dispersion +0.31 (0.16), Holm 0.173 |
 | Private-insurance cesareans with no recorded indication | 77–81% a year (blank or O80–O84 only) |
 | Rates quoted in the text from the data (no exhibit prints them; recomputed 2026-10-02) | public 37.2% (2010) → 51.5% (2024); for-profit 78.2% in 2024; for-profit Mon–Fri 81.6–84.2%; Robson 1–2 for-profit weekdays 80.5–83.5%; Robson 1 weekdays 68.1% FP / 36.4% public; private-insurance rate in the five largest states 77.7% (MG) to 89.7% (RJ) |

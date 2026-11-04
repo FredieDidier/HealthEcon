@@ -1377,3 +1377,42 @@ Build: paper 42, supplement 37, working paper 76; 0 undefined references or
 citations, 0 overfull hbox in the paper. `abstract.py` 247 of 250 (abstract not
 touched), `claims.py` 0, `numcheck.py` 0; sweep median 27, long-and-chained 5
 (unchanged), pseudo-clefts 1 (the pre-existing "Where it is charged").
+
+## 2026-11-04: Michael Challis's lessons, carried over from DaylightSaving (text only)
+
+Michael Challis, a native speaker outside applied econometrics, reviewed the sister
+DaylightSaving paper by hand (commit `4e6b8f1` there). He has not read this paper, so he
+is not thanked here (this paper carries no acknowledgments footnote in any case). The
+diagnosis is his and the application is ours. No estimate moved and nothing was refit.
+
+Applied: six paragraphs or sentences stop announcing an exhibit and open on the finding
+(Section 5 Panel A, Section 6.1 twice, 6.3 Panel B, the early-term estimate, the
+decomposition); the calendar figure opens on its Panel (a), the opener this log already keeps.
+Equation (3) leaves the introduction, which now states the assumption in words. "Brazil's
+largest states" says five at first use. "Administrative universes" became "datasets".
+"Exclude ... from below" became "lie below". "A price rather than a non-price margin"
+became "another price". "Do not discipline the magnitude" became "do not settle the
+magnitude" or "leave the magnitude open"; the claim is unchanged, and "consistent with the
+calibration" stays banned. Emphatic "do line up" removed. The clinically clean
+sample is defined at first use. American "leveling".
+
+Fees now carry US dollars beside reais (Fredie): nominal means over 2015--2024 at R$4.37,
+the mean official exchange rate of those years from the World Bank, with the
+purchasing-power figure (R$2.28, about 850 international dollars for the cesarean fee) in
+the first footnote. The calibration's PPP factor is corrected to the current World Bank value for 2020, R$2.265
+(it was R$2.35): US$1,000 of 1990 fees is now R$4,485 and the benchmarks 0.75 and 3.01
+percentage points per log point (0.73 and 2.90), so the largest predicted movement is 1.5
+points (1.4), in the abstract, the introduction, Section 5 and the table note. Text and note
+only: the constant is changed in `10_supplement.R`, the script was not re-run, and the
+"excludes" columns do not change, since no interval bound lies between old and new values.
+
+Generated notes: significance legends set `$p<0.01$` in math, in `00_utils.R` and 19 tables,
+no refit. Appendices read in full; three fixes (five largest states in the model, "lie below
+both magnitudes", "It shows that").
+
+Considered and not applied: an introduction heading (it has one, as Elsevier expects); the
+exhibit openings of the Supplementary Appendix, a reference document.
+
+New check: `audit/reader.py`, probed on a copy with four defects reintroduced. Build:
+paper 42, supplement 37, working paper 76, 0 undefined, 0 overfull hbox. `abstract.py`,
+`claims.py`, `numcheck.py`, `reader.py` all exit 0.

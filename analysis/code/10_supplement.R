@@ -117,7 +117,7 @@ cat(sprintf("\n[B/C3] Robson-1 prelabor share = %.3f (must be ~0). R1 dip %.1fpp
 #       re-estimate on corrected data, which he reports as "one-quarter of the
 #       effect estimated originally" by Gruber, Kim and Mayzlin. GKM's own
 #       magnitude is therefore about FOUR points per US$1,000. We carry both,
-#       converted at our own fee levels to roughly 0.7 and 2.9 pp per log point
+#       converted at our own fee levels to roughly 0.8 and 3.0 pp per log point
 #       of the fee gap, and the verdict of the table is the same for either.
 #
 # WHY THE SECTION STILL STANDS. Because those magnitudes are far too small to
@@ -153,8 +153,8 @@ EQ <- 0.02
 # four points per US$1,000. Both are in 1988-1992 Medicaid dollars.
 # US prices roughly doubled between 1990
 # and 2020 (CPI-U 130.7 -> 258.8), and the World Bank PPP conversion factor for
-# Brazil in 2020 is about R$2.35 to the international dollar, so US$1,000 of 1990
-# fees is on the order of R$4,650. One log point of our fee gap, evaluated at the
+# Brazil in 2020 is R$2.265 to the international dollar, so US$1,000 of 1990
+# fees is on the order of R$4,485. One log point of our fee gap, evaluated at the
 # delivery-weighted mean cesarean fee, changes the differential by
 # fee_cesarean x (e - 1). The conversion is rough and is labeled as such in the
 # note; the point does not turn on its second digit.
@@ -181,7 +181,7 @@ rm(evs); gc()
 fp_pub_gap <- readRDS(here::here("analysis", "output", "kitagawa_gap.rds"))$gap
 cat(sprintf("[C/C5] five largest states: %s; negative gaps %.2f to %.2f; for-profit-public gap %.1fpp\n",
             paste(big5, collapse = ","), gap_lo, gap_hi, 100 * fp_pub_gap))
-GKM_BRL <- 4650
+GKM_BRL <- 4485
 per_1000  <- function(pp) 0.01 * pp * fee_c * (exp(1) - 1) / GKM_BRL
 GRANT_BENCHMARK <- per_1000(1)   # Grant (2009), the corrected magnitude
 GKM_BENCHMARK   <- per_1000(4)   # Gruber, Kim and Mayzlin (1999), the original
