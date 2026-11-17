@@ -10,7 +10,7 @@
 #      of a vaginal delivery: the hours at which the economic vaginal fee per hour
 #      equals the cesarean fee per hour, for a cesarean taking one or two hours.
 #      Physician hours are not observed; billed hours are a floor on the time a
-#      vaginal delivery takes (62% of vaginal deliveries bill none), so every
+#      vaginal delivery takes (60% of vaginal deliveries bill none), so every
 #      per-hour comparison here is tilted IN FAVOUR of the vaginal delivery.
 #      -> tab_fee_per_hour.tex (Supplement)
 #
@@ -55,7 +55,10 @@ big <- ev[, .N, by = uf][order(-N)][1:5, uf]
 
 fee_hour <- function(d) {
   v  <- d[type == "vaginal"]
-  va <- v[is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
+  # every vaginal row of the table is over the deliveries with a delivery fee
+  # (94 percent of vaginal deliveries), so that the billing share is the weight
+  # that turns the two split rows into the expected fee
+  va <- v[is.finite(fee_vaginal_econ) & is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
   fc <- mean(d[type == "cesarean", fee_delivery], na.rm = TRUE)
   fv <- mean(v$fee_vaginal_econ, na.rm = TRUE)
   # The economic vaginal fee is an EXPECTED fee: delivery fee plus the labor-
@@ -68,7 +71,7 @@ fee_hour <- function(d) {
   data.table(fc = fc, fb = mean(ve$fee_delivery), fv = fv,
              fvb = mean(ve[!is.na(fee_assist), fee_vaginal_econ]),
              fvn = mean(ve[is.na(fee_assist), fee_vaginal_econ]),
-             bill = 100 * nrow(va) / nrow(v),
+             bill = 100 * nrow(va) / nrow(ve),
              hrs = mean(va$assist_hours), rate = mean(va$fee_assist / va$assist_hours),
              be1 = fv / fc, be2 = 2 * fv / fc,
              # break-even by type of vaginal delivery, one-hour cesarean: the 1.25 h
@@ -235,7 +238,8 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "characteristic as the outcome, municipality$\\times$date and",
   "municipality$\\times$sector fixed effects, and the eve-of-rest-day interaction;",
   "cells are weighted by the births with the field recorded (maternal race and the",
-  "month prenatal care began are sparsely recorded in 2010--2011). Coefficients are divided by the",
+  "month prenatal care began are sparsely recorded in 2010--2011, and parity is recorded",
+  "only from 2014, so the first-birth row covers 2014--2024). Coefficients are divided by the",
   "standard deviation of the birth-level indicator, so Panel B puts the cesarean",
   "differential on the same scale. The first column is the share among for-profit",
   "births on weekdays. The characteristics are fixed before the delivery date is",

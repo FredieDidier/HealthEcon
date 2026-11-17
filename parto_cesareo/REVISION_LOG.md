@@ -1416,3 +1416,54 @@ exhibit openings of the Supplementary Appendix, a reference document.
 New check: `audit/reader.py`, probed on a copy with four defects reintroduced. Build:
 paper 42, supplement 37, working paper 76, 0 undefined, 0 overfull hbox. `abstract.py`,
 `claims.py`, `numcheck.py`, `reader.py` all exit 0.
+
+## 2026-11-17 — code audit of the three scripts written after the 09-27 audit (Claude, requested by Fredie; nothing changed in code or exhibits)
+
+Scope: `build/01e_sinasc_datasus.R`, `analysis/code/15_estab_gradient.R` and
+`analysis/code/16_design_checks.R`, all created on 2026-09-28 and never read line by
+line before. Read in full; tested read-only against the data (scratch scripts outside
+the repository). Nothing was edited or re-run in the pipeline.
+
+**Checked and right (do not redo):**
+- 01e ledger, every year 2010-2024: rows in the final birth file = births in the
+  year's DATASUS file with a valid date and delivery type 1/2 (42,006,849 in all); no
+  DTNASC outside its file's year; no municipality code outside six digits; 0-25 times
+  of birth out of range a year; the establishment code is missing only in "Other"
+  (47%), 0% in for-profit, nonprofit and public.
+- The new fields' codes match the rules in 16: SEXO is 1/2/0 in every year except 2014
+  (M/F/I, handled); CONSULTAS 9 and MESPRENAT 99 and 10 are excluded; schooling 0/9
+  and race 9 excluded. Robson code 11 (3.3% of births 2014+) is a category in 07's
+  controls and excluded from every 1-10 analysis, consistently.
+- 15: one municipality per establishment (7 of 4,959 establishments carry two codes,
+  51 births reassigned); sector unique per establishment-year (asserted); the zero-filled
+  panel reproduces exactly (4,635,564 days, 12,691 establishment-years, 339
+  municipalities; columns 4-6 to the last digit). The prelabor count follows the
+  approved 07 convention (missing timing counts as neither).
+- 16: Panel C arithmetic, the five states (same rule as 02), the balance coding of
+  each indicator, the own-gradient specification (= 07's `m_priv`/`m_pub`, -7.94/-6.69)
+  and the asserted equality of Eq. (3) on identifying days.
+
+**Findings:**
+
+| # | Severity | What | Size | Status |
+|---|---|---|---|---|
+| 1 | medium | `tab_fee_per_hour` Panel B: the share billing labor assistance is over ALL vaginal deliveries, while the split rows of Panels A and C ("billing labor assistance" / "billing none") are over those with a delivery fee (94.2%). The table's own weights do not reproduce its expected fee (0.383 x 3,355 + 0.617 x 1,778 = 2,382, printed 2,417; with 40.5% it is 2,417). The "62 percent bill none" next to R$1,778 mixes the two bases. Same base in `02` (text's 38%). | on the fee base: 40.5% bill (59.5% none); SP 20.1, MG 71.3, RJ 26.4, PR 65.1, SC 64.5; "30 to 82" becomes "29 to 80" | decision for Fredie |
+| 2 | medium | Parity (PARIDADE) does not exist in the DATASUS files before 2014 (100% blank 2010-2013; the source, not the build). Table 2 column 2 and the text ("shares of ... race, and parity category", 2010-2024) control for parity only from 2014 and for race only from about 2012 (97% blank 2010, 42% 2011). The balance row "First birth" is 2014+ only, and its note names race and prenatal month as sparse but not parity. QTDPARTNOR/QTDPARTCES are 87-89% filled in 2012-2013 (2% in 2010). | 4 of 15 years without a parity control in col 2; no estimate re-run | decision for Fredie (note only, col 2 on 2014+, or parity derived from previous-birth counts for 2012-2013) |
+| 3 | low | 15's zero-filled panel gives an establishment zeros on days before its first or after its last birth of the year: 579 of 12,691 establishment-years span under 335 days; 2.32% of panel days (for-profit 3.06%, public 1.36%). Trimming those days moves the weekend terms by at most 0.18 (col 4 -8.729 to -8.719; col 5 -34.32 to -34.15; col 6 -6.00 to -5.87). The holiday terms move more (col 4 -7.5 to -6.5) but that test is not clean: trimming on the first and last birth selects on the outcome at 1 January and 25 December. No number in the text moves. | weekend numbers quoted in text unchanged | recorded; a clean test drops partial establishment-years instead |
+| 4 | low | Comment in 15 (lines 34-37) says the restriction to mixed municipalities "leaves the estimate unchanged"; the check model `a2z` is printed to the console only and its value is not recorded anywhere. | none | text of a comment |
+| 5 | low | `10_supplement.R:354`: the few-cluster bootstrap still sits in a `tryCatch` that prints "n/a" on failure, the pattern removed from `02`. Today it prints 0.323. | none | latent |
+
+**Not covered:** every script other than these three (beyond the lines 07 shares with
+16); reconciliation of yearly totals with the official DATASUS and ANS counts and with
+WorldCupHealth; an independent re-implementation of any headline other than Table 2
+col 1; the end-to-end run of `config/00_master_analysis.R`.
+
+**Applied the same day (Fredie: "pode fazer suas recomendações").** Finding 1: the
+billing share in `16` (and the console line in `02`) is now over vaginal deliveries with
+a delivery fee; block A of `16` re-run alone. D.19 Panel B: 38.3/18.4/70.4/21.8/64.4/64.3
+became 40.5/20.1/71.3/26.4/65.1/64.5; fee per billed hour SP 405 -> 404, RJ 480 -> 476;
+note 62 (30-82) -> 60 (29-80); every other cell identical. Text: 38 -> 40 percent (two
+places), 18-70 -> 20-71, 62 / 30-82 -> 60 / 29-80. Finding 2: Table 2 note (07 source and
+.tex), balance note (16 source and .tex) and the strategy paragraph now say parity is
+recorded from 2014 and race from about 2012; no estimate re-run. Findings 3-5 left as
+recorded.

@@ -227,7 +227,7 @@ reintroduce `else → Public`.
    sector (TISS) / ~81% for-profit (SINASC) vs ~43% public; 68% even in Robson 1
    (spontaneous labor) on weekdays, against 36% public.
 2. **Not a positive price story** — with the *economic* vaginal fee (labor
-   assistance billed on 38% of vaginal deliveries, 2.9 h at ~R$420/h), a cesarean
+   assistance billed on 40% of vaginal deliveries with a delivery fee, 2.9 h at ~R$420/h), a cesarean
    pays 18–38% less in each of the five largest states, which run ~80% cesarean.
    The coefficient is sign-unstable: +0.049** UF FE / −0.014* muni FE without
    controls, +0.019 / −0.013 (n.s.) with them; state swings of up to 1.4 log
@@ -282,7 +282,7 @@ reintroduce `else → Public`.
 | Pre-holiday prelabor bunching (bridge) | −0.47/day (deficit, not bunching); window −1.24 |
 | Org capacity, muni×date FE (prelabor) | together: beds +0.58 (0.38), scale +0.64 (0.41), n.s. individually, joint p 0.021; scale alone/with non-bed measures +1.30 to +1.43***; beds alone +0.80**; date FE together: scale +1.49***, beds +0.47 n.s. |
 | Beds vs scale | corr of logs 0.48 (estab-years); weekend interactions net of FE 0.64 (date) / 0.56 (muni×date) |
-| Fees per delivery (TISS events, D.19) | cesarean 1,939; vaginal fee alone 1,893; economic vaginal 2,417 (expected); billing labor 3,355 / billing none 1,778; 62% bill none (30–82% in big-5) |
+| Fees per delivery (TISS events, D.19) | cesarean 1,939; vaginal fee alone 1,893; economic vaginal 2,417 (expected); billing labor 3,355 / billing none 1,778; 60% bill none (29–80% in big-5; share over vaginal deliveries with a delivery fee, the base of every D.19 row, since 2026-11-17) |
 | Cesarean fee for the calibration (D.17) | 1,963 = delivery-weighted over regression muni-years; 1,939 would give 0.72 / 2.87 |
 | Education heterogeneity (D.14, with education main effect) | weekend dip −11.2pp (<8 yrs) / −7.2pp (8+); weekday rates 67% / 85% |
 | Fee gap with the base vaginal fee (D.18, Table 1 sample) | +0.0366* UF / −0.0176** muni; econ columns = Table 1 exactly |
@@ -552,6 +552,8 @@ sections above are not repeated here.
   movable holidays on four dates (Carnival Mon/Tue, Good Friday, Corpus Christi),
   which are not national holidays under federal law. The long-weekend design uses
   the eight fixed-date holidays only.
+- Parity (PARIDADE) exists in SINASC only from 2014 and race from about 2012; any
+  note or sentence on composition controls over 2010-2024 says so. [2026-11-17]
 - Level numbers print at one rounding everywhere: for-profit 81%, private
   insurance 84% (82–86% by year).
 

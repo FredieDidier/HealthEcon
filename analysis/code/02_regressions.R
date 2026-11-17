@@ -208,9 +208,9 @@ ev <- rbindlist(lapply(2015:2024, function(y)
   as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
     col_select = c("type", "uf", "year", "fee_delivery", "fee_assist", "assist_hours",
                    "fee_vaginal_econ")))))
-va <- ev[type == "vaginal" & is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
+va <- ev[type == "vaginal" & is.finite(fee_vaginal_econ) & is.finite(fee_assist) & is.finite(assist_hours) & assist_hours > 0]
 cat(sprintf("\n[02] vaginal deliveries billing labor assistance: %.1f%%; mean hours %.2f; mean R$ per hour %.0f (total assist fee / total hours %.0f)\n",
-            100 * nrow(va) / ev[type == "vaginal", .N], mean(va$assist_hours),
+            100 * nrow(va) / ev[type == "vaginal" & is.finite(fee_vaginal_econ), .N], mean(va$assist_hours),
             mean(va$fee_assist / va$assist_hours), sum(va$fee_assist) / sum(va$assist_hours)))
 big <- ev[, .N, by = uf][order(-N)][1:5, uf]
 sg <- ev[uf %in% big, .(fee_ces = mean(fee_delivery[type == "cesarean"], na.rm = TRUE),
