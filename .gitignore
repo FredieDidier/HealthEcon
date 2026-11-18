@@ -28,3 +28,26 @@ config/config_local.R
 # Rscript side effect when a base-graphics device is opened headless
 Rplots.pdf
 latex/Born_on_Schedule.tex
+
+# TeXugo: arquivos gerados pelo LaTeX
+*.pdf
+*.bbl
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.lof
+*.lot
+*.blg
+*.bcf
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.texugo-tmp
+.texugo/

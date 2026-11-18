@@ -59,7 +59,7 @@ wq <- function(x, w, p) {
 }
 
 # =============================================================================
-# FIGURE 2 — the two margins of cesarean supply
+# FIGURE 2 — the fee gap and the calendar gradients of the cesarean rate
 # =============================================================================
 
 # --- shared: municipality x date x sector cells (also feeds Figure 3a) --------
@@ -87,7 +87,7 @@ m_dif  <- feols(rate ~ i(private, weekend, ref = 0) + i(private, holiday, ref = 
                 sg, weights = ~births, cluster = ~muni + date)
 pull <- function(m, keys, series) {
   ct <- fixest::coeftable(m)[keys, , drop = FALSE]
-  data.table(series = series, margin = c("Weekend", "National holiday", "Eve of rest day"),
+  data.table(series = series, margin = c("Weekend", "Holiday", "Eve of rest day"),
              b = 100 * ct[, 1], se = 100 * ct[, 2])
 }
 gd <- rbindlist(list(
@@ -96,7 +96,7 @@ gd <- rbindlist(list(
   pull(m_dif,  c("private::1:weekend", "private::1:holiday", "private::1:eve"),
        "For-profit differential")))
 gd[, series := factor(series, levels = c("Public", "For-profit", "For-profit differential"))]
-gd[, margin := factor(margin, levels = c("Weekend", "National holiday", "Eve of rest day"))]
+gd[, margin := factor(margin, levels = c("Weekend", "Holiday", "Eve of rest day"))]
 rm(sg); gc()
 
 pb <- ggplot(gd, aes(margin, b, colour = series, group = series)) +
@@ -111,7 +111,7 @@ pb <- ggplot(gd, aes(margin, b, colour = series, group = series)) +
   # Half of a 6.5in figure is 3.25in of panel: the tick labels are wrapped over two
   # lines and the three-series legend is stacked in two rows so neither the labels
   # nor the legend run past the panel.
-  scale_x_discrete(labels = c(Weekend = "Weekend", `National holiday` = "National\nholiday",
+  scale_x_discrete(labels = c(Weekend = "Weekend", Holiday = "Holiday",
                               `Eve of rest day` = "Eve of\nrest day")) +
   guides(colour = guide_legend(nrow = 2, byrow = TRUE),
          shape  = guide_legend(nrow = 2, byrow = TRUE)) +

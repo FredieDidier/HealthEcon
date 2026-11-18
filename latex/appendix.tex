@@ -15,65 +15,16 @@
 % =============================================================================
 \section{Data and variable construction}\label{app:data}
 % =============================================================================
-This appendix documents the construction of the analysis files; the complete
-codebook is distributed in machine-readable form with the replication package
-described in the data-availability statement. Deliveries in the TISS claims are identified by
-their procedure codes in the Unified Health Supplementary Terminology
-(Terminologia Unificada da Sa\'ude Suplementar, TUSS), the standardized procedure
-nomenclature that private plans use to bill (cesarean 31309054 and 31309208;
-vaginal 31309127); the economic vaginal fee adds the separately billed hourly
-labor-assistance code (31309038). In SINASC, the sector of a birth is the
-legal-entity type of its establishment in the CNES registry in the year of the
-birth, read at the last month of that year (the registry records it from June
-2012, so 2010 and 2011 take 2012): for-profit (codes 2xxx), nonprofit (3xxx),
-and public (1xxx); the headline contrast
-compares for-profit with public establishments. All files are
-built at the municipality level on the six-digit municipality code of the
-Brazilian Institute of Geography and Statistics (Instituto Brasileiro de
-Geografia e Estat\'istica, IBGE).
+\paragraph{TISS delivery codes.} Cesarean deliveries: TUSS 31309054 and 31309208; vaginal delivery: 31309127; labor-assistance hours: 31309038. The economic vaginal fee adds the delivery fee and any separately billed hourly labor-assistance charge. Unbilled assistance is set to zero for the billed-fee calculation, not assumed to represent zero physician time. Mean economic fees are computed over eligible vaginal deliveries with a recorded positive delivery fee, covering 94.2 percent of all vaginal deliveries. Both the labor-assistance billing share (40.5 percent nationally) and the conditional subgroup means are defined on this same sample, so the expected fee is their weighted average. The remaining 59.5 percent of eligible vaginal deliveries have no recorded labor-assistance charge; in the five largest states the share without such a charge ranges from approximately 29 percent to 80 percent. The cesarean fee is defined analogously. The municipal log gap is $\log(\bar f^c_{mt}/\bar f^v_{mt})$. The main fee panel restricts to municipality-years with at least 20 insurance-financed deliveries and a well-defined fee ratio.
 
-\paragraph{Variable definitions.} The main constructed variables are defined as
-follows. Indicators equal one when the stated condition holds and zero otherwise.
-\begin{itemize}
-\item \textbf{Cesarean}: the delivery is a cesarean section. In TISS this is
-the presence of a cesarean procedure code; in SINASC it is the registry's
-delivery-type field.
-\item \textbf{Sector (for-profit / nonprofit / public)}: the sector of the birth
-establishment, from the legal-entity type of its CNES record in the year of the
-birth; \textbf{for-profit} denotes establishments with legal-entity type 2xxx,
-the headline group.
-\item \textbf{Economic vaginal fee}: the physician fee for a vaginal delivery
-plus the separately billed hourly labor-assistance fee (TUSS 31309038), which
-compensates the time spent attending labor, counted as zero for the vaginal
-deliveries that bill none. Its mean over vaginal deliveries is therefore the
-expected pay of a vaginal delivery when the mode is chosen; the deliveries that
-bill labor assistance are paid more than that mean and those that bill none less
-(\satab{tab:fee_per_hour}). This is the correct comparison for the cesarean fee
-because it credits the vaginal delivery with the time it pays for.
-\item \textbf{Log fee gap}: the natural logarithm of the ratio of the mean
-cesarean fee to the mean economic vaginal fee in a municipality-year; positive
-values mean cesareans pay more.
-\item \textbf{Cesarean share}: the share of births delivered by cesarean in a
-municipality-date-sector cell.
-\item \textbf{Weekend, holiday, eve}: indicators for Saturdays and Sundays;
-for holidays, the eight fixed-date national holidays, 20 November from 2024 (a
-national holiday under Law 14,759 of 2023), and three Easter-based movable dates
-observed as rest days across most of the country (Carnival Monday and Tuesday,
-Good Friday, and Corpus Christi; the first and last are optional federal rest
-days and Good Friday a religious holiday under municipal law, rather than
-national holidays under federal law); and the eve of a rest day (a Friday or the
-day before a holiday), respectively. The long-weekend analysis uses the eight
-fixed-date holidays only.
-\item \textbf{Robson group}: the World Health Organization's ten-group
-classification of deliveries; groups 1 and 2 are the low-risk first births used in
-the mechanism tests.
-\item \textbf{Prelabor cesarean}: a cesarean recorded as performed before labor
-began, as opposed to an in-labor cesarean.
-\item \textbf{Early-term birth}: a birth at 37 or 38 completed weeks of
-gestation.
-\item \textbf{Parto Adequado hospital}: an establishment on the regulator's list
-of hospitals in the program's 2017--2021 dissemination phase, matched to the birth
-records by its CNES code.
-\item \textbf{Obstetricians per 1,000 births}: the count of obstetricians in
-the CNES register of professionals per 1,000 births in the municipality-year.
-\end{itemize}
+\paragraph{Birth register and ownership.} SINASC identifies births from 2010 through 2024. Each birth is matched to the CNES establishment's legal-entity type recorded in the last available month of its birth year. Historical coding is available from June 2012; births in 2010 and 2011 use the 2012 classification. Public establishments have CNES legal-entity codes in category 1xxx; for-profit establishments in 2xxx; nonprofit establishments in 3xxx. The headline comparison excludes nonprofits. These are ownership, not payer, categories. Merges use the six-digit IBGE municipality code.
+
+\paragraph{Calendar indicators.} Weekend denotes Saturday or Sunday. The main holiday indicator covers eight fixed-date federal holidays, 20 November from 2024 (Law 14,759/2023), and four widely observed movable rest days associated with three occasions: Carnival Monday and Tuesday, Good Friday, and Corpus Christi. Carnival and Corpus Christi are federal optional rest days rather than federal national holidays; Good Friday is a religious holiday established under municipal law. The label ``holiday'' in the regression tables denotes this analytical holiday indicator rather than a claim that every included date has the same federal legal status. The long-weekend analysis uses only the eight fixed-date national holidays and excludes the movable dates and 20 November. The eve indicator covers Friday or the day preceding another rest day.
+
+\paragraph{Clinical classification and outcomes.} Robson groups 1--10 are recorded from 2014. Group 1 includes nulliparous term singleton cephalic pregnancies with spontaneous labor; group 2 includes nulliparous term singleton cephalic pregnancies with induced labor or prelabor cesarean. A group-1 cesarean coded as prelabor is impossible under the register's classification rule, not independent validation of the timing variable. Prelabor cesarean means surgery recorded before labor began. A cesarean without valid timing information enters neither prelabor nor in-labor components but remains in the birth denominator. Early-term birth denotes 37--38 completed gestational weeks.
+
+\paragraph{Covariate availability.} Parity is unavailable throughout 2010--2013 and is analyzed from 2014 onward; race becomes usable from approximately 2012. The first-birth row of \satab{tab:balance} is therefore based only on observations from 2014 onward. These field-specific windows do not change the 2010--2024 date range reported for Table~\ref{tab:main_gradient}, column 2.
+
+\paragraph{Capacity and covariates.} Obstetric bed counts and measures of staffing come from CNES. Lagged delivery volume and obstetric beds are used for establishment-level interactions. Registered obstetrician counts can be incomplete indicators of the available delivery team; this is a measurement limitation, not evidence of zero staffing. Municipality controls from IEPS and CNES include GDP per capita, private-plan coverage, prenatal-care adequacy, and obstetrician density.
+
+\paragraph{Replication and missingness.} Supplementary Appendix Tables~\ref{tab:sampleflow} and~\ref{tab:timing_missing} document sample flow and timing-code missingness. Public SINASC and TISS extracts, CNES legal-entity classifications, TUSS delivery procedures, and the construction of municipality-day-sector cells are documented in the accompanying replication materials. The calendar regression includes live births only and cannot describe pregnancies ending in stillbirth. Prelabor and in-labor outcomes are restricted to the usable timing-code years from 2012 onward; invalid or missing codes count in neither numerator.

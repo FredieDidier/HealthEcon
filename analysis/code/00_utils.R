@@ -357,3 +357,25 @@ valid_idade <- function(x) data.table::fifelse(x >= 10 & x <= 60, x, NA_integer_
 cache_fresh <- function(cache, inputs) {
   file.exists(cache) && all(file.mtime(inputs) <= file.mtime(cache))
 }
+
+# ---------------------------------------------------------------------------
+# IPCA DEFLATOR. Annual factors that turn nominal reais into reais of `base`:
+# the monthly IPCA (Banco Central SGS series 433, percent change) is chained
+# into a price level, averaged within each calendar year, and divided into the
+# base year's average. The series is cached under build/IPCA and downloaded
+# from the Banco Central API when the cache is absent.
+# ---------------------------------------------------------------------------
+ipca_deflator <- function(base = 2020, years = 2015:2024) {
+  f <- file.path(DROPBOX_ROOT, "build", "IPCA", "ipca_sgs433.csv")
+  if (!file.exists(f)) {
+    dir.create(dirname(f), recursive = TRUE, showWarnings = FALSE)
+    utils::download.file(sprintf(paste0(
+      "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv",
+      "&dataInicial=01/01/%d&dataFinal=31/12/%d"), min(years, base), max(years, base)), f, quiet = TRUE)
+  }
+  ip <- data.table::fread(f, sep = ";", dec = ",")
+  ip[, `:=`(year = as.integer(substr(data, 7, 10)), level = cumprod(1 + valor / 100))]
+  d <- ip[, .(n = .N, level = mean(level)), by = year]
+  stopifnot(all(c(years, base) %in% d$year), all(d[year %in% c(years, base), n] == 12))
+  d[, .(year, f = d[year == base, level] / level)][year %in% years]
+}

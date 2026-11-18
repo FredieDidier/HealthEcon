@@ -30,6 +30,8 @@ ALLOW_A = {
     ("appendix.tex", "1,000"): "a unit (per 1,000 births), not an estimate",
     ("sup_appendix.tex", "0.16"): "standard error of the demand-smoothing Panel B coefficient, "
                                   "the table named in the previous paragraph",
+    ("paper.tex", "59.5"): "derived: 100 - 40.5 percent of vaginal deliveries billing labor "
+                           "assistance, Table D.19 Panel B",
 }
 
 # Numbers that match no exhibit at all, each with its reason. A stale number that

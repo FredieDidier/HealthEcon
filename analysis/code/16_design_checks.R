@@ -47,9 +47,9 @@ TABLE <- here::here("analysis", "output", "tables")
 # A. Fees per hour of physician time
 # =============================================================================
 ev <- rbindlist(lapply(2015:2024, function(y)
-  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
+  cbind(year = y, as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
     col_select = c("type", "uf", "fee_delivery", "fee_assist", "assist_hours",
-                   "fee_vaginal_econ")))))
+                   "fee_vaginal_econ"))))))
 # the same five states as the Section 5 facts in 02_regressions.R
 big <- ev[, .N, by = uf][order(-N)][1:5, uf]
 
@@ -69,6 +69,7 @@ fee_hour <- function(d) {
   # (external check, 2026-09-28).
   ve <- v[is.finite(fee_vaginal_econ)]
   data.table(fc = fc, fb = mean(ve$fee_delivery), fv = fv,
+             fee_share = 100 * nrow(ve) / nrow(v),
              fvb = mean(ve[!is.na(fee_assist), fee_vaginal_econ]),
              fvn = mean(ve[is.na(fee_assist), fee_vaginal_econ]),
              bill = 100 * nrow(va) / nrow(ve),
@@ -79,9 +80,33 @@ fee_hour <- function(d) {
              be1b = mean(ve[!is.na(fee_assist), fee_vaginal_econ]) / fc,
              be1n = mean(ve[is.na(fee_assist), fee_vaginal_econ]) / fc)
 }
-fh <- rbind(cbind(uf = "Brazil", fee_hour(ev)),
-            rbindlist(lapply(big, function(u) cbind(uf = u, fee_hour(ev[uf == u])))))
+fh_tab <- function(e) rbind(cbind(uf = "Brazil", fee_hour(e)),
+  rbindlist(lapply(big, function(u) cbind(uf = u, fee_hour(e[uf == u])))))
+fh <- fh_tab(ev)
+# The table reports nominal means. The same table in 2020 reais, each year's
+# fees deflated by the IPCA, checks that no comparison the text draws depends on
+# inflation, in Brazil and in each state: the cesarean fee against the economic
+# vaginal fee and its two split rows, every break-even against one hour, and the
+# cesarean fee against the vaginal fee alone in Brazil and in the states that
+# rarely bill labor assistance (Section 5). In MG, which bills it on 71 percent
+# of vaginal deliveries, the fee alone and the cesarean fee are within 0.3
+# percent of each other in nominal terms and swap order in 2020 reais; no
+# sentence uses that pair.
+ev[ipca_deflator(2020), on = "year", `:=`(fee_delivery = fee_delivery * i.f,
+   fee_assist = fee_assist * i.f, fee_vaginal_econ = fee_vaginal_econ * i.f)]
+fh_real <- fh_tab(ev)
 rm(ev); gc()
+same_side <- function(a, b) all(sign(a) == sign(b))
+stopifnot(identical(fh$uf, fh_real$uf),
+  same_side((fh$fc - fh$fb)[fh$uf == "Brazil" | fh$bill < 50],
+            (fh_real$fc - fh_real$fb)[fh$uf == "Brazil" | fh$bill < 50]),
+  same_side(fh$fc - fh$fv, fh_real$fc - fh_real$fv),
+  same_side(fh$fc - fh$fvb, fh_real$fc - fh_real$fvb),
+  same_side(fh$fc - fh$fvn, fh_real$fc - fh_real$fvn),
+  same_side(fh$be1 - 1, fh_real$be1 - 1), same_side(fh$be1b - 1, fh_real$be1b - 1),
+  same_side(fh$be1n - 1, fh_real$be1n - 1),
+  fh_real[uf == "Brazil", be1] < fh[uf == "Brazil", be1])
+cat("\n[16A] the same, in 2020 reais (IPCA):\n"); print(fh_real)
 cat("\n[16A] fees per hour of physician time:\n"); print(fh)
 
 rowf <- function(label, x, fmt) paste0(label, " & ", paste(sprintf(fmt, x), collapse = " & "), " \\\\")
@@ -118,7 +143,8 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "states by deliveries, as in Section~\\ref{sec:notprice}. Fees are means over the",
   "deliveries that bill them: the cesarean fee over cesareans with a positive",
   "delivery fee, the vaginal fees over vaginal deliveries with a positive delivery",
-  "fee. The economic vaginal fee is, for each such delivery, the delivery fee plus",
+  sprintf("fee (%.1f percent of vaginal deliveries nationally). The economic", fh[uf == "Brazil", fee_share]),
+  "vaginal fee is, for each such delivery, the delivery fee plus",
   "the hourly labor-assistance fee billed with it, counted as zero where none is",
   "billed, averaged over all of them. It is the expected pay of a vaginal delivery",
   "when the mode of delivery is chosen, not the pay of a typical one: the two rows",
@@ -136,7 +162,12 @@ tex <- c("\\begin{table}[H]", "\\centering",
   sprintf("take time (%.0f percent of them nationally, between %.0f and %.0f percent in",
           100 - fh[uf == "Brazil", bill], 100 - max(fh[uf != "Brazil", bill]),
           100 - min(fh[uf != "Brazil", bill])),
-  "the five states), so the comparison is tilted in favor of the vaginal delivery. Reais convert to US dollars at about R\\$4.37 per dollar, the mean official exchange rate of 2015--2024.",
+  "the five states), so the comparison is tilted in favor of the vaginal delivery.",
+  sprintf(paste("Fee amounts are nominal means over 2015--2024. Deflating annual fees to 2020",
+    "reais using the IPCA leaves every comparison drawn in the text unchanged and reduces the one-hour",
+    "cesarean break-even threshold from %.2f to %.2f hours."),
+    fh[uf == "Brazil", be1], fh_real[uf == "Brazil", be1]),
+  "Reais convert to US dollars at about R\\$4.37 per dollar, the mean official exchange rate of 2015--2024.",
   "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_fee_per_hour.tex"))
 
@@ -226,7 +257,7 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
   "\\begin{tabular}{lccc}", "\\toprule",
   " & Mean, for-profit & For-profit $\\times$ & For-profit $\\times$ \\\\",
-  " & weekdays & Weekend & National holiday \\\\", "\\midrule",
+  " & weekdays & Weekend & Holiday \\\\", "\\midrule",
   "\\multicolumn{4}{l}{\\emph{Panel A. Predetermined characteristics (standard deviations)}} \\\\",
   "\\addlinespace[2pt]", body, "\\midrule",
   "\\multicolumn{4}{l}{\\emph{Panel B. Benchmark: the outcome of Table~\\ref{tab:main_gradient}, column 1 (standard deviations)}} \\\\",
@@ -300,7 +331,7 @@ tex <- c("\\begin{table}[H]", "\\centering",
   "\\multicolumn{5}{l}{\\emph{Panel B. Each sector's own gradient, Equation~\\eqref{eq:scheduling} (percentage points)}} \\\\",
   "\\addlinespace[2pt]",
   tex_row("Weekend", OWN, "weekend", dig = 2),
-  tex_row("National holiday", OWN, "holiday", dig = 2),
+  tex_row("Holiday", OWN, "holiday", dig = 2),
   tex_row("Eve of rest day", OWN, "eve", dig = 2),
   tex_nobs(OWN),
   "\\bottomrule", "\\end{tabular}}",

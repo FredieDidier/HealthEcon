@@ -199,6 +199,16 @@ rows <- rbindlist(lapply(names(specs), function(nm) {
              rules_out_gkm = ifelse(ci[[1]] > GKM_BENCHMARK || ci[[2]] < GKM_BENCHMARK,
                                  "excluded", "not excluded"))
 }))
+# The same benchmarks at the mean cesarean fee in 2020 reais (each year's fee
+# deflated by the IPCA), the base year of the US-to-Brazil conversion above.
+# The note reports them and asserts that no interval comparison changes.
+fee_c_real <- ipca_deflator(2020)[w, on = "year"][, weighted.mean(fee_cesarean * f, tiss_deliveries, na.rm = TRUE)]
+GRANT_REAL <- 0.01 * 1 * fee_c_real * (exp(1) - 1) / GKM_BRL
+GKM_REAL   <- 0.01 * 4 * fee_c_real * (exp(1) - 1) / GKM_BRL
+excl <- function(b) ifelse(rows$lo > b | rows$hi < b, "excluded", "not excluded")
+stopifnot(identical(excl(GRANT_REAL), rows$rules_out), identical(excl(GKM_REAL), rows$rules_out_gkm))
+cat(sprintf("[C/C5] 2020 reais: mean cesarean fee R$%.0f; Grant %.2f, GKM %.2f pp per log point\n",
+            fee_c_real, 100 * GRANT_REAL, 100 * GKM_REAL))
 ctab <- rows[, .(Specification = spec,
                  `Coefficient` = sprintf("%+.4f", beta),
                  `95\\% CI` = sprintf("[%+.4f, %+.4f]", lo, hi),
@@ -207,7 +217,7 @@ ctab <- rows[, .(Specification = spec,
                  `Excludes Grant?` = rules_out,
                  `Excludes GKM?` = rules_out_gkm)]
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{The fee-gap coefficient against two yardsticks: an equivalence region and the canonical price response}}",
+  "\\caption{\\textbf{The fee-gap coefficient, an equivalence region, and the literature's price responses}}",
   "\\label{tab:feegap_ci}", "\\small",
   "\\begin{tabular}{lcccccc}", "\\toprule",
   paste(names(ctab), collapse = " & "), "\\\\", "\\midrule",
@@ -227,7 +237,11 @@ tex <- c("\\begin{table}[H]\\centering",
     "Table~\\ref{tab:fees}, weighted by deliveries; the mean over delivery events that",
     "Table~\\ref{tab:fee_per_hour} and the text report, R\\$%s, is %.0f percent lower and",
     "would put them at %.2f and %.2f. The conversion uses US consumer prices between 1990 and 2020 and the",
-    "World Bank purchasing-power factor for Brazil, and is deliberately rough. Two things",
+    "World Bank purchasing-power factor for Brazil, and is deliberately rough.",
+    "The calibration uses nominal mean fees over 2015--2024. Using IPCA-deflated fees",
+    "expressed in 2020 reais yields reference magnitudes of %.2f and %.2f percentage points",
+    "per log point for \\citet{grant2009} and \\citet{gruber1999physician}, respectively,",
+    "compared with %.2f and %.2f in the baseline. No confidence-interval comparison changes. Two things",
     "follow, and the paper states both. No interval fits inside the equivalence region, so",
     "these data do not establish that the price response is negligible. And the two",
     "fixed-effect schemes disagree about both magnitudes: the within-municipality",
@@ -241,6 +255,7 @@ tex <- c("\\begin{table}[H]\\centering",
     100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK,
     formatC(fee_c_ev, format = "d", big.mark = ","), 100 * (1 - fee_c_ev / fee_c),
     100 * GRANT_BENCHMARK * fee_c_ev / fee_c, 100 * GKM_BENCHMARK * fee_c_ev / fee_c,
+    100 * GRANT_REAL, 100 * GKM_REAL, 100 * GRANT_BENCHMARK, 100 * GKM_BENCHMARK,
     rows[spec == "State fixed effects", nclust],
     gap_lo, gap_hi, 100 * GRANT_BENCHMARK * gap_hi, 100 * GKM_BENCHMARK * gap_hi,
     100 * fp_pub_gap)),
@@ -442,7 +457,7 @@ m_r1_wd <- m_r1[weekend == 0, missing_pct]; m_r1_we <- m_r1[weekend == 1, missin
 mtab <- mw[, .(Sector = as.character(sector_display(sector, c("Private", "Public"))), `Weekday (\\%)` = sprintf("%.2f", Weekday),
                `Weekend (\\%)` = sprintf("%.2f", Weekend))]
 tex2 <- c("\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{Missingness of the cesarean-timing indicator is balanced across the week}}",
+  "\\caption{\\textbf{Missingness of the cesarean-timing indicator by day of week}}",
   "\\label{tab:timing_missing}", "\\small",
   "\\begin{tabular}{lcc}", "\\toprule",
   "Sector & Weekday (\\%) & Weekend (\\%) \\\\", "\\midrule",

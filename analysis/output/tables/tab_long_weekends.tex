@@ -1,6 +1,6 @@
 \begin{table}[H]
 \centering
-\caption{\textbf{Long weekends and the displacement of scheduled cesareans}}
+\caption{\textbf{Long weekends and displacement}}
 \label{tab:long_weekends}
 \small\setlength{\tabcolsep}{5pt}
 \resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
@@ -10,7 +10,7 @@
  & Cesarean & Cesarean & Prelabor cesarean & In-labor cesarean \\
  & share & share & share & share \\
 \midrule
-\multicolumn{5}{l}{\emph{Panel A. Holiday taxonomy, for-profit differential}} \\
+\multicolumn{5}{l}{\emph{Panel A. Holiday types, for-profit differential}} \\
 \addlinespace[2pt]
 For-profit $\times$ Bridge holiday (Tue/Thu) & -2.427$^{**}$ & -0.826 & -3.389$^{*}$ & 2.522$^{***}$ \\
  & (1.124) & (1.624) & (1.801) & (0.749) \\
@@ -33,15 +33,15 @@ For-profit $\times$ holiday identity & No & Yes & Yes & Yes \\
 Municipality $\times$ date fixed effects & Yes & Yes & Yes & Yes \\
 Observations & 4,256,023 & 4,256,023 & 4,256,023 & 4,256,023 \\
 \midrule
-\multicolumn{5}{l}{\emph{Panel B. Displacement around bridge holidays (counts, for-profit minus public)}} \\
+\multicolumn{5}{l}{\emph{Panel B. Bridge-holiday event-time sums, counts: for-profit minus public}} \\
 \addlinespace[2pt]
  & Prelabor & In-labor & Vaginal & Total \\
  & cesareans & cesareans & births & births \\
 \addlinespace[2pt]
-Pre-holiday excess, $\sum_{\ell=-3}^{-1}\theta_\ell$ & -0.4684$^{*}$ & -0.2098$^{**}$ & -0.0774$^{**}$ & -0.8315$^{**}$ \\
+Three days before holiday & -0.4684$^{*}$ & -0.2098$^{**}$ & -0.0774$^{**}$ & -0.8315$^{**}$ \\
  & (0.2589) & (0.0899) & (0.0319) & (0.3641) \\
 \addlinespace[2pt]
-Window total, $\sum_{\ell=-3}^{+3}\theta_\ell$ & -1.2410$^{***}$ & -0.3081$^{**}$ & -0.2723$^{***}$ & -2.0053$^{***}$ \\
+Seven-day window & -1.2410$^{***}$ & -0.3081$^{**}$ & -0.2723$^{***}$ & -2.0053$^{***}$ \\
  & (0.3831) & (0.1305) & (0.0699) & (0.5099) \\
 \addlinespace[2pt]
 \midrule
@@ -52,21 +52,6 @@ Observations & 1,215,744 & 1,215,744 & 1,215,744 & 1,215,744 \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} SINASC 2012--2024, the years in which the prelabor indicator is
-recorded for about 85 percent of cesareans or more. Panel A: municipality-date-sector
-cells with at least one birth, weighted by births; movable holidays are excluded.
-Each fixed-date national holiday is classified by the day of week on which it falls.
-Columns 2--4 add for-profit $\times$ holiday-identity indicators, so the weekend-
-falling holiday is the omitted category and the coefficients are identified within
-holiday and within day of week. Coefficients are in percentage points.
-Panel B: balanced municipality-date panel of the two sectors, counts in births,
-event time $\ell$ measured in days from the holiday, non-window days omitted,
-municipality and year-month fixed effects with day-of-week controls;
-$\theta_\ell$ is the for-profit minus public difference on event day $\ell$
-relative to an ordinary day of the same week day. The observation count is the
-municipality-days of the balanced panel and is common to the four columns.
-Standard errors, two-way clustered by municipality and date, are reported in parentheses.
-\newline
-\footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\textit{Notes:} SINASC 2012--2024; fixed-date national holidays, excluding movable holidays. Panel A includes municipality-date-sector cells with births, weighted by births, and municipality-by-date fixed effects; coefficients in percentage points. Columns 2--4 add holiday-identity interactions. Panel B uses balanced municipality-date counts and day-of-week, municipality, and year-by-month effects. Event-time coefficients in Panel B are birth counts, whereas Panel A reports shares; details and supplementary share estimates appear in Supplementary Appendix Table~\ref{tab:displacement_robust}. Standard errors, two-way clustered by municipality and date, are reported in parentheses. Significance codes as in Table~\ref{tab:fees}.
 \end{minipage}
 \end{table}

@@ -357,7 +357,7 @@ row_from_model <- function(models, key, mult = 100) {
 lines <- c(
   "\\begin{table}[H]",
   "\\centering",
-  "\\caption{\\textbf{Long weekends and the displacement of scheduled cesareans}}",
+  "\\caption{\\textbf{Long weekends and displacement}}",
   "\\label{tab:long_weekends}",
   "\\small\\setlength{\\tabcolsep}{5pt}",
   "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
@@ -367,7 +367,7 @@ lines <- c(
   " & Cesarean & Cesarean & Prelabor cesarean & In-labor cesarean \\\\",
   " & share & share & share & share \\\\",
   "\\midrule",
-  "\\multicolumn{5}{l}{\\emph{Panel A. Holiday taxonomy, for-profit differential}} \\\\",
+  "\\multicolumn{5}{l}{\\emph{Panel A. Holiday types, for-profit differential}} \\\\",
   "\\addlinespace[2pt]")
 
 add_row <- function(label, key) {
@@ -396,7 +396,7 @@ lines <- c(lines,
   paste0("Observations & ", paste(sapply(m_tax, function(s)
     formatC(s$n, big.mark = ",", format = "d")), collapse = " & "), " \\\\"),
   "\\midrule",
-  "\\multicolumn{5}{l}{\\emph{Panel B. Displacement around bridge holidays (counts, for-profit minus public)}} \\\\",
+  "\\multicolumn{5}{l}{\\emph{Panel B. Bridge-holiday event-time sums, counts: for-profit minus public}} \\\\",
   "\\addlinespace[2pt]",
   " & Prelabor & In-labor & Vaginal & Total \\\\",
   " & cesareans & cesareans & births & births \\\\",
@@ -413,8 +413,8 @@ pb_row <- function(label, col) {
 }
 n_evt <- formatC(stats::nobs(m_evt[[1]]), big.mark = ",", format = "d")
 lines <- c(lines,
-  pb_row("Pre-holiday excess, $\\sum_{\\ell=-3}^{-1}\\theta_\\ell$", "pre"),
-  pb_row("Window total, $\\sum_{\\ell=-3}^{+3}\\theta_\\ell$", "full"),
+  pb_row("Three days before holiday", "pre"),
+  pb_row("Seven-day window", "full"),
   "\\midrule",
   "Day-of-week controls & Yes & Yes & Yes & Yes \\\\",
   "Municipality fixed effects & Yes & Yes & Yes & Yes \\\\",
@@ -423,21 +423,7 @@ lines <- c(lines,
   "\\bottomrule",
   "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
-  "\\textit{Notes:} SINASC 2012--2024, the years in which the prelabor indicator is",
-  "recorded for about 85 percent of cesareans or more. Panel A: municipality-date-sector",
-  "cells with at least one birth, weighted by births; movable holidays are excluded.",
-  "Each fixed-date national holiday is classified by the day of week on which it falls.",
-  "Columns 2--4 add for-profit $\\times$ holiday-identity indicators, so the weekend-",
-  "falling holiday is the omitted category and the coefficients are identified within",
-  "holiday and within day of week. Coefficients are in percentage points.",
-  "Panel B: balanced municipality-date panel of the two sectors, counts in births,",
-  "event time $\\ell$ measured in days from the holiday, non-window days omitted,",
-  "municipality and year-month fixed effects with day-of-week controls;",
-  "$\\theta_\\ell$ is the for-profit minus public difference on event day $\\ell$",
-  "relative to an ordinary day of the same week day. The observation count is the",
-  "municipality-days of the balanced panel and is common to the four columns.",
-  "Standard errors, two-way clustered by municipality and date, are reported in parentheses.",
-  "\\newline", SIGNIF_NOTE,
+  "\\textit{Notes:} SINASC 2012--2024; fixed-date national holidays, excluding movable holidays. Panel A includes municipality-date-sector cells with births, weighted by births, and municipality-by-date fixed effects; coefficients in percentage points. Columns 2--4 add holiday-identity interactions. Panel B uses balanced municipality-date counts and day-of-week, municipality, and year-by-month effects. Event-time coefficients in Panel B are birth counts, whereas Panel A reports shares; details and supplementary share estimates appear in Supplementary Appendix Table~\\ref{tab:displacement_robust}. Standard errors, two-way clustered by municipality and date, are reported in parentheses. Significance codes as in Table~\\ref{tab:fees}.",
   "\\end{minipage}",
   "\\end{table}")
 write_table_tex(lines, file.path(TABLE, "tab_long_weekends.tex"))

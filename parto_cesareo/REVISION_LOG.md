@@ -1417,6 +1417,128 @@ New check: `audit/reader.py`, probed on a copy with four defects reintroduced. B
 paper 42, supplement 37, working paper 76, 0 undefined, 0 overfull hbox. `abstract.py`,
 `claims.py`, `numcheck.py`, `reader.py` all exit 0.
 
+## 2026-11-17: the rewritten writing and razor skills, measured against the JHE (Claude, requested by Fredie)
+
+Fredie asked for the quality of the Ninety Minutes rewrite (WorldCupHealth) applied here,
+with `applied-micro-paper-writing` and `occam-razor` as rewritten in Fable Framework 1.2.0,
+then `manuscript-audit`. Target taken as the Journal of Health Economics, the one recorded
+on 2026-07-16 (Fredie said "Journal of Economics" in chat). **Text, captions and code
+comments only: no estimate, number, sample, hedge or exhibit placement moved, nothing was
+refit, and the abstract and highlights were not touched** (the abstract form was settled
+on 2026-10-02).
+
+**Journal profile (read 2026-11-17).** The guide for authors blocks automated reading
+(HTTP 403 in WebFetch and in the in-app browser; not bypassed). From the indexed text of
+the official pages, through searches restricted to sciencedirect.com and elsevier.com:
+abstract of at most 250 words; 1 to 7 keywords; papers of any length (no page limit
+found); a generative-AI declaration at submission; highlights of 3 to 5 bullets of at most
+85 characters (Elsevier-wide page). Not found: a JEL rule, a spacing rule, the data-policy
+wording. These are second-hand and should be confirmed in the submission system. Three
+recent JHE empirical articles in open access (Europe PMC full text) were measured with one
+script, applied the same way to the draft (`measure.py`, kept with the session notes):
+housing instability (JHE 108, 2026, final version), living alone and provider behaviour in
+public and private hospitals (JHE 102, 2025, final version), the exit of Cuban doctors in
+Brazil (JHE 106, 2026, author manuscript). Three articles are a small sample.
+
+| body text | words | intro paragraphs / words | median sentence | sentences >40 words | ", so" | colon joins | semicolons | "rather than" | ", not" | thus/therefore |
+|---|---|---|---|---|---|---|---|---|---|---|
+| JHE housing 2026 | 11,514 | 10 / 1,717 | 29 | 23.5% | 0.0 | 1.7 | 8.2 | 1.1 | 0.0 | 0.8 |
+| JHE living alone 2025 | 9,170 | 11 / 1,638 | 21 | 4.9% | 0.0 | 1.5 | 2.2 | 0.4 | 0.0 | 1.5 |
+| JHE Cuban doctors 2026 | 10,575 | 10 / 1,671 | 22 | 7.3% | 0.0 | 0.4 | 1.6 | 0.3 | 0.1 | 1.9 |
+| paper.tex before | 13,038 | 14 / 3,274 | 28 | 20.4% | 2.0 | 5.0 | 6.5 | 2.8 | 1.0 | 1.8 |
+| paper.tex after | 12,944 | 15 / 3,192 | 24.5 | 13.1% | 0.5 | 2.2 | 5.0 | 1.9 | 1.2 | 1.5 |
+
+Constructions per 1,000 words. Standard deviation of sentence length 15.1 to 13.8 (JHE
+10.6 to 15.1). Supplement: median 27 to 24, over 40 words 16.7 to 8.8 percent, ", so" 4.2
+to 2.6, colon joins 5.8 to 1.9, "rather than" 3.2 to 2.3. JHE abstracts run 103 to 252
+words; table notes median 56 words in the article with 19 tables, 197 in the one with
+three; the introductions end on a roadmap (one) or on the literature (two).
+
+**Changed.**
+- Introduction architecture. The announced contribution ("Our contribution is not the
+  weekly birth cycle but a joint diagnosis") became the contrast with the two Brazilian
+  calendar studies, which work from birth records and do not observe the physician fee
+  (checked in the local copies of Melo and Menezes-Filho, and Spinola and Rocha). The
+  preview of the fee result in that paragraph, repeated two paragraphs later, was cut.
+  "Three sets of facts emerge" and the First/Second/Third openers of the three results
+  paragraphs went; the first now says "We find that". "The paper contributes to three
+  literatures. The first is ... The second is ... The third is" became the finding of each
+  literature followed by where this paper departs, and the 600-word first contribution
+  paragraph was split into supplier-induced demand and practice styles with capacity.
+  "This reframes supplier-induced demand around the price of time" (a self-assessment)
+  and "which the model attributes to the opportunity cost of physician time" (the model
+  paragraph says it) were cut.
+- Claims set to their evidence: "the physician's scarcest input is time" became "may be
+  the scarcer input" (a premise, not a finding); "the small positive in-labor term is
+  displacement" became "is consistent with displacement", as Section 6.1 already said;
+  "It is nonetheless the margin a policy could act on" (capacity, an association) became
+  "points to a margin that policy could test"; the two-entered capacity sentence of the
+  introduction now says "entered together", as the CLAUDE.md rule requires.
+- Cadence: about 60 colon or semicolon joins carrying a second claim became full stops or
+  subordinate clauses, ", so" chains were split, "rather than" varied (instead of, more
+  than, in place of, not, or restructured). The first replacement raised thus/therefore
+  from 1.8 to 2.4 per 1,000 words and ", not" from 1.0 to 1.2; twelve were then removed or
+  restructured, leaving 1.5 and 1.2. In 4.2 the repeated reading of the calendar
+  coefficients lost "that is, as scheduling patterns".
+- Captions that stated a verdict or used a metaphor, changed in the R source and in the
+  generated `.tex` with the same string (verified equal; no script re-run): Figure 2 "The
+  fee gap and the calendar gradients of the cesarean rate"; Figure 3 "Delivery by day of
+  week and hour of birth, and the weekend change by Robson group" ("scheduled delivery"
+  presumed the mechanism); Table 6 "Kitagawa decomposition of the for-profit--public
+  cesarean gap over Robson groups" (`03`); D.7 "Descriptive ranking of the weekend dip
+  among all 21 two-day placebo pairs" (`06`); D.17 "The fee-gap coefficient, an
+  equivalence region, and the literature's price responses" (`10`, "yardsticks"); D.22
+  "Missingness of the cesarean-timing indicator by day of week" (`10`, a verdict). Run-in
+  heading "The size of the margin" became "Practice style and the weekday excess". The
+  Figure 2 comment in `11` follows the caption.
+
+**Checked and did not move.** Every number: the multiset of numbers in `paper.tex`,
+`appendix.tex`, `model.tex`, `sup_appendix.tex` and the four retitled tables is identical
+to the pre-edit snapshot (script probed with a planted 7.9 to 8.9, which it caught).
+Citation sites: identical key counts in all four sources. `abstract.py` 247 of 250,
+`claims.py`, `numcheck.py`, `reader.py` exit 0 before and after. Retracted strong forms
+grepped in all carriers (sources, R, generated tables, highlights, README, CLAUDE.md,
+audit scripts): none left. Build: paper 42 pages, supplement 37, working paper 76 to 77
+(rebuilt with `build_wp.sh`, not re-posted); 0 undefined references or citations, 0
+overfull hbox, 0 float too large in all three. The supplement's overfull vbox (58.25pt)
+is pre-existing: the pre-edit snapshot compiled in a scratch copy gives the same value.
+The diff was read line by line; it caught four defects this round introduced (the
+Robson decomposition said to isolate "the calendar pattern", which it does not measure; a
+price as the agent of a prediction; "the components of the rate show where the dip
+sits"; a "Nor" with no negative before it) and a new "Its ... Its" pair the sweep found;
+all fixed. Sweep: long and chained 5 to 4, over 55 words 28 to 20, pseudo-clefts 1 (the
+known false positive).
+
+**Deliberately left alone.** The abstract and its closing policy sentence (2026-10-02);
+the four statements that the data cannot separate physician time from staffing (kept on
+2026-11-03); the First/Second enumerations of the two weaker predictions and of the two
+limits of the fee regressions (genuine enumerations); the conclusion's policy paragraph;
+the standard scope sentence; "as corroboration rather than as a placebo" (CLAUDE.md
+wording); generated table notes; the generative-AI declaration, which already says the
+assistants drafted and edited text. The median sentence fell from 28 to 24.5 words, inside
+the 21 to 29 of the three JHE articles and with a wider spread than two of them; the tail,
+not the body, is what moved.
+
+**Razor (Occam), proposed and not applied.** No sentence is repeated verbatim across the
+four sources and none comments on itself, so no mechanical cut remained.
+
+| candidate | claim it supports | sentence that reads it | verdict | what it pays for |
+|---|---|---|---|---|
+| Introduction length, 15 paragraphs and 3,192 words (JHE 1,638 to 1,717) | the whole positioning | the reader before Section 2 | Fredie's call: about 1,000 words could go by moving the Parfitt contrast and its footnote, the "Brazilian studies ... compensation and time" paragraph and the families sentence to Section 2 or 7 | a shorter path to the data; no page limit binds |
+| Third mention of Melo and Spinola ("and within Brazil to the holiday and Carnival evidence") in the childbirth-literature paragraph | positioning | none beyond the pointer | cut (describe a paper once) | one clause |
+| Intro model paragraph, Section 4 framework paragraph and Appendix A | the convenience premium | three places | keep the intro and Appendix A; shorten Section 4's to the predictions | about 80 words |
+| Section 5 closing list of supplementary pointers | pointers to D.17, D.18, D.19, D.20 | itself | keep: two of the four tables are cited only there; or move each pointer to the sentence that uses its result | nothing |
+| Body table notes, 130 to 170 words | specification of each table | the notes | shorten by naming the equation, in a pass over the R note strings; JHE evidence is mixed (56 and 197) | defer; it touches six generators |
+
+Considered and kept: the intro's two-sentence version of the 35,000 count (the skill allows
+one sentence; the second carries the caveat that it is not a count of caused cesareans).
+
+**Decisions returned to Fredie.** (1) The razor table above, item by item. (2) Whether the
+generative-AI declaration should mention this round explicitly; as written it covers
+drafting and editing of text. (3) Confirm the four JHE rules marked second-hand in the
+submission system. (4) Re-post the working paper to SSRN if wanted (now 77 pages).
+Nothing was committed.
+
 ## 2026-11-17 — code audit of the three scripts written after the 09-27 audit (Claude, requested by Fredie; nothing changed in code or exhibits)
 
 Scope: `build/01e_sinasc_datasus.R`, `analysis/code/15_estab_gradient.R` and
@@ -1467,3 +1589,154 @@ places), 18-70 -> 20-71, 62 / 30-82 -> 60 / 29-80. Finding 2: Table 2 note (07 s
 .tex), balance note (16 source and .tex) and the strategy paragraph now say parity is
 recorded from 2014 and race from about 2012; no estimate re-run. Findings 3-5 left as
 recorded.
+
+## 2026-11-17 — fees deflated by the IPCA: a check, reported in two notes (Claude, requested by Fredie)
+
+Question: do the nominal fee means of 2015-2024 need IPCA correction? Regressions
+untouched (the log fee ratio cancels the price level and year fixed effects absorb it).
+Deflator: monthly IPCA, Banco Central SGS 433, chained, annual mean, base 2020
+(`ipca_deflator()` in `00_utils.R`, cached in `build/IPCA/ipca_sgs433.csv`; its annual
+compounding matches IBGE SIDRA table 1737 in every year, largest gap 0.01 pp in 2022).
+2020 is the base because the literature conversion (US$1,000 of 1990 = R$4,485) is in
+2020 reais.
+
+| | nominal | 2020 reais |
+|---|---|---|
+| D.19 Brazil: cesarean / vaginal alone / economic vaginal | 1,939 / 1,893 / 2,417 | 1,906 / 1,836 / 2,332 |
+| D.19 Brazil: billing labor / billing none / per hour | 3,355 / 1,778 / 420 | 3,176 / 1,759 / 398 |
+| D.19 break-even, 1 h / billing / none / 2 h | 1.25 / 1.73 / 0.92 / 2.49 | 1.22 / 1.67 / 0.92 / 2.45 |
+| D.17 mean cesarean fee; Grant; GKM (pp per log point) | 1,963; 0.75; 3.01 | 1,921; 0.74; 2.94 |
+| Five largest states, negative log fee gap | 0.20 to 0.49 | 0.17 to 0.48 |
+
+Decision (Fredie): keep nominal numbers; say so in the D.19 and D.17 notes, with the
+deflated figures computed in `16` block A and `10` block C5 (both re-run alone; each
+table changed by the inserted sentence only). Both scripts stop if a comparison flips:
+D.17's excluded/not-excluded verdicts are identical; in D.19 every comparison the text
+draws keeps its side. One cell that no sentence uses does flip: in MG the cesarean fee
+and the vaginal fee alone are within 0.3 percent nominally (1,928 vs 1,933) and swap in
+2020 reais (1,880 vs 1,865); so the note says "every comparison drawn in the text", not
+"the comparisons". Not changed: the "18-38 percent less" of Section 5 (16-38 under
+deflation; nominal kept), the US$ conversion at R$4.37, any regression.
+
+## 2026-11-17 — Fredie's rewrite through Section 6.1: references and build (Claude, requested by Fredie)
+
+Scope: `paper.tex` from the title page to the end of "Weekly gradients and the
+for-profit differential". Fredie's prose kept; only these changed. Build errors: six
+Unicode minus signs (U+2212) in the Table 2 paragraphs; six divider lines lacking `%`
+printed as rows of equals signs (overfull boxes). Hand-typed exhibit references became
+`\ref`/`\satab`/`\eqref` (Supplementary Appendix E, D.3 twice, D.4, D.17 twice, D.19,
+D.21, Figure 3(a)/(b), Equation (3)). Table 2 (`tab_main_gradient`) and Figure 3
+(`fig_calendar_fingerprints`, block restored verbatim from the earlier version) are
+`\input` again, since the text cites them. The two paragraphs opening on "Table 2, Panel B"
+and "Panel A" open on the finding, exhibit in parentheses. Slips: `\citep`->`\citet`
+(betran2021), "8.6-percentage-point increase", "1.6 percentage points" (two places),
+"TA simple model", `$p$`-value notation, a figure note's missing full stop. Numbers
+checked against Table 2: unchanged. Scratch build: 0 errors.
+Left open: `model.tex` cites `sec:capacity` and `tab:prelabor_lowrisk`, which the
+rewritten body no longer defines; the supplement cites `tab:long_weekends`, `eq:event`
+and `sec:capacity`. natbib "multiply defined citations" comes from xr importing the
+supplement's `\bibcite` lines (pre-existing); the underfull boxes are two long ANS URLs
+in the bibliography (pre-existing).
+
+## 2026-11-17 — "holidays", exhibit-led openers, the 94.2 (Claude, requested by Fredie)
+
+- The Holiday indicator is `holiday_dates()`: eight fixed-date national holidays, 20
+  November from 2024, and Carnival Monday/Tuesday, Good Friday and Corpus Christi, which
+  Appendix B says are not national holidays under federal law. "National holiday(s)" for
+  that indicator became "holiday(s)": paper.tex lines 106, 292, 294; row labels in 8 R
+  scripts (03, 07, 09, 11, 12, 13, 15, 16) and the 10 generated tables that print them;
+  the demand-smoothing note; Figure 2(b) axis, redrawn by re-running 11 lines 1-173.
+  Kept: "ordinary fixed-date national holidays" (long weekends, line 424; Table on long
+  weekends), which is literally right. Code comments not touched.
+- Paragraphs opening on an exhibit or equation (lines 129, 187, 222) now open on the
+  content, exhibit in parentheses. "Crucially," cut.
+- 94.2: 516,692 of 548,573 vaginal deliveries 2015-2024 have a positive delivery fee
+  (94.19%), the base of every vaginal row of D.19. The D.19 note now prints it, computed
+  in 16 block A (re-run alone; only that clause changed). The fee paragraph cites D.19;
+  numcheck gets one allowed exception, 59.5 = 100 - 40.5.
+
+## 2026-11-18 — Fredie's rewrite through "Across Robson groups": references and build (Claude, requested by Fredie)
+
+Build errors: four Unicode minus signs (−4.32, −1.43, −4.75, −2.11) became `$-x$`; none
+left in any .tex. The TeXugo log also listed errors in `Born_on_Schedule.tex` and in
+table files ("Extra }", "Not in outer par mode"); none reproduces in a scratch build of
+the current sources (paper, supplement and working paper all 0 errors), so nothing was
+changed for them. Figure 3 (`fig_calendar_fingerprints`) had dropped out of paper.tex
+again and is back after the first calendar paragraph; Table 3 (`tab_prelabor_lowrisk`)
+is `\input` after the Robson group 1 paragraph. Hand references became commands: Table 3,
+D.6, D.16 and D.22, Figure 3(c) twice. The Robson 1-2 and group 1 dips (7.03, 6.04) now
+cite Table 3 columns 5-6, where they are printed. Table 2 note: Fredie's rewrite, typed
+into the .tex, is now also the string in `07_main_specification.R` (checked identical),
+with `\eqref` for the two equations, the house standard-error sentence, and a stray `*`
+removed. Left open: `\label{sec:cost}` now sits on the prelabor subsection (only the
+generated working paper cites it); `tab:health` (model.tex line 104) and `sec:capacity`
+are undefined until the later sections are rewritten.
+
+## The 2026-11-18 installation of the JHE rewrite (v4), text and exhibit labels only
+
+Source: `Born_on_Schedule_JHE_rewrite_v4.md` (Fredie's Downloads). Fredie had already
+installed the abstract and Sections 1 to 6.2 in `paper.tex`, with his own small text
+edits; those were kept as he wrote them.
+
+**Installed from the rewrite.** Sections 6.3 (within-establishment), 6.4 (holidays,
+capacity, demand smoothing; carries `\label{sec:capacity}`, which the supplement
+cites), 7 (early-term and neonatal, Kitagawa, weekday benchmark; `\label{sec:cost}`
+moved here from 6.2, which is now `sec:prelabor`), the new Conclusion, Appendix A
+(`model.tex`, equations numbered A1 to A3) and Appendix B (`appendix.tex`, the
+itemized definitions replaced by the rewrite's paragraphs).
+
+**Exhibits aligned with the rewrite** (R source and generated `.tex` together, nothing
+re-run): captions of Tables 3, 4 and 6; panel titles and the two Panel B row labels of
+Table 4 ("Three days before holiday", "Seven-day window"); the notes of Tables 1 and 3
+to 6; Table 6 column headers (two-level header so the table prints at full size), group
+numbers 1 to 10 and the three-row total. Table 2's hand-edited `.tex` had lost a
+closing brace in the Panel A title; restored. Table 1's hand-pasted note carried the
+significance line twice and a stray asterisk; cleaned. Figure 1's note repeated the
+caption; Figure 3's note replaced by the rewrite's.
+
+**Deliberate departures from the rewrite text.** The Table 3 note keeps one clause
+saying the register assigns uncoded cesareans to Robson group 1 (guardrail of
+2026-10-02). Appendix B says "the label 'holiday' in the regression tables" because
+Table 2 now prints "Holiday", not "National holiday", and says the 29-80 percent
+no-labor-billing range is for the five largest states. Standard-error sentences follow
+the house wording.
+
+**Moved to the supplement.** The long-weekend design (holiday taxonomy, Equation
+`eq:blocks`, event study `eq:event`, cited by Figure D.1) left the body with the
+rewrite and now opens the supplement's "Long weekends and displacement" subsection,
+verbatim from the previous body. Supplement equations are numbered within section.
+
+**Checked, did not change.** Both documents compile with 0 undefined references and
+citations (paper 33 pages, supplement 38). `audit/` checks: abstract 231 words,
+claims 0, numcheck 0 and 0, sweep clean; `reader.py` flags "potentially" (four uses,
+three in text Fredie installed). Every supplementary table number the rewrite cites
+(D.3 to D.22, C.4, C.5, Figure C.4, Appendix E) matches the compiled supplement.
+
+Same day, follow-up. Figure 3 moved from Section 6.1 to the end of Section 6.2, after
+the Robson-group paragraph and before Table 3, as in the rewrite. The Section 7.1
+shares were recomputed from `sinasc_births.parquet` on the Figure C.4 sample (2010-2024,
+for-profit and public, 32-43 weeks): 37-38 weeks 40.8 percent for-profit vs 26.3
+public; 40-41 weeks 16.6 vs 32.4; both modes at week 39. So "41, 26, 17, 32" are right
+for the figure's denominator; over all recorded gestational ages the 37-38 shares are
+40.2 and 25.6. The 40.1/26.2 of the 2026-09-07 entry predate the 2026-09-27 rebuild.
+The `card2023` sentence was checked against the AEA abstract and the NBER WP 25986
+(rev. Oct 2019): low-risk first births (term, singleton, vertex), born in better shape
+(higher Apgar), fewer readmissions (first month), suggestive lower mortality, more ED
+visits for respiratory problems in the year after birth. The sentence is supported; not
+changed.
+
+## 2026-11-18 — review of Fredie's rewrite of paper.tex (text only)
+
+Changed in `latex/paper.tex`: intro "tests offer mixed evidence" became "do not support the
+sharper physician-leisure predictions"; group 10 "statistically indistinguishable" (no test
+printed) became "similar"; "consistent with physician discretion" became the house phrase
+"concentrated where the choice between labor and surgery is still open"; 4.5 percent "of
+claims" became "of deliveries"; the gamma_j sentence rewritten; duplicated 461-municipality
+sentence merged; "Errors" became "Standard errors"; clustering phrase fixed; the repeated
+11.2/9.8 sentence folded into the previous one; Tita is "elective repeat cesarean"; labels
+`sec:physician fees` / `sec: birth timing` renamed `sec:fees_data` / `sec:timing_data`
+(nothing referenced them).
+Checked, not changed: card2023 sentence (supported, see entry above); appendix.tex and
+model.tex; Figure 2(a) code uses the same specification and sample filter as Table 1 col 4.
+Numbers unchanged apart from the removed duplicate 1.3. Paper compiles, 0 undefined refs;
+abstract, claims and numcheck pass; reader flags "potentially" (pre-existing).

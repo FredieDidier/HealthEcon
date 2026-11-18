@@ -158,8 +158,8 @@ sex of the newborn, on the left of Equation~\eqref{eq:gradient}.
 
 \subsection{The differential within the establishment}
 
-A municipality-sector cell averages its establishments, so the differential of
-Table~\ref{tab:main_gradient} mixes two things: each hospital changing its
+A municipality-sector cell averages its establishments. The differential of
+Table~\ref{tab:main_gradient} mixes each hospital changing its
 practice on weekends, and weekend births moving toward hospitals that operate at
 lower cesarean rates. Table~\ref{tab:estab_gradient} re-estimates
 Equation~\eqref{eq:gradient} on establishment-day cells with establishment-by-year
@@ -169,10 +169,10 @@ code, $-1.8$ percentage points on weekends. Within the establishment the
 differential is $-0.9$ with birth weights and $-1.3$ with each hospital's weight
 fixed at its mean daily births, which removes the concern that a hospital's weight
 falls on exactly the days being compared. Half or more of the headline
-differential is therefore a change of practice inside the hospital: about half
+differential is a change of practice inside the hospital, about half
 with birth weights and seven tenths with fixed weights. The rest is
 reallocation, and columns 4--6 show it on a panel in which every day of an
-establishment-year enters and days with no birth count as zeros: a for-profit
+establishment-year enters and days with no birth count as zeros. A for-profit
 establishment is 8.7 percentage points less likely than a public one to record any
 birth on a weekend, its prelabor cesareans fall by 34 log points more and its
 vaginal births by 6. The zero-filled panel keeps establishment-years with at least
@@ -190,6 +190,66 @@ level.
 \input{../analysis/output/tables/tab14_neonatal_suggestive.tex}
 
 \subsection{Long weekends and displacement}
+
+If procedures are ordered around the calendar, they should be ordered around
+blocks of rest, not merely around Sundays. We therefore ask a single economic
+question with a single pre-specified exercise: are scheduled procedures moved
+across dates so as to build longer blocks of leisure? The primary outcome is the
+share of births delivered by prelabor cesarean, the primary window is the three
+days on either side of a holiday, the primary sample is the eight fixed-date
+national holidays over 2012 to 2024 (20 November, national only from 2024, is left
+out), and the primary parameters are the
+long-block coefficients and the sum of the pre-holiday event-time coefficients.
+All of this was fixed before estimation, and we report the results whether or not
+they support the hypothesis.
+
+Classify each fixed-date national holiday by the day of the week on which it
+falls. A holiday on a Wednesday is genuinely isolated: it yields one day
+of rest attached to nothing. A holiday on a Monday or a Friday automatically
+creates a three-day weekend. A holiday on a Tuesday or a Thursday is a
+bridge: one further day off buys a four-day block, and Brazilian practice
+is to take it. Holidays that fall on a Saturday or a Sunday add no workday of
+rest and serve as a placebo. Extending Equation~\eqref{eq:gradient},
+\begin{multline}
+\text{Y}_{mds} = \lambda_{md} + \phi_{ms}
+  + \gamma_I\,\text{ForProfit}_{s}\!\times\!\text{Isolated}_{d}
+  + \gamma_3\,\text{ForProfit}_{s}\!\times\!\text{ThreeDay}_{d} \\
+  + \gamma_B\,\text{ForProfit}_{s}\!\times\!\text{Bridge}_{d}
+  + \sum_{w}\eta_w\,\text{ForProfit}_{s}\!\times\!\text{DOW}_{wd}
+  + \sum_{h}\kappa_h\,\text{ForProfit}_{s}\!\times\!\text{Holiday}_{hd}
+  + \varepsilon_{mds},
+\label{eq:blocks}
+\end{multline}
+where the day-of-week interactions compare a holiday to ordinary days of the same
+week day and the holiday-identity interactions compare a holiday to itself in
+years when it falls elsewhere in the week. Without them, an apparent bridge effect
+could be nothing more than a Tuesday effect or a Christmas effect. The
+physician-leisure hypothesis predicts $\gamma_B$ more negative than $\gamma_I$ and
+$\gamma_3$; we test $\gamma_B = \gamma_I$ and $\gamma_B = \gamma_3$ directly.
+
+A dip on the holiday itself is not displacement. Displacement means procedures are
+moved to adjacent dates, and shares cannot reveal it, because a share falls when
+its numerator falls, when its denominator rises, or both, so we turn to counts.
+Because every municipality-day carries exactly one for-profit and one
+public cell once zeros are filled in, the municipality-by-date fixed effects of
+Equation~\eqref{eq:gradient} are algebraically equivalent to differencing the two
+sectors within the day. For each outcome $k$ in $\{$prelabor cesareans, in-labor
+cesareans, vaginal births, total births$\}$ we estimate, on event time
+$\ell = d - H$ measured from the holiday $H$,
+\begin{equation}
+Y^{k}_{md,\text{FP}} - Y^{k}_{md,\text{Pub}}
+  = \alpha_m + \tau_{ym} + \sum_{w}\eta_w\,\text{DOW}_{wd}
+  + \sum_{c}\sum_{\ell=-4}^{4}\theta^{k}_{c\ell}\,
+    \mathbf{1}\{d \in W_c,\ d - H = \ell\} + e_{md},
+\label{eq:event}
+\end{equation}
+where $c$ indexes the holiday type, $W_c$ its event windows, $\alpha_m$ are
+municipality and $\tau_{ym}$ year-by-month fixed effects, non-window days are the
+omitted category, and standard errors are two-way clustered by municipality and
+date. Windows containing a second national holiday are dropped. If procedures are
+pulled forward, $\sum_{\ell=-3}^{-1}\theta^{\text{prelabor}}_{\ell}$ is positive;
+if they are merely rescheduled within the window, $\sum_{\ell=-3}^{3}\theta_{\ell}$ is
+zero.
 
 Figure~\ref{fig:displacement_event} plots the displacement event study around bridge
 holidays for the four count outcomes, showing no pre-holiday bunching of prelabor
@@ -221,18 +281,18 @@ rather than by a headcount of registered obstetricians, which distinguishes a
 four-hour registration from a forty-hour one. The interaction is close to zero
 ($-$0.16 percentage points, standard error 0.17), while the delivery-scale
 interaction is positive and significant in that column (1.31 points, standard
-error 0.45), so what attenuation the point estimates suggest tracks the size of
-the service rather than measured obstetric time. Column 6 adds the SUS share of the
+error 0.45). What attenuation the point estimates suggest tracks the size of
+the service, not measured obstetric time. Column 6 adds the SUS share of the
 establishment's obstetric beds, the one establishment-level measure of payer as
 distinct from ownership in our data. It is zero at the median for-profit
 establishment-year, which supports reading legal-entity type 2xxx as a
-predominantly private-payer population, and its interactions are positive: a
+predominantly private-payer population, and its interactions are positive. A
 for-profit hospital that places all of its obstetric beds with the SUS has a
 weekend gradient 2.6 percentage points flatter and a holiday gradient 2.9 points
 flatter than one that places none. Payer exposure is not assigned, and
 for-profit hospitals serving the SUS differ from those that do not in ways the
-establishment-by-year fixed effects hold fixed only in levels, so we read this as
-an association rather than as the causal effect of a payer mix. It shows that the calendar pattern varies with payer within a single ownership type, which
+establishment-by-year fixed effects hold fixed only in levels. We read this as
+an association, not as the causal effect of a payer mix. It shows that the calendar pattern varies with payer within a single ownership type, which
 ownership alone cannot show.
 
 \input{../analysis/output/tables/tab_org_capacity.tex}
@@ -242,7 +302,7 @@ ownership alone cannot show.
 
 \citet{elejalde2021} show that Chilean private hospitals raised their cesarean
 rate after a demand shock even though a vaginal delivery and a cesarean were paid
-the same price, and attribute the response to schedulability: booking a cesarean
+the same price, and attribute the response to schedulability. Booking a cesarean
 lets a hospital move a delivery off a week it expects to be crowded and take more
 deliveries in total. It is the closest published alternative to our own reading of
 a calendar gradient without a positive per-delivery fee gap, and two of its implications are testable
@@ -253,7 +313,7 @@ parameter, and the sample before estimating.
 Panel A tests pull-forward. Expected demand for an establishment in a given week
 of the year is the leave-one-out mean of its own births in that week of the year
 across all other years, with each week first expressed relative to the
-establishment's own average week in its own year. The normalization matters: a
+establishment's own average week in its own year. The normalization matters, because a
 raw leave-one-out mean is mechanically negatively related to the value it omits
 whenever the establishment is growing, since the early years of an expanding
 hospital fall below and the later years above the mean of the other years. If
@@ -280,8 +340,8 @@ nonetheless the opposite of the one demand smoothing predicts. Both panels repor
 rather than the causal effect of crowding or of scheduling, and neither
 contradicts the Chilean result, which comes from a different institutional shock.
 Taken together, they indicate that the mechanism operating without a price gap in Chile
-is not the one visible in Brazil: scheduling here is organized around the week,
-not around the leveling of throughput.
+is not the one visible in Brazil, where scheduling is organized around the week
+and not around the leveling of throughput.
 
 \input{../analysis/output/tables/tab_demand_smoothing.tex}
 
@@ -291,7 +351,7 @@ Table~\ref{tab:heterogeneity} reports the
 municipality-level heterogeneity of the weekend dip by obstetrician density and
 by maternal education, and Table~\ref{tab:modality} contrasts physician-owned
 cooperative insurers with insurer-run plans. Neither the education split nor the
-cooperative contrast supports a simple demand-side reading: the implied weekend
+cooperative contrast supports a simple demand-side reading. The implied weekend
 dip is smaller, not larger, for more-educated mothers, and the cooperative
 difference is not significant; neither pattern rules out unobserved maternal
 preferences or joint physician--patient scheduling decisions. The education
@@ -316,7 +376,7 @@ Robson groups. Group 1 (spontaneous labor) carries no prelabor cesareans, but by
 construction rather than as a check on the data: the register derives the Robson
 group from the same labor-onset and prelabor fields, so a prelabor cesarean of a
 nulliparous term cephalic singleton is assigned to group 2. The table supports a
-narrower statement: the part of the group-1 weekend dip among cesareans coded in
+narrower statement. The part of the group-1 weekend dip among cesareans coded in
 labor cannot come from prelabor scheduling, and the rest is among cesareans with
 no timing code, which the register also leaves in group 1. The group-1 dip is 1.3 percentage points larger than the
 group-10 (preterm) dip ($p=0.006$). Table~\ref{tab:feegap_ci} reports the fee-gap coefficient
@@ -329,8 +389,8 @@ settle the magnitude, which is why the argument of
 Section~\ref{sec:notprice} depends on the calibration alone.
 Table~\ref{tab:fee_base_econ} reproduces the first two columns of
 Table~\ref{tab:fees} and re-estimates them with the vaginal fee measured by the
-base delivery fee alone: the coefficient still changes sign
-between state and municipality fixed effects, so the sign instability does not
+base delivery fee alone. The coefficient still changes sign
+between state and municipality fixed effects, and the sign instability does not
 depend on the endogenous billed labor-assistance hours.
 Table~\ref{tab:fee_per_hour} sets the fees per delivery beside the price of a
 billed labor hour and reports the physician time beyond which a vaginal delivery
@@ -377,7 +437,7 @@ substantive question a reader would pose, not by the outcome of the test.
 Table~\ref{tab:multiple_testing} reports, within each family, the Holm-Bonferroni
 adjusted $p$-value \citep{holm1979}, which controls the familywise error rate, and
 the Benjamini-Hochberg $q$-value \citep{benjamini1995}, which controls the false
-discovery rate. Families A to C are unaffected: every estimate significant on its
+discovery rate. Families A to C are unaffected. Every estimate significant on its
 own remains significant after the adjustment, and the cooperative contrast, not
 significant on its own, stays so. In family D, the four long-weekend coefficients have
 unadjusted $p$-values between 0.051 and 0.070 and Holm $p$-values of 0.202, so
@@ -402,7 +462,7 @@ cesarean epidemic. Two episodes relate directly to the paper's reading that the
 operative margin is not the relative procedure fee; we report them here because neither supports a
 causal program evaluation. First, the December 2015 court order directing the
 national regulator to make plans pay at least three times more for vaginal delivery
-never became an actual fee change: the regulator appealed and no rule was issued
+never became an actual fee change, because the regulator appealed and no rule was issued
 (Section~\ref{sec:notprice}). Second, hospitals joined Parto Adequado, the flagship
 quality-improvement program, between 2017 and 2021, but the ANS list does not
 record each hospital's exact entry date. We therefore impose a common 2017 onset
@@ -414,8 +474,8 @@ single adoption cohort, and the estimator then coincides with a two-way
 fixed-effects event study against never-participating hospitals, so it does not
 correct for staggered timing. The estimates show a
 pre-existing differential downward trend that begins well before 2017 and
-continues without a break at adoption, so the movement is a continuation of that
-trend rather than a treatment effect. We therefore do not
+continues without a break at adoption. The movement is a continuation of that
+trend and not a treatment effect. We therefore do not
 read this comparison as an estimate of the program's effect; the available
 observational design does not identify it. The decline is real; its attribution to
 the program is not supported by the data, a caution for short-window evaluations

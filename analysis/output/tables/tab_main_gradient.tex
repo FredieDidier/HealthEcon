@@ -15,7 +15,7 @@
 For-profit $\times$ Weekend & -1.789$^{***}$ & -1.821$^{***}$ & -1.493$^{***}$ & -4.747$^{***}$ & 2.882$^{***}$ \\
  & (0.623) & (0.582) & (0.393) & (0.920) & (0.483) \\
 \addlinespace[2pt]
-For-profit $\times$ National holiday & -2.549$^{***}$ & -2.405$^{***}$ & -1.714$^{***}$ & -4.413$^{***}$ & 2.118$^{***}$ \\
+For-profit $\times$ Holiday & -2.549$^{***}$ & -2.405$^{***}$ & -1.714$^{***}$ & -4.413$^{***}$ & 2.118$^{***}$ \\
  & (0.507) & (0.437) & (0.378) & (0.737) & (0.381) \\
 \addlinespace[2pt]
 For-profit $\times$ Eve of rest day & -1.059$^{***}$ & -1.005$^{***}$ & -0.825$^{***}$ & -1.362$^{***}$ & 0.347 \\
@@ -36,7 +36,7 @@ Observations & 5,038,435 & 5,038,435 & 3,591,510 & 4,301,117 & 4,301,117 \\
 Weekend & \multicolumn{2}{c}{-6.693$^{***}$} & \multicolumn{2}{c}{-7.941$^{***}$} & \\
  & \multicolumn{2}{c}{(0.245)} & \multicolumn{2}{c}{(0.479)} & \\
 \addlinespace[2pt]
-National holiday & \multicolumn{2}{c}{-3.502$^{***}$} & \multicolumn{2}{c}{-5.326$^{***}$} & \\
+Holiday & \multicolumn{2}{c}{-3.502$^{***}$} & \multicolumn{2}{c}{-5.326$^{***}$} & \\
  & \multicolumn{2}{c}{(0.212)} & \multicolumn{2}{c}{(0.356)} & \\
 \addlinespace[2pt]
 Eve of rest day & \multicolumn{2}{c}{-0.445$^{***}$} & \multicolumn{2}{c}{-0.941$^{***}$} & \\
@@ -49,23 +49,6 @@ Observations & \multicolumn{2}{c}{3,611,893} & \multicolumn{2}{c}{1,426,542} & \
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;
-coefficients in percentage points. Panel A estimates
-Equation~\eqref{eq:gradient}: municipality$\times$date fixed effects absorb every
-shock common to the two sectors within a municipality-day, so the interactions are
-the for-profit-specific gradient. Predetermined maternal composition is the cell's
-share of births in each maternal age band, education category, race category, and
-parity category; parity is recorded from 2014 and race from about 2012, so in
-earlier years those shares control for nothing. Robson-group shares standardize clinically but may respond to
-scheduling, since the classification encodes labor onset and gestational age.
-Columns 4--5 split the cesarean share into cesareans performed before and during
-labor, on 2012--2024, the years in which the timing indicator is recorded for about
-85 percent of cesareans or more; a cesarean without it counts in neither
-component. Panel B reports each sector's own gradient from
-Equation~\eqref{eq:scheduling}, with municipality and year fixed effects.
-Standard errors, two-way clustered by municipality and date, are reported in
-parentheses.
-\newline
-\footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\textit{Notes:} SINASC municipality-date-sector cells weighted by births. Panel A is Equation~\eqref{eq:gradient}, with municipality-by-date and municipality-by-sector effects. Column 2 adds maternal-composition controls where available: parity is not recorded before 2014, and race is sparsely recorded before approximately 2012; thus the reported 2010--2024 sample is not adjusted for these characteristics in every year. Column 3 uses Robson shares from 2014 onward. In columns 4--5, cesareans with missing or invalid timing codes enter neither numerator but remain in the total-birth denominator. Panel B is Equation~\eqref{eq:scheduling}, by sector. Standard errors, two-way clustered by municipality and date, are reported in parentheses. Significance codes as in Table~\ref{tab:fees}.
 \end{minipage}
 \end{table}

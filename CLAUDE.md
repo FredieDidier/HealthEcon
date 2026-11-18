@@ -68,6 +68,15 @@
 > calibration" stays banned). Fees carry US dollars beside reais at R$4.37, with the
 > basis in the introduction's footnote. New check `audit/reader.py`. See REVISION_LOG.
 
+> **2026-11-17 — rewritten writing and razor skills, measured against three JHE
+> articles (text and captions only).** The introduction shows its contribution by
+> contrast with each literature (no "contributes to three literatures", no "Three sets of
+> facts emerge"); colon and ", so" joins carrying a second claim are split (colon joins
+> 5.0 to 2.2 per 1,000 words, JHE 0.4 to 1.7). Captions name the object, not a verdict
+> (Figures 2 and 3, Tables 6, D.7, D.17, D.22, changed in R and .tex). The in-labor
+> weekend term is "consistent with displacement". Numbers byte-identical; razor proposals
+> and the JHE profile in REVISION_LOG.
+
 ## What the paper is
 
 Empirical paper, *"Born on Schedule: Fees, Supply-Side Scheduling, and Cesarean

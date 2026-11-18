@@ -126,7 +126,7 @@ tex <- c(
   "\\multicolumn{6}{l}{\\emph{Panel A. For-profit differential}} \\\\",
   "\\addlinespace[2pt]",
   tex_row("For-profit $\\times$ Weekend", MAIN, KG[["wk"]]),
-  tex_row("For-profit $\\times$ National holiday", MAIN, KG[["hl"]]),
+  tex_row("For-profit $\\times$ Holiday", MAIN, KG[["hl"]]),
   tex_row("For-profit $\\times$ Eve of rest day", MAIN, KG[["ev"]]),
   "\\midrule",
   "Predetermined maternal composition & No & Yes & Yes & No & No \\\\",
@@ -149,7 +149,7 @@ pb <- function(label, key) {
     "\\addlinespace[2pt]")
 }
 tex <- c(tex,
-  pb("Weekend", "weekend"), pb("National holiday", "holiday"), pb("Eve of rest day", "eve"),
+  pb("Weekend", "weekend"), pb("Holiday", "holiday"), pb("Eve of rest day", "eve"),
   "\\midrule",
   "Municipality fixed effects & \\multicolumn{2}{c}{Yes} & \\multicolumn{2}{c}{Yes} & \\\\",
   "Year fixed effects & \\multicolumn{2}{c}{Yes} & \\multicolumn{2}{c}{Yes} & \\\\",
@@ -159,23 +159,8 @@ tex <- c(tex,
          formatC(nobs(m_priv), big.mark = ",", format = "d"), "} & \\\\"),
   "\\bottomrule", "\\end{tabular}}",
   "\\begin{minipage}{\\linewidth}\\footnotesize",
-  "\\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;",
-  "coefficients in percentage points. Panel A estimates",
-  "Equation~\\eqref{eq:gradient}: municipality$\\times$date fixed effects absorb every",
-  "shock common to the two sectors within a municipality-day, so the interactions are",
-  "the for-profit-specific gradient. Predetermined maternal composition is the cell's",
-  "share of births in each maternal age band, education category, race category, and",
-  "parity category; parity is recorded from 2014 and race from about 2012, so in",
-  "earlier years those shares control for nothing. Robson-group shares standardize clinically but may respond to",
-  "scheduling, since the classification encodes labor onset and gestational age.",
-  "Columns 4--5 split the cesarean share into cesareans performed before and during",
-  "labor, on 2012--2024, the years in which the timing indicator is recorded for about",
-  "85 percent of cesareans or more; a cesarean without it counts in neither",
-  "component. Panel B reports each sector's own gradient from",
-  "Equation~\\eqref{eq:scheduling}, with municipality and year fixed effects.",
-  "Standard errors, two-way clustered by municipality and date, are reported in",
-  "parentheses.",
-  "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
+  "\\textit{Notes:} SINASC municipality-date-sector cells weighted by births. Panel A is Equation~\\eqref{eq:gradient}, with municipality-by-date and municipality-by-sector effects. Column 2 adds maternal-composition controls where available: parity is not recorded before 2014, and race is sparsely recorded before approximately 2012; thus the reported 2010--2024 sample is not adjusted for these characteristics in every year. Column 3 uses Robson shares from 2014 onward. In columns 4--5, cesareans with missing or invalid timing codes enter neither numerator but remain in the total-birth denominator. Panel B is Equation~\\eqref{eq:scheduling}, by sector. Standard errors, two-way clustered by municipality and date, are reported in parentheses. Significance codes as in Table~\\ref{tab:fees}.",
+  "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_main_gradient.tex"))
 
 cat("\n[07] For-profit differential (pp):\n")
@@ -196,7 +181,7 @@ cat(sprintf("\n[07] footnote: for-profit weekday births per year %s; gross %.1fp
 
 fam_A <- data.table(
   family = "A. For-profit calendar gradient",
-  hypothesis = c("For-profit $\\times$ Weekend", "For-profit $\\times$ National holiday",
+  hypothesis = c("For-profit $\\times$ Weekend", "For-profit $\\times$ Holiday",
                  "For-profit $\\times$ Eve of rest day"),
   estimate = coef(m1)[KG], p = coeftable(m1)[KG, 4])
 saveRDS(fam_A, file.path(here::here("analysis", "output"), "fam_A.rds"))

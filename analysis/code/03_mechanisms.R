@@ -89,7 +89,7 @@ r_pub  <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Pu
 r_priv <- feols(rate ~ weekend + holiday + eve | muni + year, cell[sector == "Private"],
                 weights = ~births, cluster = ~muni + date)
 
-dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "National holiday",
+dict <- c(rate = "Cesarean rate", weekend = "Weekend", holiday = "Holiday",
           eve = "Eve of rest day", muni = "Municipality", year = "Year")
 # r_pub/r_priv are the per-sector gradients now shown in Panel B of tab_main_gradient
 # (built in 07); the standalone tab03_scheduling exhibit was retired.
@@ -291,7 +291,7 @@ if (exists("r1_priv")) {
   MECH <- list(m_pre_priv, m_lab_priv, m_pre_pub, m_lab_pub, m_r12, r1_priv)
   tex <- c(
     "\\begin{table}[H]", "\\centering",
-    "\\caption{\\textbf{The weekend dip by delivery timing and clinical risk}}",
+    "\\caption{\\textbf{Weekend gradients by delivery timing and clinical group}}",
     "\\label{tab:prelabor_lowrisk}",
     "\\small\\setlength{\\tabcolsep}{4pt}",
     "\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
@@ -309,18 +309,8 @@ if (exists("r1_priv")) {
     tex_nobs(MECH),
     "\\bottomrule", "\\end{tabular}}",
     "\\begin{minipage}{\\linewidth}\\footnotesize",
-    "\\textit{Notes:} Estimates of Equation~\\eqref{eq:scheduling}, restricted to the",
-    "weekend indicator. Municipality-date cells, SINASC, weighted by births;",
-    "coefficients in percentage points. Columns 1--4 split the cesarean share of births",
-    "into cesareans performed before labor began and cesareans performed during labor,",
-    "on 2012--2024, the years in which the timing indicator is recorded; a cesarean",
-    "without it counts in neither component. Columns 5--6 use 2014--2024, the years with",
-    "the Robson classification, and restrict to Robson groups 1--2 (nulliparous, term, singleton,",
-    "cephalic) and to Robson group 1 alone, which requires spontaneous labor, so that",
-    "none of its cesareans is coded as prelabor, although the register also assigns",
-    "to it the cesareans whose timing code is missing. Standard errors, two-way clustered",
-    "by municipality and date, are reported in parentheses.",
-    "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
+    "\\textit{Notes:} Equation~\\eqref{eq:scheduling}, estimated separately by sector; coefficients in percentage points. The outcome in columns 1--4 is a component of the share of all births delivered by cesarean, on 2012--2024; cesareans lacking a prelabor or in-labor code enter neither component. Columns 5--6 use Robson groups from 2014 onward; the register also assigns to Robson group 1 the cesareans whose timing code is missing. Standard errors, two-way clustered by municipality and date, are reported in parentheses. Significance codes as in Table~\\ref{tab:fees}.",
+    "\\end{minipage}", "\\end{table}")
   write_table_tex(tex, file.path(TABLE, "tab_prelabor_lowrisk.tex"))
   message("tab_prelabor_lowrisk.tex written")
 }
@@ -372,31 +362,32 @@ saveRDS(list(gap = gap, composition = composition, practice = practice),
         here::here("analysis", "output", "kitagawa_gap.rds"))
 
 kt <- wide[order(g), .(
-  `Robson group` = g,
+  `Robson group` = as.integer(g),
   `Share private` = sprintf("%.1f", 100*share_Private),
   `Share public`  = sprintf("%.1f", 100*share_Public),
   `Rate private`  = sprintf("%.1f", 100*rate_Private),
   `Rate public`   = sprintf("%.1f", 100*rate_Public))]
 tex <- c(
   "\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{Decomposing the for-profit--public cesarean gap (Kitagawa, Robson groups)}}",
+  "\\caption{\\textbf{Kitagawa decomposition of the for-profit--public cesarean gap}}",
   "\\label{tab:decomposition}",
   "\\small",
   "\\begin{tabular}{lcccc}",
   "\\toprule",
-  "Robson group & Share for-profit (\\%) & Share public (\\%) & Cesarean for-profit (\\%) & Cesarean public (\\%) \\\\",
+  " & \\multicolumn{2}{c}{Birth share (\\%)} & \\multicolumn{2}{c}{Cesarean rate (\\%)} \\\\",
+  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-5}",
+  "Robson group & For-profit & Public & For-profit & Public \\\\",
   "\\midrule",
   apply(kt, 1, function(x) paste(paste(x, collapse = " & "), "\\\\")),
   "\\midrule",
-  sprintf("\\multicolumn{5}{l}{Gap %.1fpp $=$ case-mix %.1fpp (%.0f\\%%) $+$ practice style %.1fpp (%.0f\\%%)} \\\\",
-          100*gap, 100*composition, 100*composition/gap, 100*practice, 100*practice/gap),
+  sprintf("\\multicolumn{5}{l}{Total gap: %.1f percentage points} \\\\", 100*gap),
+  sprintf("\\multicolumn{5}{l}{\\quad from Robson-group composition: %.1f points (%.0f\\%%)} \\\\",
+          100*composition, 100*composition/gap),
+  sprintf("\\multicolumn{5}{l}{\\quad from within-group cesarean rates: %.1f points (%.0f\\%%)} \\\\",
+          100*practice, 100*practice/gap),
   "\\bottomrule",
   "\\end{tabular}",
-  paste("\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024 (Robson",
-        "classification available from 2014). Kitagawa decomposition",
-        "\\citep{kitagawa1955} of the",
-        "for-profit--public cesarean gap into Robson-group composition and",
-        "within-group rate differences."),
+  "\\\\[2pt]\\footnotesize\\textit{Notes:} SINASC 2014--2024, Robson groups 1--10. Symmetric Kitagawa decomposition of sector-level cesarean rates. Totals are subject to rounding. Within-group differences are descriptive; they do not isolate physician choice or medical inappropriateness.",
   "\\end{table}")
 write_table_tex(resize_tabular(tex), file.path(TABLE, "tab11_decomposition.tex"))
 

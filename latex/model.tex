@@ -1,122 +1,58 @@
 % =============================================================================
-% model.tex — A simple model of delivery-mode choice and physician time.
-% \input{model} from paper.tex. Delivers the five predictions tested in the
-% empirical sections (P1-P5) and the policy corollary.
+% model.tex — A simple model of delivery choice and the value of physician time.
+% \input{model} from appendix.tex. Organizes the mechanisms and the five
+% predictions (P1-P5) that the empirical sections confront.
 % =============================================================================
 
-\section{A simple model of delivery-mode choice and physician time}
+\section{A simple model of delivery choice and the value of physician time}
 \label{sec:model}
+\setcounter{equation}{0}
+\renewcommand{\theequation}{A\arabic{equation}}
 
-\subsection{Setup}
+\subsection{Environment}
 
-A physician attends a pregnancy whose labor, absent intervention, begins at a
-random time $\tilde{t}$ distributed (approximately) uniformly over the days and
-hours of the week. Clinically, the onset of spontaneous labor does not follow
-the calendar, which is the premise of our timing tests. The
-physician chooses between attending a vaginal delivery ($v$) and performing a
-prelabor scheduled cesarean ($c$) at a time $t$ of her choosing; if labor
-starts before a cesarean is performed, the delivery may still convert to an
-in-labor cesarean for clinical reasons.
+Consider a physician attending a pregnancy for which spontaneous labor begins at an uncertain time $\tilde t$. The physician can provide a vaginal delivery, requiring a random duration $\tau_v$ beginning at $\tilde t$, or schedule a cesarean at a chosen time $t$, taking a relatively predictable duration $\tau_c$. The physician receives billed expected compensation $f_v$ for vaginal delivery, including expected paid labor assistance, and $f_c$ for cesarean delivery.
 
-\paragraph{Fees.} The physician receives $f_c$ for a cesarean and $f_v$ for a
-vaginal delivery, where $f_v$ includes the separately billed hourly labor
-assistance, the economic vaginal fee. In our data $f_c - f_v \le 0$, on average, in the five largest states.
+Let $w(t)$ be the physician's shadow cost of a unit of time, lower in regular working hours than at nights, weekends, and holidays. The uncertainty surrounding vaginal delivery may also require reserving time or remaining reachable, at an opportunity cost $\kappa\geq0$. Let $\theta$ be the patient's net clinical benefit of vaginal rather than cesarean delivery, with distribution $F$ across pregnancies. The physician internalizes a fraction $\alpha\in(0,1]$ of this clinical benefit. A negative $\theta$ denotes a pregnancy for which cesarean delivery is clinically preferred.
 
-\paragraph{Time.} A cesarean takes a fixed block $\tau_c$ ($\approx$1 hour) at
-the chosen time $t$. A vaginal delivery requires attending labor for a random
-duration $\tau_v$ (billed mean $\approx$2.9 hours, with $E[\tau_v] > \tau_c$) at
-the random time $\tilde{t}$. The opportunity cost of physician time is
-\[
-w(t) \;=\;
-\begin{cases}
-w_0 & t \in \text{weekday business hours}, \\
-w_0 + \Delta & t \in \text{nights, weekends, holidays},
-\end{cases}
-\qquad \Delta > 0 .
-\]
-Committing to an event of unknown timing additionally carries an on-call cost
-$\kappa \ge 0$: the physician must hold open calendar slots she could otherwise
-fill (an option cost of unschedulable time).
+\subsection{Choice}
 
-\paragraph{Agency.} A vaginal delivery yields the patient a net clinical benefit
-$\theta \sim F$ (with $\theta < 0$ when a cesarean is medically indicated). The
-physician is an imperfect agent and internalizes $\alpha\theta$, $\alpha \in
-(0,1]$.
-
-\subsection{The delivery-mode decision}
-
-The physician schedules a prelabor cesarean if and only if
+Under the simplifying assumptions that labor duration and onset timing are independent and that a planned cesarean can be scheduled during regular working hours, the private convenience premium from scheduling is
 \begin{equation}
-\underbrace{f_c - f_v}_{\text{fee gap } \le 0}
-\;+\;
-\underbrace{\Pi}_{\text{convenience premium}}
-\;>\; \alpha\,\theta,
-\qquad
-\Pi \;\equiv\; E\!\left[w(\tilde{t})\right] E[\tau_v] + \kappa - w_0\,\tau_c \;>\; 0,
+\Pi = E[w(\tilde t)]\,E[\tau_v]+\kappa-w_0\tau_c,
+\label{eq:premium}
+\end{equation}
+where $w_0$ is the regular-hours opportunity cost. A planned cesarean is chosen when
+\begin{equation}
+(f_c-f_v)+\Pi>\alpha\theta.
 \label{eq:choice}
 \end{equation}
-so the cutoff is $\theta^{*} = \left(f_c - f_v + \Pi\right)/\alpha$ and the
-cesarean share is $F(\theta^{*})$. The convenience premium $\Pi$ is strictly
-positive even when the fee gap is negative: labor falls disproportionately on
-high-$w$ times ($E[w(\tilde{t})] > w_0$), lasts longer ($E[\tau_v] > \tau_c$),
-and blocks the calendar ($\kappa$). Conditional on choosing $c$, the physician
-schedules it at $\arg\min_t w(t)$ (weekday business hours) and, to
-guarantee the procedure precedes $\tilde{t}$ (whose hazard rises steeply after
-gestational week 39), books it at weeks 37--39, earlier than spontaneous labor
-would deliver.
 
-\subsection{Predictions and the corresponding tests}
+With threshold $\theta^*=(f_c-f_v+\Pi)/\alpha$, the stylized cesarean share is $F(\theta^*)$. This representation separates the net billed fee gap from the cost of unschedulable time. The premium can be positive even where $f_c-f_v<0$, provided vaginal attendance is longer, less predictable, or involves substantial on-call costs. The model is intentionally partial-equilibrium: it does not represent hospital capacity, patient bargaining over dates, insurance contract heterogeneity, or the clinical distinction between planned and urgent intrapartum cesareans.
 
-\begin{itemize}
-\item[\textbf{P1.}] \emph{Local fee responsiveness may be small.} The cesarean
-share responds to the fee gap through $f(\theta^{*})/\alpha$. The model does not
-imply a small fee response solely because the convenience premium is large: a small
-local response additionally requires the delivery-choice cutoff $\theta^{*}$ to lie
-in a low-density region of the clinical-benefit distribution ($f(\theta^{*})\approx
-0$). The empirical fee regressions assess this local responsiveness over the
-observed support.
-\hfill [\emph{Tested:} fee-gap regressions and fee-swing falsification, Table
-\ref{tab:fees}, and the fees per hour of physician time,
-\satab{tab:fee_per_hour}. The 2015 court order is not a test: no rule was ever
-issued.]
-\item[\textbf{P2.}] \emph{The scheduling pattern.} Prelabor cesareans bunch
-at $\arg\min_t w(t)$ (weekday business hours) and fall on weekends and
-holidays; in-labor cesareans inherit $\tilde{t}$'s uniform timing and weakly
-rise on weekends (marginal-$\theta$ women who labor before being
-scheduled convert). \hfill [\emph{Tested:} day-of-week, holiday and
-hour-of-birth clustering, and the prelabor/in-labor split:
-Figure \ref{fig:calendar} and Tables \ref{tab:main_gradient} and
-\ref{tab:prelabor_lowrisk}.]
-\item[\textbf{P3.}] \emph{Scarcity.} $\Delta$ and $\kappa$ rise where obstetric
-capacity is scarce (fewer substitutes to cover on-call time), so weekend dips are
-larger there. \hfill [\emph{Tested:} organizational-capacity interactions
-(Section~\ref{sec:capacity}) and municipality obstetrician density
-(\satab{tab:heterogeneity}). Supported for obstetrician density. For
-establishment capacity the gradient is flatter at larger services. Across
-municipalities, with both entered, delivery volume accounts for it; within
-municipality-days bed count and volume are jointly but not individually
-significant, each is significant without the other, and contracted obstetrician
-hours give a precise zero.]
-\item[\textbf{P4.}] \emph{The early-term cost.} Guaranteeing $t < \tilde{t}$
-requires booking before the week-39 hazard spike, shifting prelabor cesareans
-earlier than spontaneous labor would deliver and producing excess early-term
-birth. \hfill [\emph{Tested:}
-gestational-age distributions and early-term gap, Table \ref{tab:health} and
-\safig{fig:gestation}.]
-\item[\textbf{P5.}] \emph{A demand-side reading is not supported.} If the timing
-preference were the mother's, the weekend dip would concentrate among mothers with
-the strongest demand for scheduling (proxied by schooling); it does not, though
-this does not rule out unobserved maternal preferences or joint
-physician--patient scheduling. \hfill
-[\emph{Tested:} maternal-education interaction, \satab{tab:heterogeneity}.]
-\end{itemize}
+The response to the fee differential is
+\begin{equation}
+\frac{\partial F(\theta^*)}{\partial(f_c-f_v)}=\frac{f_F(\theta^*)}{\alpha},
+\label{eq:feeresponse}
+\end{equation}
+where $f_F$ is the density of clinical benefit at the threshold. A large convenience premium does not, by itself, imply an economically negligible fee elasticity. Such a conclusion also requires information about the number of pregnancies close to the threshold. Section~\ref{sec:notprice} therefore uses an explicit external calibration; its fee regressions cannot establish price irrelevance.
 
-\subsection{Policy corollary}
+\subsection{Mechanisms and alternative implications}
 
-The model alone does not rank fee-based and organizational interventions. The
-reduced-form estimates suggest limited and unstable responsiveness to the observed
-fee variation, while the calendar evidence motivates policies that alter scheduling
-costs. Read together with those estimates, the model directs attention to
-organizational levers that reduce $\Pi$ itself: on-call/laborist shift coverage
-(which lowers $\kappa$ and detaches $w(\tilde t)$ from the attending physician's
-calendar), midwife-led continuity of care, and hospital scheduling norms.
+The model predicts that planned cesareans will be concentrated at times when $w(t)$ is low and that a sector in which physicians personally bear greater scheduling costs may have steeper calendar gradients. The model also suggests that arranging cesareans before the rising spontaneous-labor hazard can shift deliveries toward earlier gestational ages. An organizational extension in which hospitals rather than individual clinicians face time-dependent costs yields similar patterns. Hence the weekday gradient, the larger for-profit increment, and attenuation at large obstetric services all have multiple potential interpretations.
+
+A pure physician-leisure story has additional, falsifiable implications: longer uninterrupted breaks should produce stronger displacement than isolated rest days, and procedures should accumulate ahead of extended breaks. The lack of those patterns in Section~\ref{sec:capacity} limits that story. A distinct hospital demand-smoothing story predicts the ability to move volume across weeks; the available evidence does not show it. These findings restrict the mechanisms consistent with the observed calendar patterns.
+
+The model is a device for organizing mechanisms, not an identified structural model. Its primitives, including $w(t)$, $\kappa$, $\alpha$, and $F$, are not estimated from the administrative data.
+
+\subsection{Empirical predictions and corresponding evidence}
+
+P1. Fee responsiveness. A negative mean fee gap is compatible with cesarean delivery when the time-cost premium is sufficiently large. The model alone places no upper bound on the fee response. Section~\ref{sec:notprice} therefore compares the observed fee gaps with externally calibrated responses and presents the unstable fee associations in Table~\ref{tab:fees} and Supplementary Appendix Tables~\ref{tab:feegap_ci}--\ref{tab:fewcluster}. The unimplemented 2015 court order supplies no experimental variation.
+
+P2. Calendar organization. Scheduling lowers the cost of operating in regular hours and can generate fewer prelabor cesarean births on weekends and holidays, with observed delivery composition adjusting in the other direction. Figure~\ref{fig:calendar} and Tables~\ref{tab:main_gradient}--\ref{tab:prelabor_lowrisk} provide the day-of-week, business-hour, and timing comparisons. They cannot isolate hospital scheduling from an individual obstetrician's availability preferences.
+
+P3. Capacity and substitutability. With fewer substitutes to cover unpredictable labor, the effective cost of on-call availability may be higher. \satab{tab:heterogeneity} relates the weekend dip to obstetrician density, while the establishment-level Supplementary Appendix Tables~\ref{tab:org_capacity}--\ref{tab:org_capacity_valid} describe associations with delivery volume and beds. Volume and beds entered together are jointly significant under municipality-by-date effects, without a separately significant coefficient; one-at-a-time specifications are stronger. Registered obstetrician hours do not show the same pattern. None of these regressions identifies a causal capacity effect.
+
+P4. Gestational timing. To complete surgery before spontaneous labor, scheduled deliveries may occur at earlier gestational ages. Section~\ref{sec:cost} and \safig{fig:gestation} document the earlier for-profit distribution, and Table~\ref{tab:health} reports its adjusted early-term association. Births in both sectors peak at week 39. This pattern does not identify how any woman's gestational age would change under a different care arrangement.
+
+P5. Maternal preferences. Mothers may request convenient dates and jointly plan delivery with physicians; a stronger education gradient could be consistent with such a channel. \satab{tab:heterogeneity} reports the education interaction. That proxy neither isolates maternal preferences nor rules them out, even when the pattern is more pronounced among mothers with less schooling.

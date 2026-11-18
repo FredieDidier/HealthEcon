@@ -203,7 +203,7 @@ row4 <- function(label, pairs) {
 panel <- function(models, keys = c("pw", "ph", "pe"), ikeys = c("pwS", "phS", "peS")) {
   unlist(lapply(seq_along(keys), function(i)
     row4(c("For-profit $\\times$ Weekend",
-           "For-profit $\\times$ National holiday",
+           "For-profit $\\times$ Holiday",
            "For-profit $\\times$ Eve of rest day")[i],
          list(list(models[[1]], keys[i]), list(models[[2]], keys[i]),
               list(models[[3]], keys[i]), list(models[[4]], ikeys[i])))))

@@ -253,7 +253,7 @@ cat(sprintf("\nTrue weekend (Sun+Sat) dip = %.2f pp; rank %d/21; exact permutati
 print(res)
 
 tex <- c("\\begin{table}[H]\\centering",
-  "\\caption{\\textbf{Descriptive ranking: the weekend dip across all 21 two-day placebos}}",
+  "\\caption{\\textbf{Descriptive ranking of the weekend dip among all 21 two-day placebo pairs}}",
   "\\label{tab:permutation}\\small",
   "\\begin{tabular}{lc}", "\\toprule",
   "Pseudo rest-day pair & For-profit cesarean dip (pp) \\\\", "\\midrule",
