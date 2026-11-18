@@ -1,7 +1,7 @@
 Highlights (Journal of Health Economics submission; max 85 characters each)
 
-- Brazil's for-profit maternity sector delivers about 81% of births by cesarean
-- Per delivery a cesarean pays less on average; per physician hour it pays more
-- Cesareans drop on weekends and holidays, driven by prelabor scheduled surgery
-- Within the same municipality-day, the for-profit weekend dip is 1.8 points larger
-- Practice style, not case-mix, accounts for 73% of the for-profit-public gap
+- Cesareans account for 81% of births at for-profit hospitals in Brazil
+- Cesareans pay physicians less per delivery on average, but may pay more per hour
+- Cesarean rates fall on weekends in both public and for-profit hospitals
+- Within municipality-days, the for-profit weekend decline is 1.8 pp larger
+- Within-Robson cesarean rates account for 73% of the for-profit–public gap
