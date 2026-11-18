@@ -24,7 +24,7 @@
 | analysis/code/07_main_specification.R | tab_main_gradient |
 | analysis/code/08_long_weekends.R | tab_long_weekends, tab_displacement_robust |
 | analysis/code/09_org_capacity.R | tab_org_capacity, tab_org_capacity_valid |
-| analysis/code/10_supplement.R   | tab_multiple_testing, tab_ref_*, fig_ref_c11_pa_hospital_es |
+| analysis/code/10_supplement.R   | tab_ref_*, fig_ref_c11_pa_hospital_es |
 | analysis/code/11_body_figures.R | fig_two_margins, fig_calendar_fingerprints, fig_gestation_panels |
 | analysis/code/12_subgroups.R    | tab_subgroup_gradients, robson_grad.rds |
 | analysis/code/13_demand_smoothing.R | tab_demand_smoothing |

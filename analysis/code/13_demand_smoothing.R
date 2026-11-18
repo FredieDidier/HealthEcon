@@ -42,7 +42,6 @@
 # throughput. Same evidence class as the organizational-capacity exercise.
 #
 # Exhibit: tab_demand_smoothing.tex (Supplemental Appendix D).
-# Saves analysis/output/fam_F.rds for the multiple-testing table built in 10.
 # =============================================================================
 
 source(here::here("config", "config.R"))
@@ -234,16 +233,5 @@ tx <- c("\\begin{table}[H]\\centering",
   "\\end{table}")
 write_table_tex(resize_tabular(tx), file.path(TABLE, "tab_demand_smoothing.tex"))
 
-# family F for the multiple-testing table built in 10_supplement.R
-saveRDS(data.table(
-  family = "F. Demand smoothing",
-  hypothesis = c("Expected demand next week $\\times$ prelabor cesarean share",
-                 "Expected demand next week $\\times$ cesarean share",
-                 "Prelabor cesarean share $\\times$ weekly flow dispersion"),
-  estimate = c(coeftable(m_pre2)["exp_next", 1], coeftable(m_ces)["exp_next", 1],
-               coeftable(m_vmr2)["pre_share", 1]),
-  p = c(coeftable(m_pre2)["exp_next", 4], coeftable(m_ces)["exp_next", 4],
-        coeftable(m_vmr2)["pre_share", 4])),
-  file.path(OUT, "fam_F.rds"))
 
 message("13_demand_smoothing.R: done")

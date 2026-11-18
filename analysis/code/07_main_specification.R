@@ -179,11 +179,5 @@ cat(sprintf("\n[07] footnote: for-profit weekday births per year %s; gross %.1fp
             format(round(wd_births), big.mark = ","), 100 * gross, format(round(gross * wd_births), big.mark = ","),
             100 * eq3, format(round(eq3 * wd_births), big.mark = ",")))
 
-fam_A <- data.table(
-  family = "A. For-profit calendar gradient",
-  hypothesis = c("For-profit $\\times$ Weekend", "For-profit $\\times$ Holiday",
-                 "For-profit $\\times$ Eve of rest day"),
-  estimate = coef(m1)[KG], p = coeftable(m1)[KG, 4])
-saveRDS(fam_A, file.path(here::here("analysis", "output"), "fam_A.rds"))
 
 message("07_main_specification.R done")

@@ -181,9 +181,7 @@ Then:
 ## Program-to-output inventory
 
 Every script re-sources `config/config.R` and its utils, so scripts can also be
-run individually. **Order matters at the tail:** `07`/`08`/`09`/`13` each save a
-hypothesis family (`analysis/output/fam_{A,D,E,F}.rds`) that `10_supplement.R`
-reads for the multiple-testing table; run them in that order (`13` before `10`). `08` also builds
+run individually. `08` builds
 `graphs/fig_long_weekend_event`, the displacement event study now shown in the
 Supplementary Appendix. `12_subgroups.R` runs **before** `11` despite its number:
 it saves `analysis/output/robson_grad.rds`, the coefficients `11` draws as panel
@@ -199,14 +197,14 @@ Body exhibits are **bold**. Everything else is Supplemental Appendix.
 | `04_heterogeneity.R` | (supplement) | `tables/tab10_heterogeneity.tex`, `tables/tab10b_modality.tex` |
 | `05_cost.R` | **Table 5** | `tables/tab09_health.tex`; `tables/tab12_cost.tex`; `graphs/fig09_gestation`, `graphs/fig09b_gestation_by_timing` |
 | `06_robustness.R` | (supplement) | `tables/tab13_referee_robustness.tex`, `tab13c_dip_by_region_period.tex`, `tab14_neonatal_suggestive.tex`, `tab15_permutation.tex`, `tab15b_no_indication.tex`; `graphs/fig05_rn368_timeline` |
-| `07_main_specification.R` | **Table 2** | `tables/tab_main_gradient.tex`; `fam_A.rds` |
-| `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `fam_D.rds`, `evt_coefs.rds` |
-| `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex`; `fam_E.rds` |
+| `07_main_specification.R` | **Table 2** | `tables/tab_main_gradient.tex` |
+| `08_long_weekends.R` | **Table 4** | `tables/tab_long_weekends.tex`; `tables/tab_displacement_robust.tex`; `graphs/fig_long_weekend_event`, `fig_long_weekend_event_blocks`; `evt_coefs.rds` |
+| `09_org_capacity.R` | (supplement) | `tables/tab_org_capacity.tex`, `tables/tab_org_capacity_valid.tex` |
 | `14_estab_practice_style.R` | (supplement) | `tables/tab_estab_practice_style.tex` (Robson-standardized dispersion across maternities); caches `sinasc_estab_year_robson.parquet` |
-| `13_demand_smoothing.R` | (supplement) | `tables/tab_demand_smoothing.tex`; `fam_F.rds` |
+| `13_demand_smoothing.R` | (supplement) | `tables/tab_demand_smoothing.tex` |
 | `15_estab_gradient.R` | (supplement) | `tables/tab_estab_gradient.tex` (Eq. 3 on establishment-date cells with establishment×year FE, fixed weights, extensive margin, PPML counts; early-term share in Eq. 3) |
 | `16_design_checks.R` | (supplement) | `tables/tab_fee_per_hour.tex`, `tables/tab_balance.tex`, `tables/tab_ident_sample.tex` (fees per hour of physician time and break-even hours; predetermined characteristics and newborn sex on the left of Eq. 3; coverage and own gradients on the identifying municipality-days) |
-| `10_supplement.R` | (supplement) | `tables/tab_multiple_testing.tex`, `tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
+| `10_supplement.R` | (supplement) | `tables/tab_ref_c3_robson_validation.tex`, `tab_ref_c5_feegap_ci.tex`, `tab_ref_c6_fee_base_econ.tex`, `tab_ref_c7_placebo_ranking.tex`, `tab_ref_c10_fewcluster.tex`, `tab_ref_c12_missingness.tex`, `tab_ref_c12_sampleflow.tex`; `graphs/fig_ref_c11_pa_hospital_es` |
 | `12_subgroups.R` | (supplement) | `tables/tab_subgroup_gradients.tex` (gestational-age + maternal-age splits of Equation 3), `graphs/fig_robson_gradient`, `robson_grad.rds` (feeds **Figure 3** panel c) |
 | `11_body_figures.R` | **Figure 2, Figure 3** | `graphs/fig_two_margins` (**Figure 2**: price binscatter + scheduling gradients), `graphs/fig_calendar_fingerprints` (**Figure 3**: day-of-week + hour of birth + Robson gradient), `graphs/fig_gestation_panels` (Supplementary Appendix) |
 
@@ -231,8 +229,8 @@ pdflatex paper;      pdflatex paper
 pdflatex supplement
 ```
 
-The supplement needs its own `bibtex` pass because it cites Holm (1979) and
-Benjamini and Hochberg (1995) in Appendix D. Verify with
+The supplement needs its own `bibtex` pass because it carries citations of its
+own. Verify with
 
 ```
 grep -c "Reference .* undefined" latex/paper.log      # must be 0

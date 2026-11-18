@@ -130,7 +130,7 @@ hold in abstract, intro, strategy section, table notes, and conclusion:
   scale, predicting at most ~0.37pp and ~1.5pp against a 36pp gap. The RAW FACT leads, the regression follows.
 - **demand smoothing** (Eq. de Elejalde-Giolito) = tested and NOT supported. The
   pull-forward null is weak (say so); the throughput result points the other way
-  but is only marginally significant and dies under the family adjustment, so
+  but is only marginally significant (10 percent), so
   report it as an ABSENCE of levelling, never as evidence that scheduling makes
   the flow lumpier.
 - **weekend/holiday gradients** (Eq. 2) = calendar sorting of deliveries, NOT the
@@ -287,7 +287,7 @@ reintroduce `else → Public`.
 | Robson 1 vs 10 (for-profit) | G1 dip 1.3pp larger, p = 0.006; still not a placebo. G1/G3 have 0 prelabor cesareans BY CONSTRUCTION (DATASUS derives Robson from the labor-onset and prelabor fields): the timing table is a definition, never a validation |
 | Eq (3), term vs preterm | −2.1pp vs +1.5pp; difference +3.6pp |
 | Eq (3), mother <35 vs 35+ | −2.5pp vs +1.7pp*; within Robson 1–2, −4.8 vs −1.4 |
-| Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70); family D Holm 0.202 |
+| Long weekends: bridge = isolated | p 0.55 (prelabor p 0.70) |
 | Pre-holiday prelabor bunching (bridge) | −0.47/day (deficit, not bunching); window −1.24 |
 | Org capacity, muni×date FE (prelabor) | together: beds +0.58 (0.38), scale +0.64 (0.41), n.s. individually, joint p 0.021; scale alone/with non-bed measures +1.30 to +1.43***; beds alone +0.80**; date FE together: scale +1.49***, beds +0.47 n.s. |
 | Beds vs scale | corr of logs 0.48 (estab-years); weekend interactions net of FE 0.64 (date) / 0.56 (muni×date) |
@@ -305,7 +305,7 @@ reintroduce `else → Public`.
 | Excess weekday cesareans (own-municipality-year) | 35,330/yr for-profit = 9.3% of weekday cesareans |
 | Footnote reconciliation | 7.9pp × 463k = ~37k/yr; Eq. (3) 1.8pp × 463k = ~8k/yr |
 | Price benchmarks in our units | Grant 0.75 / GKM 3.01 pp per log point (R$1,963 mean cesarean fee) |
-| Demand smoothing | next-week coefficients small, either sign, none significant; forecast slope 0.050; MDE 0.63pp; dispersion +0.31 (0.16), Holm 0.173 |
+| Demand smoothing | next-week coefficients small, either sign, none significant; forecast slope 0.050; MDE 0.63pp; dispersion +0.31 (0.16), significant only at 10% |
 | Private-insurance cesareans with no recorded indication | 77–81% a year (blank or O80–O84 only) |
 | Rates quoted in the text from the data (no exhibit prints them; recomputed 2026-10-02) | public 37.2% (2010) → 51.5% (2024); for-profit 78.2% in 2024; for-profit Mon–Fri 81.6–84.2%; Robson 1–2 for-profit weekdays 80.5–83.5%; Robson 1 weekdays 68.1% FP / 36.4% public; private-insurance rate in the five largest states 77.7% (MG) to 89.7% (RJ) |
 | Robson-group weekend gradients, groups 6–9 (Fig 3c, `robson_grad.rds`) | FP −1.6 / −2.2 / −2.4 / −0.5 vs public −2.7 / −3.7 / −4.2 / −1.1; the for-profit excess reverses in 6–8 (ceiling: FP 94–98% cesarean) |
@@ -327,7 +327,7 @@ pdflatex paper; pdflatex paper
 pdflatex supplement
 ```
 Verify with `grep -c "Reference .* undefined" paper.log` → must be 0.
-Supplement needs its OWN bibtex pass (cites holm1979 + benjamini1995 in App D).
+Supplement needs its OWN bibtex pass (it carries citations of its own).
 `paper.tex` puts the bibliography FIRST and \inputs `appendix.tex` (A model +
 B data) after it, per the Elsevier/JHE layout (changed 2026-07-24); the
 Supplemental Appendix is a separate document.
@@ -523,7 +523,7 @@ sections above are not repeated here.
   explains 60-80% of regional variation. `spinola2026` studies inconvenient dates, not
   bridge days. `gans2009` does not support "holiday incentives". `fischer2026` is
   forthcoming: fill in volume and pages before submitting. [2026-09-07 audit]
-- Demand-smoothing throughput (p=0.065, Holm 0.196) is never "a lumpier flow".
+- Demand-smoothing throughput (p=0.065) is never "a lumpier flow".
   [2026-09-07 audit]
 - Keep the softened scope language: the paper "documents an ownership-specific
   supply-side calendar pattern consistent with scheduling", not "identifies

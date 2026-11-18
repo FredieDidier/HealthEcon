@@ -1756,3 +1756,41 @@ calibration sentence stay in their notes because the paper cites those tables fo
 "hospital" stays "establishment" inside tables; house standard-error sentence kept.
 Compiles (paper 33 pp, supplement 38 pp, WP 68 pp, 0 undefined refs); abstract, claims
 and numcheck pass. No script was re-run.
+
+## 2026-11-18 — multiple-testing table removed; Figure 2 and 3 notes (Claude, requested by Fredie)
+
+**Removed (Fredie: "não vou mais colocar esse resultado de testes múltiplos").** Supplement
+subsection "Multiple hypothesis testing" and `tab_multiple_testing.tex`; section K of
+`10_supplement.R`; the family hand-offs `fam_A/D/E/F.rds` and the code that saved them in
+`07`, `08`, `09`, `13`; the table's entry in `00_table_text.R`; the clause pointing to it in
+the `tab_subgroup_gradients` note (R and `.tex`, regenerated with `apply_table_text`,
+identical apart from that clause); the demand-smoothing sentence now says the dispersion
+estimate is "significant only at the 10 percent level" (no Holm value); `holm1979` and
+`benjamini1995` out of `refs.bib` (no longer cited); README, replication README, CLAUDE.md
+and the `supplement.tex` comment updated. No estimate re-run; every R file edited parses.
+
+**Figure notes (paper.tex).** Figure 2: the intervals are 95 percent (1.96 SE in
+`11_body_figures.R`). Figure 3: years by panel, what each panel plots (panel (a) includes
+nonprofit establishments, `SECTOR_LEVELS`), 95 percent intervals in panel (c) (1.96 SE in
+`12_subgroups.R`), and the Robson groups defined.
+
+**Checked.** Paper 33 pages, supplement 36, working paper 68; 0 undefined references in all
+three; `abstract.py` 231 of 250, `claims.py` 0, `numcheck.py` 0; `reader.py` flags
+"potentially" (pre-existing). One overfull hbox in each of paper (lines 356-357) and
+supplement (lines 468-474), in paragraphs not edited; not checked whether they predate
+this round.
+
+**Checked and not changed: five references dropped in the rewrite** (abstracts read
+2026-11-18). Fabbri, Monfardini and Castaldini (2016) and Gans and Leigh (2012) are on the
+paper's own question (who times deliveries, physician leisure, doctors avoiding weekends);
+Lo (2003) is evidence for the maternal-preference alternative; Dickert-Conlin and Chandra
+(1999) and Gans and Leigh (2009) show families moving births for money, a claim the
+rewritten paper no longer makes. Decision left to Fredie. A proposed scope paragraph for
+the conclusion was given in chat, not installed. Nothing committed.
+
+Same day, follow-up (Fredie: "Sim, instale os três"). Installed in `paper.tex`: the scope
+paragraph of the conclusion, between the limits and the policy paragraphs; `fabbri2016` and
+`gans2012` in the international calendar sentence of the introduction, each with the finding
+its abstract reports; both `refs.bib` entries restored from `be0d250`. Paper 33 to 34
+pages, 0 undefined in paper, supplement and working paper; abstract, claims and numcheck
+pass; reader flags "potentially" (pre-existing). Nothing committed.

@@ -12,8 +12,7 @@
 #      -> tab_subgroup_gradients.tex (Supplement, Appendix D).
 #
 # LABELING (hold everywhere). These are EXPLORATORY SUBGROUP SPLITS of the
-# Equation (3) differential, not pre-specified hypotheses, and they are not part
-# of the five multiple-testing families (A-E). Two further cautions:
+# Equation (3) differential, not pre-specified hypotheses. Two further cautions:
 #
 #   - GESTATIONAL AGE AT BIRTH IS PARTLY AN OUTCOME of the behaviour we study
 #     (Table 5 shows a for-profit early-term gap), so the term/preterm
@@ -267,8 +266,7 @@ tex <- c(
   "Maternal age in Panels B and C is predetermined. Panel C restricts to Robson",
   "groups 1--2 (nulliparous, term, singleton, cephalic), the births least likely to",
   "require surgery; Robson groups are recorded from 2014. These are exploratory",
-  "subgroup splits and are not among the pre-specified hypothesis families of",
-  "Table~\\ref{tab:multiple_testing}. Standard errors, two-way clustered by",
+  "subgroup splits. Standard errors, two-way clustered by",
   "municipality and date, are reported in parentheses.",
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 write_table_tex(tex, file.path(TABLE, "tab_subgroup_gradients.tex"))

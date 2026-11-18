@@ -360,9 +360,7 @@ the establishment-year prelabor-cesarean share to the log variance-to-mean ratio
 weekly deliveries, a measure that is zero under a Poisson benchmark and rises as
 weekly deliveries become more uneven. The within-establishment estimate is $+0.31$
 (standard error 0.16), opposite to the negative sign predicted by leveling. It is
-significant at the 10 percent level before adjustment, but not after adjusting
-within the family of demand-smoothing tests (Holm $p = 0.173$;
-Table~\ref{tab:multiple_testing}). The evidence does not support throughput
+significant only at the 10 percent level. The evidence does not support throughput
 leveling in these data; it also does not establish that scheduling causes
 deliveries to become more uneven. Both analyses are associational, and the weak
 predictive content of expected weekly demand prevents a strong rejection of the
@@ -478,35 +476,6 @@ and neither establishes that the causal fee effect is absent.
 \input{../analysis/output/tables/tab_ref_c12_sampleflow.tex}
 \input{../analysis/output/tables/tab_ref_c12_missingness.tex}
 
-\subsection{Multiple hypothesis testing}\label{app:multiple}
-
-The paper reports several related hypotheses in the calendar regressions and
-supplementary analyses. Rather than reading each unadjusted $p$-value as a separate
-confirmatory test, Table~\ref{tab:multiple_testing} groups the reported tests into
-six substantive families. Within each family, the step-down adjustment of
-\citet{holm1979} controls the familywise error rate, and the \citet{benjamini1995}
-$q$-value controls the expected false discovery rate. The families follow the
-empirical questions, not whether individual results are significant. These
-adjustments do not repair bias or turn observational coefficients into causal
-effects; they address the risk of chance significance from testing several related
-coefficients.
-
-The headline for-profit calendar interactions in family A of
-Table~\ref{tab:multiple_testing} and the for-profit--public
-outcome differences in family C remain significant after correction. In family B
-the obstetrician-density and education interactions remain significant and the
-cooperative-insurer contrast does not. In family D the four ordinary fixed-date
-long-weekend hypotheses have unadjusted $p$-values between 0.05 and 0.07 and Holm
-values of 0.20, so none is significant on its own after adjustment. Family E
-includes both bed and volume interactions from the same specification, none of
-which is individually significant; estimates for either capacity measure entered
-alone are a different exercise (Table~\ref{tab:org_capacity_valid}). In family F,
-the weakly positive throughput-dispersion association does not survive adjustment
-(Holm $p = 0.173$), and neither forward-demand coefficient is significant. The
-results support a robust weekly calendar pattern and do not confirm the specific
-holiday-leisure and weekly-throughput predictions.
-
-\input{../analysis/output/tables/tab_multiple_testing.tex}
 
 % =============================================================================
 \section{The policy record}\label{app:policy}

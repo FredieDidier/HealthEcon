@@ -524,18 +524,5 @@ sup <- c(sup,
   "\\newline", SIGNIF_NOTE, "\\end{minipage}", "\\end{table}")
 write_table_tex(sup, file.path(TABLE, "tab_displacement_robust.tex"))
 
-# hand the hypothesis family to the multiple-testing table (Section K of 07_*.R)
-ph <- m_tax$pre_hol$ct
-fam_D <- data.table(
-  family = "D. Long weekends",
-  hypothesis = c("For-profit $\\times$ Bridge holiday",
-                 "For-profit $\\times$ Three-day holiday",
-                 "For-profit $\\times$ Isolated holiday",
-                 "Pre-holiday excess, prelabor cesareans"),
-  estimate = c(ph[K[["brg"]], 1], ph[K[["d3"]], 1], ph[K[["iso"]], 1],
-               disp[outcome == "Prelabor cesareans" & block == "Bridge", pre.estimate]),
-  p = c(ph[K[["brg"]], 4], ph[K[["d3"]], 4], ph[K[["iso"]], 4],
-        disp[outcome == "Prelabor cesareans" & block == "Bridge", pre.p]))
-saveRDS(fam_D, file.path(here::here("analysis", "output"), "fam_D.rds"))
 
 message("08_long_weekends.R done")

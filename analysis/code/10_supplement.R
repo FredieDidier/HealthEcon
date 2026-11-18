@@ -13,7 +13,6 @@
 #   G  placebo two-day ranking, correctly labelled (not "randomization inference")
 #   H  Parto Adequado hospital-level event study (skips if list unavailable)
 #   I  replication-package scaffolding (README + session/renv snapshot)
-#   K  multiple-testing adjustment within pre-specified hypothesis families
 #
 # The paper's MAIN specification (Equation 3, the within-municipality-day
 # for-profit differential) lives in 07_main_specification.R, and the long-weekend
@@ -620,7 +619,7 @@ readme <- c(
   "| analysis/code/07_main_specification.R | tab_main_gradient |",
   "| analysis/code/08_long_weekends.R | tab_long_weekends, tab_displacement_robust |",
   "| analysis/code/09_org_capacity.R | tab_org_capacity, tab_org_capacity_valid |",
-  "| analysis/code/10_supplement.R   | tab_multiple_testing, tab_ref_*, fig_ref_c11_pa_hospital_es |",
+  "| analysis/code/10_supplement.R   | tab_ref_*, fig_ref_c11_pa_hospital_es |",
   "| analysis/code/11_body_figures.R | fig_two_margins, fig_calendar_fingerprints, fig_gestation_panels |",
   "| analysis/code/12_subgroups.R    | tab_subgroup_gradients, robson_grad.rds |",
   "| analysis/code/13_demand_smoothing.R | tab_demand_smoothing |",
@@ -643,133 +642,5 @@ readme <- c(
 writeLines(readme, file.path(REPL, "README.md"))
 cat("\n[I/C13] wrote replication scaffolding to analysis/output/replication/ (README.md, sessionInfo.txt).\n")
 
-# =============================================================================
-# K — MULTIPLE-TESTING ADJUSTMENT over pre-specified hypothesis families.
-# The paper reports several heterogeneity tests and several outcome regressions.
-# We group the hypotheses into pre-specified families and report, within each
-# family, Holm-Bonferroni adjusted p-values (familywise error rate) and
-# Benjamini-Hochberg q-values (false discovery rate). Families A, D and E are
-# saved by 07_main_specification.R, 08_long_weekends.R and 09_org_capacity.R.
-#   -> tab_multiple_testing.tex
-# =============================================================================
-
-source(here::here("config", "config.R"))
-pacman::p_load(data.table, arrow, fixest, here)
-source(here::here("analysis", "code", "00_utils.R"))
-SIN   <- file.path(DROPBOX_ROOT, "build", "SINASC", "input")
-OUT   <- file.path(DROPBOX_ROOT, "build", "TISS", "output")
-WFO   <- file.path(DROPBOX_ROOT, "build", "workfile", "output", "main_data.parquet")
-TABLE <- here::here("analysis", "output", "tables")
-AOUT  <- here::here("analysis", "output")
-
-read_fam <- function(nm) {
-  f <- file.path(AOUT, paste0(nm, ".rds"))
-  if (file.exists(f)) readRDS(f) else NULL
-}
-fam_A <- read_fam("fam_A")
-if (is.null(fam_A)) stop("fam_A.rds missing: run 07_main_specification.R first")
-
-# --- Family B: heterogeneity in the weekend dip ------------------------------
-b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
-       col_select = c("sector", "cesarean", "escolaridade_mae", "muni", "date", "dow", "year")))
-b <- b[year <= 2024 & sector == "Private"]
-b[, weekend := as.integer(dow %in% c(1, 7))]
-w <- as.data.table(read_parquet(WFO))
-dens <- w[!is.na(obstetricians_per_1k_births),
-          .(dens = mean(obstetricians_per_1k_births)), by = .(muni = muni6)]
-dens[, low_dens := as.integer(dens < median(dens))]
-b <- merge(b, dens[, .(muni, low_dens)], by = "muni", all.x = FALSE)
-cell_a <- b[, .(rate = mean(cesarean), n = .N), by = .(muni, date, weekend, low_dens, year)]
-m_dens <- feols(rate ~ weekend + weekend:low_dens | muni + year, cell_a,
-                weights = ~n, cluster = ~muni + date)
-b[, educ_hi := fifelse(escolaridade_mae %in% 4:5, 1L,
-              fifelse(escolaridade_mae %in% 1:3, 0L, NA_integer_))]
-cell_b <- b[!is.na(educ_hi), .(rate = mean(cesarean), n = .N),
-            by = .(muni, date, weekend, educ_hi, year)]
-# same specification as 04_heterogeneity.R: the education level must enter
-m_educ <- feols(rate ~ weekend + weekend:educ_hi + educ_hi | muni + year, cell_b,
-                weights = ~n, cluster = ~muni + date)
-rm(b, cell_a, cell_b); gc()
-
-ev <- rbindlist(lapply(2015:2024, function(y)
-  as.data.table(read_parquet(file.path(OUT, sprintf("delivery_events_%d.parquet", y)),
-    col_select = c("cesarean", "modalidade", "faixa_etaria", "muni_prestador", "year")))))
-ev <- ev[!is.na(modalidade) & modalidade != "" & !is.na(muni_prestador)]
-ev[, coop := as.integer(grepl("^Cooperativa", modalidade))]
-m_mod1 <- feols(cesarean ~ coop + i(faixa_etaria) | muni_prestador + year, ev,
-                cluster = ~muni_prestador)
-rm(ev); gc()
-
-fam_B <- data.table(
-  family = "B. Heterogeneity in the weekend dip",
-  hypothesis = c("Weekend $\\times$ Low obstetrician density",
-                 "Weekend $\\times$ Mother has 8+ years of schooling",
-                 "Physician-owned cooperative insurer"),
-  estimate = c(coef(m_dens)["weekend:low_dens"], coef(m_educ)["weekend:educ_hi"],
-               coef(m_mod1)["coop"]),
-  p = c(coeftable(m_dens)["weekend:low_dens", 4], coeftable(m_educ)["weekend:educ_hi", 4],
-        coeftable(m_mod1)["coop", 4]))
-rm(m_dens, m_educ, m_mod1); gc()
-
-# --- Family C: sector differences in gestational and newborn outcomes --------
-b <- as.data.table(read_parquet(file.path(SIN, "sinasc_births.parquet"),
-       col_select = c("sector", "semana_gestacao", "peso", "apgar5", "idade_mae",
-                      "escolaridade_mae", "raca_cor_mae", "muni", "year")))
-b <- b[year <= 2024 & sector %in% c("Private", "Public")]
-b[, `:=`(apgar5 = valid_apgar(apgar5), peso = valid_peso(peso), idade_mae = valid_idade(idade_mae))]
-b[, `:=`(early_term = as.integer(semana_gestacao %between% c(37, 38)),
-         lbw = as.integer(peso < 2500), low_apgar = as.integer(apgar5 < 7),
-         private = as.integer(sector == "Private"), age2 = idade_mae^2)]
-b[, educ := factor(escolaridade_mae, levels = 1:5)]
-ctrl <- "idade_mae + age2 + i(educ) + i(raca_cor_mae)"
-m_et <- feols(as.formula(paste("early_term ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
-m_lb <- feols(as.formula(paste("lbw ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
-m_ap <- feols(as.formula(paste("low_apgar ~ private +", ctrl, "| muni + year")), b, cluster = ~muni)
-fam_C <- data.table(
-  family = "C. For-profit--public outcome differences",
-  hypothesis = c("Early-term birth (37--38 weeks)", "Low birthweight ($<$2500g)",
-                 "Five-minute Apgar $<$ 7"),
-  estimate = c(coef(m_et)["private"], coef(m_lb)["private"], coef(m_ap)["private"]),
-  p = c(coeftable(m_et)["private", 4], coeftable(m_lb)["private", 4],
-        coeftable(m_ap)["private", 4]))
-rm(b, m_et, m_lb, m_ap); gc()
-
-mt <- rbindlist(Filter(Negate(is.null),
-  list(fam_A, fam_B, fam_C, read_fam("fam_D"), read_fam("fam_E"), read_fam("fam_F"))))
-mt[, `:=`(p_holm = p.adjust(p, "holm"), q_bh = p.adjust(p, "BH")), by = family]
-fmt_p <- function(x) fifelse(x < 0.001, "$<$0.001", sprintf("%.3f", x))
-
-body <- character(0)
-for (fm in unique(mt$family)) {
-  body <- c(body, sprintf("\\emph{%s} & & & & \\\\", fm))
-  sub <- mt[family == fm]
-  for (i in seq_len(nrow(sub))) body <- c(body, sprintf(
-    "\\quad %s & %.4f & %s & %s & %s \\\\", sub$hypothesis[i], sub$estimate[i],
-    fmt_p(sub$p[i]), fmt_p(sub$p_holm[i]), fmt_p(sub$q_bh[i])))
-  body <- c(body, "\\addlinespace[3pt]")
-}
-tex <- c("\\begin{table}[H]",
-  "   \\caption{\\label{tab:multiple_testing} \\textbf{Multiple-hypothesis adjustment within pre-specified families}}",
-  "   \\centering",
-  "\\small\\setlength{\\tabcolsep}{5pt}\\resizebox{\\ifdim\\width>\\linewidth \\linewidth\\else\\width\\fi}{!}{%",
-  "   \\begin{tabular}{lcccc}", "      \\toprule",
-  "      Hypothesis & Estimate & Unadjusted $p$ & Holm $p$ & BH $q$ \\\\", "      \\midrule",
-  paste0("      ", body), "\\bottomrule", "   \\end{tabular}", "}", "   ",
-  "   \\par \\raggedright ",
-  paste("   \\footnotesize\\textit{Notes:} Each family collects the hypotheses that the",
-    "paper tests jointly. Family A is the within-municipality-day for-profit calendar",
-    "gradient of Table~\\ref{tab:main_gradient}; family B the supplemental heterogeneity",
-    "tests; family C the for-profit--public outcome differences of",
-    "Table~\\ref{tab:health}; family D the long-weekend taxonomy and displacement tests of",
-    "Table~\\ref{tab:long_weekends}; family E the organizational-capacity interactions of",
-    "Table~\\ref{tab:org_capacity}; and family F the demand-smoothing tests of",
-    "Table~\\ref{tab:demand_smoothing}. Holm $p$ is the",
-    "Holm--Bonferroni adjusted $p$-value \\citep{holm1979}, which controls the familywise",
-    "error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate",
-    "$q$-value \\citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding",
-    "columns of the source tables."),
-  "\\end{table}", "")
-write_table_tex(tex, file.path(TABLE, "tab_multiple_testing.tex"))
-cat("\n[K] Multiple-testing families:\n"); print(mt)
 
 message("\n10_supplement.R done")
