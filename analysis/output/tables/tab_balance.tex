@@ -1,6 +1,6 @@
 \begin{table}[H]
 \centering
-\caption{\textbf{Predetermined maternal characteristics in the within-municipality-day comparison}}
+\caption{\textbf{Observable characteristics in the within-municipality-day comparison}}
 \label{tab:balance}
 \small\setlength{\tabcolsep}{5pt}
 \resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
@@ -53,26 +53,7 @@ Cesarean & 0.826 & -0.0360$^{***}$ & -0.0513$^{***}$ \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} SINASC 2010--2024, for-profit and public municipality-date cells.
-Each row estimates Equation~\eqref{eq:gradient} with the cell share of the
-characteristic as the outcome, municipality$\times$date and
-municipality$\times$sector fixed effects, and the eve-of-rest-day interaction;
-cells are weighted by the births with the field recorded (maternal race and the
-month prenatal care began are sparsely recorded in 2010--2011, and parity is recorded
-only from 2014, so the first-birth row covers 2014--2024). Coefficients are divided by the
-standard deviation of the birth-level indicator, so Panel B puts the cesarean
-differential on the same scale. The first column is the share among for-profit
-births on weekdays. The characteristics are fixed before the delivery date is
-chosen (the count of prenatal visits only partly, since a pregnancy delivered
-earlier has had less time to accumulate visits), but the set of women delivering
-on a given day is not: scheduling moves
-births off weekends, so a weekend composition difference is predicted by the
-scheduling hypothesis as well as by selection. The table therefore measures how
-much composition the differential could carry, not whether mothers are
-comparable across days. The sex of the newborn is the exception: scheduling
-cannot sort on it, so it is a placebo outcome. Table~\ref{tab:main_gradient},
-column 2, conditions on the cell shares of age, schooling, race, and parity.
-Standard errors, two-way clustered by municipality and date, are reported in parentheses.
+\textit{Notes:} SINASC 2010--2024, for-profit and public municipality-date cells. Each row estimates Equation~\eqref{eq:gradient}, replacing the outcome by the share of births with the indicated characteristic, with municipality$\times$date and municipality$\times$sector fixed effects and the eve-of-rest-day interaction. Cells are weighted by the number of births with the characteristic recorded. Coefficients are scaled by the standard deviation of the corresponding birth-level indicator, and Panel B puts the cesarean benchmark on the same scale; the first column gives the mean for-profit weekday share. Race is sparsely recorded before about 2012 and the month prenatal care began in 2010--2011; the parity field is absent in 2010--2013, so the first-birth row uses 2014--2024 only. The characteristics are fixed before the delivery date is chosen, but the set of women delivering on a given day is not, and prenatal-visit counts also depend on the length of the pregnancy. The table therefore describes balance; it does not test that mothers are exchangeable across days. Newborn sex cannot be chosen, although its distribution on a date can still differ through sorting. Standard errors, two-way clustered by municipality and date, are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{minipage}

@@ -1,6 +1,6 @@
 \begin{table}[H]
 \centering
-\caption{\textbf{The for-profit calendar gradient within the establishment, and the early-term share}}
+\caption{\textbf{Calendar gradients within establishments and early-term deliveries}}
 \label{tab:estab_gradient}
 \small\setlength{\tabcolsep}{3pt}
 \resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
@@ -51,22 +51,7 @@ Observations & 4,212,319 & 2,014,187 & & & & \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} SINASC, for-profit and public establishments; coefficients in
-percentage points, and in log points $\times$ 100 in the Poisson columns. Column 1
-estimates Equation~\eqref{eq:gradient} on municipality-date-sector cells built from
-the births that carry an establishment code. Columns 2--6 use establishment-date
-cells with establishment$\times$year fixed effects, so the differential is
-identified from each establishment's own weekday-weekend variation against the
-other sector in the same municipality-day. Column 2 weights by the cell's births,
-as the paper does; columns 3--4 hold each establishment's weight fixed at its mean
-daily births in the year. Columns 4--6 use a panel with every day of each
-establishment-year with at least 50 births, in the municipality-years with
-both sectors, the only ones that identify the differential; days with no birth
-enter as zeros. Column 4 is the probability that the establishment records any
-birth that day; columns 5--6 are counts. Panel B uses births with a recorded
-gestational age, and column 8 Robson groups 1--2 (nulliparous, term, singleton,
-cephalic). Standard errors are two-way clustered by municipality and date in
-columns 1, 7 and 8 and by establishment and date in columns 2--6.
+\textit{Notes:} SINASC, for-profit and public establishments; coefficients in percentage points, and in log points $\times$ 100 in the Poisson columns. Panel A, column 1, estimates Equation~\eqref{eq:gradient} on municipality-date-sector cells built from the births that carry an establishment code. Columns 2--6 use establishment-date cells with establishment$\times$year fixed effects; column 2 weights by the cell's births, and columns 3--4 hold each establishment's weight fixed at its mean daily births in the year. Columns 4--6 include zero-birth days for establishment-years with at least 50 births in municipality-years containing both sectors. Column 4 is the probability of recording any birth that day; columns 5--6 are Poisson counts. Panel B uses the share of births at 37--38 weeks and, in column 8, the Robson 1--2 subsample. Standard errors are two-way clustered by municipality and date in columns 1, 7 and 8 and by establishment and date in columns 2--6, and are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{minipage}

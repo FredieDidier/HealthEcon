@@ -1,6 +1,6 @@
 
 \begin{sidewaystable}\centering
-   \caption{\label{tab:referee_robustness} \textbf{Robustness of the weekend dip: sector classification, rest-day definitions, and newborn composition}}
+   \caption{\label{tab:referee_robustness} \textbf{Weekend gradients under alternative definitions and newborn composition}}
    \centering
 \footnotesize\setlength{\tabcolsep}{3pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lccccc}
@@ -30,7 +30,9 @@
    \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} For-profit municipality-date cells, SINASC 2010--2024, weighted by births. Column 1 classifies an establishment as for-profit if the registry lists it as for-profit in any month of 2012--2024, rather than in the birth's own year. Columns 4--5 are composition checks: weekend (unscheduled) for-profit births include fewer healthy scheduled term pregnancies, so newborn risk indicators shift mechanically. Standard errors, two-way clustered by municipality and date, are reported in parentheses. \footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\textit{Notes:} For-profit SINASC municipality-date cells, 2010--2024, weighted by live births. Column 1 assigns for-profit status whenever the CNES registry records that legal-entity type in any month of 2012--2024, instead of the status specific to the birth year. Columns 2--3 alter the rest-day definition. Columns 4--5 use newborn outcomes to describe the composition of deliveries that remain on weekends; they do not estimate the causal effect of weekend birth on health. Standard errors, two-way clustered by municipality and date, are reported in parentheses.
+\newline
+\footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{minipage}
 \end{sidewaystable}
 

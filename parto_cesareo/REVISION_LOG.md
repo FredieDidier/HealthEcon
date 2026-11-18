@@ -1740,3 +1740,19 @@ Checked, not changed: card2023 sentence (supported, see entry above); appendix.t
 model.tex; Figure 2(a) code uses the same specification and sample filter as Table 1 col 4.
 Numbers unchanged apart from the removed duplicate 1.3. Paper compiles, 0 undefined refs;
 abstract, claims and numcheck pass; reader flags "potentially" (pre-existing).
+
+## 2026-11-18 — supplement rewritten to Fredie's V5 (text only, uncommitted)
+
+`latex/sup_appendix.tex` follows `Born_on_Schedule_Supplement_JHE_rewrite_V5.md`: new
+prose, figure captions and notes. Table captions and notes now live in
+`analysis/code/00_table_text.R`, applied by `standardize_notes()` at the end of every
+table build, so a re-run keeps them; the 28 generated `.tex` files were updated by it and
+their bodies are byte-identical. Fixes to V5: education dips were in the wrong order
+(>=8 years is -7.22, <8 is -11.23); previous-cesarean balance is -0.0225, not -0.022;
+period estimates are -7.2 to -7.6, not "-7 to -8"; pre-holiday sums are negative only
+for the prelabor share; "unresolved" became "do not confirm"; the D.23 meta sentence on
+"pre-specified" was dropped; the 11.9-point same-municipality pair gap and the 0.20-0.49
+calibration sentence stay in their notes because the paper cites those tables for them;
+"hospital" stays "establishment" inside tables; house standard-error sentence kept.
+Compiles (paper 33 pp, supplement 38 pp, WP 68 pp, 0 undefined refs); abstract, claims
+and numcheck pass. No script was re-run.

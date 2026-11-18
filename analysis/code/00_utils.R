@@ -243,11 +243,14 @@ postprocess_tex <- function(file, fontsize = "\\small", tabcolsep = 4,
 # caption and reads as misaligned, and REVERTED the same day at Fredie's request.
 # Do not narrow it, do not wrap it in \centerline, and do not re-add \centering.
 # ---------------------------------------------------------------------------
+source(here::here("analysis", "code", "00_table_text.R"))
+
 NOTE_OPEN  <- "\\begin{minipage}{\\linewidth}\\footnotesize"
 NOTE_CLOSE <- "\\end{minipage}"
 
 standardize_notes <- function(file) {
   if (!file.exists(file)) return(invisible(file))
+  on.exit(apply_table_text(file), add = TRUE)   # supplement captions and notes
   tx <- readLines(file, warn = FALSE)
   if (any(grepl("\\begin{minipage}", tx, fixed = TRUE))) return(invisible(file))
   i <- grep("\\textit{Notes:}", tx, fixed = TRUE)

@@ -1,6 +1,6 @@
 \begin{table}[H]
 \centering
-\caption{\textbf{The for-profit calendar gradient by gestational age and maternal age}}
+\caption{\textbf{Heterogeneity by gestational age and maternal age}}
 \label{tab:subgroup_gradients}
 \small\setlength{\tabcolsep}{4pt}
 \resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
@@ -64,24 +64,7 @@ Sample & \multicolumn{3}{c}{2010--2024 (Panel C: 2014--2024)} & \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births;
-coefficients in percentage points. Columns 2--4 of Panel A use the births with a
-recorded gestational age, which the registry carries for few births before 2012.
-Every column estimates the for-profit
-differential of Equation~\eqref{eq:gradient}. Columns 2--3 fit it separately
-within each subgroup; column 4 reports the interaction of each term with the
-subgroup indicator, estimated jointly with municipality$\times$date$\times$subgroup
-and municipality$\times$sector$\times$subgroup fixed effects, and is the formal
-test that the two subgroups share a gradient. Panel A splits births at 37
-completed weeks. Gestational age at birth is partly an outcome of the scheduling
-we study, so Panel A is a heuristic falsification test rather than a clean
-placebo, and preterm delivery is not synonymous with unschedulable delivery.
-Maternal age in Panels B and C is predetermined. Panel C restricts to Robson
-groups 1--2 (nulliparous, term, singleton, cephalic), the births least likely to
-require surgery; Robson groups are recorded from 2014. These are exploratory
-subgroup splits and are not among the pre-specified hypothesis families of
-Table~\ref{tab:multiple_testing}. Standard errors, two-way clustered by
-municipality and date, are reported in parentheses.
+\textit{Notes:} Municipality-date-sector cells, SINASC, weighted by births; coefficients in percentage points. Panel A separates term from preterm births at 37 completed weeks, using births with a recorded gestational age. Gestational age is partly an outcome of the scheduling studied, so the subgroup contrast is neither a causal moderator nor a clean falsification. Panels B and C divide mothers at age 35; Panel C restricts to Robson groups 1--2, recorded from 2014. Columns 2--3 fit the differential within each subgroup; column 4 estimates the difference between the subgroup interactions in a joint regression with municipality$\times$date$\times$subgroup and municipality$\times$sector$\times$subgroup fixed effects. These subgroup analyses are exploratory and do not belong to the hypothesis families of Table~\ref{tab:multiple_testing}. Standard errors, two-way clustered by municipality and date, are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{minipage}

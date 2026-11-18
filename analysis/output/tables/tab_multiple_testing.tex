@@ -1,5 +1,5 @@
 \begin{table}[H]
-   \caption{\label{tab:multiple_testing} \textbf{Multiple-hypothesis adjustment within pre-specified families}}
+   \caption{\label{tab:multiple_testing} \textbf{Adjusted inference within hypothesis families}}
    \centering
 \small\setlength{\tabcolsep}{5pt}\resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
    \begin{tabular}{lcccc}
@@ -42,7 +42,7 @@
    \end{tabular}
 }
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} Each family collects the hypotheses that the paper tests jointly. Family A is the within-municipality-day for-profit calendar gradient of Table~\ref{tab:main_gradient}; family B the supplemental heterogeneity tests; family C the for-profit--public outcome differences of Table~\ref{tab:health}; family D the long-weekend taxonomy and displacement tests of Table~\ref{tab:long_weekends}; family E the organizational-capacity interactions of Table~\ref{tab:org_capacity}; and family F the demand-smoothing tests of Table~\ref{tab:demand_smoothing}. Holm $p$ is the Holm--Bonferroni adjusted $p$-value \citep{holm1979}, which controls the familywise error rate within the family; BH $q$ is the Benjamini--Hochberg false-discovery-rate $q$-value \citep{benjamini1995}. Estimates and unadjusted $p$-values reproduce the corresponding columns of the source tables.
+\textit{Notes:} Family A corresponds to Table~\ref{tab:main_gradient}; B to Tables~\ref{tab:heterogeneity}--\ref{tab:modality}; C to Table~\ref{tab:health}; D to Table~\ref{tab:long_weekends}; E to Table~\ref{tab:org_capacity}; and F to Table~\ref{tab:demand_smoothing}. Holm $p$-values \citep{holm1979} adjust within each family and control its familywise error rate; Benjamini--Hochberg $q$-values \citep{benjamini1995} target the false discovery rate. Estimates and unadjusted $p$-values reproduce the source exhibits.
 \end{minipage}
 \end{table}
 

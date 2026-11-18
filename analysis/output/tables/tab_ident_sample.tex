@@ -1,6 +1,6 @@
 \begin{table}[H]
 \centering
-\caption{\textbf{The sample that identifies the within-municipality-day differential}}
+\caption{\textbf{Coverage of the identifying municipality-days}}
 \label{tab:ident_sample}
 \small\setlength{\tabcolsep}{5pt}
 \resizebox{\ifdim\width>\linewidth \linewidth\else\width\fi}{!}{%
@@ -31,14 +31,7 @@ Observations & 1,426,542 & 677,340 & 3,611,893 & 677,340 \\
 \bottomrule
 \end{tabular}}
 \begin{minipage}{\linewidth}\footnotesize
-\textit{Notes:} SINASC 2010--2024, municipality-date cells by sector, weighted by
-births. Identifying days are the municipality-days on which both sectors record at
-least one birth; with municipality$\times$date fixed effects, only these days
-contribute to the for-profit differential of Equation~\eqref{eq:gradient}, and
-re-estimating it on them reproduces Table~\ref{tab:main_gradient}, column 1,
-exactly. Municipalities counts those with at least one birth in the sector
-(columns 1 and 3) and those with at least one identifying day (columns 2 and 4).
-Standard errors, two-way clustered by municipality and date, are reported in parentheses.
+\textit{Notes:} SINASC 2010--2024, municipality-date cells by sector, weighted by births. An identifying day is a municipality-date with at least one birth in both ownership sectors; with municipality$\times$date fixed effects, only these days contribute to the for-profit differential of Equation~\eqref{eq:gradient}. Columns 1 and 3 cover all days in each sector; columns 2 and 4 use identifying days only. Municipalities counts those with at least one birth in the sector (columns 1 and 3) and those with at least one identifying day (columns 2 and 4). Panel B re-estimates each sector's own calendar regression. Re-estimating the pooled within-municipality-day interaction on this common sample reproduces Table~\ref{tab:main_gradient}, column 1. Standard errors, two-way clustered by municipality and date, are reported in parentheses.
 \newline
 \footnotesize Significance levels: *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{minipage}
